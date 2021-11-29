@@ -1,0 +1,157 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>수강완료 클래스</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/nav.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/finish.css" rel="stylesheet" />
+  <!--  <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagemain.css" rel="stylesheet"/> -->
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet"/>
+
+    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/nav.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+
+    <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    <style>
+        .reviewbtn {background-color: #91C788 !important;} /* 수강후기 작성 버튼 */
+        .dropdown { position: relative; left: 17%;} /* 정렬 */
+        .search {position: relative; right: 13%;} /* 검색 */
+        .finishtable thead tr th {border-bottom: none !important;} /* 수강완료 클래스 테이블 */
+        .finishtable thead tr th {background-color: #E3FFEC !important;}
+        .finishtable {text-align: center !important; vertical-align: middle !important;}
+    </style>
+</head>
+<body>
+	 <jsp:include page="../common/nav.jsp" />
+    <div class="common-sidebar">
+      <jsp:include page="../common/sidebar.jsp" />
+      <div class="sidebar-content">
+        <p class="taking-title">수강완료 클래스</p>
+        <br>
+        <div class="dropsearch">
+		<select class="ui dropdown">
+  			<option value="">정렬순</option>
+  			<option value="1">최신클래스순</option>
+  			<option value="0">제목순</option>
+		</select>
+    <div class="ui search">
+      <div class="ui icon input">
+        <input class="prompt" type="text">
+        <i class="search icon"></i>
+      </div>
+      <div class="results"></div>
+    </div>
+  </div>
+  <br><br><br><br><br>
+  <div class="unlist-text">
+  수강이 완료된 클래스가 없습니다.
+</div>
+<br><br><br>
+<table class="ui single line table finishtable">
+  <thead>
+    <tr>
+      <th>신청날짜</th>
+      <th>클래스제목</th>
+      <th>강사닉네임</th>
+      <th>수강완료</th>
+      <th>수강후기</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2021.08.18</td>
+      <td>나도 '메이플'</td>
+      <td>메이플러버</td>
+      <td>2021.10.18</td>
+      <td><p class="complete">후기작성완료</p></td>
+    </tr>
+    <tr>
+      <td>2021.09.04</td>
+      <td>웹개발 야 너도 할 수 있어</td>
+      <td>믿으면될지어다</td>
+      <td>2021.11.04</td>
+      <td><button class="ui button reviewbtn" onclick="reviewbtn(this);">수강후기작성</button></td>
+    </tr>
+    <tr>
+      <td>2021.07.19</td>
+      <td>웹디자인 잘 가르칠 수 있는디</td>
+      <td>천재디자인</td>
+      <td>2021.11.19</td>
+      <td><button class="ui button reviewbtn" onclick="reviewbtn(this);">수강후기작성</button></td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+    </div>
+    <!-- 수강후기 모달창 -->
+    <div class="ui small modal" id="reviewmodal">
+        <div class="header modal-header">나도 만들 수 있어 '메이플'</div>
+        <div class="content modal-content">
+          <br>
+          <table class="ui basic table modal-table">
+            <thead>
+              <tr>
+                <th>강사</th>
+                <th>수강기간</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>메이플러버</td>
+                <td>2021.06.10 - 2021. 11.10(5개월)</td>
+              </tr>
+            </tbody>
+          </table>
+            <br>
+            <div class="review">
+          <p class="review-title">클래스는 만족하셨나요?</p>
+         <div class="star"><i class="big star icon"></i> <i class="big star icon"></i> <i
+          class="big star icon"></i> <i class="big star icon"></i> <i
+          class="big star icon"></i></div> 
+        </div>
+        <br><br>
+          <input type="textarea" class="review-text">
+          <br><br><br>
+          <button class="ui button finishbtn" onclick="finishbtn(this);">작성완료</button>
+        </div>
+      </div>
+      <!-- 수강후기 작성완료 버튼 모달창 -->
+      <div class="ui mini modal" id="finishmodal">
+        <div class="content finishcontent">
+          <p class="finish-content-title">수강후기를 올리시겠습니까?</p>
+          <div class="re-modal-btn">
+          <button class="ui button btn">확인</button>
+          <button class="ui button btn">취소</button>
+        </div>
+        </div>
+      </div>
+      <script>
+        function reviewbtn(item) {
+          $('#reviewmodal').show();
+        }
+
+        function finishbtn(item) {
+          $('#finishmodal').show();
+        }
+      </script>
+</body>
+<jsp:include page="../common/footer.jsp" />
+</html>

@@ -1,0 +1,166 @@
+.main-content {
+  width: 70%;
+  overflow: auto;
+  border : 1px solid red;
+}
+
+#category {
+  color: #91c788;
+}
+
+.warningtable tbody {
+   text-align: center;
+}
+
+.warningtable thead {
+  background-color: #e3ffec;
+   text-align: center;   
+  }
+
+.introduce-detail img {
+  width: 60%;
+  height: 60%;
+  text-align: center;
+ }
+
+p {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.manager-paging {
+  width: 40%;
+  margin: 0 auto;
+  height: 50px;
+  /* border: 1px solid blue; */
+}
+
+.manager-paging ul {
+  display: inline-block;
+  list-style-type: none;
+  text-align: center;
+}
+
+.manager-paging li {
+  float: left;
+  padding: 5px 10px;
+  margin: 0 10px;
+  background-color: #91c788;
+  border-radius: 400px;
+  text-decoration: none;
+}
+
+.manager-search {
+  width: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  /* border: 1px solid blue; */
+}
+
+.manager-searchbox {
+  width: 70%;
+  margin: 0 auto;
+  height: 100%;
+  border: 1px solid rgb(200, 200, 200);
+}
+.manager-searchbox input {
+  width: 90%;
+  border: none;
+}
+
+.manager-searchbox button {
+  width: 20px;
+  height: 100%;
+  border: none;
+}
+
+.manager-searchbox img {
+  width: 100%;
+  height: 100%;
+}
+
+.date-search {
+  padding: 5px;
+	border-radius: 0.5rem;
+	font-size: 12px;
+	border-color: #91c788;
+  width: 8%;
+  height: 25px;
+  background-color: #91c788;
+}
+
+.calculate {
+  padding: 5px;
+	border-radius: 0.5rem;
+	font-size: 12px;
+	border-color: #91c788;
+  width: 8%;
+  height: 25px;
+  background-color: #91c788;
+  float: right;
+}
+
+.produce2 {
+  width: 50%;
+  position: relative;
+  left: 50%;
+  bottom: 50px;
+}
+
+.produce4 {
+  width: 50%;
+  position: relative;
+  left: 50%;
+  bottom: 50px;
+}
+
+.create {
+  padding: 5px;
+	border-radius: 0.5rem;
+	font-size: 12px;
+	border-color: #91c788;
+  width: 10%;
+  height: 30px;
+  position: relative;
+  left: 85%;
+  background-color: #91c788;
+}
+
+.delete {
+
+  padding: 5px;
+	border-radius: 0.5rem;
+	font-size: 12px;
+	border-color: #91c788;
+  width: 10%;
+  height: 30px;
+  position: relative;
+  left: 85%;
+  background-color: #91c788;
+}
+
+.modal {
+  height: 150px;
+ top: 45%;
+ left: 50%;
+}
+
+.title {
+  position: relative;
+  top: 15%;
+}
+
+.re-modal-btn {
+  position: relative;
+  top: 20%;
+}
+
+.btn {
+  background-color: white !important;
+}
+
+.content{
+  height: 150px;
+  text-align: center;
+  background-color: #91C788 !important;
+}

@@ -1,0 +1,151 @@
+.introduce {
+  width: 100%;
+  margin: 0 auto;
+  /* border: 1px solid blue; */
+  overflow: auto;
+}
+
+.introduce h4 {
+  margin-top: 0;
+}
+
+.sidebar-content {
+  width: 60%;
+  overflow: auto;
+  /* border: 1px solid pink; */
+}
+
+.warn {
+  width: 40%;
+  margin: 50px auto 0;
+  /* border: 1px solid blue; */
+  height: auto;
+}
+
+.introduce-detail {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 20px;
+  /* border: 1px solid red; */
+  height: 60%;
+  text-align: center;
+  padding: 0;
+}
+
+.introduce-detail1 {
+  width: 48%;
+  margin: 30px auto 0 auto;
+  /* border: 1px solid red; */
+  height: 30%;
+  text-align: left;
+  padding: 0;
+}
+
+.introduce-detail img {
+  width: 60%;
+  height: 60%;
+  text-align: center;
+}
+
+.introduce-detail1 input {
+  /* text-align: right; */
+  border: none;
+  outline: none;
+  margin: 5px 5px;
+  font-size: 18px;
+}
+
+.introduce-detail1 label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.manager-paging {
+  width: 40%;
+  margin: 0 auto;
+  height: 50px;
+  /* border: 1px solid blue; */
+}
+
+.manager-paging ul {
+  display: inline-block;
+  list-style-type: none;
+  text-align: center;
+}
+
+.manager-paging li {
+  float: left;
+  padding: 5px 10px;
+  margin: 0 10px;
+  background-color: #91c788;
+  border-radius: 400px;
+  text-decoration: none;
+}
+
+.manager-search {
+  width: 60%;
+  margin: 0 auto;
+  overflow: hidden;
+  /* border: 1px solid blue; */
+}
+
+.manager-searchbox {
+  width: 70%;
+  margin: 0 auto;
+  height: 100%;
+  border: 1px solid rgb(200, 200, 200);
+}
+.manager-searchbox input {
+  width: 85%;
+  height: 30px;
+  border: none;
+  padding-left: 10px;
+  font-size: 15px;
+}
+
+.manager-searchbox button {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background-color: inherit;
+  vertical-align: middle;
+}
+
+.manager-searchbox img {
+  width: 100%;
+  height: 100%;
+}
+
+.warningtable tbody {
+  text-align: center;
+}
+
+.warningtable thead {
+  background-color: #e3ffec;
+  text-align: center;
+}
+
+.introduce-detail img {
+  width: 60%;
+  height: 60%;
+  text-align: center;
+}
+
+p {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.report button {
+  margin: 10px;
+  background-color: #e3ffec;
+  height: 30px;
+  width: 100px;
+}
+
+.cancelbut {
+  margin: 10px;
+  background-color: #e45656;
+  height: 30px;
+  width: 100px;
+}

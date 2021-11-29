@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.review-go {color: #52734D !important;}
+.reviewList img {width: 150px; height: 100px;}
+#reviewcard {margin-left: 5%; width: 90%; border: 3px solid #91C788}
+.reviewList img {float: right;}
+.re-title {float: left;}
+#reviewheader { color: #FDD442; margin-bottom: 2%}
+
+iframe {
+    display: none;
+  }
+  
