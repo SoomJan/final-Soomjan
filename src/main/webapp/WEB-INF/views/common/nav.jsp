@@ -148,7 +148,7 @@ pageEncoding="UTF-8"%>
           <div><a href="#">멘토보기</a></div>
           <div><a href="#">클래스</a></div>
           <div><a href="/Final_SoomJan_html/matching/matching_mantee_main.jsp">매칭</a></div>
-          <div><a href="#">멘토신청</a></div>
+          <div><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토신청</a></div>
         </div>
 
         <div class="nav-right">

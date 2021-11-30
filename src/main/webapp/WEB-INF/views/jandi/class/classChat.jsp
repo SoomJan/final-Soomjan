@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,14 +48,23 @@ img {
 <script src="http://125.132.252.115:3000/socket.io/socket.io.js"></script>
 <script>
 
-	function getCurrentDate(chat_date){
-		let date = chat_date.substr(0, 9);
+	function getFormatDate(chat_date){
+		let year = chat_date.getFullYear() 
+		let month = chat_date.getMonth() + 1;
+		month = month < 10 ? '0' + month :  month;
 		
-		let time = chat_date.substr(11, 16);
+		let date = chat_date.getDate();
+		date = date < 10 ? '0' + date :  date;
 		
-		return date + " " + time;
-	};
-	
+		let hour = chat_date.getHours();
+		hour = hour < 10 ? '0' + hour :  hour;
+		
+		let minutes = chat_date.getMinutes();
+		minutes = minutes < 10 ? '0' + minutes :  minutes;
+		
+		return year + "-" + month + "-" + date + " " + hour + ":" + minutes;
+	}
+
 	function addSenderBox(chat){
 		let $senderBox = 
 			"<div class='senderBox' align='right'><b class='chatName'>"
@@ -81,16 +91,21 @@ img {
 			$('.chatRight').append($receiverBox);
 	};
 	
+	
 	$(document).ready(function(){
 		let socket = io("http://125.132.252.115:3000");
 		
-		// 채팅방 정보
+		// 테스트 채팅방 정보 
 		let chatInfo = {
 			email: 'ysyr0830@gmail.com',
 			chat_code: '1'
-		}
+		};
 		
-		socket.emit("chatInfo", chatInfo);
+		socket.emit("chat_info", chatInfo);
+		
+		socket.on("connect_user", (chatInfo) => {
+			console.log(chatInfo.email);
+		});
 		
 		// 채팅 이력 불러오기
 		socket.on("receive_msg", function(chat_log){
@@ -108,7 +123,7 @@ img {
 		
 		
 		$('#msg').keyup(function(key){
-			if(key.keyCode==13 && !key.shiftKey && $('#msg').val() !== ""){
+			if(key.keyCode==13 && !key.shiftKey){
 				// 시프트 엔터가 아닌 경우
 				$('#sendBtn').click();
 			}
@@ -116,20 +131,23 @@ img {
 		
 		$('#sendBtn').click(function(){
 			
-			// CLASS_CHAT에 저장
-	        let chat = {
-	            nickName: '람람',
-	            email: 'ysyr0830@gmail.com',
-	            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
-	            chat_code: '1',
-	            chate_date: new Date()
-	        };
-			
-			console.log(chat);
-			
-			socket.emit("send_msg", chat);
-			
-			$('#msg').val('');
+			if($('#msg').val() !== ''){
+				// CLASS_CHAT에 저장
+		        let chat = {
+		            nickName: '람람',
+		            email: 'ysyr0830@gmail.com',
+		            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
+		            chat_code: '1',
+		            chat_date: getFormatDate(new Date())
+		        };
+				
+				console.log(chat);
+				
+				socket.emit("send_msg", chat);
+				
+				$('#msg').val('');
+				
+			}
 		});
 		
 		socket.on('send_msg', function(chat){
@@ -146,9 +164,7 @@ img {
 
 	});
 	
-	
-	
-	
+
 </script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
@@ -177,6 +193,9 @@ img {
 							<br>
 						</div>
 						<div class="sendMessage" align="center">
+							<button class="btn btn-primary" style="float:left;" id="imgBtn" data-toggle="modal" data-target="#sendImgModal">
+								<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+							</button>
 							<textarea class="messageArea" id="msg"></textarea>
 							<input class="sendBtn" type="button" id="sendBtn" value="전송" >
 						</div>
@@ -185,6 +204,35 @@ img {
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="sendImgModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">파일 첨부</h4>
+				</div>
+				<div class="modal-body" align="center">
+					<br> <input type="file" id="sendFile"><br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default btnBD"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="okBtn">전송</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <script>
+			$('#okBtn').click(function() {
+				console.log($('#sendFile').val());
+			});
+	</script> -->
 
 </body>
 <jsp:include page="../../common/footer.jsp" />

@@ -54,22 +54,22 @@ a {
 		</div>
 		<div class="sidebar-inner-name1">
 			<ul>
-				<li><a href="#">내 정보</a></li>
+				<li><a href="soomjan/jandi/jandiProfile">내 정보</a></li>
 			</ul>
 			<ul>
 				<h3>내 클래스</h3>
-				<li><a href="#">클래스이름</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/jandi/class/chat">클래스</a></li>
 				<li><button type="button" style="border:none; background: none; padding:1px;"
 						data-toggle="modal" data-target="#addClassModal">클래스 생성하기</button></li>
 			</ul>
 			<ul>
 				<h3>정산 관리</h3>
-				<li><a href="#">정산 내역</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/jandi/jandiCalc">정산 내역</a></li>
 			</ul>
 			<ul>
 				<h3>광고 관리</h3>
-				<li><a href="#">클래스 광고 신청</a></li>
-				<li><a href="#">광고 현황</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/jandi/createAd">클래스 광고 신청</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/jandi/myAd">광고 현황</a></li>
 			</ul>
 		</div>
 
