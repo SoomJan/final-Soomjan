@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soomjd.soomjan.jandi.model.dao.JandiMapper">
+    
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CAREER" property="career"/>
+    	<result column="INTRO" property="intro"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="ENROLL_DATE" property="enroll_date"/>
+    	<result column="ACCOUNT" property="account"/>
+    	<result column="BANK" property="bank"/>
+    	<result column="ACC_NAME" property="acc_name"/>
+    </resultMap>
+    
+    <select id="selectJandi" resultMap="jandiResultMap">
+    	SELECT JAN.EMAIL
+			 , JAN.NICKNAME
+			 , JAN.CAREER
+			 , JAN.INTRO
+			 , JAN.PROFILE_PATH
+			 , JAN.ENROLL_DATE
+			 , JAN.ACCOUNT
+			 , JAN.BANK
+			 , JAN.ACC_NAME
+		FROM JANDI_TBL JAN
+	   WHERE JAN.EMAIL = #{ email }
+    </select>
+
+</mapper>

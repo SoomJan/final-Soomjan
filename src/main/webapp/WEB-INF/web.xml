@@ -23,6 +23,7 @@
 			<param-value>
 				classpath:spring/servlet-context.xml
 				classpath:spring/spring-security.xml
+				<!-- classpath:mybatis/mybatis-config.xml -->
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

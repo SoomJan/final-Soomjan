@@ -102,7 +102,6 @@ img {
 		};
 		
 		socket.emit("chat_info", chatInfo);
-		socket.emit("disconnect", chatInfo);
 		
 		socket.on("connect_user", (chatInfo) => {
 			console.log(chatInfo.email);
