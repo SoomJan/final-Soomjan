@@ -153,7 +153,7 @@ pageEncoding="UTF-8"%>
 
         <div class="nav-right">
           <div class="nav-right-login">
-            <a href="#"><button type="button" class="btn">로그인</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/testDb"><button type="button" class="btn">로그인</button> </a>
           </div>
 
           <div class="nav-right-regist">
