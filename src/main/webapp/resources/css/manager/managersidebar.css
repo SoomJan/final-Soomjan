@@ -5,6 +5,7 @@
   overflow: auto;
   margin: 150px auto 100px auto;
   /* border: 1px solid purple; */
+  height: 1000px;
 }
 .common-sidebar > div {
   display: inline-block;

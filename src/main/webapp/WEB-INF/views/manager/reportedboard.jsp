@@ -11,26 +11,17 @@ pageEncoding="UTF-8"%>
 
     <title>Signin Template for Bootstrap</title>
 
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- <link
       href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
       rel="stylesheet"
     /> -->
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
-      rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css" rel="stylesheet"/>
+        <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css" rel="stylesheet"/>
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="resources/css/semantic/semantic.css"
-    />
-    <script src="resources/css/semantic/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"/>
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="css/bootstrap.js"></script>
@@ -38,18 +29,36 @@ pageEncoding="UTF-8"%>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
+    <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    
+  	<style>
+  	.manager-paging ul li a {color: white !important;}
+    
+    .manager-paging {
+  		width: 40%;
+ 		margin: 0 auto;
+ 		height: 50px;
+ 		text-align: center;
+  		position: relative;
+ 		top: 20px;
+ 		 /* border: 1px solid blue; */
+	}
+
+	.input-search {
+		width: 400px;
+    	position: relative;
+    	left: 18%;
+    	top: 10px;
+	}
+  	</style>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
 
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
-      <div class="sidebar-content">
-        <h1>신고된 게시판 조회</h1>
+      <div class="main-content">
+        <h1 id="category">신고된 게시판 조회</h1><br>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
@@ -104,16 +113,15 @@ pageEncoding="UTF-8"%>
             </tr>
           </tbody>
         </table>
-        <div class="manager-search">
-          <form class="manager-searchbox" method="post">
-            <input type="text" />
-            <button type="submit">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/research.png"
-              />
-            </button>
-          </form>
-        </div>
+           <div class="manager-search">
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="text">
+    			<i class="search icon"></i>
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
+          </div>
         <div>
           <div class="manager-paging">
             <ul>

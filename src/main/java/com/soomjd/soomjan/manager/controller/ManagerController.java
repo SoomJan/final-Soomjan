@@ -14,5 +14,43 @@ public class ManagerController {
 		return "manager/managermain";
 	}
 	
-	// 테스트입니다.
+	@GetMapping("/mentilist")
+	public String mentilist() {
+		
+		return "manager/mentilist";
+	}
+	
+	@GetMapping("/mentolist")
+	public String mentolist() {
+		
+		return "manager/mentolist";
+	}
+	
+	@GetMapping("/manproduce")
+	public String manproduce() {
+		
+		return "manager/manproduce";
+	}
+	
+	@GetMapping("/reportedmentee")
+	public String reportedmentee() {
+		
+		return "manager/reportedmentee";
+	}
+	
+	@GetMapping("/reportedmentor")
+	public String reportedmentor() {
+		
+		return "manager/reportedmentor";
+	}
+	
+	@GetMapping("/reportedboard")
+	public String reportedboard() {
+		
+		return "manager/reportedboard";
+	}
+	
+	
+	
+	
 }
