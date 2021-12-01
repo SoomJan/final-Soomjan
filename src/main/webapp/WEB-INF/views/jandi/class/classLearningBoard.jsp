@@ -54,7 +54,7 @@ table{
 			<table style="width:100%;">
 				<tr>
 				<th align="center" width="25"></th>
-				<th align="center" width="50"><h3>OH! 잔디의 JAVA 클래스룸 학습방</h3></th>
+				<th align="center" width="50"><h3>${ sessionScope.classDTO.title } 클래스룸 학습방</h3></th>
 				<th align="center" width="25"><a href="">작성하기</a></th>
 				</tr>
 			</table>
@@ -69,7 +69,7 @@ table{
 				</thead>
 				<tbody>
 					<tr>
-						<td>OH! 잔디</td>
+						<td></td>
 						<td>chap01 숙제</td>
 						<td>2021-11-18</td>
 					</tr>

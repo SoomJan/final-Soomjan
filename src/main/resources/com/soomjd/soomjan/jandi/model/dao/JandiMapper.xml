@@ -29,5 +29,13 @@
 		FROM JANDI_TBL JAN
 	   WHERE JAN.EMAIL = #{ email }
     </select>
+    
+    <select id="selectClassCodeList" resultType="hashmap">
+    	SELECT 
+    		   CLASS_CODE
+    		 , TITLE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL = #{ email }
+    </select>
 
 </mapper>

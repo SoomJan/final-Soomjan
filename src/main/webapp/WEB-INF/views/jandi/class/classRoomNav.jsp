@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,16 +38,16 @@ table th{
 </head>
 <body>
 	<div class="sidebar-content">
-		<p class="title"><b>OH! 잔디의 JAVA 클래스룸</b></p>
-		<p align="right"><b>인원 10 / 15 명</b></p>
+		<p class="title"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
+		<p align="right"><b>인원 ${ sessionScope.currentCount } / ${ sessionScope.classDTO.maxCount } 명</b></p>
 		<br>
 		<!-- 탭 메뉴 상단 시작 -->
 		<table >
 			<tr>
-				<th width="25"><a href="" class="room class">클래스</a></th>
-				<th width="25"><a href="" class="room lecture">강의 영상</a></th>
-				<th width="25"><a href="" class="room learning">학습방</a></th>
-				<th width="25"><a href="" class="room classChat">채팅</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom/${ classCode }" class="room class">클래스</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture" class="room lecture">강의 영상</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLearningBoard" class="room learning">학습방</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classChat" class="room classChat">채팅</a></th>
 			</tr>
 		</table>
 		<br>
