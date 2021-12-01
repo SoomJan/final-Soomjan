@@ -41,11 +41,14 @@ pageEncoding="UTF-8"%>
           </td>
           <td>
             <h1 style="text-align: center;">로그인</h1>
+            <form action="${ pageContext.servletContext.contextPath }/member/login" method="post">
             <div class="login-box">
-              <input type="text" placeholder="이메일">
-              <input type="password" placeholder="비밀번호">
+              <input type="text" name="email" placeholder="이메일">
+              <input type="password" name="password" placeholder="비밀번호">
 
-              <button>로그인</button>
+              <input type="submit" value="로그인">
+             <!--  <button>로그인</button> -->
+              
 
               <br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -55,6 +58,7 @@ pageEncoding="UTF-8"%>
               &nbsp;&nbsp;&nbsp;
               <a href="#">비밀번호찾기</a>
             </div>
+            </form>
           </td>
 
         </tr>

@@ -153,11 +153,11 @@ pageEncoding="UTF-8"%>
 
         <div class="nav-right">
           <div class="nav-right-login">
-            <a href="#"><button type="button" class="btn">로그인</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/login"><button type="button" class="btn">로그인</button> </a>
           </div>
 
           <div class="nav-right-regist">
-            <a href="#"><button type="button" class="btn">회원가입</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/regist"><button type="button" class="btn">회원가입</button> </a>
           </div>
 
           <div class="nav-right-sidebar">

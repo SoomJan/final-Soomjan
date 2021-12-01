@@ -4,26 +4,48 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.member.model.dao.MemberMapper;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 	
 	private MemberMapper mapper;
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public MemberServiceImpl(MemberMapper mapper) {
+	public MemberServiceImpl(MemberMapper mapper, BCryptPasswordEncoder passwordEncoder) {
 		this.mapper = mapper;
+		this.passwordEncoder = passwordEncoder;
 	}
-
 
 
 	@Override
 	public List<HashMap<String, Object>> selectTest() {
 		
 		return mapper.selectTest();
+	}
+
+
+	@Override
+	public boolean registMember(MemberDTO member) {
+		
+		return mapper.insertMember(member) > 0? true:false;
+	}
+
+
+	@Override
+	public MemberDTO loginMember(MemberDTO member) throws LoginFailedException {
+		
+		if(!passwordEncoder.matches(member.getPassword(), mapper.selectEncPassword(member))) {
+			throw new LoginFailedException("로그인에 실패하셨습니다");
+		}
+		
+		return mapper.selectMember(member);
 	}
 
 }
