@@ -148,16 +148,16 @@ pageEncoding="UTF-8"%>
           <div><a href="#">멘토보기</a></div>
           <div><a href="#">클래스</a></div>
           <div><a href="/Final_SoomJan_html/matching/matching_mantee_main.jsp">매칭</a></div>
-          <div><a href="#">멘토신청</a></div>
+          <div><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토신청</a></div>
         </div>
 
         <div class="nav-right">
           <div class="nav-right-login">
-            <a href="#"><button type="button" class="btn">로그인</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/login"><button type="button" class="btn">로그인</button> </a>
           </div>
 
           <div class="nav-right-regist">
-            <a href="#"><button type="button" class="btn">회원가입</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/regist"><button type="button" class="btn">회원가입</button> </a>
           </div>
 
           <div class="nav-right-sidebar">

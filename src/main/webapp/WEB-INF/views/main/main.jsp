@@ -115,7 +115,8 @@ pageEncoding="UTF-8"%>
 
     <main class="container-fluid">
       <div class="main-search">
-        <h4>숨어있는 잔디를 찾아보세요</h4>
+        <h4>숨어있는 잔디를 찾아보세요
+        '${ sessionScope.loginMember.email }'</h4>
         <form class="main-searchbox" method="post">
           <input type="text" placeholder="찾으시는 강의가 있으신가요?" />
           <button type="submit">
