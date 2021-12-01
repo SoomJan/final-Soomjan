@@ -1,5 +1,7 @@
 package com.soomjd.soomjan.jandi.cotroller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.jandi.model.service.JandiService;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/jandi/*")
@@ -23,9 +26,9 @@ public class JandiController {
 	}
 	
 	@GetMapping("/jandiProfile")
-	public String jandiProfile(Model model){
-		String email = "ram@gmail.com";
-		JandiDTO jandi = jandiService.selectJandi(email);
+	public String jandiProfile(Model model, HttpSession session){
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		
 		model.addAttribute("jandi", jandi.getEmail());
 		
