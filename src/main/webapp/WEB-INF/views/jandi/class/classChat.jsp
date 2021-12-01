@@ -97,7 +97,7 @@ img {
 		
 		// 테스트 채팅방 정보 
 		let chatInfo = {
-			email: 'ysyr0830@gmail.com',
+			email: '3@naver.com',
 			chat_code: '1'
 		};
 		
@@ -134,8 +134,8 @@ img {
 			if($('#msg').val() !== ''){
 				// CLASS_CHAT에 저장
 		        let chat = {
-		            nickName: '람람',
-		            email: 'ysyr0830@gmail.com',
+		            nickName: '진진',
+		            email: '3@naver.com',
 		            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
 		            chat_code: '1',
 		            chat_date: getFormatDate(new Date())
