@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +50,7 @@ a {
 <body>
 	<div id="sidebar">
 		<div class="sidebar-inner-name">
-			<h1>환잔디 님</h1>
+			<h1>${ sessionScope.jandi.nickName } 님</h1>
 			<hr class="border-1px-black" />
 		</div>
 		<div class="sidebar-inner-name1">
@@ -58,7 +59,11 @@ a {
 			</ul>
 			<ul>
 				<h3>내 클래스</h3>
-				<li><a href="${ pageContext.servletContext.contextPath }/jandi/class/chat">클래스</a></li>
+				<c:forEach var="classes" items="${ sessionScope.classList }" >
+					<li><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom/${classes.CLASS_CODE}">
+						<c:out value="${ classes.TITLE }" /></a>
+					</li>
+				</c:forEach>
 				<li><button type="button" style="border:none; background: none; padding:1px;"
 						data-toggle="modal" data-target="#addClassModal">클래스 생성하기</button></li>
 			</ul>

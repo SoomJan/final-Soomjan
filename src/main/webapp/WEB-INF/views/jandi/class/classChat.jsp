@@ -91,80 +91,87 @@ img {
 			$('.chatRight').append($receiverBox);
 	};
 	
-	
+		/* $(item).css('background', 'white');
+		const chatCode = $(item).children().last().val();
+		console.log(chatCode); */
+		
 	$(document).ready(function(){
-		let socket = io("http://125.132.252.115:3000");
+		
+		const email = "${ sessionScope.jandi.email }";
+		const chatCode = "2";
 		
 		// 테스트 채팅방 정보 
 		let chatInfo = {
-			email: '3@naver.com',
-			chat_code: '1'
+			email: email,
+			chat_code: chatCode
 		};
 		
-		socket.emit("chat_info", chatInfo);
-		
-		socket.on("connect_user", (chatInfo) => {
-			console.log(chatInfo.email);
-		});
-		
-		// 채팅 이력 불러오기
-		socket.on("receive_msg", function(chat_log){
-			console.log(chat_log);
-			for(const chat of chat_log){
+		if(chatInfo != null){
+			let socket = io("http://125.132.252.115:3000");
+			
+			socket.emit("chat_info", chatInfo);
+			
+			socket.on("connect_user", function(chatInfo){
+				console.log(chatInfo.email);
+			});
+			
+			// 채팅 이력 불러오기
+			socket.on("receive_msg", function(chat_log){
+				console.log(chat_log);
+				for(const chat of chat_log){
+					if(chat.email === chatInfo.email){
+						addSenderBox(chat);
+					}else {
+						addReceiveBox(chat);
+					}
+					
+					$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
+				}
+			});
+			
+			
+			$('#msg').keyup(function(key){
+				if(key.keyCode==13 && !key.shiftKey){
+					// 시프트 엔터가 아닌 경우
+					$('#sendBtn').click();
+				}
+			});
+			
+			$('#sendBtn').click(function(){
+				
+				if($('#msg').val() !== ''){
+					// CLASS_CHAT에 저장
+			        let chat = {
+			            nickName: '${ sessionScope.jandi.nickName }',
+			            email: '${ sessionScope.jandi.email }',
+			            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
+			            chat_code: chatCode,
+			            chat_date: getFormatDate(new Date())
+			        };
+					
+					console.log(chat);
+					
+					socket.emit("send_msg", chat);
+					
+					$('#msg').val('');
+					
+				}
+			});
+			
+			socket.on('send_msg', function(chat){
+				
 				if(chat.email === chatInfo.email){
 					addSenderBox(chat);
 				}else {
 					addReceiveBox(chat);
 				}
-				
+				//스크롤 맨 아래 감지
 				$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
-			}
-		});
-		
-		
-		$('#msg').keyup(function(key){
-			if(key.keyCode==13 && !key.shiftKey){
-				// 시프트 엔터가 아닌 경우
-				$('#sendBtn').click();
-			}
-		});
-		
-		$('#sendBtn').click(function(){
+			});
 			
-			if($('#msg').val() !== ''){
-				// CLASS_CHAT에 저장
-		        let chat = {
-		            nickName: '진진',
-		            email: '3@naver.com',
-		            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
-		            chat_code: '1',
-		            chat_date: getFormatDate(new Date())
-		        };
-				
-				console.log(chat);
-				
-				socket.emit("send_msg", chat);
-				
-				$('#msg').val('');
-				
-			}
-		});
-		
-		socket.on('send_msg', function(chat){
-			
-			if(chat.email === chatInfo.email){
-				addSenderBox(chat);
-			}else {
-				addReceiveBox(chat);
-			}
-			//스크롤 맨 아래 감지
-			$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
-		});
-		
-
+		}
 	});
-	
-
+		
 </script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
@@ -176,17 +183,17 @@ img {
 			<!-- 탭 메뉴 내용 시작 -->
 			<div class="chatDiv">
 				<div class="chatTop">
-					<h3>멘티1</h3>
+					<h3></h3>
 					<button class="reportBtn" id="reportBtn">신고</button>
 				</div>
 				<div class="chatBottom">
 					<div class="chatLeft">
-						<div class="chatRoomBox">멘티1</div>
-						<div class="chatRoomBox">멘티2</div>
-						<div class="chatRoomBox">멘티3</div>
-						<div class="chatRoomBox">멘티1</div>
-						<div class="chatRoomBox">멘티2</div>
-						<div class="chatRoomBox">멘티3</div>
+						<c:forEach var="chatRoom" items="${ chatRoomList }">
+							<div class="chatRoomBox"><c:out value="${ chatRoom.NICKNAME }"/>
+								<input type="text" value="${ chatRoom.CHAT_CODE }" hidden="true">
+							</div>
+						</c:forEach>
+						<div class="chatRoomBox">테스트용</div>
 					</div>
 					<div style="width: 100%;">
 						<div class="chatRight">

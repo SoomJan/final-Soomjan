@@ -30,6 +30,14 @@ public class MemberController {
 		this.memberService = memberService;
 		this.passwordEncoder = passwordEncoder;
 	}
+	
+	// 죄송해요 순표님 테스트하나만 넣을게요ㅜㅜ
+	@GetMapping("classChat")
+	public String memberClassChat(Model model) {
+		
+		
+		return "mypage/class/classChat";
+	}
 
 	@GetMapping("regist")
 	public String registForm() {
@@ -65,7 +73,15 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(@ModelAttribute MemberDTO member, Model model) throws LoginFailedException {
 		
-		model.addAttribute("loginMember", memberService.loginMember(member));
+		/* 순표님...매번 로그인 하기 귀찮아서 잠시..쓸게요..ㅎ..ㅎㅎ*/
+		MemberDTO testMember = new MemberDTO();
+		testMember.setEmail("ram@gmail.com");
+		testMember.setPassword("1234");
+		
+		model.addAttribute("loginMember", memberService.loginMember(testMember));
+		
+		
+//		model.addAttribute("loginMember", memberService.loginMember(member));
 		
 		return "redirect:/";
 		

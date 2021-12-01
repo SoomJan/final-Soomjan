@@ -1,5 +1,8 @@
 package com.soomjd.soomjan.jandi.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,12 @@ public class JandiServiceImpl implements JandiService{
 
 	@Override
 	public JandiDTO selectJandi(String email) {
-		
 		return jandiMapper.selectJandi(email);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectClassCodeList(JandiDTO jandi) {
+		return jandiMapper.selectClassCodeList(jandi);
 	}
 
 }
