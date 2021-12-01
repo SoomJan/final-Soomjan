@@ -124,10 +124,10 @@ pageEncoding="UTF-8"%>
           <a href="#">
             <li>
               <div class="nav-sns2">
-                <img src="resources/images/twitter3.png" class="navi-face" style="width: 20px;" />
-                <img src="resources/images/youtube3.png" class="navi-insta" style="width: 20px;" />
-                <img src="resources/images/instagram3.png" class="navi-tw" style="width: 20px;" />
-                <img src="resources/images/facebook3.png" class="navi-you" style="width: 20px;" />
+                <img src="${ pageContext.servletContext.contextPath }/resources/images/twitter3.png" class="navi-face" style="width: 20px;" />
+                <img src="${ pageContext.servletContext.contextPath }/resources/images/youtube3.png" class="navi-insta" style="width: 20px;" />
+                <img src="${ pageContext.servletContext.contextPath }/resources/images/instagram3.png" class="navi-tw" style="width: 20px;" />
+                <img src="${ pageContext.servletContext.contextPath }/resources/images/facebook3.png" class="navi-you" style="width: 20px;" />
               </div>
             </li>
           </a>
