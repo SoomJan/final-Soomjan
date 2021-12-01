@@ -26,8 +26,8 @@ pageEncoding="UTF-8"%>
         <ul>
           <h3>클래스</h3>
           <!-- <hr class="border-1px-black" /> -->
-          <li><a href="my/attending">전체 클래스</a></li>
-          <li><a href="#">인기 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">전체 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/findclass/findTopClassMain">인기 클래스</a></li>
         </ul>
         <!--  <ul>
           <h3>설정</h3>

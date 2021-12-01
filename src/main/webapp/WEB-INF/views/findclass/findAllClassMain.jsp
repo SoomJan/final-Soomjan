@@ -47,7 +47,7 @@ pageEncoding="UTF-8"%>
       <div class="container" style="width:75%; margin-top:150px">
 
   <!-- Page Heading -->
-  <h1 class="my-4">클래스 | 
+  <h1 class="my-4">전체 클래스 | 
     <small>웹 개발</small>
   </h1>
 
