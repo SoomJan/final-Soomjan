@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,16 +69,13 @@ table{
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td>chap01 숙제</td>
-						<td>2021-11-18</td>
-					</tr>
-					<tr>
-						<td>OH! 잔디</td>
-						<td>chap02 숙제</td>
-						<td>2021-11-18</td>
-					</tr>
+					<c:forEach var="learningPost" items="${ learningPostList }">
+						<tr>
+							<td>${ learningPost.nickName }</td>
+							<td>${ learningPost.title }</td>
+							<td>${ learningPost.writeDate }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			</div>

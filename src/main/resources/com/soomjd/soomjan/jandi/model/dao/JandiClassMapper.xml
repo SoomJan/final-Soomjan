@@ -31,11 +31,11 @@
     </resultMap>
     
     <resultMap type="com.soomjd.soomjan.classes.model.dto.MokchaDTO" id="mokchaResultMap">
-    	<id column="MOKCHA_CODE" property="classCode"/>
-    	<result column="MOKCHA_NAME" property="createDate"/>
-    	<result column="WRITE_DATE" property="contents"/>
-    	<result column="CONTENTS" property="tag"/>
-    	<result column="CLASS_CODE" property="categoryCode"/>
+    	<id column="MOKCHA_CODE" property="mokchaCode"/>
+    	<result column="MOKCHA_NAME" property="mokchaName"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="CLASS_CODE" property="classCode"/>
     </resultMap>
     
     <select id="selectClassByClassCode" resultMap="classResultMap">
@@ -71,7 +71,7 @@
 			 , M.CONTENTS
 			 , M.CLASS_CODE
 		 FROM LECTURE_MOKCHA_TBL M
-		WHERE M.ClASS_CODE = # { classCode }
+		WHERE M.CLASS_CODE = #{ classCode }
     </select>
     
     <select id="selectLearningPostList" resultMap="learningPostResultMap">
@@ -86,6 +86,7 @@
 			 , L.TITLE
 			 , J.NICKNAME
 		  FROM LEARNING_TBL L
+		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
 		 WHERE L.CLASS_CODE = #{ classCode }
     </select>
     

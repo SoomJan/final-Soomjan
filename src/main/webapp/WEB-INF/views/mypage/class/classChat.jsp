@@ -175,9 +175,7 @@ img {
 		}
 	});
 		
-
 </script>
-
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -188,23 +186,19 @@ img {
 			<!-- 탭 메뉴 내용 시작 -->
 			<div class="chatDiv">
 				<div class="chatTop">
-					<h3>람잔디</h3>
+					<h3>람잔디 </h3>
 					<button class="reportBtn" id="reportBtn">신고</button>
 				</div>
 				<div class="chatBottom">
-					<div class="chatLeft">
-						<div class="chatRoomBox">람잔디</div>
-					</div>
 					<div style="width: 100%;">
-						<div class="chatRight">
-							<br>
+						<div class="chatRight" style="background: #e2fcea">
+						
 						</div>
 						<div class="sendMessage" align="center">
-							<button class="btn btn-primary" style="float:left;" id="imgBtn" data-toggle="modal" data-target="#sendImgModal">
-								<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
-							</button>
-							<textarea class="messageArea" id="msg"></textarea>
-							<input class="sendBtn" type="button" id="sendBtn" value="전송" >
+							<form id="sendMessageForm" method="post" action="">
+								<input class="sendInput" type="text" name="message">
+								<input class="sendBtn" type="submit" id="sendBtn" value="전송">
+							</form>
 						</div>
 					</div>
 				</div>

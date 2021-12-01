@@ -73,21 +73,10 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(@ModelAttribute MemberDTO member, Model model) throws LoginFailedException {
 		
-		/* 순표님...매번 로그인 하기 귀찮아서 잠시..쓸게요..ㅎ..ㅎㅎ*/
-		MemberDTO testMember = new MemberDTO();
-		testMember.setEmail("ram@gmail.com");
-		testMember.setPassword("1234");
-		
-		model.addAttribute("loginMember", memberService.loginMember(testMember));
-		
-		
-//		model.addAttribute("loginMember", memberService.loginMember(member));
+		model.addAttribute("loginMember", memberService.loginMember(member));
 		
 		return "redirect:/";
 		
 	}
-	
-	
-	
 	
 }

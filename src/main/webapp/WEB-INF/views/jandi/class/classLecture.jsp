@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,32 +86,18 @@ input {
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
-				<h2>4개의 목차</h2>
+				<h2>1개의 목차</h2>
 				<hr>
-				<div class="mokcha">
-					<button type="button" class="btnStyle">수정</button>
-					<h3>chap01. 리터럴</h3>
-					<input type="text" width="80%" name="contents" readonly="readonly"
-						value="목차 상세 설명 칸">
-					<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
-				</div>
-				<br>
-				<div class="mokcha">
-					<button type="button" class="btnStyle">수정</button>
-					<h3>chap02. 변수</h3>
-					<input type="text" width="80%" name="contents" readonly="readonly"
-						value="목차 상세 설명 칸">
-					<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
-				</div>
-				<br>
-				<div class="mokcha">
-					<button type="button" class="btnStyle">수정</button>
-					<h3>chap03. 리터럴</h3>
-					<input type="text" width="80%" name="contents" readonly="readonly"
-						value="목차 상세 설명 칸">
-					<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
-				</div>
-				<br>
+				<c:forEach var="mokcha" items="${ mokchaList }">
+					<div class="mokcha">
+						<button type="button" class="btnStyle">수정</button>
+						<h3>${ mokcha.mokchaName }</h3>
+						<input type="text" width="80%" name="contents" readonly="readonly"
+							value="${ mokcha.contents }">
+						<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
+					</div>
+					<br>
+				</c:forEach>
 				<!-- 유튜브 영상 링크... 왜 안되나요..ㅜㅠ -->
 				<!-- <iframe width="560" height="315"
 					src="https://www.youtube.com/embed/cbuZfY2S2UQ"
