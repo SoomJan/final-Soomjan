@@ -13,4 +13,6 @@ public class ManagerController {
 		
 		return "manager/managermain";
 	}
+	
+	// 테스트입니다.
 }
