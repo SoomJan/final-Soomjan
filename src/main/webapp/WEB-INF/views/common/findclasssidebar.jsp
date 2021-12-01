@@ -19,12 +19,11 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="sidebar">
       <div class="sidebar-inner-name">
-        <h1>환잔디 님</h1>
+        <h1>클래스</h1>
         <hr class="border-1px-black" />
       </div>
       <div class="sidebar-inner-name1">
         <ul>
-          <h3>클래스</h3>
           <!-- <hr class="border-1px-black" /> -->
           <li><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">전체 클래스</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/findclass/findTopClassMain">인기 클래스</a></li>

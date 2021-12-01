@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
 
     <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-    <jsp:include page="../common/findclasssidebar.jsp" />
+    <jsp:include page="../common/findmentorsidebar.jsp" />
       
       <div class="container" style="width:75%; margin-top:150px">
 
@@ -49,7 +49,8 @@ pageEncoding="UTF-8"%>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card">
             <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer1.png" alt="user"></div>
+                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer1.png" alt="user"  
+                	onclick="location.href='${ pageContext.servletContext.contextPath}/findmentor/detailmentor'"></div>
                 <p>우아한형제 IOS | 김민영</p>
             </div>
       </div>

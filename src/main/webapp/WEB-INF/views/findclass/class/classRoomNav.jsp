@@ -41,8 +41,8 @@ th{
 		<!-- 탭 메뉴 상단 시작 -->
 		<table style="width: 100%">
 			<tr>
-				<th width="50"><a href="" class="room class">클래스</a></th>
-				<th width="50"><a href="" class="room lecture">강의 영상</a></th>
+				<th width="50"><a href="${ pageContext.servletContext.contextPath}/findclass/class/classRoom" class="room class">클래스</a></th>
+				<th width="50"><a href="${ pageContext.servletContext.contextPath}/findclass/class/classLecture" class="room lecture">강의 영상</a></th>
 			</tr>
 		</table>
 		<br>
