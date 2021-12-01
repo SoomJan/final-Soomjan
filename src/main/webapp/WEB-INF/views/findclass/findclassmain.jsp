@@ -31,6 +31,12 @@ pageEncoding="UTF-8"%>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+    <script
+      type="text/javascript"
+      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
+    ></script>
+
   </head>
   <body>
 
@@ -67,6 +73,7 @@ pageEncoding="UTF-8"%>
                     </div>
                 </div>
             </div>
+
       </div>
     </div>
     <div class="col-lg-4 col-sm-6 mb-4">

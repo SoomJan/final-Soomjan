@@ -30,7 +30,7 @@ public class MainController {
 			System.out.println(member);
 		}
 		
-		return "main/main";
+		return "findclass/class/classRoom";
 	}
 	
 }
