@@ -9,5 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ManagerController {
 
 	@GetMapping("/managermain")
-	public void managerMain() {}
+	public String managerMain() {
+		
+		return "manager/managermain";
+	}
 }
