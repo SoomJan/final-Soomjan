@@ -54,7 +54,7 @@ a {
 		</div>
 		<div class="sidebar-inner-name1">
 			<ul>
-				<li><a href="soomjan/jandi/jandiProfile">내 정보</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">내 정보</a></li>
 			</ul>
 			<ul>
 				<h3>내 클래스</h3>
