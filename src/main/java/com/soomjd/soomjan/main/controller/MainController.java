@@ -11,12 +11,8 @@ public class MainController {
 	@RequestMapping(value= {"/", "main"})
 	public String main() {
 		
-		List<HashMap<String, Object>> memberList = memberService.selectTest();
-		for(HashMap<String, Object> member : memberList) {
-			System.out.println(member);
-		}
-		
-		return "findclass/class/classLecture";
+
+		return "main/main";
 
 	}
 	
