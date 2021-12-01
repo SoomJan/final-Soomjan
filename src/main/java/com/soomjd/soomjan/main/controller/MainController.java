@@ -25,10 +25,10 @@ public class MainController {
 	@GetMapping(value= {"/", "main"})
 	public String main() {
 		
-		List<HashMap<String, Object>> memberList = memberService.selectTest();
-		for(HashMap<String, Object> member : memberList) {
-			System.out.println(member);
-		}
+//		List<HashMap<String, Object>> memberList = memberService.selectTest();
+//		for(HashMap<String, Object> member : memberList) {
+//			System.out.println(member);
+//		}
 		
 		return "main/main";
 	}
