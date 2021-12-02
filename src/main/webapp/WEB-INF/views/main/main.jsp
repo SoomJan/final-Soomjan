@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -117,12 +117,11 @@ pageEncoding="UTF-8"%>
     <main class="container-fluid">
       <div class="main-search">
         <h4>숨어있는 잔디를 찾아보세요</h4>
-        <%-- '${ sessionScope.loginMember.email }' --%>
         <c:if test="${ !empty sessionScope.loginMember.email}">
-        <h4>"${ sessionScope.loginMember.email}"</h4>
+          <h4>"${ sessionScope.loginMember.email}"</h4>
         </c:if>
         <c:if test="${ not empty sessionScope.loginManager.mngNickName}">
-         <h4>"${ sessionScope.loginManager.mngNickName }"</h4>
+          <h4>"${ sessionScope.loginManager.mngNickName }"</h4>
         </c:if>
         <form class="main-searchbox" method="post">
           <input type="text" placeholder="찾으시는 강의가 있으신가요?" />
