@@ -180,6 +180,37 @@ p {
 				</div>
 			</div>
 		</div>
+				<script>
+			function modifyProfileImage(){
+				const profileImage=$('#profileImage')[0];
+				//파일이 여러개인걸 방지
+				const formData=new FormData();
+				formData.append("image", profileImage.files[0]);
+				
+				$.ajax({
+				
+					type: "POST",
+					url: "${ pageContext.servletContext.contextPath }/jandi/jandiProfile1",
+					processData: false,
+					contentType: false,
+					data: formData,
+					success: function(rtn){
+						
+						$('#profile').src="";
+
+					},
+					error:function(err){
+						console.log(err);
+					}
+					
+				})
+				
+				
+				
+				
+			}
+		
+		</script>
 		<button type="button" id="openModalBtn" data-toggle="modal" data-target="#profileModal" hidden="true"></button>
 </body>
 <jsp:include page="../common/footer.jsp" />
