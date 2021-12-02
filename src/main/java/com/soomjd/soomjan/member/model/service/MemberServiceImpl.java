@@ -2,6 +2,7 @@ package com.soomjd.soomjan.member.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,6 +47,20 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return mapper.selectMember(member);
+	}
+
+
+	@Override
+	public boolean idDupCheck(Map<String, String> map) {
+		
+		return mapper.idDupCheck(map) > 0? true:false;
+	}
+
+
+	@Override
+	public boolean nickDupCheck(Map<String, String> map) {
+		
+		return mapper.nickDupCheck(map) > 0? true:false;
 	}
 
 }

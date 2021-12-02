@@ -15,6 +15,7 @@
         <result column="IS_BLACK" property="isBlack"/>
         <result column="ENROLL_DATE" property="enrollDate"/>
         <result column="IS_EXIT" property="isExit"/>
+        <result column="NAME" property="name"/>
     </resultMap>
     
     <insert id="insertMember" parameterType="MemberDTO">
@@ -30,6 +31,7 @@
 		, IS_BLACK
 		, ENROLL_DATE
 		, IS_EXIT
+		, NAME
 		)
 		VALUES
 		(
@@ -42,6 +44,7 @@
 		, DEFAULT
 		, SYSDATE
 		, DEFAULT
+		, #{ name }
 		)
     </insert>
     
@@ -67,6 +70,20 @@
 		  FROM SSACK_TBL A
 		 WHERE A.EMAIL = #{ email }
 		   AND A.IS_EXIT = 'N'
+    </select>
+    
+    <select id="idDupCheck" resultType="_int" parameterType="HashMap">
+        SELECT
+		       COUNT(*)
+		  FROM SSACK_TBL A
+		 WHERE A.EMAIL= #{ email }
+    </select>
+    
+    <select id="nickDupCheck" resultType="_int" parameterType="HashMap">
+        SELECT
+		       COUNT(*)
+		  FROM SSACK_TBL A
+		 WHERE A.NICKNAME= #{ nickName }
     </select>
     
     <select id="selectTest" resultType="hashmap">
