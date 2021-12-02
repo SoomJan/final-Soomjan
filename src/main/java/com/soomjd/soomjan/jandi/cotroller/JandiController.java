@@ -1,11 +1,21 @@
 package com.soomjd.soomjan.jandi.cotroller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.jandi.model.service.JandiService;
@@ -33,6 +43,43 @@ public class JandiController {
 		
 		return "jandi/mentorProfile";
 	}
+	
+	@PostMapping("/jandiProfile1")
+	public String profileFileUpload(@RequestParam MultipartFile profileImage, HttpServletRequest request, Model model) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		System.out.println("root : "+root);
+		
+		String filePath= root+"\\uploadFiles";
+		
+		File mkdir = new File(filePath);
+		if(!mkdir.exists()) {
+			mkdir.mkdirs();
+		}
+		
+		
+		String originFileName = profileImage.getOriginalFilename();
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String savedName = UUID.randomUUID().toString().replace("-", "")+ext;
+		
+		try {
+			profileImage.transferTo(new File(filePath+"\\"+savedName));
+			model.addAttribute("message","파일업로드성공");
+			
+			
+		} catch (IllegalStateException | IOException e) {
+			new File(filePath+"\\"+savedName).delete();
+			model.addAttribute("message","파일업로드 실패");
+			
+			e.printStackTrace();
+		}
+		
+		return "mentorProfile";
+		
+	}
+	
+	
 	
 	@GetMapping("/jandiCalc")
 	public String jandiCalc(){
