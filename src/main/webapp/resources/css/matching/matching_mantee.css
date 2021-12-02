@@ -167,7 +167,11 @@
 /* 견적서 작성하기 표 제목 */
 .table_head{
 	
-	width="10";
+	width: 500px;
+	text-align: left;
+	border: none;
+	padding: 15px;
+	border-radius: 25px;
 
 }
 
@@ -186,7 +190,6 @@
 .input_title{
 	
 	width: 500px;
-	text-align: left;
 	border: none;
 	padding: 15px;
 	border-radius: 25px;
@@ -197,7 +200,6 @@
 #category_cb{
 	
 	width: 200px;
-	text-align: left;
 	border: none;
 	padding: 15px;
 	border-radius: 25px;
