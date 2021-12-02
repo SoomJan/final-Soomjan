@@ -99,12 +99,6 @@ public class ManagerController {
 		return "manager/reportedmentee";
 	}
 	
-	@GetMapping("/reportedmentor")
-	public String reportedmentor() {
-		
-		return "manager/reportedmentor";
-	}
-	
 	@GetMapping("/reportedboard")
 	public String reportedboard() {
 		
