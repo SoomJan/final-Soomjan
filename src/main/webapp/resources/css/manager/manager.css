@@ -115,30 +115,45 @@ p {
   float: right;
 }
 
+.produce1 {
+  width: 50%;
+  position: relative;
+  left: 2%;
+}
+
 .produce2 {
   width: 50%;
   position: relative;
   left: 50%;
-  bottom: 50px;
+  bottom: 75px;
+}
+
+.produce3 {
+  width: 50%;
+  position: relative;
+  left: 10%;
 }
 
 .produce4 {
   width: 50%;
   position: relative;
-  left: 50%;
-  bottom: 50px;
+  left: 48%;
+  bottom: 75px;
 }
 
 .create {
   padding: 5px;
-	border-radius: 0.5rem;
-	font-size: 12px;
-	border-color: #91c788;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
   width: 10%;
   height: 30px;
   position: relative;
   left: 85%;
   background-color: #91c788;
+  position: relative;
+  left: 88%;
+  bottom: 60px;
 }
 
 .delete {

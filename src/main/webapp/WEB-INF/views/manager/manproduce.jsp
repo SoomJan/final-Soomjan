@@ -58,6 +58,15 @@ pageEncoding="UTF-8"%>
     font-weight: bold;
     font-size: 20px;
     }
+    
+    .delete {background-color: #91c788 !important; height: 35px; width: 100px;}
+    .create {background-color: #91c788 !important; height: 35px; width: 100px;}
+    
+    .create-pro {
+    	border: 3px solid #91c788;
+    	padding: 4%;
+    	border-radius: 10px;
+    }
 
     </style>
   </head>
@@ -126,16 +135,16 @@ pageEncoding="UTF-8"%>
       </table>
 
       <form>
-      <input class="delete" type="submit" value="계정 삭제">
+      <input class="delete btn" type="submit" value="계정 삭제">
       </form>
 
       <h3>관리자 계정 생성 </h3>
-      <form>
-      <h3 class="produce1"> 이름 : <input class="pd1" type="text" placeholder="name"> </h3>
-      <h3 class="produce2"> 닉네임 :  <input class="pd2" type="text" placeholder="nickname"> </h3>
-      <h3 class="produce3"> 아이디 :  <input class="pd3" type="text" placeholder="ID"> </h3>
-      <h3 class="produce4"> 비밀번호 : <input class="pd4" type="text" placeholder="password"> </h3>
-      <input class="create" type="submit" value="계정 생성">
+      <form class="create-pro">
+      <h3 class="produce1"> 이름 : <div class="ui input"><input class="pd1" type="text" placeholder="name"></div> </h3>
+      <h3 class="produce2"> 닉네임 : <div class="ui input"><input class="pd2" type="text" placeholder="nickname"></div> </h3>
+      <h3 class="produce3"> 아이디 : <div class="ui input"> <input class="pd3" type="text" placeholder="ID"></div> </h3>
+      <h3 class="produce4"> 비밀번호 : <div class="ui input"><input class="pd4" type="text" placeholder="password"></div> </h3>
+      <input class="create btn" type="submit" value="계정 생성">
       </form>
 
       <script>
