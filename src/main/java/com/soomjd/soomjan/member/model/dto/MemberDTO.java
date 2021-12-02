@@ -13,12 +13,13 @@ public class MemberDTO {
 	private char isBlack;
 	private java.sql.Date enrollDate;
 	private char isExit;
+	private String name;
 	
 	public MemberDTO() {
 	}
 
 	public MemberDTO(String email, String nickName, String password, String phone, char isJandi, int warning,
-			char isBlack, Date enrollDate, char isExit) {
+			char isBlack, Date enrollDate, char isExit, String name) {
 		super();
 		this.email = email;
 		this.nickName = nickName;
@@ -29,6 +30,7 @@ public class MemberDTO {
 		this.isBlack = isBlack;
 		this.enrollDate = enrollDate;
 		this.isExit = isExit;
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -103,14 +105,21 @@ public class MemberDTO {
 		this.isExit = isExit;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDTO [email=" + email + ", nickName=" + nickName + ", password=" + password + ", phone=" + phone
 				+ ", isJandi=" + isJandi + ", warning=" + warning + ", isBlack=" + isBlack + ", enrollDate="
-				+ enrollDate + ", isExit=" + isExit + "]";
+				+ enrollDate + ", isExit=" + isExit + ", name=" + name + "]";
 	}
-	
-	
+
 	
 
 }

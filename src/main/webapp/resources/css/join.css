@@ -38,13 +38,14 @@
 .title{
     font-size: 20px;
     width: 130px;
-    text-align: right;
+    text-align: left;
 
 }
 
 
 .content{
-
+    position: relative;
+    left: 15%;
     margin-right: 20px;
 }
 
@@ -57,22 +58,6 @@
 
 
 }
-
-.emailCheck{
-    font-size: 10px;
-    color: #3456CE;
-}
-
-.authenticationCheck{
-    font-size: 10px;
-    color: #3456CE;
-}
-
-.nickNameCheck{
-    font-size: 10px;
-    color: #F02525;
-}
-
 
 .fullJoin>div>button{
     border-radius: 2px;
