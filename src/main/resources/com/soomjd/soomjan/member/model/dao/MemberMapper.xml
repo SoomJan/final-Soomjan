@@ -3,6 +3,71 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soomjd.soomjan.member.model.dao.MemberMapper">
+
+
+    <resultMap id="memberResultSet" type="MemberDTO">
+        <id column="EMAIL" property="email"/>
+        <result column="NICKNAME" property="nickName"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="PHONE" property="phone"/>
+        <result column="IS_JANDI" property="isJandi"/>
+        <result column="WARNING" property="warning"/>
+        <result column="IS_BLACK" property="isBlack"/>
+        <result column="ENROLL_DATE" property="enrollDate"/>
+        <result column="IS_EXIT" property="isExit"/>
+    </resultMap>
+    
+    <insert id="insertMember" parameterType="MemberDTO">
+        INSERT
+		  INTO SSACK_TBL
+		(
+		  EMAIL
+		, NICKNAME
+		, PASSWORD
+		, PHONE
+		, IS_JANDI
+		, WARNING
+		, IS_BLACK
+		, ENROLL_DATE
+		, IS_EXIT
+		)
+		VALUES
+		(
+		  #{ email }
+		, #{ nickName }
+		, #{ password }
+		, #{ phone }
+		, DEFAULT
+		, DEFAULT
+		, DEFAULT
+		, SYSDATE
+		, DEFAULT
+		)
+    </insert>
+    
+    <select id="selectEncPassword" resultType="java.lang.String" parameterType="MemberDTO">
+        SELECT
+		       A.PASSWORD
+		  FROM SSACK_TBL A
+		 WHERE A.EMAIL = #{ email }
+		   AND IS_EXIT = 'N'
+    </select>
+    
+    <select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
+        SELECT
+		       A.EMAIL
+			 , A.NICKNAME
+			 , A.PASSWORD
+			 , A.PHONE
+			 , A.IS_JANDI
+			 , A.WARNING
+			 , A.IS_BLACK
+			 , A.ENROLL_DATE
+			 , A.IS_EXIT
+		  FROM SSACK_TBL A
+		 WHERE A.EMAIL = #{ email }
+		   AND A.IS_EXIT = 'N'
+    </select>
     
     <select id="selectTest" resultType="hashmap">
         SELECT *

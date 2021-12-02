@@ -51,6 +51,8 @@
    </aop:config>	
    
    <mybatis-spring:scan base-package="com.soomjd.soomjan.member.model.dao"/>
+   <mybatis-spring:scan base-package="com.soomjd.soomjan.jandi.model.dao"/>
+   <mybatis-spring:scan base-package="com.soomjd.soomjan.manager.model.dao"/>
    
 		
 </beans>

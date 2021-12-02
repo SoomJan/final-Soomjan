@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,10 +16,6 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-      rel="stylesheet"
-    /> -->
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
       rel="stylesheet"
@@ -114,6 +111,7 @@ pageEncoding="UTF-8"%>
             </button>
           </form>
         </div>
+        <br />
         <div>
           <div class="manager-paging">
             <ul>

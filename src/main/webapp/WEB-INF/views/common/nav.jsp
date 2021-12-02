@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -118,6 +119,14 @@ pageEncoding="UTF-8"%>
             </li>
           </a>
         </ul>
+         <ul>
+          <a href="${ pageContext.servletContext.contextPath }/manager/login">
+            <li>
+              <span>📑</span>
+              <span>관리자 로그인</span>
+            </li>
+          </a>
+        </ul>
 
         <hr style="opacity: 0.4;" />
         <ul class="nav-sidebar-inline">
@@ -137,7 +146,7 @@ pageEncoding="UTF-8"%>
 
     <nav>
       <div class="nav-left">
-        <a href="#">
+        <a href="${ pageContext.servletContext.contextPath }">
           <img
             src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"
         /></a>
@@ -147,18 +156,42 @@ pageEncoding="UTF-8"%>
         <div class="nav-menu-item">
           <div><a href="#">멘토보기</a></div>
           <div><a href="#">클래스</a></div>
-          <div><a href="/Final_SoomJan_html/matching/matching_mantee_main.jsp">매칭</a></div>
-          <div><a href="#">멘토신청</a></div>
+          <div><a href="${ pageContext.servletContext.contextPath }/manager/matching">매칭</a></div>
+          <div><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토신청</a></div>
         </div>
 
         <div class="nav-right">
+        
+         <c:if test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}">
           <div class="nav-right-login">
-            <a href="#"><button type="button" class="btn">로그인</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/login"><button type="button" class="btn">로그인</button> </a>
           </div>
 
           <div class="nav-right-regist">
-            <a href="#"><button type="button" class="btn">회원가입</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/member/regist"><button type="button" class="btn">회원가입</button> </a>
           </div>
+          </c:if>
+          
+          <c:if test="${ !empty sessionScope.loginMember.email}">
+          <div class="nav-right-login">
+          <h4>"${ sessionScope.loginMember.email}" 님 환영합니다!</h4>
+          </div>
+          <div class="nav-right-regist">
+            <a href="${ pageContext.servletContext.contextPath }/member/logout"><button type="button" class="btn">로그아웃</button> </a>
+          </div>
+          </c:if>
+          
+          <c:if test="${ !empty sessionScope.loginManager.mngNickName}">
+          <div class="nav-right-login">
+         <h4>"${ sessionScope.loginManager.mngNickName }" 님 환영합니다!</h4>
+         </div>
+         <div class="nav-right-regist">
+            <a href="${ pageContext.servletContext.contextPath }/manager/managermain"><button type="button" class="btn">관리자 페이지</button> </a>
+            <a href="${ pageContext.servletContext.contextPath }/manager/logout"><button type="button" class="btn">로그아웃</button> </a>
+          </div>
+         
+        </c:if>
+          
 
           <div class="nav-right-sidebar">
             <button type="button" id="acti">

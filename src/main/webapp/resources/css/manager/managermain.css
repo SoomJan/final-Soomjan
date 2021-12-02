@@ -5,13 +5,18 @@
   overflow: auto;
 }
 
+body {
+	overflow-x: hidden;
+}
+
 .introduce h4 {
   margin-top: 0;
 }
 
 .sidebar-content {
   width: 60%;
-  overflow: auto;
+  height: 100%;
+  /* overflow: auto; */
   /* border: 1px solid pink; */
 }
 

@@ -47,9 +47,9 @@ pageEncoding="UTF-8"%>
         </ul>
         <ul>
           <h3>신고 관리</h3>
-          <li><a href="#">신고된 멘티</a></li>
-          <li><a href="#">신고된 멘토</a></li>
-          <li><a href="#">신고된 게시판</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentee">신고된 멘티</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentor">신고된 멘토</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedboard">신고된 게시판</a></li>
         </ul>
         <ul>
           <h3>클래스 관리</h3>
