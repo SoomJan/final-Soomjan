@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soomjd.soomjan.manager.model.dao.ManagerMapper">
+    
+       <!-- <resultMap id="memberResultSet" type="SsackDTO">
+        <id column="EMAIL" property="email"/>
+        <result column="NICKNAME" property="nickName"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="PHONE" property="phone"/>
+        <result column="IS_JANDI" property="isJandi"/>
+        <result column="WARNING" property="warning"/>
+        <result column="IS_BLACK" property="isBlack"/>
+        <result column="ENROLL_DATE" property="enrollDate"/>
+        <result column="IS_EXIT" property="isExit"/>
+        <result column="NAME" property="name"/>
+    </resultMap> -->
+    
+    <resultMap id="managerResultSet" type="ManagerDTO">
+    	<id column="MNG_NO" property="mngNo"/>
+    	<result column="MNG_ID" property="mngId"/>
+    	<result column="PASSWORD" property="password"/>
+    	<result column="MNG_NAME" property="mngName"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="MNG_NICKNAME" property="mngNickName"/>
+    </resultMap>
+    
+  <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="SsackDTO">
+        SELECT
+		       A.EMAIL
+			 , A.NICKNAME
+			 , A.PASSWORD
+			 , A.PHONE
+			 , A.IS_JANDI
+			 , A.WARNING
+			 , A.IS_BLACK
+			 , A.ENROLL_DATE
+			 , A.IS_EXIT
+			 , A.NAME
+		  FROM SSACK_TBL A
+    </select> -->
+
+	<!-- 매니저 로그인 비밀번호 확인 -->
+	<select id="selectEncPassword" resultType="java.lang.String" parameterType="ManagerDTO">
+        SELECT
+		       A.PASSWORD
+		  FROM MANAGER_TBL A
+		 WHERE A.MNG_ID = #{ mngId }
+		   AND IS_DELETED = 'N'
+    </select>
+    
+    <select id="selectManager" resultMap="managerResultSet" parameterType="ManagerDTO">
+        SELECT
+		       A.MNG_NO
+			 , A.MNG_ID
+			 , A.PASSWORD
+			 , A.MNG_NAME
+			 , A.CREATE_DATE
+			 , A.IS_DELETED
+			 , A.MNG_NICKNAME
+		    FROM MANAGER_TBL A
+		 WHERE A.MNG_ID = #{ mngId }
+		   AND IS_DELETED = 'N'
+    </select>
+    
+    <select id="allManager" resultMap="managerResultSet" parameterType="ManagerDTO">
+    
+     SELECT
+		       A.MNG_NO
+			 , A.MNG_ID
+			 , A.PASSWORD
+			 , A.MNG_NAME
+			 , A.CREATE_DATE
+			 , A.IS_DELETED
+			 , A.MNG_NICKNAME
+		    FROM MANAGER_TBL A
+		 WHERE IS_DELETED = 'N'
+    </select>
+    
+
+
+</mapper>
