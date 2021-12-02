@@ -154,7 +154,7 @@ pageEncoding="UTF-8"%>
 
       <div class="nav-menu">
         <div class="nav-menu-item">
-          <div><a href="${ pageContext.servletContext.contextPath }/findmentor/findAllMentorMain">멘토보기</a></div>
+          <div><a href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain">멘토보기</a></div>
           <div><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">클래스</a></div>
           <div><a href="${ pageContext.servletContext.contextPath }/matching/manteeMain">매칭</a></div>
           <div><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토신청</a></div>
