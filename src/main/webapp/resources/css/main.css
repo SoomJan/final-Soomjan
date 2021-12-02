@@ -30,7 +30,8 @@ main {
 
 body {
   font-family: "NanumSquareRoundR";
-  margin: 0 0;
+  	overflow-x: hidden;
+  
 }
 .main-logo {
   margin-top: 100px;

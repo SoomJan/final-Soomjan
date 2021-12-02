@@ -14,5 +14,7 @@ public interface MemberMapper {
 	String selectEncPassword(MemberDTO member);
 	
 	MemberDTO selectMember(MemberDTO member);
+	
+	
 
 }

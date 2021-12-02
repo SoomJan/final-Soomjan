@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
 <%--     <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
- --%>    <link href="${ pageContext.servletContext.contextPath }/resources/css/login.css" rel="stylesheet" />
+ --%>    <link href="${ pageContext.servletContext.contextPath }/resources/css/login/managerlogin.css" rel="stylesheet" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
 
     <script src="css/ie-emulation-modes-warning.js"></script>
@@ -34,9 +34,9 @@ pageEncoding="UTF-8"%>
     <main class="container-fluid">
       <div class="login">
         <h1>관리자 로그인</h1>
-        <form class="login-box">
-          <input type="email" id="id" placeholder="ID" />
-          <input type="password" id="pwd" placeholder="password" />
+        <form class="login-box" action="${ pageContext.servletContext.contextPath }/manager/login" method="post">
+          <input type="email" name="mngId" placeholder="ID" />
+          <input type="password" name="password" placeholder="password" />
           <button type="submit">로그인 하기</button><br>
         </form>
       </div>

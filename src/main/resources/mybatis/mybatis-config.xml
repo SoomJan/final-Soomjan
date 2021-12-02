@@ -8,6 +8,7 @@
   		<typeAlias type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" alias="JandiDTO"/>
   		<typeAlias type="com.soomjd.soomjan.member.model.dto.MemberDTO" alias="MemberDTO"/>
   		<typeAlias type="com.soomjd.soomjan.classes.model.dto.ClassDTO" alias="ClassDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.manager.model.dto.ManagerDTO" alias="ManagerDTO"/>
     </typeAliases>
     
   </configuration>

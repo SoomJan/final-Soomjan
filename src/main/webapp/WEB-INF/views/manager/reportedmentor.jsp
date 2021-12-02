@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,10 +16,6 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-      rel="stylesheet"
-    /> -->
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
       rel="stylesheet"
@@ -79,7 +76,16 @@ pageEncoding="UTF-8"%>
             </tr>
           </thead>
           <tbody>
-            <tr>
+          
+           <c:forEach var="manager" items="${ managerList }">
+           	<tr>
+          	<td>${manager.mngId}</td>
+          	<td>${manager.mngName}</td>
+          	</tr>
+          	</c:forEach>
+          	
+           
+             <!-- <tr>
               <td><a href="#">gsp@gmail.com </a></td>
               <td><a href="#">내가 발로 코드 짜는게 더 빠를듯 ㅋ</a></td>
               <td>욕설</td>
@@ -120,7 +126,8 @@ pageEncoding="UTF-8"%>
               <td><a href="#">그냥 돈만 내고 수업은 들지 말고 가세요</a></td>
               <td>욕설</td>
               <td>Y</td>
-            </tr>
+            </tr> -->
+            
           </tbody>
         </table>
  		<div class="manager-search">
@@ -148,4 +155,5 @@ pageEncoding="UTF-8"%>
   </body>
 
   <jsp:include page="../common/footer.jsp" />
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 </html>
