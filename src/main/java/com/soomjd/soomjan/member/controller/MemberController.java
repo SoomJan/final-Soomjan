@@ -30,53 +30,52 @@ public class MemberController {
 		this.memberService = memberService;
 		this.passwordEncoder = passwordEncoder;
 	}
-	
+
 	// 죄송해요 순표님 테스트하나만 넣을게요ㅜㅜ
 	@GetMapping("classChat")
 	public String memberClassChat(Model model) {
-		
-		
+
 		return "mypage/class/classChat";
 	}
 
 	@GetMapping("regist")
 	public String registForm() {
-		
+
 		return "join/join";
 	}
-	
+
 	@PostMapping("regist")
-	public String registMember(@ModelAttribute MemberDTO member,
-			HttpServletRequest request) throws MemberRegistException {
-		
+	public String registMember(@ModelAttribute MemberDTO member, HttpServletRequest request)
+			throws MemberRegistException {
+
 		System.out.println(member);
-		
+
 		/* 비밀번호 암호화 처리 */
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
-		
+
 		/* 성공 실패의 처리 */
-		if(!memberService.registMember(member)) {
-			
+		if (!memberService.registMember(member)) {
+
 			throw new MemberRegistException("회원가입에 실패하셨습니다.");
 		} else {
-			
+
 			return "redirect:/";
 		}
 	}
-	
+
 	@GetMapping("login")
 	public String loginFrom() {
-		
+
 		return "login/login";
 	}
-	
+
 	@PostMapping("login")
 	public String login(@ModelAttribute MemberDTO member, Model model) throws LoginFailedException {
 		
 		model.addAttribute("loginMember", memberService.loginMember(member));
 		
+
 		return "redirect:/";
-		
+
 	}
-	
 }

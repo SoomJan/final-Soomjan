@@ -11,7 +11,7 @@
 
 .sidebar-content {
   width: 60%;
-  overflow: auto;
+ /* overflow: auto; */
   /* border: 1px solid pink; */
 }
 
@@ -131,10 +131,10 @@
   text-align: center;
 }
 
-p {
+/* p {
   font-weight: bold;
   font-size: 20px;
-}
+} */
 
 .report button {
   margin: 10px;
