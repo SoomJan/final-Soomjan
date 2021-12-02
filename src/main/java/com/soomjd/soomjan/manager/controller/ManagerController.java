@@ -75,7 +75,6 @@ public class ManagerController {
 		return "manager/managermain";
 	}
 	
-<<<<<<< HEAD
 	@GetMapping("/mentilist")
 	public String mentilist() {
 		
