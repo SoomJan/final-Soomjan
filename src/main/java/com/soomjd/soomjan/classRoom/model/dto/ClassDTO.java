@@ -1,10 +1,10 @@
-package com.soomjd.soomjan.classes.model.dto;
+package com.soomjd.soomjan.classRoom.model.dto;
 
 import java.sql.Date;
 
 public class ClassDTO {
 	
-	private String classCode;
+	private int classCode;
 	private java.sql.Date createDate;
 	private String contents;
 	private String tag;
@@ -15,11 +15,20 @@ public class ClassDTO {
 	private int maxCount;
 	private String nickName;
 	private String title;
+	private int price;
 	
 	public ClassDTO() {	}
 	
-	public ClassDTO(String classCode, Date createDate, String contents, String tag, int categoryCode, String email,
-			String boardType, int views, int maxCount, String nickName, String title) {
+	public ClassDTO(int categoryCode, int maxCount, int price, String title, String email) {
+		this.title = title;
+		this.price = price;
+		this.email = email;
+		this.maxCount = maxCount;
+		this.categoryCode = categoryCode;
+	}
+	
+	public ClassDTO(int classCode, Date createDate, String contents, String tag, int categoryCode, String email,
+			String boardType, int views, int maxCount, String nickName, String title, int price) {
 		super();
 		this.classCode = classCode;
 		this.createDate = createDate;
@@ -31,14 +40,15 @@ public class ClassDTO {
 		this.views = views;
 		this.maxCount = maxCount;
 		this.nickName = nickName;
-		this.setTitle(title);
+		this.title = title;
+		this.price = price;
 	}
 
-	public String getClassCode() {
+	public int getClassCode() {
 		return classCode;
 	}
 
-	public void setClassCode(String classCode) {
+	public void setClassCode(int classCode) {
 		this.classCode = classCode;
 	}
 
@@ -122,11 +132,19 @@ public class ClassDTO {
 		this.title = title;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
 		return "ClassDTO [classCode=" + classCode + ", createDate=" + createDate + ", contents=" + contents + ", tag="
 				+ tag + ", categoryCode=" + categoryCode + ", email=" + email + ", boardType=" + boardType + ", views="
-				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + "]";
+				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price = " + price + "]";
 	}
 	
 

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.soomjd.soomjan.jandi.model.dao.JandiClassMapper">
+<mapper namespace="com.soomjd.soomjan.classRoom.model.dao.ClassRoomMapper">
     
-    <resultMap type="com.soomjd.soomjan.classes.model.dto.ClassDTO" id="classResultMap">
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classResultMap">
     	<id column="CLASS_CODE" property="classCode"/>
     	<result column="CREATE_DATE" property="createDate"/>
     	<result column="CONTENTS" property="contents"/>
@@ -15,10 +15,11 @@
     	<result column="VIEWS" property="views"/>
     	<result column="MAX_COUNT" property="maxCount"/>
     	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
     	<result column="NICKNAME" property="nickName" />
     </resultMap>
     
-    <resultMap type="com.soomjd.soomjan.classes.model.dto.LearningPostDTO" id="learningPostResultMap">
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO" id="learningPostResultMap">
     	<id column="POST_CODE" property="postCode"/>
     	<result column="WRITE_DATE" property="writeDate"/>
     	<result column="RE_DATE" property="reDate"/>
@@ -30,13 +31,14 @@
     	<result column="NICKNAME" property="nickName" />
     </resultMap>
     
-    <resultMap type="com.soomjd.soomjan.classes.model.dto.MokchaDTO" id="mokchaResultMap">
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.MokchaDTO" id="mokchaResultMap">
     	<id column="MOKCHA_CODE" property="mokchaCode"/>
     	<result column="MOKCHA_NAME" property="mokchaName"/>
     	<result column="WRITE_DATE" property="writeDate"/>
     	<result column="CONTENTS" property="contents"/>
     	<result column="CLASS_CODE" property="classCode"/>
     </resultMap>
+    
     
     <select id="selectClassByClassCode" resultMap="classResultMap">
     	SELECT
@@ -50,6 +52,7 @@
 		    	, C.VIEWS
 		    	, C.MAX_COUNT
 		    	, C.TITLE
+		    	, C.PRICE
 		    	, J.NICKNAME
     	  FROM CLASS_TBL C
     	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)
@@ -101,6 +104,85 @@
     	 WHERE C.CLASS_CODE = #{ classCode }
     	   AND C.EMAIL != #{ email }
     </select>
+    
+    <insert id="registClass" parameterType="ClassDTO">
+    	INSERT INTO CLASS_TBL
+    	(
+			 CLASS_CODE
+		   , TITLE
+		   , CATEGORY_CODE
+		   , EMAIL
+		   , MAX_COUNT
+		   , PRICE
+		   , CREATE_DATE
+
+    	) VALUES (
+    		 SEQ_CLASS_TBL.NEXTVAL
+		   , #{ title }
+		   , #{ categoryCode }
+		   , #{ email }
+		   , #{ maxCount }
+		   , #{ price }
+		   , SYSDATE
+    	)
+    </insert>
+    
+    <select id="selectClassCode" resultType="_int">
+    	SELECT MAX(CLASS_CODE)
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL = #{ email }
+    </select>
+    
+    <select id="selectClassCodeList" resultType="hashmap">
+    	SELECT 
+    		   CLASS_CODE
+    		 , TITLE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL = #{ email }
+    </select>
+    
+    <delete id="deleteClass">
+    	DELETE FROM CLASS_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    </delete>
+    
+    <update id="modifyClass" parameterType="ClassDTO">
+    	UPDATE CLASS_TBL
+    	   SET CONTENTS = #{ contents }
+    	   	 , TAG =  #{ tag } 
+    	 WHERE CLASS_CODE = #{ classCode }
+    </update>
+    
+    <insert id="registLecture" parameterType="MokchaDTO">
+    	INSERT INTO LECTURE_MOKCHA_TBL
+    	VALUES
+    	(
+    		  SEQ_LECTURE_MOKCHA_TBL.NEXTVAL
+    		, #{ mokchaName }
+    		, SYSDATE
+    		, #{ contents }
+    		, #{ classCode }
+    	)
+    </insert>
+    
+    <insert id="registLectureFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
+    	INSERT INTO LECTURE_FILE_TBL
+    	VALUES
+    	(
+    		  SEQ_LECTURE_FILE_TBL.NEXTVAL
+    		, SYSDATE
+    		, #{ filePath }
+    		, #{ orgFilePath }
+    		, 'N'
+    		, SEQ_LECTURE_MOKCHA_TBL.CURRVAL
+    		, #{ email }
+    	)
+    </insert>
+    
+    <delete id="deleteLecture">
+    	DELETE FROM LECTURE_MOKCHA_TBL
+    	 WHERE MOKCHA_CODE = SEQ_LECTURE_MOKCHA_TBL.CURRVAL
+    </delete>
     
     
     

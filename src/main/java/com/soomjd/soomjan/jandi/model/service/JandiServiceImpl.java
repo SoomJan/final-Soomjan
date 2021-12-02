@@ -29,4 +29,9 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.selectClassCodeList(jandi);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectCategoryList() {
+		return jandiMapper.selectCategoryList();
+	}
+
 }

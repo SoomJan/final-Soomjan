@@ -37,5 +37,9 @@
     	  FROM CLASS_TBL
     	 WHERE EMAIL = #{ email }
     </select>
+    
+    <select id="selectCategoryList" resultType="hashmap">
+    	SELECT * FROM CATEGORY_TBL
+    </select>
 
 </mapper>

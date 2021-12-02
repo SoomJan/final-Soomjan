@@ -15,7 +15,7 @@ import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/jandi/*")
-@SessionAttributes({"jandi", "loginMember", "classList"})
+@SessionAttributes({"jandi", "loginMember", "classList", "categoryList"})
 public class JandiController {
 	
 	private final JandiService jandiService;
@@ -23,7 +23,6 @@ public class JandiController {
 	@Autowired
 	public JandiController(JandiService jandiService) {
 		this.jandiService = jandiService;
-		
 	}
 	
 	@GetMapping("/jandiProfile")
@@ -35,6 +34,7 @@ public class JandiController {
 		model.addAttribute("jandi", jandi);
 		
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
+		model.addAttribute("categoryList", jandiService.selectCategoryList());
 		
 		System.out.println("환영합니다. " + jandi.getEmail() + "잔디님!");
 		
@@ -57,10 +57,5 @@ public class JandiController {
 		return "jandi/myAd";
 	}
 	
-	@GetMapping("/class/chat")
-	public String classChat(){
-		
-		return "jandi/class/classChat";
-	}
 
 }

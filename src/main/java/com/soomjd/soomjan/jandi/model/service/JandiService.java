@@ -11,4 +11,6 @@ public interface JandiService {
 
 	List<Map<String, Object>> selectClassCodeList(JandiDTO jandi);
 
+	List<Map<String, Object>> selectCategoryList();
+
 }

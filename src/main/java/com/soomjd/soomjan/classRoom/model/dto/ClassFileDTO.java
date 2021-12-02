@@ -1,4 +1,4 @@
-package com.soomjd.soomjan.classes.model.dto;
+package com.soomjd.soomjan.classRoom.model.dto;
 
 import java.sql.Date;
 

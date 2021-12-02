@@ -94,10 +94,10 @@ input {
 						<h3>${ mokcha.mokchaName }</h3>
 						<input type="text" width="80%" name="contents" readonly="readonly"
 							value="${ mokcha.contents }">
-						<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
 					</div>
 					<br>
 				</c:forEach>
+				<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
 				<!-- 유튜브 영상 링크... 왜 안되나요..ㅜㅠ -->
 				<!-- <iframe width="560" height="315"
 					src="https://www.youtube.com/embed/cbuZfY2S2UQ"
@@ -107,13 +107,13 @@ input {
 				</iframe> -->
 				<hr>
 				<div class="newMokcha">
-					<form action="" method="post">
-						목차 제목<br> <input type="text" name="mockcha"
-							placeholder="목차 제목을 입력하세요."> <br> 목차 내용<br>
+					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post" enctype="multipart/form-data">
+						목차 제목<br> 
+						<input type="text" name="mockchaName" placeholder="목차 제목을 입력하세요."> 
+						<br> 목차 내용<br>
 						<textarea name="contents" placeholder="목차 내용을 입력하세요."></textarea>
-						<br> 영상 업로드<br> <input type="file" style="border: none;">
-						<button type="submit" class="btnStyle" style="margin: 10px;">
-						목차 추가하기</button>
+						<br> 영상 업로드<br> <input type="file" name="file" style="border: none;">
+						<button type="submit" class="btnStyle" style="margin: 10px;">목차 추가하기</button>
 					</form>
 				</div>
 			</div>

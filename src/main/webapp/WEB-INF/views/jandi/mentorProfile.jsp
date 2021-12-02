@@ -61,6 +61,12 @@ p {
 	resize: none;
 }
 
+.areaStyle: focus {
+	border: none;
+	width: 100%;
+	resize: none;
+}
+
 .imgBox {
 	width: 100%;
 	height: 200px;

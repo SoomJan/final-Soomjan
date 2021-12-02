@@ -11,4 +11,6 @@ public interface JandiMapper {
 
 	List<Map<String, Object>> selectClassCodeList(JandiDTO jandi);
 
+	List<Map<String, Object>> selectCategoryList();
+
 }
