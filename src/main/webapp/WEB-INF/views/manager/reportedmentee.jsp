@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -22,7 +22,11 @@ pageEncoding="UTF-8"%>
     />
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"/>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
+    />
     <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -35,26 +39,6 @@ pageEncoding="UTF-8"%>
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
-      <style>
-  	.manager-paging ul li a {color: white !important;}
-    
-    .manager-paging {
-  		width: 40%;
- 		margin: 0 auto;
- 		height: 50px;
- 		text-align: center;
-  		position: relative;
- 		top: 20px;
- 		 /* border: 1px solid blue; */
-	}
-
-	.input-search {
-		width: 400px;
-    	position: relative;
-    	left: 18%;
-    	top: 10px;
-	}
-  	</style>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -62,7 +46,8 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 멘티 조회</h1><br>
+        <h1>신고된 멘티 조회</h1>
+        <br />
         <table class="ui basic table warningtable">
           <thead>
             <tr>
@@ -117,26 +102,24 @@ pageEncoding="UTF-8"%>
             </tr>
           </tbody>
         </table>
- 		<div class="manager-search">
-            <div class="ui search menti-search">
-  				<div class="ui icon input input-search">
-    			<input class="prompt" type="text">
-    			<i class="search icon"></i>
-  				</div>
- 			 	<div class="results"></div>
-			</div>
+        <div class="manager-search">
+          <div class="ui search menti-search">
+            <div class="ui icon input input-search">
+              <input class="prompt" type="text" />
+              <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
           </div>
+        </div>
         <br />
-        <div>
-          <div class="manager-paging">
-            <ul>
-              <li><a href="#">Prev</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">next</a></li>
-            </ul>
-          </div>
+        <div class="manager-paging">
+          <ul>
+            <li><a href="#">Prev</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">next</a></li>
+          </ul>
         </div>
       </div>
     </div>

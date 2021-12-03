@@ -10,7 +10,7 @@
 .sidebar-content {
   width: 50%;
   overflow: auto;
-  border: 1px solid pink; 
+  border: 1px solid pink;
 }
 
 .warn {
@@ -39,7 +39,7 @@
 .introduce-detail img {
   width: 350px;
   height: 100px;
-  margin : 0 auto;
+  margin: 0 auto;
 }
 
 .introduce-detail1 input {
@@ -55,10 +55,10 @@
   font-size: 20px;
 }
 
- .common-sidebar {
+.common-sidebar {
   width: 70%;
   overflow: auto;
-  margin: 0px auto 100px auto;
+  margin: 21px auto 100px auto;
   /* border: 1px solid purple; */
 }
 
@@ -122,45 +122,44 @@
 }
 
 .mentor-img {
-    margin-top: 20px;
-    margin-bottom: 20px
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .little-profile .mentor-img img {
-    width: 350px;
-    height: 350px;
-    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 100%
+  width: 350px;
+  height: 350px;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
 }
 
 .intmentor-img {
-    margin-top: 15px;
-    margin-bottom: 20px;
-    margin-left: 41px;
-    width: 200px;
-    height: 200px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 100%;
-    overflow: hidden;
-    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  margin-top: 15px;
+  margin-bottom: 20px;
+  margin-left: 41px;
+  width: 200px;
+  height: 200px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 100%;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .little-profi .intmentor-img img {
-    width: 200px;
-    height: 200px;
-    
+  width: 200px;
+  height: 200px;
 }
 
 .warningtable tbody {
-      text-align: center;
-    }
+  text-align: center;
+}
 
 .warningtable thead {
-      background-color: #E3FFEC;
-      text-align: center;
-    }
-    
+  background-color: #e3ffec;
+  text-align: center;
+}
+
 .introduce-classes {
   margin-top: 20px;
   border: 1px solid red;
@@ -171,6 +170,6 @@
 }
 
 p {
-    font-weight: bold;
-    font-size: 20px;
-    }
+  font-weight: bold;
+  font-size: 20px;
+}

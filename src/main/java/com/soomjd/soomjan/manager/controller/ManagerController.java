@@ -116,6 +116,38 @@ public class ManagerController {
 		return "manager/reportedmentor";
 	}
 	
+	// 클래스 카테고리 수정
+	@GetMapping("/modifycategory")
+	public String modifycategory() {
+		
+		return "manager/modifycategory";
+	}
 	
+	// 클래스 광고 요청
+	@GetMapping("/applyclassadvertisment")
+	public String applyclassadvertisment() {
+			
+		return "manager/applyclassadvertisment";
+	}
 	
+	// 현재 광고 중
+	@GetMapping("/classadvertisment")
+	public String classadvertisment() {
+				
+		return "manager/classadvertisment";
+	}
+	
+	// 클래스 결제 내역
+	@GetMapping("/classcal")
+	public String classcal() {
+					
+		return "manager/classcal";
+	}
+	
+	// 현재 광고 중
+	@GetMapping("/advertcal")
+	public String advertcal() {
+				
+		return "manager/advertcal";
+	}
 }
