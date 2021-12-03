@@ -77,17 +77,14 @@ pageEncoding="UTF-8"%>
         <br /><br />
 
         <div class="content">
-          <div class="title">이메일</div>
-          <input
-            type="text"
-            placeholder="이메일을 입력하세요"
-            name="email"
-            id="email"
-          />
-          <button onclick="return duplicationCheck()">중복확인</button>
-          <div class="emailCheck"></div>
-          <input type="checkbox" id="emailBoolean" style="display: none" />
-          <input type="checkbox" id="emailBoolean2" style="display: none" />
+            <div class="title">이메일</div>
+            <input type="text" placeholder="이메일을 입력하세요" name="email" id="email">
+            <button onclick="return duplicationCheck()">중복확인</button>
+            <button type="button" onclick="return sendMail()">이메일 인증하기</button>
+            <div class="emailCheck"></div>
+            <input type="checkbox" id="emailBoolean" style="display: none;">
+            <input type="checkbox" id="emailBoolean2" style="display: none;">
+            <input type="checkbox" id="emailBoolean3" style="display: none;">
         </div>
 
         <br /><br />
@@ -205,6 +202,27 @@ pageEncoding="UTF-8"%>
                 console.log(error);
               },
             });
+          }
+            return false;
+          }
+          
+          /* 이메일 인증 */
+          function sendMail() {
+
+            let email = $("#email").val();
+
+            $.ajax({
+              url: "${ pageContext.servletContext.contextPath }/sendMail",
+              type: "post",
+              data: {email : email},
+              success: function(data) {
+                alert("이메일 전송 완료");
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
+            return false;
           }
 
           return false;
@@ -337,6 +355,7 @@ pageEncoding="UTF-8"%>
             let name = $("#nameBoolean").prop("checked");
             let email = $("#emailBoolean").prop("checked");
             let email2 = $("#emailBoolean2").prop("checked");
+            let email3 = $("#emailBoolean3").prop("checked");
             let password = $("#pwdBoolean").prop("checked");
             let password2 = $("#pwdBoolean2").prop("checked");
             let nickName = $("#nickBoolean").prop("checked");
@@ -348,7 +367,7 @@ pageEncoding="UTF-8"%>
                 $("#nameModal").fadeOut();
               });
               return false;
-            } else if (!email || !email2) {
+            } else if(!email || !email2 || email3) {
               $("#emailModal").fadeIn();
               $(".btn").click(function () {
                 $("#emailModal").fadeOut();
@@ -394,11 +413,17 @@ pageEncoding="UTF-8"%>
 
     <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
+<script>
+	function openModal(str){
+		$("#modalTitle").text(str);
+		$("#dupModal2").fadeIn();
+	};
+</script>
 </html>
 <!-- 모달창 모아두는 곳 -->
 <div class="ui mini modal" id="registModal">
   <div class="contents">
-    <p class="titles">회원 가입에 성공하셨습니다.</p>
+    <p class="titles" id="modalTitle">회원 가입에 성공하셨습니다.</p>
     <div class="re-modal-btn">
       <button id="goMain" class="ui button btn">확인</button>
     </div>
