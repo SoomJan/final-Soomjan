@@ -37,5 +37,14 @@
     	  FROM CLASS_TBL
     	 WHERE EMAIL = #{ email }
     </select>
+    
+    <update id="updateProfileImage">
+    	UPDATE 
+    	       JANDI_TBL
+    	   SET PROFILE_PATH=#{savedName}
+    	 WHERE EMAIL= #{email} 
+    
+    
+    </update>
 
 </mapper>
