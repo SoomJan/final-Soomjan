@@ -1,16 +1,16 @@
-package com.soomjd.soomjan.classes.model.dto;
+package com.soomjd.soomjan.classRoom.model.dto;
 
 import java.sql.Date;
 
 public class ClassFileDTO {
 	
+	private int fileCode;
 	private String filePath;
 	private String email;
 	private String orgFilePath;
 	private java.sql.Date writeDate;
-	private int fileCode;
-	private int postCode;
 	private int mokchaCode;
+	private int postCode;
 	private int isDeleted;
 	
 	public ClassFileDTO() {	}

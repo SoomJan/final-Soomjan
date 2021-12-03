@@ -14,4 +14,6 @@ public interface JandiMapper {
 
 	int updateProfileImage(Map<String,String> key);
 
+	List<Map<String, Object>> selectCategoryList();
+
 }

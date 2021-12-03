@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -62,10 +63,26 @@ pageEncoding="UTF-8"%>
     .delete {background-color: #91c788 !important; height: 35px; width: 100px;}
     .create {background-color: #91c788 !important; height: 35px; width: 100px;}
     
+    .create {
+  		padding: 5px;
+  		border-radius: 0.5rem;
+  		font-size: 12px;
+  		border-color: #91c788;
+  		width: 10%;
+  		height: 30px;
+  		position: relative;
+  		left: 85%;
+ 		background-color: #91c788;
+  		relative;
+  		left: 88%;
+  		bottom: 60px;
+}
+    
     .create-pro {
     	border: 3px solid #91c788;
     	padding: 4%;
     	border-radius: 10px;
+    	height: 365px;
     }
 
     </style>
@@ -89,13 +106,15 @@ pageEncoding="UTF-8"%>
           </tr>
         </thead>
         <tbody>
+           <c:forEach var="managerMember" items="${ managerList }">
           <tr>
             <td><input class="check" type="checkbox"></td>
-            <td>권순표</td>
-            <td>권잔디</td>
-            <td>gsp</td>
+            <td>${ managerMember.mngName }</td>
+            <td>${ managerMember.mngNickName }</td>
+            <td>${ managerMember.mngId }</td>
           </tr>
-          <tr>
+            </c:forEach>
+ <!--          <tr>
             <td><input class="check" type="checkbox"></td>
             <td>오수빈</td>
             <td>오잔디</td>
@@ -130,7 +149,7 @@ pageEncoding="UTF-8"%>
             <td>양효진</td>
             <td>양잔디</td>
             <td>yhj</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
 

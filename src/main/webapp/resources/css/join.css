@@ -1,78 +1,68 @@
 @charset "UTF-8";
 
-.fullJoin{
-    border: 1px solid black;
-    width: 930px;
-    height: 1000px;
-    align-items: center;
-    margin-top: 200px;
+.fullJoin {
+  border: 1px solid black;
+  width: 930px;
+  height: 1000px;
+  align-items: center;
+  margin-top: 200px;
 }
 
-.head{
-    padding-left: 240px;
-    background-color: #E3FFEC;
-    height: 90px;
+.head {
+  padding-left: 240px;
+  background-color: #e3ffec;
+  height: 90px;
 }
 
-.fullJoin>div>div{
-    display: inline-block;
+.fullJoin > div > div {
+  display: inline-block;
 }
 
-.thumbnail{
-
- 
-    width: 240px;
-    height: 140px;
-
+.thumbnail {
+  width: 240px;
+  height: 140px;
 }
 
-#timage{
-    width: 60px;
-
-
+#timage {
+  width: 60px;
 }
-#ttext{
-    font-size: 50px;
+#ttext {
+  font-size: 50px;
 }
 
-.title{
-    font-size: 20px;
-    width: 130px;
-    text-align: left;
-
+.title {
+  font-size: 20px;
+  width: 130px;
+  text-align: left;
 }
 
-
-.content{
-    position: relative;
-    left: 15%;
-    margin-right: 20px;
+.content {
+  position: relative;
+  left: 15%;
+  margin-right: 20px;
 }
 
-
-.content>input{
-    border: 3px solid green;
-    border-radius: 5px;
-    height: 40px;
-    width: 600px;
-
-
+.content > input {
+  border: 3px solid green;
+  border-radius: 5px;
+  height: 40px;
+  width: 600px;
 }
 
-.fullJoin>div>button{
-    border-radius: 2px;
-    background-color: green;
-    text-align: center;
-    font-size: 20px;
-    width: 144px;
-    height: 56px;
-    color: white;
+.fullJoin > div > button {
+  border-radius: 2px;
+  background-color: green;
+  text-align: center;
+  font-size: 20px;
+  width: 144px;
+  height: 56px;
+  color: white;
 }
 
 .modal {
   height: 150px;
- top: 80%;
- left: 40%;
+  top: 80%;
+  left: 40%;
 }
 
 .titles {
@@ -93,8 +83,8 @@
   background-color: white !important;
 }
 
-.contents{
+.contents {
   height: 150px;
   text-align: center;
-  background-color: #91C788 !important;
+  background-color: #91c788 !important;
 }

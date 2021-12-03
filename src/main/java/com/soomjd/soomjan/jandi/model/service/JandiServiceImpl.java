@@ -31,9 +31,15 @@ public class JandiServiceImpl implements JandiService{
 	}
 
 	@Override
+
 	public boolean updateProfileImage(Map<String,String> key) {
 		
 		return jandiMapper.updateProfileImage(key)>0? true:false;
+	}	
+		
+	@Override	
+	public List<Map<String, Object>> selectCategoryList() {
+		return jandiMapper.selectCategoryList();
 	}
 
 }

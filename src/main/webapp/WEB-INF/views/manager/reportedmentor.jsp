@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -58,87 +58,45 @@ pageEncoding="UTF-8"%>
     	left: 18%;
     	top: 10px;
 	}
+	
+	.mento-search {height: 50px;}
   	</style>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
+
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 멘토 내역 조회</h1>
+        <h1>신고된 잔디 내역 조회</h1>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 멘토</th>
+              <th>신고된 잔디</th>
               <th>내용</th>
               <th>신고 사유</th>
               <th>신고 처리 여부</th>
             </tr>
           </thead>
           <tbody>
-          
-           <c:forEach var="manager" items="${ managerList }">
-           	<tr>
-          	<td>${manager.mngId}</td>
-          	<td>${manager.mngName}</td>
-          	</tr>
-          	</c:forEach>
-          	
-           
-             <!-- <tr>
-              <td><a href="#">gsp@gmail.com </a></td>
-              <td><a href="#">내가 발로 코드 짜는게 더 빠를듯 ㅋ</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">yhj@gmail.com </a></td>
-              <td><a href="#">코드 누가 그렇게 짜라고 알려 줬어요?</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">osb@gmail.com </a></td>
-              <td><a href="#">참 잘했어요~ ㅎㅎ</a></td>
-              <td>욕설</td>
-              <td>L</td>
-            </tr>
-            <tr>
-              <td><a href="#">ysm@gmail.com </a></td>
-              <td><a href="#">맘대로 짤거면 수업 왜 들어요?</a></td>
-              <td>욕설</td>
-              <td>N</td>
-            </tr>
-            <tr>
-              <td><a href="#">lsh@gmail.com </a></td>
-              <td><a href="#">기본이 안되어 있으시네요</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">ljh@gmail.com </a></td>
-              <td><a href="#">새싹 밟아드릴까요?</a></td>
-              <td>욕설</td>
-              <td>N</td>
-            </tr>
-            <tr>
-              <td><a href="#">iyr@gmail.com </a></td>
-              <td><a href="#">그냥 돈만 내고 수업은 들지 말고 가세요</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr> -->
-            
+            <c:forEach var="manager" items="${ managerList }">
+              <tr>
+                <td>${manager.mngId}</td>
+                <td>${manager.mngName}</td>
+              </tr>
+            </c:forEach>
           </tbody>
         </table>
- 		<div class="manager-search">
-            <div class="ui search menti-search">
-  				<div class="ui icon input input-search">
-    			<input class="prompt" type="text">
-    			<i class="search icon"></i>
-  				</div>
- 			 	<div class="results"></div>
-			</div>
+
+        <div class="manager-search">
+          <div class="ui search menti-search">
+            <div class="ui icon input input-search">
+              <input class="prompt" type="text" />
+              <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
           </div>
+        </div>
         <div>
           <div class="manager-paging">
             <ul>
@@ -146,6 +104,7 @@ pageEncoding="UTF-8"%>
               <li><a href="#">1</a></li>
               <li><a href="#">2</a></li>
               <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
               <li><a href="#">next</a></li>
             </ul>
           </div>
@@ -155,5 +114,4 @@ pageEncoding="UTF-8"%>
   </body>
 
   <jsp:include page="../common/footer.jsp" />
-  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 </html>

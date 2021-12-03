@@ -92,7 +92,7 @@ p {
 	<jsp:include page="/WEB-INF/views/common/nav.jsp" />
 
 	<div class="common-sidebar">
-		<jsp:include page="/WEB-INF/views/common/findmentorsidebar.jsp" />
+		<jsp:include page="/WEB-INF/views/common/findJandisidebar.jsp" />
 		<div class="sidebar-content">
 			<div class="introduce">
 				<div class="introduce-detail">

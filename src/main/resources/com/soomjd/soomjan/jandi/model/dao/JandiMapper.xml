@@ -47,4 +47,8 @@
     
     </update>
 
+    <select id="selectCategoryList" resultType="hashmap">
+    	SELECT * FROM CATEGORY_TBL
+    </select>
+
 </mapper>

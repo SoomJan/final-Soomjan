@@ -14,4 +14,6 @@ public interface JandiService {
 	
 	boolean updateProfileImage(Map<String,String> key);
 
+	List<Map<String, Object>> selectCategoryList();
+
 }
