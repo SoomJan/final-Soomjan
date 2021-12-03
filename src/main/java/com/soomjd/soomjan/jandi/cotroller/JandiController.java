@@ -99,7 +99,7 @@ public class JandiController {
 			key.put("savedName", savedName);
 			key.put("email", member.getEmail());
 			
-			jandiService.updateProfileImage(key);
+			jandiService.updateProfileImage(key) ;
 			try {
 				profileImage.transferTo(new File(filePath+"/"+savedName));
 
