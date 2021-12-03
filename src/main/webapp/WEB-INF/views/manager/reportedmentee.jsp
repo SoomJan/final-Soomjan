@@ -54,6 +54,10 @@ pageEncoding="UTF-8"%>
     	left: 18%;
     	top: 10px;
 	}
+	
+	.menti-search {height: 50px;}
+	
+	.warningtable tbody tr td a {color: black !important;}
   	</style>
   </head>
   <body>
@@ -62,11 +66,11 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 멘티 조회</h1><br>
+        <h1>신고된 새싹 조회</h1><br>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 멘티</th>
+              <th>신고된 새싹</th>
               <th>내용</th>
               <th>신고 사유</th>
               <th>신고 처리 여부</th>

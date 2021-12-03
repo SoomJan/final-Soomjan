@@ -58,6 +58,8 @@ pageEncoding="UTF-8"%>
     	left: 18%;
     	top: 10px;
 	}
+	
+	.mento-search {height: 50px;}
   	</style>
   </head>
   <body>
@@ -65,11 +67,11 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 멘토 내역 조회</h1>
+        <h1>신고된 잔디 내역 조회</h1>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 멘토</th>
+              <th>신고된 잔디</th>
               <th>내용</th>
               <th>신고 사유</th>
               <th>신고 처리 여부</th>
@@ -131,7 +133,7 @@ pageEncoding="UTF-8"%>
           </tbody>
         </table>
  		<div class="manager-search">
-            <div class="ui search menti-search">
+            <div class="ui search mento-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="text">
     			<i class="search icon"></i>

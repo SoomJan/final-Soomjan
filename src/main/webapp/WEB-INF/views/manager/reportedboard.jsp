@@ -51,6 +51,8 @@ pageEncoding="UTF-8"%>
     	left: 18%;
     	top: 10px;
 	}
+	
+	.warningtable tbody tr td a {color: black !important;}
   	</style>
   </head>
   <body>
