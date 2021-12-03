@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,13 +25,15 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/swiper.css"
       rel="stylesheet"
     />
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
 
-    <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script
       type="text/javascript"
       src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="${ pageContext.servletContext.contextPath }/resources/js/main.js"
     ></script>
     <script
       type="text/javascript"
@@ -43,8 +46,9 @@ pageEncoding="UTF-8"%>
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
-    <script src="${ pageContext.servletContext.contextPath }/resources/js/parallax.js"></script>
   </head>
+
+  <script></script>
 
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -115,8 +119,7 @@ pageEncoding="UTF-8"%>
 
     <main class="container-fluid">
       <div class="main-search">
-        <h4>숨어있는 잔디를 찾아보세요
-        '${ sessionScope.loginMember.email }'</h4>
+        <h4>숨어있는 잔디를 찾아보세요</h4>
         <form class="main-searchbox" method="post">
           <input type="text" placeholder="찾으시는 강의가 있으신가요?" />
           <button type="submit">
@@ -125,12 +128,13 @@ pageEncoding="UTF-8"%>
             />
           </button>
         </form>
-        <div class="recommendclass">
-          <button>#MVC</button>
-          <button>#JAVA</button>
-          <button>#SPRING</button>
-          <button>프론트앤드</button>
-        </div>
+      </div>
+      <div class="recommendclass">
+        <a href="#"><button class="btn-hover color-1">#JAVA</button></a>
+        <a href="#"><button class="btn-hover color-1">#MVC</button></a>
+        <a href="#"><button class="btn-hover color-1">#SPRING</button></a>
+        <a href="#"><button class="btn-hover color-1">프론트앤드</button></a>
+        <a href="#"><button class="btn-hover color-1">백앤드</button></a>
       </div>
       <br />
 
@@ -278,69 +282,6 @@ pageEncoding="UTF-8"%>
         <div class="swiper-button-prev">&lt;</div>
       </div>
 
-      <!-- <div class="main-logo1">
-        <div
-          id="myCarousel1"
-          class="carousel slide"
-          data-ride="carousel"
-          style="overflow: auto"
-        >
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-          </ol>
-          <div class="carousel-inner" role="listbox">
-            <div class="item active">
-              <img
-                class="first-slide"
-                src="${ pageContext.servletContext.contextPath }/resources/images/carousel1.png"
-                alt="First slide"
-              />
-            </div>
-            <div class="item">
-              <img
-                class="second-slide"
-                src="${ pageContext.servletContext.contextPath }/resources/images/carousel2.png"
-                alt="Second slide"
-              />
-            </div>
-            <div class="item">
-              <img
-                class="third-slide"
-                src="${ pageContext.servletContext.contextPath }/resources/images/carousel3.png"
-                alt="Third slide"
-              />
-            </div>
-            <div class="item">
-              <a href="#"
-                ><img
-                  class="second-slide"
-                  src="${ pageContext.servletContext.contextPath }/resources/images/carousel2.png"
-                  alt="Second slide"
-              /></a>
-            </div>
-          </div>
-          <a
-            class="left carousel-control"
-            href="#myCarousel1"
-            role="button"
-            data-slide="prev"
-          >
-            <span class="sr-only">Previous</span>
-          </a>
-          <a
-            class="right carousel-control"
-            href="#myCarousel1"
-            role="button"
-            data-slide="next"
-          >
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div> -->
-
       <div class="intro-board">
         <span><h1>이런 강의는 어때요??</h1></span>
         <span><h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4></span>
@@ -431,6 +372,18 @@ pageEncoding="UTF-8"%>
         <!-- <div class="swiper-pagination"></div> -->
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
+      </div>
+
+      <div class="mainadvertisement">
+        <div></div>
+        <div class="mainadvertisement-left">
+          <h1>이런 강의는 어때요?</h1>
+        </div>
+        <div class="mainadvertisement-right">
+          <a href="#"><button>신청하러 가기</button></a>
+        </div>
+
+        <div></div>
       </div>
 
       <div class="intro-board">
@@ -725,12 +678,6 @@ pageEncoding="UTF-8"%>
           nextEl: ".swiper-button-next1", // 다음 버튼 클래스명
           prevEl: ".swiper-button-prev1", // 이번 버튼 클래스명
         },
-      });
-    </script>
-    <script>
-      $(".parallax-window").parallax({
-        imageSrc:
-          "${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png",
       });
     </script>
   </body>

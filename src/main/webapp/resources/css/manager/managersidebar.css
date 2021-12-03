@@ -2,6 +2,7 @@
 
 .common-sidebar {
   width: 80%;
+  height: 100%;
   overflow: auto;
   margin: 150px auto 100px auto;
   /* border: 1px solid purple; */
@@ -17,14 +18,12 @@
   width: 20%;
   height: auto;
   margin: 0 50px;
-  height: 800px;
-  /* border: 1px solid blue; */
+  overflow: auto;
+  border: 1px solid blue;
 }
 
 .sidebar-inner-name {
   width: 100%;
-  height: auto;
-  /* border: 1px solid skyblue; */
   text-align: center;
 }
 
@@ -32,6 +31,7 @@
   width: 80%;
   margin: 0 auto;
   height: auto;
+  overflow: auto;
   /* border: 1px solid skyblue; */
   text-align: center;
 }

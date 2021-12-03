@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -58,6 +59,31 @@ pageEncoding="UTF-8"%>
     font-weight: bold;
     font-size: 20px;
     }
+    
+    .delete {background-color: #91c788 !important; height: 35px; width: 100px;}
+    .create {background-color: #91c788 !important; height: 35px; width: 100px;}
+    
+    .create {
+  		padding: 5px;
+  		border-radius: 0.5rem;
+  		font-size: 12px;
+  		border-color: #91c788;
+  		width: 10%;
+  		height: 30px;
+  		position: relative;
+  		left: 85%;
+ 		background-color: #91c788;
+  		relative;
+  		left: 88%;
+  		bottom: 60px;
+}
+    
+    .create-pro {
+    	border: 3px solid #91c788;
+    	padding: 4%;
+    	border-radius: 10px;
+    	height: 365px;
+    }
 
     </style>
   </head>
@@ -80,13 +106,15 @@ pageEncoding="UTF-8"%>
           </tr>
         </thead>
         <tbody>
+           <c:forEach var="managerMember" items="${ managerList }">
           <tr>
             <td><input class="check" type="checkbox"></td>
-            <td>권순표</td>
-            <td>권잔디</td>
-            <td>gsp</td>
+            <td>${ managerMember.mngName }</td>
+            <td>${ managerMember.mngNickName }</td>
+            <td>${ managerMember.mngId }</td>
           </tr>
-          <tr>
+            </c:forEach>
+ <!--          <tr>
             <td><input class="check" type="checkbox"></td>
             <td>오수빈</td>
             <td>오잔디</td>
@@ -121,21 +149,21 @@ pageEncoding="UTF-8"%>
             <td>양효진</td>
             <td>양잔디</td>
             <td>yhj</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
 
       <form>
-      <input class="delete" type="submit" value="계정 삭제">
+      <input class="delete btn" type="submit" value="계정 삭제">
       </form>
 
       <h3>관리자 계정 생성 </h3>
-      <form>
-      <h3 class="produce1"> 이름 : <input class="pd1" type="text" placeholder="name"> </h3>
-      <h3 class="produce2"> 닉네임 :  <input class="pd2" type="text" placeholder="nickname"> </h3>
-      <h3 class="produce3"> 아이디 :  <input class="pd3" type="text" placeholder="ID"> </h3>
-      <h3 class="produce4"> 비밀번호 : <input class="pd4" type="text" placeholder="password"> </h3>
-      <input class="create" type="submit" value="계정 생성">
+      <form class="create-pro">
+      <h3 class="produce1"> 이름 : <div class="ui input"><input class="pd1" type="text" placeholder="name"></div> </h3>
+      <h3 class="produce2"> 닉네임 : <div class="ui input"><input class="pd2" type="text" placeholder="nickname"></div> </h3>
+      <h3 class="produce3"> 아이디 : <div class="ui input"> <input class="pd3" type="text" placeholder="ID"></div> </h3>
+      <h3 class="produce4"> 비밀번호 : <div class="ui input"><input class="pd4" type="text" placeholder="password"></div> </h3>
+      <input class="create btn" type="submit" value="계정 생성">
       </form>
 
       <script>

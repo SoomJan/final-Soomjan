@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soomjd.soomjan.classRoom.model.dao.ClassRoomMapper">
+    
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classResultMap">
+    	<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="NICKNAME" property="nickName" />
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO" id="learningPostResultMap">
+    	<id column="POST_CODE" property="postCode"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="RE_DATE" property="reDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="NICKNAME" property="nickName" />
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.MokchaDTO" id="mokchaResultMap">
+    	<id column="MOKCHA_CODE" property="mokchaCode"/>
+    	<result column="MOKCHA_NAME" property="mokchaName"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO" id="fileResultMap">
+    	<id column="FILE_CODE" property="fileCode"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="MOKCHA_CODE" property="mokchaCode"/>
+    	<result column="POST_CODE" property="postCode"/>
+    	<result column="IS_DELETED" property="writeDate"/>
+    </resultMap>
+    
+    
+    <select id="selectClassByClassCode" resultMap="classResultMap">
+    	SELECT
+    			  C.CLASS_CODE
+		    	, C.CREATE_DATE
+		    	, C.CONTENTS
+		    	, C.TAG
+		    	, C.CATEGORY_CODE
+		    	, C.EMAIL
+		    	, C.BOARD_TYPE
+		    	, C.VIEWS
+		    	, C.MAX_COUNT
+		    	, C.TITLE
+		    	, C.PRICE
+		    	, J.NICKNAME
+    	  FROM CLASS_TBL C
+    	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)
+    	 WHERE C.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectCurrentCount" resultType="_int">
+    	SELECT COUNT(*)
+    	  FROM PURCHASE_CLASS_TBL
+    	 WHERE STATUS = 'Y'
+    	   AND CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectMokchaList" resultMap="mokchaResultMap">
+    	SELECT
+    		   M.MOKCHA_CODE
+		 	 , M.MOKCHA_NAME
+			 , M.WRITE_DATE
+			 , M.CONTENTS
+			 , M.CLASS_CODE
+		 FROM LECTURE_MOKCHA_TBL M
+		WHERE M.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectLearningPostList" resultMap="learningPostResultMap">
+    	SELECT
+    		   L.POST_CODE
+			 , L.WRITE_DATE
+			 , L.RE_DATE
+			 , L.IS_DELETED
+			 , L.CONTENTS
+			 , L.EMAIL
+			 , L.CLASS_CODE
+			 , L.TITLE
+			 , J.NICKNAME
+		  FROM LEARNING_TBL L
+		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
+		 WHERE L.CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectChatRoomList" resultType="hashMap" parameterType="hashMap">
+    	SELECT 
+    		   C.CHAT_CODE
+    		 , C.EMAIL
+    		 , C.CLASS_CODE
+    		 , S.NICKNAME
+    	  FROM CLASS_CHAT_ROOM_TBL C
+    	  JOIN SSACK_TBL S ON (C.EMAIL = S.EMAIL)
+    	 WHERE C.CLASS_CODE = #{ classCode }
+    	   AND C.EMAIL != #{ email }
+    </select>
+    
+    <insert id="registClass" parameterType="ClassDTO">
+    	INSERT INTO CLASS_TBL
+    	(
+			 CLASS_CODE
+		   , TITLE
+		   , CATEGORY_CODE
+		   , EMAIL
+		   , MAX_COUNT
+		   , PRICE
+		   , CREATE_DATE
+
+    	) VALUES (
+    		 SEQ_CLASS_TBL.NEXTVAL
+		   , #{ title }
+		   , #{ categoryCode }
+		   , #{ email }
+		   , #{ maxCount }
+		   , #{ price }
+		   , SYSDATE
+    	)
+    </insert>
+    
+    <select id="selectClassCode" resultType="_int">
+    	SELECT MAX(CLASS_CODE)
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL = #{ email }
+    </select>
+    
+    <select id="selectClassCodeList" resultType="hashmap">
+    	SELECT 
+    		   CLASS_CODE
+    		 , TITLE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL = #{ email }
+    </select>
+    
+    <delete id="deleteClass">
+    	DELETE FROM CLASS_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    </delete>
+    
+    <update id="modifyClass" parameterType="ClassDTO">
+    	UPDATE CLASS_TBL
+    	   SET CONTENTS = #{ contents }
+    	   	 , TAG =  #{ tag } 
+    	 WHERE CLASS_CODE = #{ classCode }
+    </update>
+    
+    <insert id="registLecture" parameterType="MokchaDTO">
+    	INSERT INTO LECTURE_MOKCHA_TBL
+    	VALUES
+    	(
+    		  SEQ_LECTURE_MOKCHA_TBL.NEXTVAL
+    		, #{ mokchaName }
+    		, SYSDATE
+    		, #{ contents }
+    		, #{ classCode }
+    	)
+    </insert>
+    
+    <insert id="registLectureFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
+    	INSERT INTO LECTURE_FILE_TBL
+    	VALUES
+    	(
+    		  SEQ_LECTURE_FILE_TBL.NEXTVAL
+    		, SYSDATE
+    		, #{ filePath }
+    		, #{ orgFilePath }
+    		, 'N'
+    		, SEQ_LECTURE_MOKCHA_TBL.CURRVAL
+    		, #{ email }
+    	)
+    </insert>
+    
+    <delete id="deleteLecture">
+    	DELETE FROM LECTURE_MOKCHA_TBL
+    	 WHERE MOKCHA_CODE = SEQ_LECTURE_MOKCHA_TBL.CURRVAL
+    </delete>
+    
+    <select id="selectPostByPostCode" resultMap="learningPostResultMap">
+    	SELECT
+    		   L.POST_CODE
+			 , L.WRITE_DATE
+			 , L.RE_DATE
+			 , L.IS_DELETED
+			 , L.CONTENTS
+			 , L.EMAIL
+			 , L.CLASS_CODE
+			 , L.TITLE
+			 , J.NICKNAME
+		  FROM LEARNING_TBL L
+		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
+		 WHERE L.POST_CODE = #{ postCode }
+    </select>
+    
+    <select id="selectLearningFileList" resultMap="fileResultMap">
+    	SELECT
+    		   F.FILE_PATH
+			 , F.EMAIL
+			 , F.ORG_FILE_PATH
+			 , F.WRITE_DATE
+			 , F.FILE_CODE
+			 , F.POST_CODE
+			 , F.IS_DELETED
+			 , J.NICKNAME
+		  FROM LEARNING_FILE_TBL F
+		  JOIN JANDI_TBL J ON (J.EMAIL = F.EMAIL)
+		 WHERE F.POST_CODE = #{ postCode }
+    </select>
+    
+    
+</mapper>

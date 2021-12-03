@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,24 +52,32 @@ img {
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
 				<div class="tab3-title">
-					<button type="button" class="btnStyle">수정</button>
 					<br>
-					<h3>Oh! 잔디</h3>
-					<p class="homework">chap01 숙제</p>
-					<p class="date">2021.11.18</p>
+					<table>
+						<tr>
+							<td><p class="homework" style="float:right;">${ learnigPost.title }</td>
+							<td><p class="date" style="float:right;">최종 수정일: ${ learnigPost.reDate }</p></td>
+							<td><button style="float:right;" type="button" class="btnStyle">수정</button></td>
+						</tr>
+						<tr>
+							<td><h3 style="float:left;">${ learnigPost.nickName }</h3></td>
+							<td><p class="date" style="float:right;">작성일: ${ learnigPost.writeDate }</p></td>
+						</tr>
+					</table>
 				</div>
 				<hr>
 				<br>
-				<p>chap1 숙제입니다</p>
-				<p>열심히 풀어보세요!!!</p>
+				<p>${ learnigPost.contents }</p>
 				<br>
 				<br>
 				<br>
 				<br>
 				<br>
 				<h3>첨부파일</h3>
-				<p>&nbsp&nbsp homework_chap02.pdf</p>
-				<input type="file"> <br>
+				<input type="file"><br>
+				<c:forEach var="file" items="${ learnigFileList }">
+					<p>&nbsp&nbsp ${ file.filePath }</p>
+				</c:forEach>
 				<br>
 				<h3>제출</h3>
 				<hr>

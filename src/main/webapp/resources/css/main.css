@@ -18,7 +18,7 @@
 
 /* ============== 메인 페이지 ======================= */
 main {
-  width: 70%;
+  width: 60%;
   height: auto;
   margin: 0 auto;
   padding-top: 70px;
@@ -30,12 +30,13 @@ main {
 
 body {
   font-family: "NanumSquareRoundR";
+  overflow-x: hidden;
   margin: 0 0;
 }
 .main-logo {
-  margin-top: 100px;
+  margin-top: 80px;
   width: 100%;
-  height: 500px;
+  height: 400px;
   /* border: 1px solid black; */
   overflow: hidden;
 }
@@ -69,7 +70,7 @@ body {
   width: 80%;
   height: 40px;
   padding: 0 10px;
-  font-size: 20px;
+  font-size: 15px;
   border: none;
   outline: none;
 }
@@ -96,6 +97,58 @@ body {
   height: 40px;
   border-radius: 30px;
   border: 1px solid rgb(200, 200, 200);
+}
+/* ========== 추천 클래스 강의 ================ */
+.recommendclass {
+  width: 100%;
+  overflow: auto;
+  text-align: center;
+  margin: 0 auto;
+  /* border: 1px solid black; */
+}
+
+/* .recommendclass button {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 20px;
+} */
+
+.btn-hover {
+  width: 12%;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-hover.color-1 {
+  background-image: linear-gradient(
+    to right,
+    #3dbe86,
+    #3cba92,
+    #30dd8a,
+    #2bb673
+  );
 }
 
 /* ========== 메인 로고 & 서치 박스 =========== */
@@ -154,8 +207,8 @@ body {
 
 /* Carousel base class */
 .carousel {
-  height: 500px;
-  margin-bottom: 60px;
+  height: 400px;
+  /* margin-bottom: 60px; */
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -164,7 +217,7 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 500px;
+  height: 400px;
   /* background-color: #777; */
 }
 .carousel-inner > .item > img {
@@ -172,20 +225,22 @@ body {
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 500px;
+  height: 400px;
 }
 
 .classinstructor {
   color: rgb(107, 107, 107);
-  font-size: 16px;
+  font-size: 14px;
 }
 .classtitle {
-  font-size: 23px;
+  margin: 10px 0 0;
+  height: 50px;
+  font-size: 18px;
   font-weight: bold;
 }
 
 .classprice {
-  font-size: 20px;
+  font-size: 18px;
   color: rgb(58, 61, 211);
   font-weight: bold;
 }
@@ -201,7 +256,7 @@ body {
   align-items: center; /* 위아래 기준 중앙정렬 */
   justify-content: center; /* 좌우 기준 중앙정렬 */
   /* border: 10px solid black; */
-  height: 50%;
+  height: 40%;
   bottom: 0;
   cursor: pointer;
   /* overflow: auto; */
@@ -213,8 +268,6 @@ body {
 .carousel-img {
   width: 100%;
   height: 100%;
-  /* border-radius: 50%; */
-  /* border: 10px solid black; */
 }
 
 .carousel-img1 {
@@ -243,7 +296,6 @@ body {
 }
 
 .photo img {
-  box-shadow: 10px 15px 25px 0 rgba(0, 0, 0, 0.2);
   display: block;
   transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
   margin-top: -10px;
@@ -282,17 +334,17 @@ body {
 }
 
 .applymentor-inner-left {
-  padding: 70px 40px;
-  font-size: 35px;
+  padding: 120px 40px 0 0;
+  font-size: 22px;
   /* text-align: center; */
 }
 
 .applymentor-inner-left > button {
-  font-size: 20px;
+  font-size: 15px;
   border-radius: 10px;
   background-color: #91c788;
   border: none;
-  padding: 15px 10px;
+  padding: 10px 10px;
   /* color :white */
   margin-top: 20px;
 }
@@ -311,4 +363,24 @@ body {
 
 .swiper-button-ljh {
   display: flex;
+}
+
+.mainadvertisement {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 180px;
+  background-color: #e3ffec;
+  /* border: 1px solid black; */
+}
+.mainadvertisement > div {
+  float: left;
+  width: 25%;
+  height: 100%;
+  padding: 15px 20px;
+  /* border: 1px solid brown; */
+}
+
+.mainadvertisement-left {
+}
+.mainadvertisement-right button {
 }

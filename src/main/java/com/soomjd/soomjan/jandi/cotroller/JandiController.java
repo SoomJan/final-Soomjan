@@ -2,27 +2,37 @@ package com.soomjd.soomjan.jandi.cotroller;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.jandi.model.dto.JandiIntroDTO;
 import com.soomjd.soomjan.jandi.model.service.JandiService;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/jandi/*")
-@SessionAttributes("jandi")
+@SessionAttributes({"jandi", "loginMember", "classList", "categoryList"})
 public class JandiController {
 	
 	private final JandiService jandiService;
@@ -33,49 +43,87 @@ public class JandiController {
 	}
 	
 	@GetMapping("/jandiProfile")
-	public String jandiProfile(Model model){
-		String email = "ram@gmail.com";
-		JandiDTO jandi = jandiService.selectJandi(email);
+	public String jandiProfile(Model model, HttpSession session){
 		
-		model.addAttribute("jandi", jandi.getEmail());
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		
+		model.addAttribute("jandi", jandi);
+		
+		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
+		model.addAttribute("categoryList", jandiService.selectCategoryList());
 		
 		System.out.println("환영합니다. " + jandi.getEmail() + "잔디님!");
 		
 		return "jandi/mentorProfile";
 	}
+
 	
 	@PostMapping("/jandiProfile1")
-	public String profileFileUpload(@RequestParam MultipartFile profileImage, HttpServletRequest request, Model model) {
+	@ResponseBody
+	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage,HttpSession session, HttpServletRequest request, Model model) {
 		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		
-		System.out.println("root : "+root);
+		String filePath=root+"/uploadFiles";
 		
-		String filePath= root+"\\uploadFiles";
+		System.out.println(filePath);
 		
-		File mkdir = new File(filePath);
+		
+		
+		File mkdir= new File(filePath);
 		if(!mkdir.exists()) {
 			mkdir.mkdirs();
 		}
 		
 		
-		String originFileName = profileImage.getOriginalFilename();
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String savedName = UUID.randomUUID().toString().replace("-", "")+ext;
+		String originFileName="";
+		String ext="";
+		String savedName ="";
 		
-		try {
-			profileImage.transferTo(new File(filePath+"\\"+savedName));
-			model.addAttribute("message","파일업로드성공");
+		
+		System.out.println(profileImage);
+		
+		if(profileImage.getSize()>0) {
 			
+			originFileName = profileImage.getOriginalFilename();
+			ext=originFileName.substring(originFileName.lastIndexOf("."));
+			savedName = UUID.randomUUID().toString().replace("-", "")+ext;
 			
-		} catch (IllegalStateException | IOException e) {
-			new File(filePath+"\\"+savedName).delete();
-			model.addAttribute("message","파일업로드 실패");
+			System.out.println(originFileName);
+			System.out.println(ext);
+			System.out.println(savedName);
 			
-			e.printStackTrace();
+			Map<String,String> key = new HashMap<>();
+			key.put("savedName", savedName);
+			key.put("email", member.getEmail());
+			
+			jandiService.updateProfileImage(key);
+			try {
+				profileImage.transferTo(new File(filePath+"/"+savedName));
+
+				model.addAttribute("address",savedName);
+				
+				
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		return "mentorProfile";
+		
+		return savedName;
+	}
+	
+	
+	@PostMapping("/jandiIntro")
+	public void profileIntroUpdate(@ModelAttribute JandiIntroDTO intro, HttpServletRequest request,HttpSession session, Model model) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		
+		System.out.println(member);
+		System.out.println(intro);
 		
 	}
 	
@@ -97,10 +145,5 @@ public class JandiController {
 		return "jandi/myAd";
 	}
 	
-	@GetMapping("/class/chat")
-	public String classChat(){
-		
-		return "jandi/class/classChat";
-	}
 
 }

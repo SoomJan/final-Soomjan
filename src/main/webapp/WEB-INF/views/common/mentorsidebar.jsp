@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +50,7 @@ a {
 <body>
 	<div id="sidebar">
 		<div class="sidebar-inner-name">
-			<h1>환잔디 님</h1>
+			<h1>${ sessionScope.jandi.nickName } 님</h1>
 			<hr class="border-1px-black" />
 		</div>
 		<div class="sidebar-inner-name1">
@@ -58,7 +59,11 @@ a {
 			</ul>
 			<ul>
 				<h3>내 클래스</h3>
-				<li><a href="${ pageContext.servletContext.contextPath }/jandi/class/chat">클래스</a></li>
+				<c:forEach var="classes" items="${ sessionScope.classList }" >
+					<li><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom?classCode=${classes.CLASS_CODE}">
+						<c:out value="${ classes.TITLE }" /></a>
+					</li>
+				</c:forEach>
 				<li><button type="button" style="border:none; background: none; padding:1px;"
 						data-toggle="modal" data-target="#addClassModal">클래스 생성하기</button></li>
 			</ul>
@@ -85,13 +90,16 @@ a {
 						</button>
 						<h4 class="modal-title" id="myModalLabel">클래스 추가하기</h4>
 					</div>
-					<form action="" method="post" id="modalForm">
+					<form action="${ pageContext.servletContext.contextPath }/jandi/class/createClass" method="post" id="modalForm">
 						<div class="modal-body" align="center">
-							카테고리 <select id="category">
-								<option value="">프로그래밍 언어</option>
+							카테고리 <select name="categoryCode">
+								<c:forEach var="category" items="${ categoryList }">
+									<option value="${ category.CATEGORY_CODE }">${ category.CATEGORY_NAME }</option>
+								</c:forEach>
 							</select> <br>
-							<br> 클래스 정원 <input type="number" name="num"> 명 <br>
-							<br> 클래스 가격 <input type="number" name="price"> 원
+							<br> 클래스 제목 <input type="text" name="title" id="title"><br>
+							<br> 클래스 정원 <input type="number" name="maxCount" id="maxCount"> 명 <br>
+							<br> 클래스 가격 <input type="number" name="price" id="price"> 원
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default btnBD"
@@ -105,8 +113,9 @@ a {
 		</div>
 		<script>
 			$('#okBtn').click(function() {
+				
 				if (confirm("한번 설정된 클래스의 설정은 변경할 수 없습니다. 생성하시겠습니까?")) {
-					alert("클래스 생성된 클래스로 이동!");
+					$('#modalForm').submit();
 				}
 			});
 		</script>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,23 +64,16 @@ img {
 			<div>
 				<h2>4개의 목차</h2>
 				<hr>
-				<div class="mokcha">
-					<h3>chap01. 리터럴</h3>
-					<p>목차 설명</p>
-					<video width="550" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
-				</div>
-				<br>
-				<div class="mokcha">
-					<h3>chap02. 변수</h3>
-					<p>목차 설명</p>
-					<video width="550" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
-				</div>
-				<br>
-				<div class="mokcha">
-					<h3>chap03. 리터럴</h3>
-					<p>목차 설명</p>
-					<video width="550" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
-				</div>
+				<c:forEach var="mokcha" items="${ mokchaList }">
+					<div class="mokcha">
+						<button type="button" class="btnStyle">수정</button>
+						<h3>${ mokcha.mokchaName }</h3>
+						<input type="text" width="80%" name="contents" readonly="readonly"
+							value="${ mokcha.contents }">
+						<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
+					</div>
+					<br>
+				</c:forEach>
 				<br>
 			</div>
 		</div>

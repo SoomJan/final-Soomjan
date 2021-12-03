@@ -1,7 +1,7 @@
 .main-content {
   width: 70%;
-  overflow: auto;
-  border : 1px solid red;
+/*  overflow: auto; */
+ /* border : 1px solid red; */ 
 }
 
 #category {
@@ -32,6 +32,9 @@ p {
   width: 40%;
   margin: 0 auto;
   height: 50px;
+  text-align: center;
+  position: relative;
+  top: 20px;
   /* border: 1px solid blue; */
 }
 
@@ -54,14 +57,26 @@ p {
   width: 50%;
   margin: 0 auto;
   overflow: hidden;
+  height: 50px;
   /* border: 1px solid blue; */
 }
 
+.menti-search {
+	
+}
+
+.input-search {
+	width: 400px;
+    position: relative;
+    left: 18%;
+    top: 10px;
+}
+
 .manager-searchbox {
-  width: 70%;
+ /* width: 70%;
   margin: 0 auto;
   height: 100%;
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid rgb(200, 200, 200); */
 }
 .manager-searchbox input {
   width: 90%;
@@ -100,30 +115,47 @@ p {
   float: right;
 }
 
+.produce1 {
+  width: 50%;
+  position: relative;
+  left: 2%;
+  top: 5%;
+}
+
 .produce2 {
   width: 50%;
   position: relative;
   left: 50%;
-  bottom: 50px;
+  bottom: 60px;
+}
+
+.produce3 {
+  width: 50%;
+  position: relative;
+  bottom: 35px;
+  left: 5px;
 }
 
 .produce4 {
   width: 50%;
   position: relative;
-  left: 50%;
-  bottom: 50px;
+  left: 48%;
+  bottom: 110px;
 }
 
 .create {
   padding: 5px;
-	border-radius: 0.5rem;
-	font-size: 12px;
-	border-color: #91c788;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
   width: 10%;
   height: 30px;
   position: relative;
   left: 85%;
   background-color: #91c788;
+  position: relative;
+  left: 88%;
+  bottom: 60px;
 }
 
 .delete {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,8 +26,8 @@ pageEncoding="UTF-8"%>
     />
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="resources/css/semantic/semantic.css">
-    <script src="resources/css/semantic/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="css/bootstrap.js"></script>
@@ -58,6 +59,25 @@ pageEncoding="UTF-8"%>
     font-weight: bold;
     font-size: 20px;
     }
+    
+    .manager-paging ul li a {color: white !important;}
+    
+    .manager-paging {
+  		width: 40%;
+ 		margin: 0 auto;
+ 		height: 50px;
+ 		text-align: center;
+  		position: relative;
+ 		top: 20px;
+ 		 /* border: 1px solid blue; */
+	}
+
+	.input-search {
+		width: 400px;
+    	position: relative;
+    	left: 18%;
+    	top: 10px;
+	}
 
     </style>
   </head>
@@ -67,23 +87,25 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="main-content">
-      <h1 id="category"> 등록된 멘토 조회 </h1> <br>
+      <h1 id="category"> 등록된 잔디 조회 </h1> <br>
     
           <table class="ui basic table warningtable">
             <thead>
               <tr>
                 <th>이메일</th>
                 <th>닉네임</th>
-                <th>멘토 등록 일자</th>
+                <th>잔디 등록 일자</th>
               </tr>
             </thead>
             <tbody>
+            <c:forEach var="jandiMember" items="${ jandiList }">
               <tr class="move">
-                <td> gsp@gmail.com </td>
-                <td>권잔디</td>
-                <td>2021-11-24</td>
+                <td>${ jandiMember.email }</td>
+                <td>${ jandiMember.nickName }</td>
+                <td>${ jandiMember.enroll_date }</td>
               </tr>
-              <tr class="move">
+            </c:forEach>
+<!--               <tr class="move">
                 <td>yhj@gmail.com</td>
                 <td>양잔디</td>
                 <td>2021-11-24</td>
@@ -112,7 +134,7 @@ pageEncoding="UTF-8"%>
                 <td>iyr@gmail.com </td>
                 <td>임잔디</td>
                 <td>2021-11-24</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
 
@@ -134,15 +156,14 @@ pageEncoding="UTF-8"%>
 
           </script>   
 
-          <div class="manager-search">
-            <form class="manager-searchbox" method="post">
-              <input type="text" />
-              <button type="submit">
-                <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png"
-                />
-              </button>
-            </form>
+         <div class="manager-search">
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="text">
+    			<i class="search icon"></i>
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
           </div>
           <div>
             <div class="manager-paging">

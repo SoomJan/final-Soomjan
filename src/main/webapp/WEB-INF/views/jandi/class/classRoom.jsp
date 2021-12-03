@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,9 +23,29 @@
 
 </head>
 <style>
-      img{width: 250px; text-align: center; border: none !important;}
-      .content {width:90%; border: none !important;}
+img {
+	width: 250px;
+	text-align: center;
+	border: none !important;
+}
+
+.content {
+	width: 90%;
+	border: none !important;
+}
+
+.areaStyle {
+	border: none;
+	width: 100%;
+	resize: none;
+}
+
+.areaStyle:focus {
+	outline: none;
+}
+
 </style>
+
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -33,37 +54,70 @@
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
-			<div>
-				<button class="btn btn-primary" style="float:right">수정</button>
+			<form action="${ pageContext.servletContext.contextPath }/jandi/class/modifyClass" method="post" id="modifyClassForm">
+				<button type="submit" class="btn btn-primary" style="float:right">수정</button>
 				<h2>강의 소개</h2>
 				<hr>
 				<br>
-				<p>이 클래스는 OH! 잔디만의 특급 비법이 담긴 강의입니다.</p>
-				<p>이 강의를 듣는 여러분은 선택받은 사람들인거에요!</p>
-				<p>그러니까 감사하는 마음을 가지고 게을리 하지 않고 열심히 들어주세요.</p>
-				<p>제가 공을 들여 만든 강의가 아깝지 않게 해주세요.</p>
-				<p>부탁이 아닌 강요랍니다!</p>
-				<img class="content"
-					src="${ pageContext.servletContext.contextPath }/resources/images/java.png" />
+				<div id="contents">
+					<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
+						placeholder="강의 소개를 입력해주세요.">${ classDTO.contents }</textarea>
+				</div>
 				<br>
 				<br>
+				<h4>썸네일 사진</h4>
+					<img src="">
 				<br>
 				<br>
 				<div class="tag">
-					<p class="tagName">태그</p>
-					<div class="ui button" data-tooltip="Add users to your feed"
-						data-position="top left">JAVA</div>
-					<div class="ui button" data-tooltip="Add users to your feed"
-						data-position="top center">eclipse</div>
-					<div class="ui button" data-tooltip="Add users to your feed"
-						data-position="top right">spring</div>
 				</div>
+				<br>
+				<p class="tagName">태그 수정</p>
+				<textarea class="areaStyle" name="tag" id="tag" rows="2" wrap="hard" 
+					placeholder="강의 소개를 입력해주세요.">${ classDTO.tag }</textarea>
+				<script>
+					$(function(){
+						let tags = $('#tag').text().replace(" ","");
+						let tagArr = tags.split('#');
+						for(let tag of tagArr){
+							if(tag !== ""){
+								$('.tag').append(
+								"<div class='ui button' style='margin:3px;' data-position='top left'>"
+								+ tag + "</div>");
+							}
+						}
+						
+						$('#tag').keyup(function(){
+							if($('#tag').val().length >= 300){
+								alert("300byte를 초과할 수 없습니다.");
+								$('#tag').val().substr(0, 1500);
+							}
+						});
+						
+						$('#contents').keyup(function(){
+							if($('#contents').val().length >= 1500){
+								alert("1500byte를 초과할 수 없습니다.");
+								$('#contents').val().substr(0, 1500);
+							}
+						});
+						
+						let message = '${ requestScope.modifyMessage }';
+						console.log(message);
+						
+						if( message !== "" ){
+							alert(message);
+						}
+						
+					});
+					
+				</script>
 				<hr>
 				<h2>강의 목차</h2>
-				<p class="contents">
-					chap1. 리터럴<br> chap2. 변수<br> chap3. 메소드<br> chap4.
-					배열
-				</p>
+				<c:forEach var="mokcha" items="${ mokchaList }">
+					<p class="contents">
+						${ mokcha.mokchaName }
+					</p>
+				</c:forEach>
 				<hr>
 				<br>
 				<div class="after">
@@ -87,7 +141,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </body>

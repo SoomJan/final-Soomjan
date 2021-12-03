@@ -15,10 +15,6 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-      rel="stylesheet"
-    /> -->
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
       rel="stylesheet"

@@ -1,13 +1,15 @@
 @charset "UTF-8";
 
-
 .warn {
   width: 40%;
   margin: 50px auto 0;
   /* border: 1px solid blue; */
   height: auto;
 }
-
+.introduce {
+  width: 60%;
+  height: auto;
+}
 .introduce-detail {
   width: 60%;
   margin: 0 auto;
@@ -49,347 +51,288 @@
 /*----------------------------*/
 /* css 추가하기 */
 /* 매칭 내용부분 큰 빨간 사각형 */
-.matching-content{
-    width : 800px;
-   
-    
-    }
-    
- /* 요청한 견적서가 없습니다 문구. */
-.nothing-comment {
- 	position: relative;
- 	font-size: 15px;
- 	hegiht: 100px;
- 	margin: 0 auto;
- 	
- 	top: 250px;
-    
-    }
-    
-.nothing-comment p{
- 	text-align:center;
- 	font-size: 20px;
-    
-    }
-    
- 
-/* 견적서 작성하기 버튼(main) */    
-.writeBtn{
- 
-    width: 130px;
-    height: 50px;
-    float: right;
-    font-size: 20px;
-    color: white;
-    background-color: #48A66B;
-    border: #48A66B;
-    border-radius: 35px;
-    padding-top: 3px;
-    
-    }
+.matching-content {
+  width: 100%;
+  /* border: 1px solid black; */
+}
 
-/* 견적서 작성하기 버튼div */    
-.write{
- 	
- 	width: 120px;
-    height: 50px;
-    float: right;
-    margin-top: 170px;
-    
-    }
+/* 요청한 견적서가 없습니다 문구. */
+.nothing-comment {
+  position: relative;
+  font-size: 15px;
+  hegiht: 100px;
+  margin: 0 auto;
+  top: 250px;
+}
+
+.nothing-comment p {
+  text-align: center;
+  font-size: 20px;
+}
+
+/* 견적서 작성하기 버튼(main) */
+.writeBtn {
+  width: 130px;
+  height: 50px;
+  float: right;
+  font-size: 20px;
+  color: white;
+  background-color: #48a66b;
+  border: #48a66b;
+  border-radius: 35px;
+  padding-top: 3px;
+}
+
+/* 견적서 작성하기 버튼div */
+.write {
+  width: 120px;
+  height: 50px;
+  float: right;
+  margin-top: 170px;
+}
 
 /* 목록으로 버튼 */
-.backBtn{
- 
-    width: 130px;
-    height: 50px;
-    float: left;
-    font-size: 20px;
-    color: #524A42;
-    background-color: #E1F2E7;
-    border: #48A66B;
-    border-radius: 35px;
-    padding-top: 3px;
-    
-    }
-/* 목록으로 버튼 div */    
-.back{
- 	
- 	width: 120px;
-    height: 50px;
-    float: left;
-    margin-top: 170px;
-    
-    }    
+.backBtn {
+  width: 130px;
+  height: 50px;
+  float: left;
+  font-size: 20px;
+  color: #524a42;
+  background-color: #e1f2e7;
+  border: #48a66b;
+  border-radius: 35px;
+  padding-top: 3px;
+}
+/* 목록으로 버튼 div */
+.back {
+  width: 120px;
+  height: 50px;
+  float: left;
+  margin-top: 170px;
+}
 
 /* 매칭중인 요청 메인에서 리스트 합친거(1,2,3) */
-.explain{
-	
-	color: #48A66B;
-	font-weight: bold;
-	font-size: 20px;
+.explain {
+  color: #48a66b;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 /* 초록색 박스 */
-#allrequest, #ing-request ,#yet-request  {
-	background-color: #E1F2E7;
-	border-radius: 15px;
-	height: 150px;
-	padding: 10px;
+#allrequest,
+#ing-request,
+#yet-request {
+  background-color: #e1f2e7;
+  border-radius: 15px;
+  height: 150px;
+  padding: 10px;
 }
 
 /* 표 제목 */
-.table_title{
-	
-	height: 35px;
-	font-size: 18px;
-	color: #005E23;
-}	
+.table_title {
+  height: 35px;
+  font-size: 18px;
+  color: #005e23;
+}
 
 /* estimate에서 '견적서 작성하기'문구 */
-.estimate_title{
-	
-	font-size: 20px;
-	font-weight: bold;	
-
-	
-}    
+.estimate_title {
+  font-size: 20px;
+  font-weight: bold;
+}
 
 /* 견적서 작성 테이블 */
-.estimate_table{
-	
-	background-color: #E1F2E7;
-	border-radius: 25px;
-	border-spacing: 0 20px;
-	
+.estimate_table {
+  background-color: #e1f2e7;
+  border-radius: 25px;
+  border-spacing: 0 20px;
 }
 
 /* 견적서 작성하기 표 제목 */
-.table_head{
-	
-	width="10";
-
+.table_head {
+  width: 500px;
+  text-align: left;
+  border: none;
+  padding: 15px;
+  border-radius: 25px;
 }
 
 /* 견적서 내용 작성하는 textarea */
-.content_area{
-	
-	width:500px;
-	height: 600px;
-	text-align: left;
-	border: none;
-	padding: 30px;
-	border-radius: 25px;
-	
+.content_area {
+  width: 500px;
+  height: 600px;
+  text-align: left;
+  border: none;
+  padding: 30px;
+  border-radius: 25px;
 }
 
-.input_title{
-	
-	width: 500px;
-	text-align: left;
-	border: none;
-	padding: 15px;
-	border-radius: 25px;
-	
+.input_title {
+  width: 500px;
+  border: none;
+  padding: 15px;
+  border-radius: 25px;
 }
 
 /* 카테고리 콤보박스 */
-#category_cb{
-	
-	width: 200px;
-	text-align: left;
-	border: none;
-	padding: 15px;
-	border-radius: 25px;
-	
+#category_cb {
+  width: 200px;
+  border: none;
+  padding: 15px;
+  border-radius: 25px;
 }
 
 /* 채팅을 전체를 감싸는 div */
 .chatlist {
-	
-	
-	width: 800px;
-	height: 300px;
-	background-color: #E1F2E7;
-	border-radius: 25px;
+  width: 800px;
+  height: 300px;
+  background-color: #e1f2e7;
+  border-radius: 25px;
 }
 
 /* 채팅 리스트 멘토메인 버전 */
 .chatlist_mantor {
-	
-	
-	width: 800px;
-	height: auto;
-	
+  width: 800px;
+  height: auto;
 }
 
-.chatting{
-	
-	position: relative;
-	top: 20px;
-	left: 20px;
-	width: 760px;
-	height: 110px;
-	background-color: white;
-	border-radius: 35px;
-	margin-bottom: 30px;
-	
+.chatting {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  width: 760px;
+  height: 110px;
+  background-color: white;
+  border-radius: 35px;
+  margin-bottom: 30px;
 }
 
-
-.profile{
-	
-	position: absolute;
-	top: 20px;
-	left: 20px;
-	background-color: lightblue;
-	width: 70px;
-	height: 70px;
-	
+.profile {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: lightblue;
+  width: 70px;
+  height: 70px;
 }
 
-.chat_content{
-	
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	/* background-color: lightblue; */
-	width: 630px;
-	height: 70px;
-	
+.chat_content {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  /* background-color: lightblue; */
+  width: 630px;
+  height: 70px;
 }
 
-.chat_name{
-	
-	position: absolute;
-	/* background-color: pink; */
-	height: 30px;
-	width: 100px;
+.chat_name {
+  position: absolute;
+  /* background-color: pink; */
+  height: 30px;
+  width: 100px;
 }
 
-.chat_name_p{
-	
-	font-size: 17px;
-	line-height: 30px;
-	width: 200px;
-	text-align: left;
-	font-weight: bold;
-	
+.chat_name_p {
+  font-size: 17px;
+  line-height: 30px;
+  width: 200px;
+  text-align: left;
+  font-weight: bold;
 }
 
-.chat_date{
-	
-	position: absolute;
-	/* background: lightgreen; */
-	right: 0;
-	
-	
+.chat_date {
+  position: absolute;
+  /* background: lightgreen; */
+  right: 0;
 }
 
-.chat_pre{
-	
-	position: absolute;
-	/* background: lightyellow; */
-	top: 40px;
-	width: 500px;
-	height: 30px;
-	
+.chat_pre {
+  position: absolute;
+  /* background: lightyellow; */
+  top: 40px;
+  width: 500px;
+  height: 30px;
 }
 
-.chat_pre_p{
-	
-	line-height: 30px;
-	text-align: left;
+.chat_pre_p {
+  line-height: 30px;
+  text-align: left;
 }
 
-.chat_count{
-	
-	position: absolute;
-	background: red; 
-	bottom: 0px;
-	right: 10px;
-	height: 30px;
-	width: 30px;
-	border-radius:75px;
+.chat_count {
+  position: absolute;
+  background: red;
+  bottom: 0px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 75px;
 }
 
-.chat_count_p{
-	
-	line-height: 30px;
-	color: white;
+.chat_count_p {
+  line-height: 30px;
+  color: white;
 }
 
 /* 검색 영역 div*/
-.search{
-	
-	position: absolute;
-	height: 40px;
-	width: 800px;
-
+.search {
+  position: absolute;
+  height: 40px;
+  width: 800px;
 }
 
-#search_category_cb{
-	
-	position: relative;
-	width: 130px;
-	height: 40px;
-	border-radius:15px;
-	border: none;
-	background-color: #48A66B;
-	color: white;
-	text-align: center;
-	
+#search_category_cb {
+  position: relative;
+  width: 130px;
+  height: 40px;
+  border-radius: 15px;
+  border: none;
+  background-color: #48a66b;
+  color: white;
+  text-align: center;
 }
 
-#search_area{
-	
-	position: relative;
-	left: 15px;
-	width: 530px;
-	height: 40px;
-	border-radius:15px;
-	border: 2px solid #48A66B;
-	
-	
+#search_area {
+  position: relative;
+  left: 15px;
+  width: 530px;
+  height: 40px;
+  border-radius: 15px;
+  border: 2px solid #48a66b;
 }
 
-.search_btn{
-	
-	position: relative;
-	left: 30px;
-	width: 100px;
-	height: 40px;
-	line-height: 40px;
-	border-radius:15px;
-	border: none;
-	background-color: #91c788;
-	font-size: 17px;
+.search_btn {
+  position: relative;
+  left: 30px;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 15px;
+  border: none;
+  background-color: #91c788;
+  font-size: 17px;
 }
 
 /* 견적서 테이블 div */
-.board_table{
-	
-	padding-top:10px;
-	background-color: #E1F2E7;
-	border-radius:15px;
-	height: 500px;
-
+.board_table {
+  padding-top: 10px;
+  background-color: #e1f2e7;
+  border-radius: 15px;
+  height: 500px;
 }
 
-.table_content{
-	
-	text-align: center;
-	font-size: 16px;
-	height: 40px;
+.table_content {
+  text-align: center;
+  font-size: 16px;
+  height: 40px;
 }
 
 .manager-paging {
   width: 50%;
   margin: 0 auto;
   height: 50px;
-/*   border: 1px solid blue; */
+  /*   border: 1px solid blue; */
 }
-
 
 .manager-paging ul {
   display: inline-block;
@@ -406,150 +349,111 @@
   text-decoration: none;
 }
 
-.name{
-	
-	font-size: 23px;
-	font-weight: bold;
+.name {
+  font-size: 23px;
+  font-weight: bold;
 }
 
-.rec_name{
-	
-	font-size: 17px;
-	
-	
+.rec_name {
+  font-size: 17px;
 }
 
-.chat_rec{
-	
-	background-color: #48A66B;
-	font-size: 15px;
-	width: 300px;
-	height: 40px;
-	border-radius: 15px;
-	color: white;
-	
-	
+.chat_rec {
+  background-color: #48a66b;
+  font-size: 15px;
+  width: 300px;
+  height: 40px;
+  border-radius: 15px;
+  color: white;
 }
 
-.mss{
-	
-	margin-left: 15px;
+.mss {
+  margin-left: 15px;
 }
 
-.rec_date{
-	width:300px;
-	text-align: right;
-	
+.rec_date {
+  width: 300px;
+  text-align: right;
 }
 
-.rec_date p{
-	 margin-right: 13px;
+.rec_date p {
+  margin-right: 13px;
 }
 
-.send_date{
-	
-	position: relative;
-	left: 560px;
-	width:300px;
-	text-align: left;
-	
-	
+.send_date {
+  position: relative;
+  left: 560px;
+  width: 300px;
+  text-align: left;
 }
 
-.send_date p{
-	
-	
-	margin-left: 13px;
+.send_date p {
+  margin-left: 13px;
 }
 
-.one_chat_rec{
-	
-/* 	background-color: lightgreen; */
+.one_chat_rec {
+  /* 	background-color: lightgreen; */
 }
 
-.one_chat_send{
-	
-
-/* 	background-color: lightgreen; */
-	
+.one_chat_send {
+  /* 	background-color: lightgreen; */
 }
 
-.send_mss{
-	
-	position: relative;
-	left: 560px;
-	font-size: 15px;
-	width: 300px;
-	height: 40px;
-	border-radius: 15px;
-	color: #524A42;
-	border: 2px solid #48A66B;
-	background-color: white;
-	
+.send_mss {
+  position: relative;
+  left: 560px;
+  font-size: 15px;
+  width: 300px;
+  height: 40px;
+  border-radius: 15px;
+  color: #524a42;
+  border: 2px solid #48a66b;
+  background-color: white;
 }
 
-.send_bg{
-	
-	position: absolute;
-/* 	background-color: lightgreen; */
-	width: 800px;
-	height: 40px;
-	margin-left: 50px;
-	margin-top: 300px;
-	
-
+.send_bg {
+  position: absolute;
+  /* 	background-color: lightgreen; */
+  width: 800px;
+  height: 40px;
+  margin-left: 50px;
+  margin-top: 300px;
 }
 
-
-.chat_bg{
-	
-	position: relative;
-	width: 710px;
-	height: 40px;
-	float: left;
-	border-radius: 15px;
-	border: 2px solid #524A42;
-	
-	
-	
+.chat_bg {
+  position: relative;
+  width: 710px;
+  height: 40px;
+  float: left;
+  border-radius: 15px;
+  border: 2px solid #524a42;
 }
 
-.send_btn_div{
-	
-	position: relative;
-	width: 70px;
-	float: right;
-	
+.send_btn_div {
+  position: relative;
+  width: 70px;
+  float: right;
 }
 
-.send_btn{
-	
-	
-	background-color: #48A66B;
-	color: white;
-	border-radius: 15px;
-	border: none;
-	width: 70px;
-	height: 40px;
-	font-size: 15px;
-	line-height: 40px;
-	
-
+.send_btn {
+  background-color: #48a66b;
+  color: white;
+  border-radius: 15px;
+  border: none;
+  width: 70px;
+  height: 40px;
+  font-size: 15px;
+  line-height: 40px;
 }
 
-.chatting-content{
-	
-	background-color: #E1F2E7;
-	width: 900px;
-	height: 650px;
-	padding: 20px;
-	border-radius: 10px;
-	
+.chatting-content {
+  background-color: #e1f2e7;
+  width: 900px;
+  height: 650px;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-
- 
 iframe {
-	display:none;
+  display: none;
 }
-

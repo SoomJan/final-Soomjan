@@ -2,35 +2,37 @@
 
 nav {
   position: absolute;
-  height: 120px;
+  height: 100px;
   width: 100%;
-  margin-top: -20px;
+  margin-top: -20px !important;
   margin-bottom: 20px;
   background-color: #e3ffec;
   z-index: 100;
 }
-
+.body {
+  line-height: 1.4285em;
+}
 span {
   font-size: 15px;
 }
 
 .nav-left {
   float: left;
-  width: 10%;
+  width: 15%;
   height: 100%;
-  margin-left: 100px;
 }
 
 .nav-left div {
   position: relative;
   margin: 0 auto;
-  width: 80%;
+  width: 50%;
   height: 100%;
 }
 
 .nav-left img {
-  width: 60%;
-  height: 60%;
+  width: 100%;
+  height: 80%;
+  margin: 0 auto;
   position: relative;
   top: 15%;
 }
@@ -44,7 +46,8 @@ span {
   float: right;
   width: 80%;
   height: 100%;
-  padding-right: 50px;
+  padding-right: 10px;
+  /* border: 1px solid black; */
 }
 
 .nav-menu > div {
@@ -53,8 +56,9 @@ span {
 }
 
 .nav-menu-item {
-  width: 40%;
+  width: 55%;
   height: 100%;
+  /* border: 1px solid black; */
 }
 
 .nav-menu-item > div {
@@ -65,6 +69,7 @@ span {
   top: 50%;
   transform: translate(0, -50%);
   font-size: 20px;
+  /* border: 1px solid black; */
 }
 .nav-menu-item a {
   text-decoration: none;
@@ -77,13 +82,29 @@ span {
   float: right;
   width: 30%;
   height: 100%;
+  /* border: 1px solid black; */
 }
 
 .nav-right > div {
   float: left;
-  width: 32%;
+  /* width: 49%; */
   height: 100%;
   /* border : 1px solid black; */
+}
+
+.nav-right-login {
+  /* border: 1px solid black; */
+  width: 75%;
+}
+
+.nav-right-login h5 {
+  text-align: center;
+  margin-top: 35px;
+  /* border: 1px solid black; */
+}
+
+.nav-right-regist {
+  border: 1px solid black;
 }
 
 .nav-right-login button {
@@ -91,12 +112,13 @@ span {
   border-radius: 10px;
   border: 4px solid #91c788;
   font-size: 15px;
-  width: 90px;
+  width: 80px;
   height: 45px;
   padding: 10px 10px;
+  margin: 0 10px;
   position: relative;
-  left: 135%;
   top: 28%;
+  float: right;
 }
 
 .nav-right-regist button {
@@ -107,9 +129,23 @@ span {
   width: 90px;
   height: 45px;
   padding: 10px 10px;
+  margin: 0 20px;
   position: relative;
-  left: 80%;
   top: 28%;
+}
+
+.nav-right-regist-manager button {
+  background-color: #91c788;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  font-size: 10px;
+  width: 90px;
+  height: 30px;
+  padding: 10px 10px;
+  position: relative;
+  top: -20px;
+  left: 50%;
 }
 
 .nav-right a {
@@ -122,8 +158,9 @@ span {
   transform: translate(0, -50%);
 }
 .nav-right-sidebar {
-  width: 100%;
+  width: 20%;
   height: 100%;
+  /* border: 1px solid black; */
 }
 
 .nav-right-sidebar button {
@@ -134,10 +171,8 @@ span {
 }
 
 .nav-right-sidebar img {
-  float: right;
-  position: relative;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 70%;
 }
 
 .background {
@@ -147,19 +182,28 @@ span {
   z-index: -10;
   position: absolute;
 }
+
+/* 오른쪽 사이드바 시작 */
+/* =========================================== */
 .nav-sidebar {
   position: fixed;
   z-index: 9999;
-  width: 13%;
+  width: 19%;
   left: 100%;
-  float: right;
-  height: 100vh;
+  height: 700px;
   background-color: #49a66b;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  padding: 80px 40px;
-  margin-top: -20px;
+  padding: 30px 40px;
+  top: 0%;
+  box-sizing: border-box;
+}
+
+.nav-sidebar hr {
+  border: none;
+  background: black;
+  height: 1px;
+  opacity: 0.75;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .nav-sidebar-exit {
@@ -167,16 +211,51 @@ span {
   top: 0%;
   left: 75%;
   margin: 20px 20px 0 0;
+  border: 1px solid red;
+}
+
+.nav-sidebar-exit img {
+  width: 50%;
+  height: 50%;
+}
+
+.nav-sidebar-content {
+  width: 100%;
+  height: auto;
+  /* border: 3px solid black; */
+  margin-top: 40px;
 }
 
 .nav-sidebar ul {
-  padding: 5px 10px 5px 0;
+  width: auto;
+  height: 30px;
+  padding: 0px 0px 5px 0;
+  margin: 0 auto 14px;
+  box-sizing: border-box;
+  line-height: 1.4285em;
+}
+.nav-sidebar li {
+  width: auto;
+  height: 30px;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-sidebar span {
+  width: auto;
+  height: 30px;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-sidebar-inline {
-  display: block;
-  float: left;
+  /* border: 1px solid red; */
+  width: 100%;
+  height: 30px;
+  margin: 0;
+  padding: 0;
 }
+
 .nav-sidebar a {
   list-style: none;
   text-decoration: none;
@@ -185,20 +264,16 @@ span {
   margin: 50px auto;
 }
 
-.navi-close {
-  width: 15px;
-  height: 15px;
-  position: relative;
-  left: 180%;
-}
-
 .nav-sns2 {
-  width: 105px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
   position: relative;
-  left: 80%;
-  bottom: 6px;
+  /* border: 1px solid black; */
 }
-
+.nav-sns2 img {
+  margin: 0 3px;
+}
 iframe {
   display: none;
 }
