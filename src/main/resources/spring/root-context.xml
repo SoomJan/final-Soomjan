@@ -54,6 +54,8 @@
    <mybatis-spring:scan base-package="com.soomjd.soomjan.jandi.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.manager.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.classRoom.model.dao"/>
+   <mybatis-spring:scan base-package="com.soomjd.soomjan.matching.model.dao"/>
+   
    
 		
 </beans>
