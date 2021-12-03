@@ -69,24 +69,23 @@
 							<tr>
 								<th class="table_head">카테고리</th>
 								<th>
-									<select id="category_cb" name="category">
+									<select id="category_cb" name="categoryCode">
 										<option value="">선택하세요.</option>
-										<option value="개발,프로그래밍">개발 · 프로그래밍</option>
-										<option value="웹 개발">웹 개발</option>
-										<option value="프론트엔드">프론트엔드</option>
-										<option value="백엔드">백엔드</option>
-										<option value="풀스택">풀스택</option>
-										<option value="모바일">모바일</option>
-										<option value="앱개발">앱개발</option>
-										<option value="언어 알고리즘">언어 알고리즘</option>
-										<option value="자료구조">자료구조</option>
-										<option value="데이터 사이언스">데이터 사이언스</option>
-										<option value="데이터베이스">데이터베이스</option>
-										<option value="개발 도구 데브옵스">개발 도구 데브옵스</option>
-										<option value="인프라 게임">인프라 게임</option>
-										<option value="개발 임베디드">개발 임베디드</option>
-										<option value="IoT 데스크톱">IoT 데스크톱</option>
-										<option value="앱 개발 교양,기타">앱 개발 교양 · 기타</option>
+										<option value="1">개발 · 프로그래밍</option>
+										<option value="2">웹 개발</option>
+										<option value="3">백엔드</option>
+										<option value="4">풀스택</option>
+										<option value="5">모바일</option>
+										<option value="6">앱개발</option>
+										<option value="7">언어 알고리즘</option>
+										<option value="8">자료구조</option>
+										<option value="9">데이터 사이언스</option>
+										<option value="10">데이터베이스</option>
+										<option value="11">개발 도구 데브옵스</option>
+										<option value="12">인프라 게임</option>
+										<option value="13">개발 임베디드</option>
+										<option value="14">IoT 데스크톱</option>
+										<option value="15">앱 개발 교양 · 기타</option>
 									</select>
 								</th>
 							</tr>
@@ -100,14 +99,14 @@
 								</tr>
 
 					</table>
-				</form>
 				<div class="back">
 					<button class="backBtn">목록으로</button>
 				</div>
 
 				<div class="write">
-					<button type="submit" class="writeBtn">매칭 요청</button>
+						<button type="submit" class="writeBtn">매칭 요청</button>
 				</div>
+				</form>
 			</div>
 
 		</div>

@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.soomjd.soomjan.common.exception.MemberRegistException;
+import com.soomjd.soomjan.common.exception.RegistFailedException;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
 import com.soomjd.soomjan.matching.model.service.MatchingService;
 
@@ -36,14 +39,26 @@ public class MacthingSsackMainController {
 		return "matching/ManteeEstimateWrite";
 	}
 	
+	
+	
 	@PostMapping("/estimateSend")
-	public String estimateSend(@ModelAttribute EstimateDTO estimate,
-			HttpServletRequest request){
+	public ModelAndView estimateSend(@ModelAttribute EstimateDTO estimate,
+			ModelAndView mv) throws RegistFailedException{
 		
+		System.out.println(estimate);
+		boolean result = matchingService.registEstimate(estimate);
 		
+		if(result) {
+			mv.setViewName("redirect:/matching/manteeMain");
+		} else {
+			
+			throw new RegistFailedException("견적서 등록에 실패하였습니다.");
+		}
 		
-		return "redirect:/";
+		return mv;
 	}
+	
+
 	
 	
 

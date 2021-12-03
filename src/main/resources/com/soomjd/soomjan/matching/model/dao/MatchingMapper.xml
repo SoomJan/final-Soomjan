@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soomjd.soomjan.matching.model.dao.MatchingMapper">
+
+
+    <resultMap id="memberResultSet" type="EstimateDTO">
+        <id column="ESTIMATE_CODE" property="estimateCode"/>
+        <result column="CATEGORY_CODE" property="categoryCode"/>
+        <result column="IS_MATCHED" property="isMatched"/>
+        <result column="WRITE_DATE" property="writeDate"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENTS" property="contents"/>
+        <result column="EMAIL" property="email"/>
+        <result column="IS_DELETED" property="isDeleted"/>
+    </resultMap>
+    
+    <insert id="registEstimate" parameterType="EstimateDTO">
+        INSERT
+		  INTO ESTIMATE_TBL
+		(
+		 ESTIMATE_CODE
+ 	 	,CATEGORY_CODE
+		,IS_MATCHED
+		,WRITE_DATE
+		,TITLE
+		,CONTENTS
+		,EMAIL
+		,IS_DELETED
+		)
+		VALUES
+		(
+		  SEQ_ESTIMATE_TBL.NEXTVAL
+		, #{ categoryCode }
+		, DEFAULT
+		, SYSDATE
+		, #{ title }
+		, #{ contents }
+		, 'yosm113@naver.com'
+		, DEFAULT
+		)
+    </insert>
+    
+    <select id="selectEncPassword" resultType="java.lang.String" parameterType="MemberDTO">
+        SELECT
+		       A.PASSWORD
+		  FROM SSACK_TBL A
+		 WHERE A.EMAIL = #{ email }
+		   AND IS_EXIT = 'N'
+    </select>
+    
+    
+
+</mapper>
