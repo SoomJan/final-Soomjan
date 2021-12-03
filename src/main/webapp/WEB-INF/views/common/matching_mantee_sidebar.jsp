@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/findmentor/findmentorsidebar.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/matching/findmentorsidebar.css"
       rel="stylesheet"
     />
 
