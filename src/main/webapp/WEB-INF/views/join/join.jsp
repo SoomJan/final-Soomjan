@@ -66,8 +66,9 @@ pageEncoding="UTF-8"%>
         
         <div class="content">
             <div class="title">인증번호</div>
-            <input type="number" name="proof">
-            <div class="authenticationCheck"></div>
+            <input type="text" name="proof" id="proof">
+            <input type="text" id="proof2" style="display: none;">
+            <div class="proofCheck"></div>
             <input type="checkbox" id="proofBoolean" style="display: none;">
         </div>
 
@@ -182,7 +183,12 @@ pageEncoding="UTF-8"%>
               type: "post",
               data: {email : email},
               success: function(data) {
-                alert("이메일 전송 완료");
+                if(!data) {
+                  alert("이메일 전송 실패");
+                } else {
+                  alert("이메일 전송 완료");
+                  $("#proof2").val(data);
+                }
               },
               error: function(error) {
                 console.log(error);
@@ -190,6 +196,25 @@ pageEncoding="UTF-8"%>
             });
             return false;
           }
+
+          /* 인증번호 확인 */
+          $(function(){
+            $("#proof").keyup(function(){
+
+              let num1 = $(this).val();
+              let num2 = $("#proof2").val();
+
+              if(num1 == num2) {
+                $(".proofCheck").html("인증 번호가 일치합니다.").css("color", "blue");
+               $(this).focus().css("background", "palegreen");
+               $("#proofBoolean").prop("checked", true);
+              } else {
+                $(".proofCheck").html("인증번호가 일치하지 않습니다.").css("color","red");
+               $(this).focus().css("background", "lightpink");
+               $("#emailBoolean2").prop("checked", false);
+              }
+            });
+          });
 
           /* 이메일 형식 체크 */
           $(function(){
