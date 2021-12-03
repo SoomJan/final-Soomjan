@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -86,23 +87,25 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="main-content">
-      <h1 id="category"> 등록된 멘토 조회 </h1> <br>
+      <h1 id="category"> 등록된 잔디 조회 </h1> <br>
     
           <table class="ui basic table warningtable">
             <thead>
               <tr>
                 <th>이메일</th>
                 <th>닉네임</th>
-                <th>멘토 등록 일자</th>
+                <th>잔디 등록 일자</th>
               </tr>
             </thead>
             <tbody>
+            <c:forEach var="jandiMember" items="${ jandiList }">
               <tr class="move">
-                <td> gsp@gmail.com </td>
-                <td>권잔디</td>
-                <td>2021-11-24</td>
+                <td>${ jandiMember.email }</td>
+                <td>${ jandiMember.nickName }</td>
+                <td>${ jandiMember.enroll_date }</td>
               </tr>
-              <tr class="move">
+            </c:forEach>
+<!--               <tr class="move">
                 <td>yhj@gmail.com</td>
                 <td>양잔디</td>
                 <td>2021-11-24</td>
@@ -131,7 +134,7 @@ pageEncoding="UTF-8"%>
                 <td>iyr@gmail.com </td>
                 <td>임잔디</td>
                 <td>2021-11-24</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
 

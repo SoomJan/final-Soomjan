@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soomjd.soomjan.manager.model.dao.ManagerMapper">
     
-       <!-- <resultMap id="memberResultSet" type="SsackDTO">
+     <resultMap id="ssackResultSet" type="MemberDTO">
         <id column="EMAIL" property="email"/>
         <result column="NICKNAME" property="nickName"/>
         <result column="PASSWORD" property="password"/>
@@ -15,7 +15,19 @@
         <result column="ENROLL_DATE" property="enrollDate"/>
         <result column="IS_EXIT" property="isExit"/>
         <result column="NAME" property="name"/>
-    </resultMap> -->
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiResultSet">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CAREER" property="career"/>
+    	<result column="INTRO" property="intro"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="ENROLL_DATE" property="enroll_date"/>
+    	<result column="ACCOUNT" property="account"/>
+    	<result column="BANK" property="bank"/>
+    	<result column="ACC_NAME" property="acc_name"/>
+    </resultMap>
     
     <resultMap id="managerResultSet" type="ManagerDTO">
     	<id column="MNG_NO" property="mngNo"/>
@@ -27,7 +39,7 @@
     	<result column="MNG_NICKNAME" property="mngNickName"/>
     </resultMap>
     
-  <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="SsackDTO">
+  <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="ssackDTO">
         SELECT
 		       A.EMAIL
 			 , A.NICKNAME
@@ -79,6 +91,105 @@
 		 WHERE IS_DELETED = 'N'
     </select>
     
+    <select id="ssackMember" resultMap="ssackResultSet">
 
+		SELECT
+		       F.RNUM
+		     , F.EMAIL
+		     , F.NICKNAME
+		     , F.PASSWORD
+		     , F.PHONE
+		     , F.IS_JANDI
+		     , F.WARNING
+		     , F.IS_BLACK
+		     , F.ENROLL_DATE
+		     , F.IS_EXIT
+		     , F.NAME
+		 FROM (SELECT ROWNUM RNUM
+		 	        , D.EMAIL
+		 	        , D.NICKNAME
+		 	        , D.PASSWORD
+		 	        , D.PHONE
+		 	        , D.IS_JANDI
+		 	        , D.WARNING
+		 	        , D.IS_BLACK
+		 	        , D.ENROLL_DATE
+		 	        , D.IS_EXIT
+		 	        , D.NAME
+		 	     FROM (SELECT
+		 	     		      A.EMAIL
+		 	     		    , A.NICKNAME
+		 	     		    , A.PASSWORD
+		 	     		    , A.PHONE
+		 	     		    , A.IS_JANDI
+		 	     		    , A.WARNING
+		 	     		    , A.IS_BLACK
+		 	     		    , A.ENROLL_DATE
+		 	     		    , A.IS_EXIT
+		 	     		    , A.NAME
+		 	     		 FROM SSACK_TBL A
+		 	     		 <where>
+		 	     		 	<if test='searchCondition == "1"'>
+		 	     		 		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "2"'>
+		 	     		 		A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "3"'>
+		 	     		 		A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 </where>
+		 	     	 ORDER BY A.ENROLL_DATE DESC
+		 	    	  ) D
+		 	    <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+	        	) F
+     			WHERE F.RNUM >= #{ startRow }	  	 
+	</select>
+	
+	<select id="jandiMember" resultMap="jandiResultSet" parameterType="JandiDTO">
+    	SELECT 
+    		   JAN.EMAIL
+			 , JAN.NICKNAME
+			 , JAN.CAREER
+			 , JAN.INTRO
+			 , JAN.PROFILE_PATH
+			 , JAN.ENROLL_DATE
+			 , JAN.ACCOUNT
+			 , JAN.BANK
+			 , JAN.ACC_NAME
+		FROM JANDI_TBL JAN
+    </select>
+    
+     <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
+    
+     SELECT
+		       A.MNG_NO
+			 , A.MNG_ID
+			 , A.PASSWORD
+			 , A.MNG_NAME
+			 , A.CREATE_DATE
+			 , A.IS_DELETED
+			 , A.MNG_NICKNAME
+		    FROM MANAGER_TBL A
+    </select>
 
+	<select id="selectTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT
+		       COUNT(*)
+		  FROM SSACK_TBL
+		  
+		   <where>
+		 	 <if test='searchCondition == "1"'>
+		 	   A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		 	 <if test='searchCondition == "2"'>
+		 	   A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		 	 <if test='searchCondition == "3"'>
+		 	   A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		  </where>
+	</select>
 </mapper>
