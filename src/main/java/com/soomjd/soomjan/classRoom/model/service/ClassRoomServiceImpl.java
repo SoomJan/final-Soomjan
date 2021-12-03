@@ -42,12 +42,12 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		public List<LearningPostDTO> selectLearningPostList(int classCode) {
 			return classRoomMapper.selectLearningPostList(classCode);
 		}
-	
+		
 		@Override
 		public List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap) {
 			return classRoomMapper.selectChatRoomList(chatRoomMap);
 		}
-
+		
 		@Override
 		public int registClass(ClassDTO classDTO) {
 			return classRoomMapper.registClass(classDTO);
@@ -88,5 +88,16 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 			return classRoomMapper.deleteLecture();
 			
 		}
+
+		@Override
+		public LearningPostDTO selectPostByPostCode(int postCode) {
+			return classRoomMapper.selectPostByPostCode(postCode);
+		}
+
+		@Override
+		public List<ClassFileDTO> selectLearningFileList(int postCode) {
+			return classRoomMapper.selectLearningFileList(postCode);
+		}
+
 
 }

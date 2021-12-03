@@ -39,6 +39,17 @@
     	<result column="CLASS_CODE" property="classCode"/>
     </resultMap>
     
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO" id="fileResultMap">
+    	<id column="FILE_CODE" property="fileCode"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="MOKCHA_CODE" property="mokchaCode"/>
+    	<result column="POST_CODE" property="postCode"/>
+    	<result column="IS_DELETED" property="writeDate"/>
+    </resultMap>
+    
     
     <select id="selectClassByClassCode" resultMap="classResultMap">
     	SELECT
@@ -184,8 +195,36 @@
     	 WHERE MOKCHA_CODE = SEQ_LECTURE_MOKCHA_TBL.CURRVAL
     </delete>
     
+    <select id="selectPostByPostCode" resultMap="learningPostResultMap">
+    	SELECT
+    		   L.POST_CODE
+			 , L.WRITE_DATE
+			 , L.RE_DATE
+			 , L.IS_DELETED
+			 , L.CONTENTS
+			 , L.EMAIL
+			 , L.CLASS_CODE
+			 , L.TITLE
+			 , J.NICKNAME
+		  FROM LEARNING_TBL L
+		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
+		 WHERE L.POST_CODE = #{ postCode }
+    </select>
+    
+    <select id="selectLearningFileList" resultMap="fileResultMap">
+    	SELECT
+    		   F.FILE_PATH
+			 , F.EMAIL
+			 , F.ORG_FILE_PATH
+			 , F.WRITE_DATE
+			 , F.FILE_CODE
+			 , F.POST_CODE
+			 , F.IS_DELETED
+			 , J.NICKNAME
+		  FROM LEARNING_FILE_TBL F
+		  JOIN JANDI_TBL J ON (J.EMAIL = F.EMAIL)
+		 WHERE F.POST_CODE = #{ postCode }
+    </select>
     
     
-    
-
 </mapper>

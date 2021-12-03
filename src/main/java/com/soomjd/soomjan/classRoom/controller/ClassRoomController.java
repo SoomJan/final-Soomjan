@@ -70,7 +70,12 @@ private final ClassRoomService classRoomService;
 	}
 	
 	@GetMapping("classLearningPost")
-	public void classLearningPost(Model model, @PathVariable int postCode) {
+	public void classLearningPost(Model model, @RequestParam int postCode) {
+		
+		System.out.println("postCode : " + postCode);
+		
+		model.addAttribute("learnigPost", classRoomService.selectPostByPostCode(postCode));
+		model.addAttribute("learnigFileList", classRoomService.selectLearningFileList(postCode));
 		
 	}
 	
@@ -158,7 +163,7 @@ private final ClassRoomService classRoomService;
 	}
 	
 	@PostMapping("registLecture")
-	public String registLecture(@RequestParam MultipartFile file, HttpServletRequest request, Model model, RedirectAttributes rttr) {
+	public String registLecture(HttpServletRequest request, Model model, RedirectAttributes rttr) {
 		
 		
 		// 목차내용
@@ -172,52 +177,54 @@ private final ClassRoomService classRoomService;
 		mokcha.setClassCode(classCode);
 		
 		if(classRoomService.registLecture(mokcha) > 0) {
-			
-			// 파일
-			System.out.println("file : " +  file);
-			
-			String root = "http://125.132.252.115:21//C://soomjd";
-			String filePath = root + "//lectureFiles";
-			
-			File mkdir = new File(filePath);
-			if(!mkdir.exists()) { mkdir.mkdirs(); }
-			
-			// 파일명 변경처리
-			String originFileName = file.getOriginalFilename();
-			String ext = originFileName.substring(originFileName.lastIndexOf("."));
-			String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-			
-			ClassFileDTO classFile = null;
-		
-			//파일 저장
-			try {
-				file.transferTo(new File(filePath + "\\" + savedName));
-				System.out.println("파일 업로드 성공");
-				
-				classFile = new ClassFileDTO();
-				JandiDTO jandi = (JandiDTO) request.getSession().getAttribute("jandi");
-				classFile.setEmail(jandi.getEmail());
-				classFile.setFilePath(filePath);
-				classFile.setOrgFilePath(originFileName);
-				
-				if(classRoomService.registLectureFile(classFile) > 0) {
-					rttr.addFlashAttribute("modifyMessage", "목차를 추가했습니다.");
-				}else {
-					rttr.addFlashAttribute("modifyMessage", "목차 추가에 실패했습니다.");
-				}
-				
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-				new File(filePath + "\\" + savedName).delete();
-//				int result = classRoomService.deleteLecture();
-				System.out.println("파일 업로드 실패");
-			}
-			
+			rttr.addFlashAttribute("modifyMessage", "목차를 추가했습니다.");
 		}else {
 			rttr.addFlashAttribute("modifyMessage", "목차 추가에 실패했습니다.");
 		}
-		
 		return "redirect:/jandi/class/classLecture";
+	}
+	
+	@PostMapping("uploadMokchaFile")
+	public String uploadMokchaFile(@RequestParam MultipartFile file, Model model, RedirectAttributes rttr, HttpServletRequest request) {
+		
+		// 파일
+		System.out.println("file : " +  file);
+		
+		String root = "http://125.132.252.115:21//C://soomjd";
+		String filePath = root + "//lectureFiles";
+		
+		File mkdir = new File(filePath);
+		if(!mkdir.exists()) { mkdir.mkdirs(); }
+		
+		// 파일명 변경처리
+		String originFileName = file.getOriginalFilename();
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+		
+		ClassFileDTO classFile = null;
+		
+		//파일 저장
+		try {
+			file.transferTo(new File(filePath + "\\" + savedName));
+			System.out.println("파일 업로드 성공");
+			
+			classFile = new ClassFileDTO();
+			JandiDTO jandi = (JandiDTO) request.getSession().getAttribute("jandi");
+			classFile.setEmail(jandi.getEmail());
+			classFile.setFilePath(filePath);
+			classFile.setOrgFilePath(originFileName);
+			
+			if(classRoomService.registLectureFile(classFile) > 0) {
+			}else {
+			}
+
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			new File(filePath + "\\" + savedName).delete();
+			System.out.println("파일 업로드 실패");
+		}
+		
+		return "";
 	}
 	
 }

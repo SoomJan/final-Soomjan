@@ -19,6 +19,8 @@ public interface ClassRoomMapper {
 
 	List<LearningPostDTO> selectLearningPostList(int classCode);
 
+	List<ClassFileDTO> selectLearningFile(int postCode);
+	
 	List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap);
 
 	int registClass(ClassDTO classDTO);
@@ -36,5 +38,10 @@ public interface ClassRoomMapper {
 	int registLectureFile(ClassFileDTO classFile);
 
 	int deleteLecture();
+
+	LearningPostDTO selectPostByPostCode(int postCode);
+
+	List<ClassFileDTO> selectLearningFileList(int postCode);
+
 
 }

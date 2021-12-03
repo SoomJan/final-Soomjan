@@ -94,6 +94,10 @@ input {
 						<h3>${ mokcha.mokchaName }</h3>
 						<input type="text" width="80%" name="contents" readonly="readonly"
 							value="${ mokcha.contents }">
+						<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
+							<br> 영상 업로드<br> <input type="file" name="file" style="border: none;">
+							<button type="submit" class="btnStyle" style="margin: 10px;">영상 추가하기</button>
+						</form>
 					</div>
 					<br>
 				</c:forEach>
@@ -112,7 +116,6 @@ input {
 						<input type="text" name="mockchaName" placeholder="목차 제목을 입력하세요."> 
 						<br> 목차 내용<br>
 						<textarea name="contents" placeholder="목차 내용을 입력하세요."></textarea>
-						<br> 영상 업로드<br> <input type="file" name="file" style="border: none;">
 						<button type="submit" class="btnStyle" style="margin: 10px;">목차 추가하기</button>
 					</form>
 				</div>

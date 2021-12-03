@@ -19,7 +19,7 @@ public interface ClassRoomService {
 	List<MokchaDTO> selectMokchaList(int classCode);
 
 	List<LearningPostDTO> selectLearningPostList(int classCode);
-
+	
 	List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap);
 
 	int registClass(ClassDTO classDTO);
@@ -37,6 +37,10 @@ public interface ClassRoomService {
 	int registLectureFile(ClassFileDTO classFile);
 
 	int deleteLecture();
+
+	LearningPostDTO selectPostByPostCode(int postCode);
+
+	List<ClassFileDTO> selectLearningFileList(int postCode);
 
 
 }
