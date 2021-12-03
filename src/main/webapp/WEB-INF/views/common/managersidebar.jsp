@@ -41,26 +41,51 @@ pageEncoding="UTF-8"%>
       <div class="sidebar-inner-name1">
         <ul>
           <h3>계정 관리</h3>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/mentilist">멘티 조회</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/mentolist">멘토 조회</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/mentilist">새싹 조회</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/mentolist">잔디 조회</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/manager/manproduce">관리자 계정 관리</a></li>
         </ul>
         <ul>
           <h3>신고 관리</h3>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentee">신고된 멘티</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentor">신고된 멘토</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentee">신고된 새싹</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentor">신고된 잔디</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedboard">신고된 게시판</a></li>
         </ul>
         <ul>
           <h3>클래스 관리</h3>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/modifycategory">카테고리 수정 </a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/applyclassadvertisment">클래스 광고 요청</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/classadvertisment">현재 광고중인 클래스</a></li>
+          <li>
+            <a
+              href="${ pageContext.servletContext.contextPath }/manager/modifycategory"
+              >카테고리 수정
+            </a>
+          </li>
+          <li>
+            <a
+              href="${ pageContext.servletContext.contextPath }/manager/applyclassadvertisment"
+              >클래스 광고 요청</a
+            >
+          </li>
+          <li>
+            <a
+              href="${ pageContext.servletContext.contextPath }/manager/classadvertisment"
+              >현재 광고중인 클래스</a
+            >
+          </li>
         </ul>
         <ul>
           <h3>정산 관리</h3>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/classcal">클래스 결제 내역</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/advertcal">광고 결제 내역</a></li>
+          <li>
+            <a
+              href="${ pageContext.servletContext.contextPath }/manager/classcal"
+              >클래스 결제 내역</a
+            >
+          </li>
+          <li>
+            <a
+              href="${ pageContext.servletContext.contextPath }/manager/advertcal"
+              >광고 결제 내역</a
+            >
+          </li>
         </ul>
       </div>
     </div>

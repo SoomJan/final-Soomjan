@@ -61,6 +61,12 @@ p {
 	resize: none;
 }
 
+.areaStyle: focus {
+	border: none;
+	width: 100%;
+	resize: none;
+}
+
 .imgBox {
 	width: 100%;
 	height: 200px;
@@ -89,29 +95,32 @@ p {
 			<div class="introduce">
 				<button class="btnStyle">닉네임 변경</button>
 				<div class="introduce-detail">
-					<img src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png"
+					<img src="${ pageContext.servletContext.contextPath }/resources/images/레드잔디.png"
 						id="profile" onclick="modifyProfile();">
 					<h3>OH! 잔디 멘토</h3>
 				</div>
 			</div>
 			<br>
 			<div class="introduce" style="padding: 3%">
-				<form id="mentorForm" action="" method="post">
-					<button type="submit" class="btnStyle">수정</button>
+				<form id="mentorForm" action="${ pageContext.servletContext.contextPath }/jandi/jandiIntro" method="post">
+
 					<P>멘토 경력</P>
 					<hr class="border-1px-black" />
-					<textarea class="areaStyle" name="" rows="10" cols="20" wrap="hard"
-						placeholder="경력을 작성해 주세요."></textarea>
-				</form>
-				<br>
-				<form id="introduceForm" action="" method="post">
-					<button type="submit" class="btnStyle">수정</button>
+					<textarea class="areaStyle" name="career" rows="10" cols="20" wrap="hard"
+						style="border: 1px solid black"  placeholder="경력을 작성해 주세요."></textarea>
+
+
 					<P>소개</P>
 					<hr class="border-1px-black" />
-					<textarea class="areaStyle" name="" rows="20" cols="20" wrap="hard"
-						placeholder="소개를 작성해 주세요."></textarea>
+					<textarea class="areaStyle" name="introduce" id="introText" rows="20" cols="20" wrap="hard"
+						style="border: 1px solid black" placeholder="소개를 작성해 주세요."></textarea>
+						
+					<button type="button" class="btnStyle">수정</button>
 				</form>
+			
 				<br>
+				<br>
+				<hr>
 				<div class="warining">
 					<p>오잔디 멘토님의 진행중인 클래스</p>
 					<hr class="border-1px-black" />
@@ -159,12 +168,12 @@ p {
 						</button>
 						<h4 class="modal-title" id="myModalLabel">프로필 사진 변경</h4>
 					</div>
-					<form action="" method="post" id="modalForm">
+					<form action="jandiProfile1" method="post" id="modalForm" enctype="multipart/form-data">
 						<div class="modal-body" align="center">
 							<br>
 								<b>변경할 프로필 사진을 선택해 주세요.</b>
 								<br><br>
-								<input type="file" name="profileImage">
+								<input type="file" name="profileImage" id="profileImage">
 							<br>
 							<br>
 							<button class="btn btn-default btnBD" style="margin-right:80%;">프로필 사진 초기화</button>
@@ -174,43 +183,47 @@ p {
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default btnBD"
 								data-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary" id="okBtn">변경</button>
+							<button type="button" class="btn btn-primary" id="okBtn" onclick="modifyProfileImage();">변경</button>
 						</div>
 					</form>
+						<script>
+							function modifyProfileImage(){
+								console.log("전");
+								const profileImage=$('#modalForm')[0];
+								//파일이 여러개인걸 방지
+								const formData=new FormData(profileImage);
+								formData.append("profileImage",$('#profileImage')[0].files[0]);
+								console.log("중");
+								
+								
+								
+								
+								$.ajax({
+								
+									type: "POST",
+									url: "${ pageContext.servletContext.contextPath }/jandi/jandiProfile1",
+									processData: false,
+									contentType: false,
+									data: formData,
+									success: function(data){
+										
+								
+										$('#profile').attr("src","${ pageContext.servletContext.contextPath }/resources/uploadFiles/"+data);
+									
+										$('#openModalBtn').attr("hidden",true);
+									},
+									error:function(err){
+										console.log(err);
+									}
+									
+								});
+							}
+						
+						</script>
 				</div>
 			</div>
 		</div>
-				<script>
-			function modifyProfileImage(){
-				const profileImage=$('#profileImage')[0];
-				//파일이 여러개인걸 방지
-				const formData=new FormData();
-				formData.append("image", profileImage.files[0]);
-				
-				$.ajax({
-				
-					type: "POST",
-					url: "${ pageContext.servletContext.contextPath }/jandi/jandiProfile1",
-					processData: false,
-					contentType: false,
-					data: formData,
-					success: function(rtn){
-						
-						$('#profile').src="";
-
-					},
-					error:function(err){
-						console.log(err);
-					}
-					
-				})
-				
-				
-				
-				
-			}
-		
-		</script>
+			
 		<button type="button" id="openModalBtn" data-toggle="modal" data-target="#profileModal" hidden="true"></button>
 </body>
 <jsp:include page="../common/footer.jsp" />

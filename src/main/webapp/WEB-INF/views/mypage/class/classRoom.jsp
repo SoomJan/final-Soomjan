@@ -61,11 +61,7 @@ img {
 				<h2>강의 소개</h2>
 				<hr>
 				<br>
-				<p>이 클래스는 OH! 잔디만의 특급 비법이 담긴 강의입니다.</p>
-				<p>이 강의를 듣는 여러분은 선택받은 사람들인거에요!</p>
-				<p>그러니까 감사하는 마음을 가지고 게을리 하지 않고 열심히 들어주세요.</p>
-				<p>제가 공을 들여 만든 강의가 아깝지 않게 해주세요.</p>
-				<p>부탁이 아닌 강요랍니다!</p>
+				<p>${ classDTO.contents }</p>
 				<img class="content"
 					src="${ pageContext.servletContext.contextPath }/resources/images/java.png" />
 				<br> <br> <br> <br>

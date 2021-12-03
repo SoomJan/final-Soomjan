@@ -50,52 +50,13 @@ pageEncoding="UTF-8"%>
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
         <h1>클래스 카테고리 수정</h1>
-        <table class="ui basic table warningtable">
-          <thead>
-            <tr>
-              <th>회원 아이디</th>
-              <th>이름</th>
-              <th>신고 사유</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="#">gsp@gmail.com </a></td>
-              <td>권순표</td>
-              <td>욕설</td>
-            </tr>
-            <tr>
-              <td><a href="#">yhj@gmail.com </a></td>
-              <td>양효진</td>
-              <td>욕설</td>
-            </tr>
-            <tr>
-              <td><a href="#">osb@gmail.com </a></td>
-              <td>오수빈</td>
-              <td>욕설</td>
-            </tr>
-            <tr>
-              <td><a href="#">ysm@gmail.com </a></td>
-              <td>유선미</td>
-              <td>욕설</td>
-            </tr>
-            <tr>
-              <td><a href="#">lsh@gmail.com </a></td>
-              <td>이선호</td>
-              <td>욕설</td>
-            </tr>
-            <tr>
-              <td><a href="#">ljh@gmail.com </a></td>
-              <td>이지환</td>
-              <td>욕설</td>
-            </tr>
-            <tr>
-              <td><a href="#">iyr@gmail.com </a></td>
-              <td>임예람</td>
-              <td>욕설</td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          
+        </div>
+        <div>
+
+        </div>
+      </div>
       </div>
     </div>
   </body>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.jandi.model.dao.JandiMapper;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
 public class JandiServiceImpl implements JandiService{
@@ -27,6 +28,18 @@ public class JandiServiceImpl implements JandiService{
 	@Override
 	public List<Map<String, Object>> selectClassCodeList(JandiDTO jandi) {
 		return jandiMapper.selectClassCodeList(jandi);
+	}
+
+	@Override
+
+	public boolean updateProfileImage(Map<String,String> key) {
+		
+		return jandiMapper.updateProfileImage(key)>0? true:false;
+	}	
+		
+	@Override	
+	public List<Map<String, Object>> selectCategoryList() {
+		return jandiMapper.selectCategoryList();
 	}
 
 }

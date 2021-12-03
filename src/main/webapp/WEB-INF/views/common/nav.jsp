@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,7 +17,10 @@ pageEncoding="UTF-8"%>
       rel="stylesheet"
     />
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/glyphicons-halflings-regular.svg" rel="stylesheet" />
+    <link
+      href="${ pageContext.servletContext.contextPath }/resources/css/glyphicons-halflings-regular.svg"
+      rel="stylesheet"
+    />
 
     <!--<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>-->
 
@@ -26,8 +29,7 @@ pageEncoding="UTF-8"%>
     <script>
       $(function () {
         $("#acti").on("click", function () {
-          $("#nav-sidebar").css("left", "84%");
-
+          $("#nav-sidebar").css("left", "81%");
         });
       });
 
@@ -42,39 +44,90 @@ pageEncoding="UTF-8"%>
   <body>
     <div class="nav-sidebar" id="nav-sidebar">
       <div class="nav-sidebar-exit">
-        <img src="resources/images/close.png" class="navi-close" />
+        <img src="${ pageContext.servletContext.contextPath }/resources/images/close.png"/>
       </div>
 
-      <div class="width-100">
+      <div class="nav-sidebar-content">
+        <div>
         <ul>
-          <a href="#">
+          <a href="${ pageContext.servletContext.contextPath }">
             <li>
               <span>🏠</span>
               <span>홈으로</span>
             </li>
           </a>
         </ul>
-        <hr style="opacity: 0.4;">
-        <ul>
-          <a href="login.html" target="_parent">
+      </div>
+      <div>
+          <hr/>
+           <c:if
+            test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}" >
+             <ul>
+
             <li>
+          <a href="${ pageContext.servletContext.contextPath }/member/login">
               <span>✋</span>
               <span>로그인하기</span>
-            </li>
           </a>
+            </li>
         </ul>
         <ul>
-          <a href="#">
             <li>
+          <a href="${ pageContext.servletContext.contextPath }/member/regist">
               <span>📜</span>
               <span>회원가입 </span>
-            </li>
           </a>
+            </li>
         </ul>
-        <hr style="opacity: 0.4;" />
-      </div>
+        </c:if>
 
-      <div class="width-100">
+        <c:if
+            test="${ !empty sessionScope.loginMember.email}" >
+             <ul>
+
+            <li>
+              <a href="#">
+              <span>✋</span>
+              <span>마이페이지</span>
+             </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+          <a href="${ pageContext.servletContext.contextPath }/member/logout">
+              <span>📜</span>
+              <span>로그아웃</span>
+          </a>
+            </li>
+        </ul>
+        </c:if>
+
+        <c:if
+            test="${ !empty sessionScope.loginManager.mngNickName }" >
+             <ul>
+
+            <li>
+          <a href="${ pageContext.servletContext.contextPath }/manager/managermain">
+              <span>✋</span>
+              <span>관리자 페이지</span>
+          </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+          <a href="${ pageContext.servletContext.contextPath }/manager/logout">
+              <span>📜</span>
+              <span>로그아웃</span>
+          </a>
+            </li>
+        </ul>
+        </c:if>
+
+
+      </div>
+      
+      <div>
+        <hr />
         <ul class="find-grass">
           <a href="#">
             <li>
@@ -93,8 +146,8 @@ pageEncoding="UTF-8"%>
         </ul>
       </div>
 
-      <div class="width-100">
-        <hr style="opacity: 0.4;" />
+      <div>
+        <hr/>
         <ul>
           <a href="#">
             <li>
@@ -119,7 +172,7 @@ pageEncoding="UTF-8"%>
             </li>
           </a>
         </ul>
-         <ul>
+        <ul>
           <a href="${ pageContext.servletContext.contextPath }/manager/login">
             <li>
               <span>📑</span>
@@ -128,70 +181,111 @@ pageEncoding="UTF-8"%>
           </a>
         </ul>
 
-        <hr style="opacity: 0.4;" />
+        <hr />
         <ul class="nav-sidebar-inline">
           <a href="#">
             <li>
               <div class="nav-sns2">
-                <img src="${ pageContext.servletContext.contextPath }/resources/images/twitter3.png" class="navi-face" style="width: 20px;" />
-                <img src="${ pageContext.servletContext.contextPath }/resources/images/youtube3.png" class="navi-insta" style="width: 20px;" />
-                <img src="${ pageContext.servletContext.contextPath }/resources/images/instagram3.png" class="navi-tw" style="width: 20px;" />
-                <img src="${ pageContext.servletContext.contextPath }/resources/images/facebook3.png" class="navi-you" style="width: 20px;" />
+                <img
+                  src="${ pageContext.servletContext.contextPath }/resources/images/twitter3.png"
+                  class="navi-face"
+                  style="width: 20px"
+                />
+                <img
+                  src="${ pageContext.servletContext.contextPath }/resources/images/youtube3.png"
+                  class="navi-insta"
+                  style="width: 20px"
+                />
+                <img
+                  src="${ pageContext.servletContext.contextPath }/resources/images/instagram3.png"
+                  class="navi-tw"
+                  style="width: 20px"
+                />
+                <img
+                  src="${ pageContext.servletContext.contextPath }/resources/images/facebook3.png"
+                  class="navi-you"
+                  style="width: 20px"
+                />
               </div>
             </li>
           </a>
         </ul>
       </div>
     </div>
+  </div>
 
     <nav>
       <div class="nav-left">
+        <div>
         <a href="${ pageContext.servletContext.contextPath }">
           <img
             src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"
         /></a>
       </div>
+      </div>
 
       <div class="nav-menu">
         <div class="nav-menu-item">
-          <div><a href="${ pageContext.servletContext.contextPath }/findmentor/findAllMentorMain">멘토보기</a></div>
-          <div><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">클래스</a></div>
-          <div><a href="${ pageContext.servletContext.contextPath }/matching/manteeMain">매칭</a></div>
-          <div><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토신청</a></div>
+          <div>
+            <a
+              href="${ pageContext.servletContext.contextPath }/findmentor/findAllMentorMain"
+              >멘토보기</a
+            >
+          </div>
+          <div>
+            <a
+              href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain"
+              >클래스</a
+            >
+          </div>
+          <div>
+            <a
+              href="${ pageContext.servletContext.contextPath }/matching/manteeMain"
+              >매칭</a
+            >
+          </div>
+          <div>
+            <a
+              href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile"
+              >멘토신청</a
+            >
+          </div>
         </div>
 
         <div class="nav-right">
-        
-         <c:if test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}">
-          <div class="nav-right-login">
-            <a href="${ pageContext.servletContext.contextPath }/member/login"><button type="button" class="btn">로그인</button> </a>
-          </div>
+          <c:if
+            test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}"
+          >
+            <div class="nav-right-login">
+              <a href="${ pageContext.servletContext.contextPath }/member/login"
+                ><button type="button" class="btn">로그인</button>
+              </a>
+               <a
+                href="${ pageContext.servletContext.contextPath }/member/regist"
+                ><button type="button" class="btn">회원가입</button>
+              </a>
+            </div>
 
-          <div class="nav-right-regist">
-            <a href="${ pageContext.servletContext.contextPath }/member/regist"><button type="button" class="btn">회원가입</button> </a>
-          </div>
-          </c:if>
           
+          </c:if>
+
           <c:if test="${ !empty sessionScope.loginMember.email}">
-          <div class="nav-right-login">
-          <h4>"${ sessionScope.loginMember.email}" 님 환영합니다!</h4>
-          </div>
-          <div class="nav-right-regist">
-            <a href="${ pageContext.servletContext.contextPath }/member/logout"><button type="button" class="btn">로그아웃</button> </a>
-          </div>
+            <div class="nav-right-login">
+              <h5>"${ sessionScope.loginMember.email }" 님 <br>
+                환영합니다!</h5>
+               
+            </div>
+            
           </c:if>
-          
+
           <c:if test="${ !empty sessionScope.loginManager.mngNickName}">
-          <div class="nav-right-login">
-         <h4>"${ sessionScope.loginManager.mngNickName }" 님 환영합니다!</h4>
-         </div>
-         <div class="nav-right-regist">
-            <a href="${ pageContext.servletContext.contextPath }/manager/managermain"><button type="button" class="btn">관리자 페이지</button> </a>
-            <a href="${ pageContext.servletContext.contextPath }/manager/logout"><button type="button" class="btn">로그아웃</button> </a>
-          </div>
-         
-        </c:if>
-          
+            <div class="nav-right-login">
+              <h5>"${ sessionScope.loginManager.mngNickName }"님 <br>
+                환영합니다!</h5>
+                
+            </div>
+           
+          </c:if>
 
           <div class="nav-right-sidebar">
             <button type="button" id="acti">
