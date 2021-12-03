@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%>
     />
 
     <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/findmentor/findmentormain.css">
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/findJandi/findJandiMain.css">
     <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -36,21 +36,21 @@ pageEncoding="UTF-8"%>
 
     <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-    <jsp:include page="../common/findmentorsidebar.jsp" />
+    <jsp:include page="../common/findJandisidebar.jsp" />
       
       <div class="container" style="width:75%; margin-top:150px">
 
   <!-- Page Heading -->
   <h1 class="my-4">멘토 보기 | 
-    <small>인기 멘토</small>
+    <small>전체 멘토</small>
   </h1>
 
   <div class="row">
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card">
             <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer1.png" alt="user"
-                	onclick="location.href='${ pageContext.servletContext.contextPath}/findmentor/mentorProfile'"></div>
+                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer1.png" alt="user"  
+                	onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/detailJandi'"></div>
                 <p>우아한형제 IOS | 김민영</p>
             </div>
       </div>
@@ -58,8 +58,7 @@ pageEncoding="UTF-8"%>
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card">
             <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer2.png" alt="user"
-                	onclick="location.href='${ pageContext.servletContext.contextPath}/findmentor/detailmentor'"></div>
+                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer2.png" alt="user"></div>
                 <p>넥슨 & 위메프 | 허민</p>
             </div>
       </div>
