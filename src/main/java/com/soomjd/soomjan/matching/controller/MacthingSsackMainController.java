@@ -1,9 +1,10 @@
 package com.soomjd.soomjan.matching.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.exception.RegistFailedException;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
 import com.soomjd.soomjan.matching.model.service.MatchingService;
 
@@ -35,8 +36,14 @@ public class MacthingSsackMainController {
 
 	
 	@GetMapping("/manteeWrite")
-	public String manteeWrite(){
+	public String manteeWrite(CategoryDTO category, Model model){
+		
+		List<CategoryDTO> categoryList = matchingService.selectCategory(category);
+		System.out.println(categoryList);
+		model.addAttribute("categoryList",categoryList);
+		
 		return "matching/ManteeEstimateWrite";
+		
 	}
 	
 	

@@ -16,6 +16,11 @@
         <result column="IS_DELETED" property="isDeleted"/>
     </resultMap>
     
+    <resultMap id="categoryList" type="CategoryDTO">
+    	<id column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    
     <insert id="registEstimate" parameterType="EstimateDTO">
         INSERT
 		  INTO ESTIMATE_TBL
@@ -42,12 +47,11 @@
 		)
     </insert>
     
-    <select id="selectEncPassword" resultType="java.lang.String" parameterType="MemberDTO">
+    <select id="selectCategory" resultMap="categoryList">
         SELECT
-		       A.PASSWORD
-		  FROM SSACK_TBL A
-		 WHERE A.EMAIL = #{ email }
-		   AND IS_EXIT = 'N'
+		       CATEGORY_CODE
+		     , CATEGORY_NAME
+		  FROM CATEGORY_TBL
     </select>
     
     

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,21 +72,9 @@
 								<th>
 									<select id="category_cb" name="categoryCode">
 										<option value="">선택하세요.</option>
-										<option value="1">개발 · 프로그래밍</option>
-										<option value="2">웹 개발</option>
-										<option value="3">백엔드</option>
-										<option value="4">풀스택</option>
-										<option value="5">모바일</option>
-										<option value="6">앱개발</option>
-										<option value="7">언어 알고리즘</option>
-										<option value="8">자료구조</option>
-										<option value="9">데이터 사이언스</option>
-										<option value="10">데이터베이스</option>
-										<option value="11">개발 도구 데브옵스</option>
-										<option value="12">인프라 게임</option>
-										<option value="13">개발 임베디드</option>
-										<option value="14">IoT 데스크톱</option>
-										<option value="15">앱 개발 교양 · 기타</option>
+										<c:forEach var="category" items="${categoryList}" >
+											<option value="${category.categoryCode}">${category.categoryName}</option>
+										</c:forEach>
 									</select>
 								</th>
 							</tr>
