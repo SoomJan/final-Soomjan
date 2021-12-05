@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
+import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.service.ManagerService;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
@@ -170,12 +172,55 @@ public class ManagerController {
 		return "manager/reportedmentor";
 	}
 	
-	// 클래스 카테고리 수정
+	// 클래스 카테고리 조회
 	@GetMapping("/modifycategory")
-	public String modifycategory() {
+	public String modifycategory(Model model, CategoryDTO category) {
+		
+		List<CategoryDTO> categoryList = managerService.selectCategory(category);
+		System.out.println(categoryList);
+		System.out.println(categoryList.size());
+		System.out.println(categoryList.get(0));
+		System.out.println(categoryList.get(0).getCategoryCode());
+		System.out.println(categoryList.get(1));
+		System.out.println(categoryList.get(1).getCategoryCode());
+//		System.out.println(categoryList.get(categoryList.size()).getCategoryCode() + 1);
+
+		
+		model.addAttribute("categoryList",categoryList);
+		
 		
 		return "manager/modifycategory";
 	}
+	
+	// 클래스 카테고리 추가
+	@PostMapping("/modifycategory")
+	public String modifycategory(@ModelAttribute CategoryDTO category, Model model) throws MemberRegistException {
+		
+		List<CategoryDTO> categoryList = managerService.selectCategory(category);
+		
+		System.out.println(category.getCategoryName());
+		System.out.println(category);
+		System.out.println(categoryList.size());
+		
+		category.setCategoryCode(categoryList.size() + 1);
+//		category.setCategoryCode(categoryList.get(categoryList.size()).getCategoryCode()-1);
+		
+//		System.out.println(categoryList.get(categoryList.size()).getCategoryCode() + 1);
+		
+		
+		/* 성공 실패의 처리 */
+		if (!managerService.modifycategory(category)) {
+
+			throw new MemberRegistException("회원가입에 실패하셨습니다.");
+		} else {
+			
+			model.addAttribute("categoryList",categoryList);
+
+
+			return "redirect:/manager/modifycategory";
+		}
+	}
+	
 	
 	// 클래스 광고 요청
 	@GetMapping("/applyclassadvertisment")

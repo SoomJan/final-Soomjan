@@ -100,61 +100,26 @@ pageEncoding="UTF-8"%>
         <thead>
           <tr>
             <th></th>
-            <th>이름</th>
             <th>닉네임</th>
             <th>아이디</th>
+            <th>계정 비활성화</th>
           </tr>
         </thead>
         <tbody>
            <c:forEach var="managerMember" items="${ managerList }">
           <tr>
             <td><input class="check" type="checkbox"></td>
-            <td>${ managerMember.mngName }</td>
             <td>${ managerMember.mngNickName }</td>
             <td>${ managerMember.mngId }</td>
+            <td>${ managerMember.isDeleted }</td>
           </tr>
             </c:forEach>
- <!--          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>오수빈</td>
-            <td>오잔디</td>
-            <td>ojd</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>임예람</td>
-            <td>임잔디</td>
-            <td>lyr</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>이선호</td>
-            <td>이잔디</td>
-            <td>lsh</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>이지환</td>
-            <td>환잔디</td>
-            <td>ljh</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>유선미</td>
-            <td>유잔디</td>
-            <td>ysm</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>양효진</td>
-            <td>양잔디</td>
-            <td>yhj</td>
-          </tr> -->
+ 
         </tbody>
       </table>
 
       <form>
-      <input class="delete btn" type="submit" value="계정 삭제">
+      <input class="delete btn" type="submit" value="계정 비활성화">
       </form>
 
       <h3>관리자 계정 생성 </h3>
@@ -181,7 +146,7 @@ pageEncoding="UTF-8"%>
             if(!name) {
               $("#nameModal").fadeIn();
               $(".btn").click(function(){
-                $("#nameModal").fadeOut();
+              $("#nameModal").fadeOut();
               });
             } else if(!nickName) {
               $("#nickModal").fadeIn();
@@ -212,7 +177,7 @@ pageEncoding="UTF-8"%>
           });
         });
 
-        /* 관리자 계정 삭제하기 */
+        /* 관리자 계정 비활성화하기 */
         $(function(){
           $(".delete").click(function(e){
 

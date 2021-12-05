@@ -12,6 +12,7 @@ import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dao.ManagerMapper;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
@@ -65,6 +66,18 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public List<MemberDTO> ssackMember(SelectCriteria searchMap) {
 		return mapper.ssackMember(searchMap);
+	}
+
+
+	@Override
+	public List<CategoryDTO> selectCategory(CategoryDTO category) {
+		return mapper.selectCategory(category);
+	}
+
+
+	@Override
+	public boolean modifycategory(CategoryDTO category) {
+		return mapper.modifycategory(category)> 0? true:false;
 	}
 
 }

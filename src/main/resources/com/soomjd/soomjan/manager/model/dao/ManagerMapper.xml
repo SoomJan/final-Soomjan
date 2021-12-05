@@ -39,6 +39,11 @@
     	<result column="MNG_NICKNAME" property="mngNickName"/>
     </resultMap>
     
+    <resultMap id="categoryResult" type="CategoryDTO">
+    	<id column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    
   <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="ssackDTO">
         SELECT
 		       A.EMAIL
@@ -192,4 +197,20 @@
 		 	 </if>
 		  </where>
 	</select>
+	
+	<!-- 카테고리 조회 -->
+	<select id="selectCategory" resultMap="categoryResult">
+		SELECT * FROM CATEGORY_TBL ORDER BY CATEGORY_CODE
+	</select>
+	
+	<!-- 카테고리 추가 -->
+	<insert id="modifycategory" parameterType="CategoryDTO">
+	INSERT
+	  INTO CATEGORY_TBL
+	  (
+	  	CATEGORY_CODE, CATEGORY_NAME
+	  )
+	VALUES
+	( #{categoryCode}, #{categoryName} )
+	</insert>
 </mapper>

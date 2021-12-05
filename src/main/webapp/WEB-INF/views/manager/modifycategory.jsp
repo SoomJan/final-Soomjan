@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -23,6 +24,10 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
       rel="stylesheet"
     />
+    <link
+    href="${ pageContext.servletContext.contextPath }/resources/css/manager/modifycategory.css"
+    rel="stylesheet"
+  />
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
@@ -50,15 +55,39 @@ pageEncoding="UTF-8"%>
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
         <h1>클래스 카테고리 수정</h1>
-        <div>
-          
-        </div>
-        <div>
+        <br><br>
+        <div class="modifycategory-left">
+          <h4> 현재 카테고리</h4>
+
+          <table class="category-table">
+            <thead>
+              <tr>
+                <td>카테고리 번호</td>
+                <td>카테고리 이름</td>
+              </tr>
+            </thead>
+
+            <tbody>
+             	<c:forEach var="category" items="${categoryList }">
+            	<tr>
+             		<td> ${ category.categoryCode } </td>
+					    <td>${ category.categoryName }</td>             	
+             	</tr>
+             	</c:forEach>
+            </tbody>
+          </table>
 
         </div>
+        <div class="modifycategory-right">
+          <h4> 수정할 카테고리</h4>
+          <form action="${ pageContext.servletContext.contextPath }/manager/modifycategory" method="POST">
+            <input type="text" name="categoryName">
+            <button type="submit">추가하기</button>
+          </form>
+          
+        </div>
       </div>
       </div>
-    </div>
   </body>
 
   <jsp:include page="../common/footer.jsp" />

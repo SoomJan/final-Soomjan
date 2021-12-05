@@ -39,30 +39,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
-      <style>
-  	.manager-paging ul li a {color: white !important;}
-    
-    .manager-paging {
-  		width: 40%;
- 		margin: 0 auto;
- 		height: 50px;
- 		text-align: center;
-  		position: relative;
- 		top: 20px;
- 		 /* border: 1px solid blue; */
-	}
-
-	.input-search {
-		width: 400px;
-    	position: relative;
-    	left: 18%;
-    	top: 10px;
-	}
-	
-	.menti-search {height: 50px;}
-	
-	.warningtable tbody tr td a {color: black !important;}
-  	</style>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -70,7 +46,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 새싹 조회</h1><br>
+        <h1>신고된 새싹 조회</h1>
+        <br />
         <table class="ui basic table warningtable">
           <thead>
             <tr>

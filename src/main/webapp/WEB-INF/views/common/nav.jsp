@@ -265,26 +265,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 ><button type="button" class="btn">회원가입</button>
               </a>
             </div>
-
-          
           </c:if>
 
           <c:if test="${ !empty sessionScope.loginMember.email}">
             <div class="nav-right-login">
               <h5>"${ sessionScope.loginMember.email }" 님 <br>
                 환영합니다!</h5>
-               
             </div>
-            
           </c:if>
 
           <c:if test="${ !empty sessionScope.loginManager.mngNickName}">
             <div class="nav-right-login">
               <h5>"${ sessionScope.loginManager.mngNickName }"님 <br>
                 환영합니다!</h5>
-                
             </div>
-           
           </c:if>
 
           <div class="nav-right-sidebar">
