@@ -16,4 +16,6 @@ public interface JandiMapper {
 
 	List<Map<String, Object>> selectCategoryList();
 
+	int updateIntro(Map<String, Object> key);
+
 }

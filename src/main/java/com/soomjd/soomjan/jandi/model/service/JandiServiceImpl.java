@@ -42,4 +42,10 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.selectCategoryList();
 	}
 
+	@Override
+	public boolean updateIntro(Map<String, Object> key) {
+		
+		return jandiMapper.updateIntro(key)>0? true:false;
+	}
+
 }

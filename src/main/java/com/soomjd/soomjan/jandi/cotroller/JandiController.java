@@ -47,6 +47,7 @@ public class JandiController {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+			
 		
 		model.addAttribute("jandi", jandi);
 		
@@ -54,6 +55,9 @@ public class JandiController {
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
 		
 		System.out.println("환영합니다. " + jandi.getEmail() + "잔디님!");
+
+		System.out.println(jandi);
+	
 		
 		return "jandi/mentorProfile";
 	}
@@ -64,6 +68,9 @@ public class JandiController {
 	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage,HttpSession session, HttpServletRequest request, Model model) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		
+		
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		
 		String filePath=root+"/uploadFiles";
@@ -99,11 +106,17 @@ public class JandiController {
 			key.put("savedName", savedName);
 			key.put("email", member.getEmail());
 			
+			File originFile = new File(filePath+"/"+jandi.getprofile_path());
+			
 			jandiService.updateProfileImage(key) ;
+			
+			originFile.delete();
 			try {
 				profileImage.transferTo(new File(filePath+"/"+savedName));
 
 				model.addAttribute("address",savedName);
+				
+				
 				
 				
 			} catch (IllegalStateException | IOException e) {
@@ -118,12 +131,20 @@ public class JandiController {
 	
 	
 	@PostMapping("/jandiIntro")
-	public void profileIntroUpdate(@ModelAttribute JandiIntroDTO intro, HttpServletRequest request,HttpSession session, Model model) {
+	public String profileIntroUpdate(@ModelAttribute JandiIntroDTO intro, HttpServletRequest request,HttpSession session) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		
 		System.out.println(member);
 		System.out.println(intro);
+		
+		Map<String,Object> key=new HashMap<>();
+		key.put("member", member);
+		key.put("intro",intro);
+		
+		jandiService.updateIntro(key);
+		
+		return "redirect:jandi/mentorProfile";
 		
 	}
 	
@@ -131,13 +152,21 @@ public class JandiController {
 	
 	@GetMapping("/jandiCalc")
 	public String jandiCalc(){
+		
+		
+		
+		
+		
+		
 		return "jandi/mentorCalc";
 	}
 	
 	// 매핑 주소와 동일한 jsp파일이 있는 경우 해당 jsp를 띄워준다.
 	@GetMapping("/createAd")
-	public void createAd(){
+	public String createAd(){
 		
+		
+		return "jandi/createAd";
 	}
 	
 	@GetMapping("/myAd")

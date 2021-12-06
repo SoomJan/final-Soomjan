@@ -16,4 +16,6 @@ public interface JandiService {
 
 	List<Map<String, Object>> selectCategoryList();
 
+	boolean updateIntro(Map<String, Object> key);
+
 }

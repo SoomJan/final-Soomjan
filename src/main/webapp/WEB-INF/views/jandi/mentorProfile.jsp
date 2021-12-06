@@ -95,34 +95,41 @@ p {
 			<div class="introduce">
 				<button class="btnStyle">닉네임 변경</button>
 				<div class="introduce-detail">
-					<img src="${ pageContext.servletContext.contextPath }/resources/images/레드잔디.png"
+					<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${ requestScope.jandi.profile_path}"
 						id="profile" onclick="modifyProfile();">
-					<h3>OH! 잔디 멘토</h3>
+					<h3>${ requestScope.jandi.nickName }</h3>
 				</div>
 			</div>
 			<br>
+			
 			<div class="introduce" style="padding: 3%">
+			
+			
 				<form id="mentorForm" action="${ pageContext.servletContext.contextPath }/jandi/jandiIntro" method="post">
 
 					<P>멘토 경력</P>
 					<hr class="border-1px-black" />
 					<textarea class="areaStyle" name="career" rows="10" cols="20" wrap="hard"
-						style="border: 1px solid black"  placeholder="경력을 작성해 주세요."></textarea>
+						style="border: 1px solid black"  placeholder="경력을 작성해 주세요.">
+						${ requestScope.jandi.career }
+						</textarea>
 
 
 					<P>소개</P>
 					<hr class="border-1px-black" />
 					<textarea class="areaStyle" name="introduce" id="introText" rows="20" cols="20" wrap="hard"
-						style="border: 1px solid black" placeholder="소개를 작성해 주세요."></textarea>
+						style="border: 1px solid black" placeholder="소개를 작성해 주세요.">
+						${ requestScope.jandi.intro }
+						</textarea>
 						
-					<button type="button" class="btnStyle">수정</button>
+					<button type="submit" class="btnStyle">수정</button>
 				</form>
 			
 				<br>
 				<br>
 				<hr>
 				<div class="warining">
-					<p>오잔디 멘토님의 진행중인 클래스</p>
+					<p>"${ requestScope.jandi.nickName }" 멘토님의 진행중인 클래스</p>
 					<hr class="border-1px-black" />
 					<table style="width: 100%">
 						<tr>

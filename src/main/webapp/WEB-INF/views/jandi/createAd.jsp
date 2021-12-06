@@ -58,15 +58,17 @@ table{
 	<div class="common-sidebar">
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
-			<h3>클래스 광고 신청</h3>
-			<hr class="border-1px-black" />
-			<h4 style="padding-left: 30px;">클래스 선택 : &nbsp;
-			<select name="myClass" form="createAdForm">
-				<option>OH! 잔디의 JAVA</option>
-			</select>
-			</h4>
-			<br>
 			<form id="createAdForm" action="" method="post" enctype="multipart/form-data">
+				<h3>클래스 광고 신청</h3>
+				<hr class="border-1px-black" />
+				<h4 style="padding-left: 30px;">클래스 선택 : &nbsp;
+				<select name="myClass" form="createAdForm">
+					<option>OH! 잔디의 JAVA</option>
+				</select>
+				</h4>
+				
+				<br>
+
 				<textArea name="adContents" cols="5" rows="5" placeholder="광고 문구를 입력해주세요."
 				style="resize:none; margin-left: 30px; border:none; width:90%;"></textArea>
 				<h4>등록할 이미지 파일을 선택해 주세요.</h4>

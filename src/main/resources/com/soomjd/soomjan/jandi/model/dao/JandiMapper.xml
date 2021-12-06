@@ -50,5 +50,15 @@
     <select id="selectCategoryList" resultType="hashmap">
     	SELECT * FROM CATEGORY_TBL
     </select>
+    
+    <update id="updateIntro">
+    	UPDATE
+    		   JANDI_TBL
+    	   SET CAREER=#{intro.career},
+    	       INTRO=#{intro.introduce}
+    	 WHERE EMAIL=#{member.email}         
+    
+    
+    </update>
 
 </mapper>
