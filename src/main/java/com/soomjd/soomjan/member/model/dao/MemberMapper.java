@@ -9,8 +9,6 @@ import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MemberMapper {
 	
-	List<HashMap<String, Object>> selectTest();
-	
 	int insertMember(MemberDTO member);
 	
 	String selectEncPassword(MemberDTO member);
@@ -20,5 +18,9 @@ public interface MemberMapper {
 	int idDupCheck(Map<String, String> map);
 
 	int nickDupCheck(Map<String, String> map);
+
+	String findEmail(Map<String, String> map);
+
+	int findPwd(Map<String, String> map);
 
 }

@@ -79,8 +79,8 @@ pageEncoding="UTF-8"%>
         <div class="content">
             <div class="title">이메일</div>
             <input type="text" placeholder="이메일을 입력하세요" name="email" id="email">
-            <button onclick="return duplicationCheck()">중복확인</button>
-            <button type="button" onclick="return sendMail()">이메일 인증하기</button>
+            <button type="button" onclick="return duplicationCheck()">중복확인</button>
+            <button type="button" id="proofButton" onclick="return sendMail()" style="display: none;">이메일 인증하기</button>
             <div class="emailCheck"></div>
             <input type="checkbox" id="emailBoolean" style="display: none;">
             <input type="checkbox" id="emailBoolean2" style="display: none;">
@@ -90,18 +90,11 @@ pageEncoding="UTF-8"%>
         <br /><br />
 
         <div class="content">
-<<<<<<< HEAD
-            <div class="title">인증번호</div>
-            <input type="text" name="proof" id="proof">
-            <input type="text" id="proof2" style="display: none;">
-            <div class="proofCheck"></div>
-            <input type="checkbox" id="proofBoolean" style="display: none;">
-=======
           <div class="title">인증번호</div>
-          <input type="number" name="proof" />
-          <div class="authenticationCheck"></div>
+          <input type="text" name="proof" id="proof">
+          <input type="text" id="proof2" style="display: none;">
+          <div class="proofCheck"></div>
           <input type="checkbox" id="proofBoolean" style="display: none" />
->>>>>>> e4c9a541e0ed011f4b045605e6cde3b7f1cc2318
         </div>
 
         <br /><br />
@@ -124,12 +117,12 @@ pageEncoding="UTF-8"%>
           <input type="checkbox" id="pwdBoolean2" style="display: none" />
         </div>
 
-        <br /><br />
+        <br/><br />
 
         <div class="content">
           <div class="title">닉네임</div>
-          <input type="text" name="nickName" id="nickName" />
-          <button onclick="return duplicationCheck2()">중복확인</button>
+          <input type="text" name="nickName" id="nickName"/>
+          <button type="button" onclick="return duplicationCheck2()">중복확인</button>
           <input type="checkbox" id="nickBoolean" style="display: none" />
         </div>
 
@@ -156,6 +149,7 @@ pageEncoding="UTF-8"%>
       </form>
 
       <script>
+
         /* 이름 형식 체크 */
         $(function () {
           $("#name").keyup(function () {
@@ -182,10 +176,7 @@ pageEncoding="UTF-8"%>
           let email = $("#email").val();
 
           if (!email) {
-            $("#nullModal").fadeIn();
-            $(".btn").click(function () {
-              $("#nullModal").fadeOut();
-            });
+            showModal("닉네임을 입력해주세요.");
           } else {
             $.ajax({
               url: "${ pageContext.servletContext.contextPath }/member/idDupCheck",
@@ -193,17 +184,12 @@ pageEncoding="UTF-8"%>
               data: { email: email },
               success: function (data) {
                 if (data == "true") {
-                  $("#dupModal").fadeIn();
-                  $(".btn").click(function () {
-                    $("#dupModal").fadeOut();
-                    $("#emailBoolean").prop("checked", false);
-                  });
+                  showModal("중복된 이메일입니다.");
+                  $("#emailBoolean").prop("checked", false);
                 } else {
-                  $("#notDupModal").fadeIn();
-                  $(".btn").click(function () {
-                    $("#notDupModal").fadeOut();
-                    $("#emailBoolean").prop("checked", true);
-                  });
+                  showModal("사용 가능한 이메일입니다.");
+                  $("#proofButton").css("display", "");
+                  $("#emailBoolean").prop("checked", true);
                 }
               },
               error: function (error) {
@@ -225,10 +211,12 @@ pageEncoding="UTF-8"%>
               data: {email : email},
               success: function(data) {
                 if(!data) {
-                  alert("이메일 전송 실패");
+                  showModal("이메일 전송 실패");
+                  $("#emailBoolean3").prop("checked", false);
                 } else {
-                  alert("이메일 전송 완료");
+                  showModal("이메일 전송 완료");
                   $("#proof2").val(data);
+                  $("#emailBoolean3").prop("checked", true);
                 }
               },
               error: function(error) {
@@ -246,33 +234,41 @@ pageEncoding="UTF-8"%>
               let num2 = $("#proof2").val();
 
               if(num1 == num2) {
-                $(".proofCheck").html("인증 번호가 일치합니다.").css("color", "blue");
-               $(this).focus().css("background", "palegreen");
-               $("#proofBoolean").prop("checked", true);
+                $(".proofCheck").html("인증 번호가 일치합니다.")
+                .css("color", "blue");
+                $(this).focus().css("background", "palegreen");
+              $("#proofBoolean").prop("checked", true);
               } else {
-                $(".proofCheck").html("인증번호가 일치하지 않습니다.").css("color","red");
-               $(this).focus().css("background", "lightpink");
-               $("#emailBoolean2").prop("checked", false);
+                $(".proofCheck")
+                .html("인증 번호가 일치하지 않습니다.")
+                .css("color", "red");
+              $(this).focus().css("background", "lightpink");
+              $("#proofBoolean").prop("checked", false);
               }
             });
           });
+          
+        /* 이메일 형식 체크 */
+        $(function () {
+          $("#email").keyup(function () {
+            let filter =
+              /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
-          /* 이메일 형식 체크 */
-          $(function(){
-        	 $("#email").keyup(function(){
-
-             let filter = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-             if(!filter.test($(this).val())){
-               $(".emailCheck").html("올바르지 않은 이메일 형식입니다.").css("color","red");
-               $(this).focus().css("background", "lightpink");
-               $("#emailBoolean2").prop("checked", false);
-             } else {
-               $(".emailCheck").html("올바른 이메일 형식입니다.").css("color", "blue");
-               $(this).focus().css("background", "palegreen");
-               $("#emailBoolean2").prop("checked", true);
-             }
-           });
+            if (!filter.test($(this).val())) {
+              $(".emailCheck")
+                .html("올바르지 않은 이메일 형식입니다.")
+                .css("color", "red");
+              $(this).focus().css("background", "lightpink");
+              $("#emailBoolean2").prop("checked", false);
+            } else {
+              $(".emailCheck")
+                .html("올바른 이메일 형식입니다.")
+                .css("color", "blue");
+              $(this).focus().css("background", "palegreen");
+              $("#emailBoolean2").prop("checked", true);
+            }
+          });
+        });
 
         /* 핸드폰 번호 형식 체크 */
         $(function () {
@@ -341,10 +337,7 @@ pageEncoding="UTF-8"%>
           let nickName = $("#nickName").val();
 
           if (!nickName) {
-            $("#nullModal2").fadeIn();
-            $(".btn").click(function () {
-              $("#nullModal2").fadeOut();
-            });
+            showModal("닉네임을 입력해주세요.");
           } else {
             $.ajax({
               url: "${ pageContext.servletContext.contextPath }/member/nickDupCheck",
@@ -352,17 +345,11 @@ pageEncoding="UTF-8"%>
               data: { nickName: nickName },
               success: function (data) {
                 if (data == "true") {
-                  $("#dupModal2").fadeIn();
-                  $(".btn").click(function () {
-                    $("#dupModal2").fadeOut();
-                    $("#nickBoolean").prop("checked", false);
-                  });
+                  showModal("중복된 닉네임입니다.");
+                  $("#nickBoolean").prop("checked", false);
                 } else {
-                  $("#notDupModal2").fadeIn();
-                  $(".btn").click(function () {
-                    $("#notDupModal2").fadeOut();
-                    $("#nickBoolean").prop("checked", true);
-                  });
+                  showModal("사용 가능한 닉네임입니다.");
+                  $("#nickBoolean").prop("checked", true);
                 }
               },
               error: function (error) {
@@ -380,40 +367,29 @@ pageEncoding="UTF-8"%>
             let email = $("#emailBoolean").prop("checked");
             let email2 = $("#emailBoolean2").prop("checked");
             let email3 = $("#emailBoolean3").prop("checked");
+            let proof = $("#proofBoolean").prop("checked");
             let password = $("#pwdBoolean").prop("checked");
             let password2 = $("#pwdBoolean2").prop("checked");
             let nickName = $("#nickBoolean").prop("checked");
             let phone = $("#phoneBoolean").prop("checked");
 
             if (!name) {
-              $("#nameModal").fadeIn();
-              $(".btn").click(function () {
-                $("#nameModal").fadeOut();
-              });
+              showModal("이름을 다시 확인해주세요.");
               return false;
-            } else if(!email || !email2 || email3) {
-              $("#emailModal").fadeIn();
-              $(".btn").click(function () {
-                $("#emailModal").fadeOut();
-              });
+            } else if(!email || !email2 || !email3) {
+              showModal("이메일을 다시 확인해주세요.");
+              return false;
+            } else if(!proof) {
+              showModal("인증 번호를 다시 확인해주세요.");
               return false;
             } else if (!password || !password2) {
-              $("#pwdModal").fadeIn();
-              $(".btn").click(function () {
-                $("#pwdModal").fadeOut();
-              });
+              showModal("비밀 번호를 다시 확인해주세요.");
               return false;
             } else if (!nickName) {
-              $("#nickModal").fadeIn();
-              $(".btn").click(function () {
-                $("#nickModal").fadeOut();
-              });
+              showModal("닉네임을 다시 확인해주세요.");
               return false;
             } else if (!phone) {
-              $("#phoneModal").fadeIn();
-              $(".btn").click(function () {
-                $("#phoneModal").fadeOut();
-              });
+              showModal("핸드폰 번호를 다시 확인해주세요.");
               return false;
             } else {
               e.preventDefault();
@@ -430,6 +406,17 @@ pageEncoding="UTF-8"%>
             }
           });
         });
+
+        /* 모달창 띄워주는 함수 */
+          function showModal(str) {
+            $("#modalTitle").html(str);
+            $("#Modal").fadeIn();
+              $(".btn").click(function () {
+                $("#Modal").fadeOut();
+              });
+          };
+
+
       </script>
     </main>
 
@@ -437,116 +424,21 @@ pageEncoding="UTF-8"%>
 
     <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
-<script>
-	function openModal(str){
-		$("#modalTitle").text(str);
-		$("#dupModal2").fadeIn();
-	};
-</script>
 </html>
+
 <!-- 모달창 모아두는 곳 -->
 <div class="ui mini modal" id="registModal">
   <div class="contents">
-    <p class="titles" id="modalTitle">회원 가입에 성공하셨습니다.</p>
+    <p class="titles">회원 가입이 완료되었습니다.</p>
     <div class="re-modal-btn">
       <button id="goMain" class="ui button btn">확인</button>
     </div>
   </div>
 </div>
 
-<div class="ui mini modal" id="nullModal">
+<div class="ui mini modal" id="Modal">
   <div class="contents">
-    <p class="titles">이메일을 입력해주세요.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="dupModal">
-  <div class="contents">
-    <p class="titles">중복된 이메일입니다.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="notDupModal">
-  <div class="contents">
-    <p class="titles">사용 가능한 이메일입니다.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="nullModal2">
-  <div class="contents">
-    <p class="titles">닉네임을 입력해주세요.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="dupModal2">
-  <div class="contents">
-    <p class="titles">중복된 닉네임입니다.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="notDupModal2">
-  <div class="contents">
-    <p class="titles">사용 가능한 닉네임입니다.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="nameModal">
-  <div class="contents">
-    <p class="titles">이름을 다시 확인해주세요.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="emailModal">
-  <div class="contents">
-    <p class="titles">이메일을 다시 확인해주세요.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="pwdModal">
-  <div class="contents">
-    <p class="titles">비밀번호를 다시 확인해주세요.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="nickModal">
-  <div class="contents">
-    <p class="titles">닉네임을 다시 확인해주세요.</p>
-    <div class="re-modal-btn">
-      <button class="ui button btn">확인</button>
-    </div>
-  </div>
-</div>
-
-<div class="ui mini modal" id="phoneModal">
-  <div class="contents">
-    <p class="titles">핸드폰 번호를 다시 확인해주세요.</p>
+    <p class="titles" id="modalTitle"></p>
     <div class="re-modal-btn">
       <button class="ui button btn">확인</button>
     </div>

@@ -73,7 +73,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </ul>
         <ul>
             <li>
-          <a href="${ pageContext.servletContext.contextPath }/member/regist">
+          <a href="${ pageContext.servletContext.contextPath }/member/terms">
               <span>📜</span>
               <span>회원가입 </span>
           </a>
@@ -261,7 +261,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 ><button type="button" class="btn">로그인</button>
               </a>
                <a
-                href="${ pageContext.servletContext.contextPath }/member/regist"
+                href="${ pageContext.servletContext.contextPath }/member/terms"
                 ><button type="button" class="btn">회원가입</button>
               </a>
             </div>

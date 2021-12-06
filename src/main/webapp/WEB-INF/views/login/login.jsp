@@ -61,11 +61,11 @@ pageEncoding="UTF-8"%>
 
                 <br /><br />
                 <div>
-                  <a href="#">이메일찾기</a>
+                  <a href="${ pageContext.servletContext.contextPath }/member/findEmail">이메일찾기</a>
                   &nbsp;&nbsp;&nbsp;
-                  <a href="#">회원가입</a>
+                  <a href="${ pageContext.servletContext.contextPath }/member/terms">회원가입</a>
                   &nbsp;&nbsp;&nbsp;
-                  <a href="#">비밀번호찾기</a>
+                  <a href="${ pageContext.servletContext.contextPath }/member/findPwd">비밀번호찾기</a>
                 </div>
               </div>
             </form>

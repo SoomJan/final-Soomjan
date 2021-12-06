@@ -86,9 +86,20 @@
 		 WHERE A.NICKNAME= #{ nickName }
     </select>
     
-    <select id="selectTest" resultType="hashmap">
-        SELECT *
-          FROM SSACK_TBL 
+    <select id="findEmail" resultType="java.lang.String" parameterType="HashMap">
+        SELECT
+               A.EMAIL
+          FROM SSACK_TBL A
+         WHERE A.NAME = #{ name }
+           AND A.PHONE = #{ phone }
+    </select>
+    
+    <select id="findPwd" resultType="_int" parameterType="HashMap">
+        SELECT
+		       COUNT(*)
+		  FROM SSACK_TBL A
+		 WHERE A.NAME= #{ name }
+           AND A.EMAIL= #{ email }
     </select>
 
 </mapper>

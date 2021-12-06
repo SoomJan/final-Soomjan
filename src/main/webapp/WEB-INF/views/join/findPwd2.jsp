@@ -15,6 +15,12 @@ pageEncoding="UTF-8"%>
      <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
    <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css" rel="stylesheet" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
+    />
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
 
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -39,52 +45,102 @@ pageEncoding="UTF-8"%>
         </div>
  
         <br><br><br><br><br><br>
+        <form method="post" id="submitForm">
         <div class="content">
             <div class="title">인증번호</div>
-            <input type="number" name="authentication">
-            <div class="authenticationCheck">인증되었습니다.</div>
+            <input type="text" name="proof" id="num1">
+            <input type="text" id="num2" style="display: none;">
+            <button type="button" id="proof" onclick="return sendMail()">인증번호 보내기</button>
+            <input type="hidden" name="email" id="email" value="${ email }">
         </div>
 
         <br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br>
         <div style="align-items: center; width: fit-content; margin: auto;">
-            <button onclick="show();">확인</button>
+            <button type="button" onclick="return confirm()">확인</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="reset">취소</button>
         </div>
-
-
-
-        <div id="modal-page">
-          <p>인증번호가 틀렸습니다.<br>다시 입력해주세요</p>
-          <button onclick="off();">확인</button>
-        </div>
+      </form>
 
         <script>
-          function show(){
-            document.getElementById("modal-page").style.visibility="visible";
+          
+          /* 인증번호 보내는 함수 */
+          function sendMail() {
+
+            let email = "${ email }";
+
+            $.ajax({
+              url: "${ pageContext.servletContext.contextPath }/sendMail",
+              type: "post",
+              data: {email : email},
+              success: function(data) {
+                if(!data) {
+                  showModal("이메일 전송 실패");
+                } else {
+                  showModal("이메일 전송 완료");
+                  $("#num2").val(data);
+                }
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
+            return false;
           }
 
-          function off(){
-            document.getElementById("modal-page").style.visibility="hidden";
+          /* 인증번호 확인 */
+          function confirm() {
+
+            let num1 = $("#num1").val();
+            let num2 = $("#num2").val();
+
+            if(num1 == num2) {
+              $("#nextModal").fadeIn();
+                    $(".btn").click(function () {
+                      $("#submitForm")
+                      .attr("action", "${ pageContext.servletContext.contextPath }/member/findPwd3").submit();
+                    });
+            } else {
+              showModal("인증번호가 일치하지 않습니다.");
+            }
           }
+
+           /* 모달창 띄워주는 함수 */
+        function showModal(str) {
+            $("#modalTitle").html(str);
+            $("#Modal").fadeIn();
+              $(".btn").click(function () {
+                $("#Modal").fadeOut();
+              });
+          };
 
         </script>
       
     </main>
 
-
-
-
-
-
-
-
-
-
     <jsp:include page="../common/footer.jsp" />
-
 
     <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
+
+<!-- 모달창 모아두는 곳 -->
+
+<div class="ui mini modal" id="Modal">
+  <div class="contents">
+    <p class="titles" id="modalTitle"></p>
+    <div class="re-modal-btn">
+      <button class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>
+
+<div class="ui mini modal" id="nextModal">
+  <div class="contents">
+    <p class="titles" id="modalTitle">인증 번호가 일치합니다.</p>
+    <div class="re-modal-btn">
+      <button class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>

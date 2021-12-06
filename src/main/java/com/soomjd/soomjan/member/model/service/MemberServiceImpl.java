@@ -24,14 +24,6 @@ public class MemberServiceImpl implements MemberService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-
-	@Override
-	public List<HashMap<String, Object>> selectTest() {
-		
-		return mapper.selectTest();
-	}
-
-
 	@Override
 	public boolean registMember(MemberDTO member) {
 		
@@ -61,6 +53,21 @@ public class MemberServiceImpl implements MemberService {
 	public boolean nickDupCheck(Map<String, String> map) {
 		
 		return mapper.nickDupCheck(map) > 0? true:false;
+	}
+
+
+	@Override
+	public String findEmail(Map<String, String> map) {
+		
+		String findEmail = mapper.findEmail(map);
+		
+		return findEmail;
+	}
+
+	@Override
+	public boolean findPwd(Map<String, String> map) {
+		
+		return mapper.findPwd(map) > 0? true:false;
 	}
 
 }
