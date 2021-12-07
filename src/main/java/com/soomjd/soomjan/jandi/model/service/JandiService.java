@@ -16,4 +16,12 @@ public interface JandiService {
 
 	List<Map<String, Object>> selectCategoryList();
 
+	boolean updateIntro(Map<String, Object> key);
+
+	List<String> selectClassesList(String email);
+
+	int insertAd(Map<String, Object> key);
+
+	int selectClassesCode(String myClass);
+
 }

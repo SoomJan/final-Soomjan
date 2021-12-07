@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,17 +59,30 @@ table{
 	<div class="common-sidebar">
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
-			<h3>클래스 광고 신청</h3>
-			<hr class="border-1px-black" />
-			<h4 style="padding-left: 30px;">클래스 선택 : &nbsp;
-			<select name="myClass" form="createAdForm">
-				<option>OH! 잔디의 JAVA</option>
-			</select>
-			</h4>
-			<br>
-			<form id="createAdForm" action="" method="post" enctype="multipart/form-data">
+			<form id="createAdForm" action="createAd" method="post" enctype="multipart/form-data">
+				<h3>클래스 광고 신청</h3>
+				<hr class="border-1px-black" />
+				<h4 style="padding-left: 30px;">클래스 선택 : &nbsp;
+				<select name="myClass" form="createAdForm" id="classesSelect">
+					<c:forEach var="classes" items="${ requestScope.classesSelect }">
+						<option>${ classes }</option>
+					</c:forEach>
+				</select>
+				</h4>
+				<script>
+					let classArray = ${ requestScope.classes };
+				
+					for(let i in classArray){
+						$('#classSelect').options[i].text=classArray[i];
+						$('#classSelect').options[i].value=classArray[i];
+					}
+				</script>
+				
+				
+				<br>
+
 				<textArea name="adContents" cols="5" rows="5" placeholder="광고 문구를 입력해주세요."
-				style="resize:none; margin-left: 30px; border:none; width:90%;"></textArea>
+				style="resize:none; margin-left: 30px; border:1px solid black; width:90%;"></textArea>
 				<h4>등록할 이미지 파일을 선택해 주세요.</h4>
 				<hr style="margin-top:10px; margin-bottom: 10px;">
 				<input type="file" name="adPoster" style="margin-left: 30px;">

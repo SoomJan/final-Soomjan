@@ -42,4 +42,28 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.selectCategoryList();
 	}
 
+	@Override
+	public boolean updateIntro(Map<String, Object> key) {
+		
+		return jandiMapper.updateIntro(key)>0? true:false;
+	}
+
+	@Override
+	public List<String> selectClassesList(String email) {
+		
+		return jandiMapper.selectClassesList(email);
+	}
+
+	@Override
+	public int insertAd(Map<String, Object> key) {
+		
+		return jandiMapper.insertAd(key);
+	}
+
+	@Override
+	public int selectClassesCode(String myClass) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectClassesCode(myClass);
+	}
+
 }

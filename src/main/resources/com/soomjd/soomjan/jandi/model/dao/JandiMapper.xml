@@ -50,5 +50,35 @@
     <select id="selectCategoryList" resultType="hashmap">
     	SELECT * FROM CATEGORY_TBL
     </select>
+    
+    <update id="updateIntro">
+    	UPDATE
+    		   JANDI_TBL
+    	   SET CAREER=#{intro.career},
+    	       INTRO=#{intro.introduce}
+    	 WHERE EMAIL=#{member.email}         
+    
+    
+    </update>
+    
+    <select id="selectClassesList" resultType="String">
+    	SELECT 
+    		   TITLE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL=#{email} 		   
+    </select>
+    
+    <select id="selectClassesCode" resultType="_int">
+    	SELECT 
+    	       CLASS_CODE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL=#{myClass}      
+    </select>
+    
+    
+    
+    <insert id="insertAd">
+    	INSERT 
+    </insert>
 
 </mapper>
