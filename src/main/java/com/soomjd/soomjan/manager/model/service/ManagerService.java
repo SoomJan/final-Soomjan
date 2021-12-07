@@ -23,4 +23,10 @@ public interface ManagerService {
 
 	int selectTotalCount(Map<String, String> searchMap);
 
+	boolean msregistMember(ManagerDTO manager);
+
+	boolean emailCheck(Map<String, String> map);
+
+	boolean nickNameCheck(Map<String, String> map);
+
 }

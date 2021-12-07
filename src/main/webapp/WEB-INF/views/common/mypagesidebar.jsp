@@ -16,9 +16,9 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css"
       rel="stylesheet"
     />
-
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-
+    <script src="resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script type="text/javascript" src="css/bootstrap.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -124,14 +124,19 @@ pageEncoding="UTF-8"%>
         </div>
         </div>
       </div>
+      
   <script>
+  $(function(){
     $('#endbtn').click(function(){
       $('#endmodal').show();
     }); 
-    
+  });
+  
+  $(function(){
     $('#con-btn').click(function(){
       $('#endbtnhmodal').show();
     });
+  });
   </script>
   </body>
 

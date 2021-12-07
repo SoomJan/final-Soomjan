@@ -23,4 +23,10 @@ public interface ManagerMapper {
 	List<ManagerDTO> managerMember(ManagerDTO manager);
 
 	int selectTotalCount(Map<String, String> searchMap);
+
+	int insertMsMember(ManagerDTO manager);
+
+	int emailCheck(Map<String, String> map);
+
+	int nickNameCheck(Map<String, String> map);
 }

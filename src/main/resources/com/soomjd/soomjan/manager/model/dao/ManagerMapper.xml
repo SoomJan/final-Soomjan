@@ -192,4 +192,42 @@
 		 	 </if>
 		  </where>
 	</select>
+	
+	<insert id="insertMsMember" parameterType="ManagerDTO">
+		INSERT
+		  INTO MANAGER_TBL
+		(
+		  MNG_NO
+		, MNG_ID
+		, PASSWORD
+		, MNG_NAME
+		, CREATE_DATE
+		, IS_DELETED
+		, MNG_NICKNAME
+		)
+		VALUES
+		(
+		  SEQ_MNG_NO.NEXTVAL
+		, #{ mngId }
+		, #{ password }
+		, #{ mngName }
+		, SYSDATE
+		, 'N'
+		, #{ mngNickName }
+		)
+	</insert>
+	
+	<select id="emailCheck" resultType="_int" parameterType="HashMap">
+		SELECT
+		       COUNT(*)
+		  FROM MANAGER_TBL
+		 WHERE MNG_ID = #{ email }
+	</select>
+	
+	<select id="nickNameCheck" resultType="_int" parameterType="HashMap">
+		SELECT
+		       COUNT(*)
+		  FROM MANAGER_TBL
+		 WHERE MNG_NICKNAME = #{ nickName }
+	</select>
 </mapper>

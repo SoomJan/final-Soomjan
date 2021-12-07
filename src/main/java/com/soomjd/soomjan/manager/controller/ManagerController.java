@@ -1,10 +1,12 @@
 package com.soomjd.soomjan.manager.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +30,7 @@ import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/manager/*")
-@SessionAttributes({"loginManager", "ssackList", "jandiList", "managerList"})
+@SessionAttributes({"loginManager", "ssackList", "jandiList", "managerList", "selectCriteria"})
 public class ManagerController {
 	
 	private final ManagerService managerService;
@@ -115,6 +117,8 @@ public class ManagerController {
 	        
 	        model.addAttribute("ssackList", ssackList);
 	        model.addAttribute("selectCriteria", selectCriteria);
+	        
+	        System.out.println("selectCriteria : " + selectCriteria);
 	       
 	      
 	/*      List<MemberDTO> ssackList = managerService.ssackMember(ssack);
@@ -145,6 +149,58 @@ public class ManagerController {
 		model.addAttribute("managerList", managerList);
 		
 		return "manager/manproduce";
+	}
+	
+	@PostMapping("/msregist")
+	public String msRegistMember(ManagerDTO manager, HttpServletRequest request) {
+		
+		System.out.println("manager : " + manager);
+		
+		manager.setPassword(passwordEncoder.encode(manager.getPassword()));
+		
+		if(!managerService.msregistMember(manager)) {
+			
+			System.out.println("계정 생성 실패");
+		} else {
+			System.out.println("계정 생성 성공");
+		}
+		return "redirect:/";
+	}
+	
+	@PostMapping("/emailCheck")
+	public void emailCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
+		
+		System.out.println("email : " + email);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("email", email);
+		
+		boolean isDup = managerService.emailCheck(map);
+		System.out.println("isDup : " + isDup);
+		
+		if(isDup) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
+	}
+	
+	@PostMapping("/nickNameCheck")
+	public void nickNameCheck(HttpServletResponse response, @RequestParam("nickName") String nickName) throws IOException {
+		
+		System.out.println("nickName : " + nickName );
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("nickName", nickName);
+		
+		boolean isDup = managerService.nickNameCheck(map);
+		System.out.println("isDup : " + isDup);
+		
+		if(isDup) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
 	}
 	
 	@GetMapping("/reportedmentee")

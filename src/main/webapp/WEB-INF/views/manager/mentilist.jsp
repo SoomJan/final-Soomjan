@@ -69,6 +69,13 @@ pageEncoding="UTF-8"%>
     	left: 18%;
     	top: 10px;
 	}
+	
+	#searchCondition {
+		float: left;
+   		position: relative;
+    	left: 15%;
+    	top: 35%;
+	}
     </style>
   </head>
   <body>
@@ -181,28 +188,18 @@ pageEncoding="UTF-8"%>
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
-    			<i class="search icon"><input type="submit" style="display=none;"></i>
+    			<i class="search icon"><input type="submit" style="display: none;"></i>
   				</div>
  			 	<div class="results"></div>
 			</div>
-			<jsp:include page="../common/Paging.jsp"/>
 			</form>
           </div>
           <div>   
-<!--             <div class="manager-paging">
-              <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">next</a></li>
-              </ul>
-            </div> -->
-          </div>
 
+          </div>
+			<jsp:include page="../common/Paging.jsp" />
         </div>
       </div>
-    </div>
+    
   </body>
-  <jsp:include page="../common/footer.jsp" />
 </html>
