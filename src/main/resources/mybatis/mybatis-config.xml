@@ -14,6 +14,8 @@
   		<typeAlias type="com.soomjd.soomjan.classRoom.model.dto.MokchaDTO" alias="MokchaDTO"/>
   		<typeAlias type="com.soomjd.soomjan.matching.model.dto.EstimateDTO" alias="EstimateDTO"/>
   		<typeAlias type="com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO" alias="LearningPostDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.matching.model.dto.CategoryDTO" alias="CategoryDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.faq.model.dto.FaqDTO" alias="FaqDTO"/>
   		
     </typeAliases>
     

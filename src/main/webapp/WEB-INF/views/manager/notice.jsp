@@ -16,6 +16,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
       rel="stylesheet"
@@ -39,6 +40,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
+    
+      <script>
+          $(function () {
+            $(".move").hover(
+              function () {
+                $(this).css("background", "gray");
+              },
+              function () {
+                $(this).css("background", "white");
+              }
+            );
+          });
+
+        </script>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -46,62 +61,35 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 새싹 조회</h1>
+        <h1>공지사항 관리</h1>
         <br />
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 새싹</th>
-              <th>내용</th>
-              <th>신고 사유</th>
-              <th>신고 처리 여부</th>
+              <th>공지사항 번호</th>
+              <th>제목</th>
+              <th>날짜</th>
+              <th>활성화 상태</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><a href="#">gsp@gmail.com </a></td>
-              <td><a href="#">잔디가 아니라 잡초였네?</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">yhj@gmail.com </a></td>
-              <td><a href="#">이따구로 하실거면 환불해주세요</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">osb@gmail.com </a></td>
-              <td><a href="#">수업 해보신적은 있으세요?</a></td>
-              <td>욕설</td>
-              <td>L</td>
-            </tr>
-            <tr>
-              <td><a href="#">ysm@gmail.com </a></td>
-              <td><a href="#">숙제 내놓고 왜 검사안해주는데</a></td>
-              <td>욕설</td>
-              <td>N</td>
-            </tr>
-            <tr>
-              <td><a href="#">lsh@gmail.com </a></td>
-              <td><a href="#">진짜 열심히 듣고있습니다!! 감사해요 ㅎㅎ</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">ljh@gmail.com </a></td>
-              <td><a href="#">너 어디사냐?</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">iyr@gmail.com </a></td>
-              <td><a href="#">그냥 제가 수업할테니 저한테 돈주세요</a></td>
-              <td>욕설</td>
-              <td>N</td>
-            </tr>
+            <c:forEach var="faq" items="${ faqList }">
+              <tr onclick="location.href='${pageContext.servletContext.contextPath}/manager/noticeDetail/${ faq.postCode }'">
+                <td>${ faq.postCode }</td>
+                <td>${ faq.title }</td>
+                <td>${ faq.writeDate }</td>
+                <td>${ faq.isDeleted }</td>
+              </tr>
+            </c:forEach>
           </tbody>
         </table>
+        
+       
+        
+        <a href="${ pageContext.servletContext.contextPath }/manager/addnotice">
+          <button>공지사항 작성</button></a
+        >
+
         <div class="manager-search">
           <div class="ui search menti-search">
             <div class="ui icon input input-search">
@@ -110,16 +98,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
             <div class="results"></div>
           </div>
-        </div>
-        <br />
-        <div class="manager-paging">
-          <ul>
-            <li><a href="#">Prev</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">next</a></li>
-          </ul>
         </div>
       </div>
     </div>

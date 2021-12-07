@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,7 +36,10 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="sidebar">
       <div class="sidebar-inner-name">
-        <h1>환잔디 님</h1>
+      
+    	   <c:if test="${ !empty sessionScope.loginManager.mngNickName}">
+              <h1>${ sessionScope.loginManager.mngNickName }님 </h1>
+          </c:if>
         <hr class="border-1px-black" />
       </div>
       <div class="sidebar-inner-name1">
@@ -84,6 +88,15 @@ pageEncoding="UTF-8"%>
             <a
               href="${ pageContext.servletContext.contextPath }/manager/advertcal"
               >광고 결제 내역</a
+            >
+          </li>
+        </ul>
+        <ul>
+          <h3>공지사항</h3>
+          <li>
+            <a
+              href="${ pageContext.servletContext.contextPath }/manager/notice"
+              >공지사항 조회</a
             >
           </li>
         </ul>

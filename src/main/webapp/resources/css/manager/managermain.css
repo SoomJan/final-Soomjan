@@ -17,14 +17,7 @@ body {
   width: 60%;
   height: 100%;
   /* overflow: auto; */
-  border: 1px solid pink;
-}
-
-.sidebar-content > div {
-  width: 50%;
-  height: auto;
-  border: 1px solid pink;
-  float: left;
+  /* border: 1px solid pink; */
 }
 
 .warn {

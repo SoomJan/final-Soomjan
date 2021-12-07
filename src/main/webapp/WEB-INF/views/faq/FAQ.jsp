@@ -60,7 +60,7 @@ pageEncoding="UTF-8"%>
   </head>
 
   <!-- Channel Plugin Scripts -->
-  <script>
+ <script>
     (function () {
       var w = window;
       if (w.ChannelIO) {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +25,11 @@ import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
+import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.service.ManagerService;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
@@ -228,12 +231,75 @@ public class ManagerController {
 		return "manager/reportedmentor";
 	}
 	
-	// 클래스 카테고리 수정
+	// 클래스 카테고리 조회
 	@GetMapping("/modifycategory")
-	public String modifycategory() {
+	public String modifycategory(Model model, CategoryDTO category) {
+		
+		List<CategoryDTO> categoryList = managerService.selectCategory(category);
+		System.out.println(categoryList);
+		
+		model.addAttribute("categoryList",categoryList);
+		
 		
 		return "manager/modifycategory";
 	}
+	
+	// 클래스 카테고리 추가
+	@PostMapping("/modifycategory")
+	public String modifycategory(@ModelAttribute CategoryDTO category, Model model) throws MemberRegistException {
+		
+		List<CategoryDTO> categoryList = managerService.selectCategory(category);
+		
+		System.out.println(category.getCategoryName());
+		
+		category.setCategoryCode(categoryList.size() + 1);
+		
+		/* 성공 실패의 처리 */
+		if (!managerService.modifycategory(category)) {
+
+			throw new MemberRegistException("회원가입에 실패하셨습니다.");
+		} else {
+			
+			model.addAttribute("categoryList",categoryList);
+
+
+			return "redirect:/manager/modifycategory";
+		}
+	}
+	
+	// 카테고리 번호로 카테고리 이름 가져오기
+	@PostMapping(value="checkCategoryCode", produces ="application/text; charset=utf8")
+	public void checkCategoryCode(HttpServletResponse response, @RequestParam("categoryCode") int categoryCode) throws IOException {
+		
+		CategoryDTO category = new CategoryDTO();
+		category.setCategoryCode(categoryCode);
+		
+		CategoryDTO checkcategory = new CategoryDTO();
+		checkcategory = managerService.checkCategory(category);
+		
+		if(checkcategory != null){
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(checkcategory.getCategoryName());
+		} else {
+			response.getWriter().write("false");
+		}
+	}
+	
+	// 카테고리 이름 변경
+	@PostMapping("changeCategory")
+	public String changeCategoryName(@ModelAttribute CategoryDTO category, Model model) {
+		
+		boolean changeCategory = managerService.changeCategoryName(category);
+		
+		System.out.print(changeCategory);
+		
+		List<CategoryDTO> categoryList = managerService.selectCategory(category);
+
+		model.addAttribute("categoryList",categoryList);
+
+		return "redirect:/manager/modifycategory";
+	}
+	
 	
 	// 클래스 광고 요청
 	@GetMapping("/applyclassadvertisment")
@@ -262,4 +328,73 @@ public class ManagerController {
 				
 		return "manager/advertcal";
 	}
+	// ================================ 공지 사항 =================================================
+	
+	// 공지사항 조회
+	@GetMapping("notice")
+	public String notice(Model model, FaqDTO faq) {
+		
+		List<FaqDTO> faqList = managerService.selectnotice(faq);
+		
+		model.addAttribute("faqList",faqList);
+		
+		
+		return "manager/notice";
+	}
+	
+	// 공지사항 작성
+	@GetMapping("addnotice")
+	public String addnotice() {
+			
+		return "manager/addnotice";
+	}
+		
+	// 공지사항 받아서 데이터 베이스 삽입
+	@PostMapping("addnotice")
+	public String addnotice(@ModelAttribute FaqDTO faq, Model model) throws MemberRegistException {
+		
+		
+		if (!managerService.addnotice(faq)) {
+
+			throw new MemberRegistException("등록에 실패하였습니다.");
+		} else {
+			
+//			model.addAttribute("categoryList",categoryList);
+
+
+			return "redirect:/manager/notice";
+		}
+	}
+	
+	// 관리자 측면 공지사항 세부내용 조회
+	@GetMapping("/noticeDetail/{postCode}")
+	public String noticeDetail(Model model, @PathVariable("postCode") int postCode) {
+		
+
+		FaqDTO noticeDetail = new FaqDTO();
+		noticeDetail.setPostCode(postCode);
+		
+		FaqDTO faq = managerService.noticeDetail(noticeDetail);
+		
+		model.addAttribute("faq", faq);
+		
+		return "manager/noticeDetail";
+	}
+	
+	// 관리자가 공지사항 내용 수정
+	@PostMapping("/modifyContents")
+	public String modifyContents(@ModelAttribute FaqDTO faq, Model model) throws MemberRegistException {
+		
+		if(managerService.modifyContents(faq)) {
+		
+			FaqDTO noticeDetail = managerService.noticeDetail(faq);
+			
+			model.addAttribute("noticeDetail", noticeDetail);
+			
+			return "redirect:/manager/notice";
+		} else {
+			throw new MemberRegistException("수정에 실패하였습니다.");
+		}
+	}
+	
 }

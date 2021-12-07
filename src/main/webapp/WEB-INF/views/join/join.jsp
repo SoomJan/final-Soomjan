@@ -223,7 +223,8 @@ pageEncoding="UTF-8"%>
               }
             });
             return false;
-          }
+        };
+
         /* 이메일 형식 체크 */
         $(function () {
           $("#email").keyup(function () {

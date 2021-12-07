@@ -39,6 +39,20 @@
     	<result column="MNG_NICKNAME" property="mngNickName"/>
     </resultMap>
     
+    <resultMap id="categoryResult" type="CategoryDTO">
+    	<id column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    
+    <resultMap id="faqResult" type="FaqDTO">
+    	<id column="POST_CODE" property="postCode"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="MNG_NO" property="mngNo"/>
+    </resultMap>
+    
   <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="ssackDTO">
         SELECT
 		       A.EMAIL
@@ -230,4 +244,70 @@
 		  FROM MANAGER_TBL
 		 WHERE MNG_NICKNAME = #{ nickName }
 	</select>
+	
+	<!-- 카테고리 조회 -->
+	<select id="selectCategory" resultMap="categoryResult">
+		SELECT * FROM CATEGORY_TBL ORDER BY CATEGORY_CODE
+	</select>
+	
+	<!-- 카테고리 추가 -->
+	<insert id="modifycategory" parameterType="CategoryDTO">
+	INSERT
+	  INTO CATEGORY_TBL
+	  (
+	  	CATEGORY_CODE, CATEGORY_NAME
+	  )
+	VALUES
+	( #{categoryCode}, #{categoryName} )
+	</insert>
+	
+	<select id="checkCategory" resultMap="categoryResult">
+	SELECT * FROM CATEGORY_TBL WHERE CATEGORY_CODE = ${ categoryCode }
+	</select>
+	
+	<update id="changeCategoryName">
+		update CATEGORY_TBL SET CATEGORY_NAME = #{categoryName} WHERE CATEGORY_CODE = #{categoryCode}
+	</update> 
+	
+	<insert id="addnotice" parameterType="FaqDTO">
+	INSERT INTO FAQ_TBL (POST_CODE, TITLE, CONTENTS, WRITE_DATE, IS_DELETED, MNG_NO)
+		   VALUES (SEQ_FAQ_TBL.NEXTVAL, #{title}, #{contents}, SYSDATE, 'N', 1)		
+	
+	</insert>
+	
+	<select id="selectnotice" resultMap="faqResult">
+		SELECT
+       C.RNUM
+     , C.POST_CODE
+     , C.TITLE
+     , C.CONTENTS
+     , C.WRITE_DATE
+     , C.IS_DELETED
+     , C.MNG_NO
+  FROM (SELECT ROWNUM RNUM   
+             , B.POST_CODE
+             , B.TITLE
+             , B.CONTENTS
+             , B.WRITE_DATE
+             , B.IS_DELETED
+             , B.MNG_NO
+          FROM (SELECT  
+               A.POST_CODE
+             , A.TITLE
+             , A.CONTENTS
+             , A.WRITE_DATE
+             , A.IS_DELETED
+             , A.MNG_NO
+             FROM FAQ_TBL A
+              ORDER BY A.WRITE_DATE DESC
+              ) B) C
+	</select>
+	
+	<select id="noticeDetail" resultMap="faqResult">
+	 SELECT * FROM FAQ_TBL WHERE POST_CODE = #{postCode}
+	</select>
+	
+	<update id="modifyContents">
+		update FAQ_TBL SET CONTENTS = #{contents} WHERE POST_CODE = #{postCode}
+	</update> 
 </mapper>

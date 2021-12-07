@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,12 +12,25 @@ pageEncoding="UTF-8"%>
 
     <title>등록된 멘티 조회</title>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css" rel="stylesheet"/>
+    <link
+      href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
+      rel="stylesheet"
+    />
+    <link
+      href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
+      rel="stylesheet"
+    />
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
+    />
     <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -31,37 +44,20 @@ pageEncoding="UTF-8"%>
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
     <style>
-    .warningtable tbody {
-      text-align: center;
-    }
+      .warningtable tbody {
+        text-align: center;
+      }
 
-    .warningtable thead {
-      background-color: #E3FFEC;
-      text-align: center;
-    }
-    
-    .introduce-detail img {
-      width: 60%;
-      height: 60%;
-      text-align: center;
-    }
+      .warningtable thead {
+        background-color: #e3ffec;
+        text-align: center;
+      }
 
-    p {
-    font-weight: bold;
-    font-size: 20px;
-    }
-    
-   .manager-paging ul li a {color: white !important;}
-    
-    .manager-paging {
-  		width: 40%;
- 		margin: 0 auto;
- 		height: 50px;
- 		text-align: center;
-  		position: relative;
- 		top: 20px;
- 		 /* border: 1px solid blue; */
-	}
+      .introduce-detail img {
+        width: 60%;
+        height: 60%;
+        text-align: center;
+      }
 
 	.input-search {
 		width: 400px;
@@ -76,6 +72,25 @@ pageEncoding="UTF-8"%>
     	left: 15%;
     	top: 35%;
 	}
+      p {
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      .manager-paging ul li a {
+        color: white !important;
+      }
+
+      .manager-paging {
+        width: 40%;
+        margin: 0 auto;
+        height: 50px;
+        text-align: center;
+        position: relative;
+        top: 20px;
+        /* border: 1px solid blue; */
+      }
+
     </style>
   </head>
   <body>
@@ -84,20 +99,21 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="main-content">
-      <h1 id="category"> 등록된 새싹 조회 </h1> <br>
-    
-          <table class="ui basic table warningtable">
-            <thead>
-              <tr>
-                <th>가입 날짜</th>
-                <th>이메일</th>
-                <th>닉네임</th>
-                <th>잔디 여부</th>
-                <th>경고 횟수</th>
-                <th>블랙 리스트</th>
-              </tr>
-            </thead>
-            <tbody>
+        <h1 id="category">등록된 새싹 조회</h1>
+        <br />
+
+        <table class="ui basic table warningtable">
+          <thead>
+            <tr>
+              <th>가입 날짜</th>
+              <th>이메일</th>
+              <th>닉네임</th>
+              <th>잔디 여부</th>
+              <th>경고 횟수</th>
+              <th>블랙 리스트</th>
+            </tr>
+          </thead>
+          <tbody>
             <c:forEach var="ssackMember" items="${ sessionScope.ssackList }">
               <tr class="move">
                 <td>${ ssackMember.enrollDate }</td>
@@ -107,84 +123,45 @@ pageEncoding="UTF-8"%>
                 <td>${ ssackMember.warning }</td>
                 <td>${ ssackMember.isBlack }</td>
               </tr>
-              </c:forEach>
-   <!--            <tr class="move">
-                <td>yhj@gmail.com </td>
-                <td>양잔디</td>
-                <td>2021-11-24</td>
-                <td>N</td>
-                <td>0</td>
-                <td>N</td>
-              </tr>
-              <tr class="move">
-                <td>osb@gmail.com </td>
-                <td>오잔디</td>
-                <td>2021-11-24</td>
-                <td>Y</td>
-                <td>2</td>
-                <td>N</td>
-              </tr>
-              <tr class="move">
-                <td>ysm@gmail.com </td>
-                <td>유잔디</td>
-                <td>2021-11-24</td>
-                <td>N</td>
-                <td>1</td>
-                <td>N</td>
-              </tr>
-              <tr class="move">
-                <td>lsh@gmail.com </td>
-                <td>이잔디</td>
-                <td>2021-11-24</td>
-                <td>Y</td>
-                <td>0</td>
-                <td>N</td>
-              </tr>
-              <tr class="move">
-                <td>ljh@gmail.com </td>
-                <td>환잔디</td>
-                <td>2021-11-24</td>
-                <td>N</td>
-                <td>0</td>
-                <td>N</td>
-              </tr>
-              <tr class="move">
-                <td>iyr@gmail.com </td>
-                <td>임잔디</td>
-                <td>2021-11-24</td>
-                <td>N</td>
-                <td>2</td>
-                <td>N</td>
-              </tr> -->
-            </tbody>
-          </table>
+            </c:forEach>
+          </tbody>
+        </table>
 
-          <script>
-         
-            $(function(){
-              $(".move").hover(function(){
-                $(this).css('background', 'gray');
-              }, function(){
-                $(this).css('background', 'white');
-              });
-            });
-  
-            $(function(){
-              $(".move").click(function(){
-                location.href="${ pageContext.servletContext.contextPath }/test.jsp";
-              });
-            });
-  
-            </script>   
+        <script>
+          $(function () {
+            $(".move").hover(
+              function () {
+                $(this).css("background", "gray");
+              },
+              function () {
+                $(this).css("background", "white");
+              }
+            );
+          });
 
-          <div class="manager-search">
-        <input type="hidden" name="currentPage" value="1">
-      	<select class="menu" id="searchCondition" name="searchCondition" style="outline: none;">
-    		<option value="1">닉네임</option>
-        	<option value="2">경고횟수</option>
-        	<option value="3">블랙리스트</option>
-       	</select>
-       		<form action="${ pageContext.servletContext.contextPath }/manager/mentilist" method="get">
+          $(function () {
+            $(".move").click(function () {
+              location.href =
+                "${ pageContext.servletContext.contextPath }/test.jsp";
+            });
+          });
+        </script>
+
+        <div class="manager-search">
+          <input type="hidden" name="currentPage" value="1" />
+          <select
+            class="menu"
+            id="searchCondition"
+            name="searchCondition"
+            style="outline: none"
+          >
+            <option value="1">닉네임</option>
+            <option value="2">경고횟수</option>
+            <option value="3">블랙리스트</option>
+          </select>
+          <form
+            action="${ pageContext.servletContext.contextPath }/manager/mentilist"
+            method="get">
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
@@ -195,11 +172,10 @@ pageEncoding="UTF-8"%>
 			</form>
           </div>
           <div>   
-
           </div>
 			<jsp:include page="../common/Paging.jsp" />
         </div>
       </div>
-    
   </body>
+  <jsp:include page="../common/footer.jsp" />
 </html>

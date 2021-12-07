@@ -3,12 +3,12 @@ package com.soomjd.soomjan.matching.model.dto;
 public class CategoryDTO {
 	
 	private int categoryCode;
-	private int categoryName;
+	private String categoryName;
 	
 	public CategoryDTO() {
 	}
 
-	public CategoryDTO(int categoryCode, int categoryName) {
+	public CategoryDTO(int categoryCode, String categoryName) {
 		super();
 		this.categoryCode = categoryCode;
 		this.categoryName = categoryName;
@@ -22,11 +22,11 @@ public class CategoryDTO {
 		this.categoryCode = categoryCode;
 	}
 
-	public int getCategoryName() {
+	public String getCategoryName() {
 		return categoryName;
 	}
 
-	public void setCategoryName(int categoryName) {
+	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
 
