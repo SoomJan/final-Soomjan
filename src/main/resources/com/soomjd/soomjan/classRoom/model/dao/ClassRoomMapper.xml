@@ -47,7 +47,7 @@
     	<result column="WRITE_DATE" property="writeDate"/>
     	<result column="MOKCHA_CODE" property="mokchaCode"/>
     	<result column="POST_CODE" property="postCode"/>
-    	<result column="IS_DELETED" property="writeDate"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
     </resultMap>
     
     
@@ -185,7 +185,7 @@
     		, #{ filePath }
     		, #{ orgFilePath }
     		, 'N'
-    		, SEQ_LECTURE_MOKCHA_TBL.CURRVAL
+    		, #{ mokchaCode }
     		, #{ email }
     	)
     </insert>
@@ -226,5 +226,41 @@
 		 WHERE F.POST_CODE = #{ postCode }
     </select>
     
+    <select id="selectMokchaFileList" resultMap="fileResultMap">
+    	SELECT
+    		   F.FILE_PATH
+			 , F.EMAIL
+			 , F.ORG_FILE_PATH
+			 , F.UPLOAD_DATE
+			 , F.FILE_CODE
+			 , F.MOKCHA_CODE
+			 , F.IS_DELETED
+			 , J.NICKNAME
+		  FROM LECTURE_FILE_TBL F
+		  JOIN JANDI_TBL J ON (J.EMAIL = F.EMAIL)
+		  JOIN LECTURE_MOKCHA_TBL M ON (M.MOKCHA_CODE = F.MOKCHA_CODE)
+		 WHERE M.CLASS_CODE = #{ classCode }
+    </select>
+    
+      <update id="modifyLearnigPost" parameterType="LearningPostDTO">
+    	UPDATE LEARNING_TBL
+    	   SET CONTENTS = #{ contents }
+    	   	 , TITLE =  #{ title } 
+    	 WHERE POST_CODE = #{ postCode }
+    </update>
+    
+    <insert id="registLearningFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
+    	INSERT INTO LEARNING_FILE_TBL
+    	VALUES
+    	(
+    		  #{ filePath }
+    		, #{ email }
+    		, #{ orgFilePath }
+    		, SYSDATE
+    		, SEQ_LEARNING_FILE_TBL.NEXTVAL
+    		, #{ postCode }
+    		, 'N'
+    	)
+    </insert>
     
 </mapper>

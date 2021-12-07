@@ -11,12 +11,12 @@ public class ClassFileDTO {
 	private java.sql.Date writeDate;
 	private int mokchaCode;
 	private int postCode;
-	private int isDeleted;
+	private String isDeleted;
 	
 	public ClassFileDTO() {	}
 
 	public ClassFileDTO(String filePath, String email, String orgFilePath, Date writeDate, int fileCode, int postCode,
-			int mokchaCode, int isDeleted) {
+			int mokchaCode, String isDeleted) {
 		super();
 		this.filePath = filePath;
 		this.email = email;
@@ -84,11 +84,11 @@ public class ClassFileDTO {
 		this.mokchaCode = mokchaCode;
 	}
 
-	public int getIsDeleted() {
+	public String getIsDeleted() {
 		return isDeleted;
 	}
 
-	public void setIsDeleted(int isDeleted) {
+	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 

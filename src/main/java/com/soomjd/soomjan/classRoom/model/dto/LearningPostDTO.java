@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class LearningPostDTO {
 	
-	private String postCode;
+	private int postCode;
 	private java.sql.Date writeDate;
 	private java.sql.Date reDate;
 	private String contents;
@@ -18,7 +18,7 @@ public class LearningPostDTO {
 	public LearningPostDTO() {}
 
 
-	public LearningPostDTO(String postCode, Date writeDate, Date reDate, String contents, String email, int classCode,
+	public LearningPostDTO(int postCode, Date writeDate, Date reDate, String contents, String email, int classCode,
 			String title, String isDeleted, String nickName) {
 		super();
 		this.postCode = postCode;
@@ -33,12 +33,12 @@ public class LearningPostDTO {
 	}
 
 
-	public String getPostCode() {
+	public int getPostCode() {
 		return postCode;
 	}
 
 
-	public void setPostCode(String postCode) {
+	public void setPostCode(int postCode) {
 		this.postCode = postCode;
 	}
 

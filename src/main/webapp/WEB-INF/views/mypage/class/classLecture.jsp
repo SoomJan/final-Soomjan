@@ -66,11 +66,8 @@ img {
 				<hr>
 				<c:forEach var="mokcha" items="${ mokchaList }">
 					<div class="mokcha">
-						<button type="button" class="btnStyle">수정</button>
 						<h3>${ mokcha.mokchaName }</h3>
-						<input type="text" width="80%" name="contents" readonly="readonly"
-							value="${ mokcha.contents }">
-						<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
+						<p>${ mokcha.contents }</p>
 					</div>
 					<br>
 				</c:forEach>
