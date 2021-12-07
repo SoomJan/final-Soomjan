@@ -118,11 +118,11 @@
   font-size: 20px;
 }
 
-/* 초록색 박스 */
+/* 메인 표 초록색 박스 */
 #allrequest{
   background-color: #e1f2e7;
   border-radius: 15px;
-  height: 600px;
+  height: 650px;
   padding: 15px;
 }
 

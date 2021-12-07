@@ -32,8 +32,15 @@ public class MacthingSsackMainController {
 		this.matchingService = matchingService;
 	}
 
+	@GetMapping("/manteeMain")
+	public String ManteeMain() {
+		
+		
+		return "matching/matchingManteeMain";
+	}
+	
 	@GetMapping("/manteeMain/{memberEmail:.+}")
-	public String ManteeMain(Model model, @PathVariable("memberEmail") String memberEmail, EstimateDTO estimate){
+	public String ManteeMain(Model model, @PathVariable("memberEmail") String memberEmail){
 		
 		System.out.println(memberEmail);
 		
@@ -48,6 +55,7 @@ public class MacthingSsackMainController {
 	
 	@GetMapping("/manteeWrite")
 	public String manteeWrite(CategoryDTO category, Model model){
+		
 		
 		List<CategoryDTO> categoryList = matchingService.selectCategory(category);
 		System.out.println(categoryList);

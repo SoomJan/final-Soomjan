@@ -89,8 +89,13 @@
 							</tbody>
 						</table>
 					</div>
-					<br><br><br><br><br>
-					
+					<br>
+							<div class="write">
+								<a href="${ pageContext.servletContext.contextPath }/matching/manteeWrite">
+								<button class="writeBtn">견적서 작성</button>
+								</a>
+							</div>
+								
 					</div>
 					
 					</div>
