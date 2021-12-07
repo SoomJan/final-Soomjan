@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.joomjan.common.fileWrapper.FileWrapper;
+import com.joomjan.common.fileWrapper.JSchWrapper;
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
+import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 
 @Controller
 @RequestMapping("/*/class/*")
-@SessionAttributes({"currentCount", "classCode", "classDTO"})
+@SessionAttributes({"currentCount", "classCode", "classDTO", "jandi"})
 public class ClassRoomController {
 	
 private final ClassRoomService classRoomService;
@@ -40,10 +44,12 @@ private final ClassRoomService classRoomService;
 	}
 	
 	@GetMapping("classRoom")
-	public void classRoom(Model model, @RequestParam int classCode) {
+	public void classRoom(Model model, @RequestParam int classCode, HttpSession session) {
 		
 		model.addAttribute("classCode", classCode);
+		model.addAttribute("jandi", session.getAttribute("jandi"));
 		System.out.println("classCode : " + classCode);
+		System.out.println("jandi : " + (JandiDTO)session.getAttribute("jandi"));
 		
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
 		model.addAttribute("currentCount", classRoomService.selectCurrentCount(classCode));
@@ -58,6 +64,7 @@ private final ClassRoomService classRoomService;
 		System.out.println(classCode);
 		
 		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
+		model.addAttribute("mokchaFileList", classRoomService.selectMokchaFileList(classCode));
 		
 	}
 	
@@ -185,46 +192,130 @@ private final ClassRoomService classRoomService;
 	}
 	
 	@PostMapping("uploadMokchaFile")
-	public String uploadMokchaFile(@RequestParam MultipartFile file, Model model, RedirectAttributes rttr, HttpServletRequest request) {
+	public String uploadMokchaFile(@RequestParam MultipartFile file, @RequestParam int mokchaCode, HttpSession session, RedirectAttributes rttr) {
 		
-		// 파일
-		System.out.println("file : " +  file);
+		//파일 저장 객체(따로 뺌)
+		FileWrapper fileWrapper = new FileWrapper();
 		
-		String root = "http://125.132.252.115:21//C://soomjd";
-		String filePath = root + "//lectureFiles";
+		// 파일 , 파라미터 확인
+		System.out.println("file : " +  file.getOriginalFilename());
+		System.out.println("mokchaCode : " + mokchaCode);
 		
-		File mkdir = new File(filePath);
-		if(!mkdir.exists()) { mkdir.mkdirs(); }
+		// 파일 경로 설정
+		String root = session.getServletContext().getRealPath("resources");
+		String dir = "/lectureFiles/videos";
+		String filePath = root + dir;
 		
 		// 파일명 변경처리
 		String originFileName = file.getOriginalFilename();
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
 		
-		ClassFileDTO classFile = null;
-		
 		//파일 저장
-		try {
-			file.transferTo(new File(filePath + "\\" + savedName));
-			System.out.println("파일 업로드 성공");
+		if(fileWrapper.uploadSingleFile(file, savedName, filePath)) {
 			
-			classFile = new ClassFileDTO();
-			JandiDTO jandi = (JandiDTO) request.getSession().getAttribute("jandi");
-			classFile.setEmail(jandi.getEmail());
-			classFile.setFilePath(filePath);
+			// DB에 저장할 파일 DTO
+			ClassFileDTO classFile = new ClassFileDTO();
+			classFile.setEmail(((JandiDTO)session.getAttribute("jandi")).getEmail());
+			classFile.setFilePath(dir + "/" + savedName);
 			classFile.setOrgFilePath(originFileName);
+			classFile.setMokchaCode(mokchaCode);
 			
 			if(classRoomService.registLectureFile(classFile) > 0) {
-			}else {
+				rttr.addFlashAttribute("uploadMessage", "업로드를 완료했습니다.");
 			}
-
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-			new File(filePath + "\\" + savedName).delete();
-			System.out.println("파일 업로드 실패");
+			System.out.println("성공!");
+		}else {
+			rttr.addFlashAttribute("uploadMessage", "업로드에 실패했습니다.");
 		}
 		
-		return "";
+		return "redirect:/jandi/class/classLecture";
+	}
+	
+	
+	@PostMapping("modifyLearnigPost")
+	public String modifyLearnigPost(Model model, RedirectAttributes rttr
+			, @RequestParam String contents, @RequestParam String title, @RequestParam int postCode) {
+		
+		System.out.println("contents : " + contents);
+		System.out.println("title : " + title);
+		System.out.println("postCode : " + postCode);
+		
+		LearningPostDTO learningPost = new LearningPostDTO();
+		learningPost.setTitle(title);
+		learningPost.setContents(contents);
+		learningPost.setPostCode(postCode);
+		
+		if(classRoomService.modifyLearnigPost(learningPost) > 0) {
+			rttr.addFlashAttribute("modifyMessage", "수정에 성공했습니다.");
+		}else {
+			rttr.addFlashAttribute("modifyMessage", "수정에 실패했습니다.");
+		}
+		
+		return "redirect:/jandi/class/classLearningPost?postCode=" + postCode;
+	}
+	
+	@PostMapping("uploadLearningFile")
+	public String uploadLearningFile(@RequestParam MultipartFile file, @RequestParam int postCode
+			, HttpSession session, RedirectAttributes rttr) {
+		
+		//파일 저장 객체(따로 뺌)
+		FileWrapper fileWrapper = new FileWrapper();
+		
+		// 파일 , 파라미터 확인
+		System.out.println("file : " +  file.getOriginalFilename());
+		System.out.println("postCode : " + postCode);
+		
+		// 파일 경로 설정
+		String root = session.getServletContext().getRealPath("resources");
+		String dir = "/learningFiles";
+		String filePath = root + dir;
+		
+		// 파일명 변경처리
+		String originFileName = file.getOriginalFilename();
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+		
+		//파일 저장
+		if(fileWrapper.uploadSingleFile(file, savedName, filePath)) {
+			
+			// DB에 저장할 파일 DTO
+			ClassFileDTO classFile = new ClassFileDTO();
+			classFile.setEmail(((JandiDTO)session.getAttribute("jandi")).getEmail());
+			classFile.setFilePath(dir + "/" + savedName);
+			classFile.setOrgFilePath(originFileName);
+			classFile.setPostCode(postCode);
+			
+			if(classRoomService.registLearningFile(classFile) > 0) {
+				rttr.addFlashAttribute("uploadMessage", "업로드를 완료했습니다.");
+			}
+			System.out.println("성공!");
+		}else {
+			rttr.addFlashAttribute("uploadMessage", "업로드에 실패했습니다.");
+		}
+		
+		return "redirect:/jandi/class/classLearningPost?postCode=" + postCode;
+	}
+	
+	@GetMapping("*/download/{ filePath }")
+	public void download(@PathVariable String filePath, HttpServletRequest request, HttpServletResponse response) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		//파일 저장 객체(따로 뺌)
+		FileWrapper fileWrapper = new FileWrapper();
+		File file = new File(filePath);
+		// 파일명 변경처리
+		String originFileName = file.getName();
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+		
+		try {
+			if(fileWrapper.downloadSingleFile(file, savedName, response.getOutputStream())) {
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

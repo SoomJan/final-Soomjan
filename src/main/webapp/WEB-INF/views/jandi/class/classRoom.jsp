@@ -74,7 +74,7 @@ img {
 				<br>
 				<p class="tagName">태그 수정</p>
 				<textarea class="areaStyle" name="tag" id="tag" rows="2" wrap="hard" 
-					placeholder="강의 소개를 입력해주세요.">${ classDTO.tag }</textarea>
+					placeholder="태그를 입력해주세요.">${ classDTO.tag }</textarea>
 				<script>
 					$(function(){
 						let tags = $('#tag').text().replace(" ","");

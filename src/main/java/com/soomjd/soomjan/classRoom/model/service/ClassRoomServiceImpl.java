@@ -99,5 +99,21 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 			return classRoomMapper.selectLearningFileList(postCode);
 		}
 
+		@Override
+		public List<ClassFileDTO> selectMokchaFileList(int classCode) {
+			return classRoomMapper.selectMokchaFileList(classCode);
+		}
+
+		@Override
+		public int modifyLearnigPost(LearningPostDTO learningPost) {
+			return classRoomMapper.modifyLearnigPost(learningPost);
+		}
+
+		@Override
+		public int registLearningFile(ClassFileDTO classFile) {
+			return classRoomMapper.registLearningFile(classFile);
+		}
+
+
 
 }

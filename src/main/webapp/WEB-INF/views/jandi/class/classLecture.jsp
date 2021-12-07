@@ -53,7 +53,7 @@ img {
 }
 
 .mokcha video {
-	width: 600;
+	width: 90%;
 	margin: 10px;
 }
 
@@ -77,6 +77,25 @@ input {
 	border: 1px solid black;
 }
 </style>
+<script>
+	$(function(){
+		if('${ requestScope.uploadMessage }' != ''){
+			alert('${ requestScope.uploadMessage }');
+			console.log('${ requestScope.uploadMessage }');
+		}
+	});
+	
+	function checkValue(item){
+		if($(item).prev().val() != ""){
+			$(item).parent().submit();
+			alert("업로드를 시작합니다.");
+		}else{
+			alert("파일을 선택해 주세요.");
+		}
+		
+	}
+	
+</script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -92,16 +111,24 @@ input {
 					<div class="mokcha">
 						<button type="button" class="btnStyle">수정</button>
 						<h3>${ mokcha.mokchaName }</h3>
-						<input type="text" width="80%" name="contents" readonly="readonly"
-							value="${ mokcha.contents }">
+						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
+						
+						<c:forEach var="mokchaFile" items="${ mokchaFileList }">
+							<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
+								<video class="mokcha" controls
+									src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
+							</c:if>
+						</c:forEach>
+						
 						<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
-							<br> 영상 업로드<br> <input type="file" name="file" style="border: none;">
-							<button type="submit" class="btnStyle" style="margin: 10px;">영상 추가하기</button>
+							<input type="hidden" value="${ mokcha.mokchaCode }" name="mokchaCode">
+							<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
+							<button type="button" class="btnStyle sendBtn" onclick="checkValue(this);">영상 추가하기</button>
 						</form>
 					</div>
 					<br>
+					<hr>
 				</c:forEach>
-				<video width="600" src="${pageContext.servletContext.contextPath }/resources/videos/cat.mp4" controls></video>
 				<!-- 유튜브 영상 링크... 왜 안되나요..ㅜㅠ -->
 				<!-- <iframe width="560" height="315"
 					src="https://www.youtube.com/embed/cbuZfY2S2UQ"
@@ -109,9 +136,8 @@ input {
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowfullscreen>
 				</iframe> -->
-				<hr>
 				<div class="newMokcha">
-					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post" enctype="multipart/form-data">
+					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
 						목차 제목<br> 
 						<input type="text" name="mockchaName" placeholder="목차 제목을 입력하세요."> 
 						<br> 목차 내용<br>

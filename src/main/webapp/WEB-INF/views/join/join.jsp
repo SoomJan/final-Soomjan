@@ -224,7 +224,6 @@ pageEncoding="UTF-8"%>
             });
             return false;
           }
-
         /* 이메일 형식 체크 */
         $(function () {
           $("#email").keyup(function () {
@@ -410,12 +409,6 @@ pageEncoding="UTF-8"%>
 
     <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
-<script>
-	function openModal(str){
-		$("#modalTitle").text(str);
-		$("#dupModal2").fadeIn();
-	};
-</script>
 </html>
 <!-- 모달창 모아두는 곳 -->
 <div class="ui mini modal" id="registModal">

@@ -42,5 +42,11 @@ public interface ClassRoomService {
 
 	List<ClassFileDTO> selectLearningFileList(int postCode);
 
+	List<ClassFileDTO> selectMokchaFileList(int classCode);
+
+	int modifyLearnigPost(LearningPostDTO learningPost);
+
+	int registLearningFile(ClassFileDTO classFile);
+
 
 }

@@ -6,25 +6,17 @@
 
 <title>학습방 게시물</title>
 
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
-	rel="stylesheet" />
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-	rel="stylesheet" />
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagemain.css"
-	rel="stylesheet" />
-  <link
-	href="${ pageContext.servletContext.contextPath }/resources/css/mypage/class.css"
-	rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 
-<link rel="stylesheet" type="text/css"
-	href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-
-<link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
+<script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -64,10 +56,20 @@ table{
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
 				<div class="tab3-title">
-              <h3>Oh! 잔디</h3><p class="homework">chap01 숙제</p><p class="date">2021.11.18</p></div>
+				<br>
+					<table>
+						<tr>
+							<td><p class="homework" style="float:right;">${ learnigPost.title }</td>
+							<td><p class="date" style="float:right;">최종 수정일: ${ learnigPost.reDate }</p></td>
+						</tr>
+						<tr>
+							<td><h3 style="float:left;">${ learnigPost.nickName }</h3></td>
+							<td><p class="date" style="float:right;">작성일: ${ learnigPost.writeDate }</p></td>
+						</tr>
+					</table>
+				</div>
               <hr><br>
-              <p>chap1 숙제입니다</p>
-              <p>열심히 풀어보세요!!!</p>
+              <p>${ learnigPost.contents }</p>
               <br><br><br><br><br>
               <h3>첨부파일</h3>
               <p>&nbsp&nbsp homework_chap01.pdf</p>

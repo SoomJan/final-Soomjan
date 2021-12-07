@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +42,72 @@ img {
 	width: 90%;
 	border: none !important;
 }
+
+.areaStyle {
+	border: none;
+	width: 90%;
+	resize: none;
+	margin-left:2%;
+	border-radius : 10px;
+	padding : 1%;
+}
+
+.areaStyle:focus {
+	outline: 1px solid black;
+}
+
+.inputStyle{
+	border: none;
+	width: 80%;
+	text-align: center;
+	border-radius : 10px;
+}
+
+.inputStyle:focus {
+	outline: 1px solid black;
+}
+  
 </style>
+<script>
+	$(function(){
+		if('${ requestScope.uploadMessage }' != ''){
+			alert('${ requestScope.uploadMessage }');
+			console.log('${ requestScope.uploadMessage }');
+		}
+		
+		$('#title').keyup(function(){
+			if($('#title').val().length >= 300){
+				alert("300byte를 초과할 수 없습니다.");
+				$('#title').val().substr(0, 1500);
+			}
+		});
+		
+		$('#contents').keyup(function(){
+			if($('#contents').val().length >= 1500){
+				alert("1500byte를 초과할 수 없습니다.");
+				$('#contents').val().substr(0, 1500);
+			}
+		});
+		
+		let message = '${ requestScope.modifyMessage }';
+		console.log(message);
+		
+		if( message !== "" ){
+			alert(message);
+		}
+	});
+	
+	function checkValue(item){
+		if($(item).prev().val() != ""){
+			$(item).parent().submit();
+			alert("업로드를 시작합니다.");
+		}else{
+			alert("파일을 선택해 주세요.");
+		}
+		
+	}
+	
+</script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -51,33 +117,35 @@ img {
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
-				<div class="tab3-title">
+				<form action="${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost" method="post">
+					<div>
+						<p style="font-size: x-large; font-weight: 700;" align="center">
+							<input class="inputStyle" type="text" name="title" value="${ learnigPost.title }"></p>
+						<p align="right">작성일: ${ learnigPost.writeDate }</p>
+						<p align="right">최종 수정일: ${ learnigPost.reDate }</p>
+					</div>
+					<hr>
+						<div><button type="submit" class="btnStyle">수정</button></div>
 					<br>
-					<table>
-						<tr>
-							<td><p class="homework" style="float:right;">${ learnigPost.title }</td>
-							<td><p class="date" style="float:right;">최종 수정일: ${ learnigPost.reDate }</p></td>
-							<td><button style="float:right;" type="button" class="btnStyle">수정</button></td>
-						</tr>
-						<tr>
-							<td><h3 style="float:left;">${ learnigPost.nickName }</h3></td>
-							<td><p class="date" style="float:right;">작성일: ${ learnigPost.writeDate }</p></td>
-						</tr>
-					</table>
-				</div>
-				<hr>
-				<br>
-				<p>${ learnigPost.contents }</p>
-				<br>
-				<br>
-				<br>
+					<div id="contents">
+						<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
+							placeholder="강의 소개를 입력해주세요.">${ learnigPost.contents }</textarea>
+					</div>
+					<input type="hidden" name="postCode" value="${ learnigPost.postCode }">
+				</form>
 				<br>
 				<br>
 				<h3>첨부파일</h3>
-				<input type="file"><br>
 				<c:forEach var="file" items="${ learnigFileList }">
-					<p>&nbsp&nbsp ${ file.filePath }</p>
+					<c:set var="fileName" value="${fn:  file.filePath }" />
+					<b style="float:right;">작성일: ${ file.writeDate }</b>
+					<a href="${pageContext.servletContext.contextPath }/jandi/class/learningPost/download/${ file.filePath }"></a>
 				</c:forEach>
+				<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadLearningFile" method="post" enctype="multipart/form-data">
+					<input type="hidden" value="${ learnigPost.postCode }" name="postCode">
+					<br><b>파일 업로드</b> <br> <input type="file" name="file" style="border: none;">
+					<button type="button" class="btnStyle formBtn" onclick="checkValue(this);">파일 추가하기</button>
+				</form>
 				<br>
 				<h3>제출</h3>
 				<hr>

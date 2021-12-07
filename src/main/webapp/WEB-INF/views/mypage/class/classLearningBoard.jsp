@@ -55,6 +55,13 @@ table{
 	text-align: center;
 }
 </style>
+<script>
+	function movePost(item){
+		let postCode = $(item).prev().val();
+		console.log(postCode);
+		location.href="${pageContext.servletContext.contextPath}/mypage/class/classLearningPost?postCode=" + postCode; 
+	};
+</script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -82,7 +89,8 @@ table{
 				</thead>
 				<tbody>
 					<c:forEach var="learningPost" items="${ learningPostList }">
-						<tr>
+						<input type="hidden" value="${ learningPost.postCode }">
+						<tr onclick="movePost(this)">
 							<td>${ learningPost.nickName }</td>
 							<td>${ learningPost.title }</td>
 							<td>${ learningPost.writeDate }</td>
