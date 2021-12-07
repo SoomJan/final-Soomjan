@@ -85,6 +85,12 @@ pageEncoding="UTF-8"%>
     	height: 365px;
     }
 
+	.nameCheck {
+	position: relative;
+    left: 7%;
+    top: 5px;
+    }
+    
     </style>
   </head>
   <body>
@@ -114,42 +120,6 @@ pageEncoding="UTF-8"%>
             <td>${ managerMember.mngId }</td>
           </tr>
             </c:forEach>
- <!--          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>오수빈</td>
-            <td>오잔디</td>
-            <td>ojd</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>임예람</td>
-            <td>임잔디</td>
-            <td>lyr</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>이선호</td>
-            <td>이잔디</td>
-            <td>lsh</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>이지환</td>
-            <td>환잔디</td>
-            <td>ljh</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>유선미</td>
-            <td>유잔디</td>
-            <td>ysm</td>
-          </tr>
-          <tr>
-            <td><input class="check" type="checkbox"></td>
-            <td>양효진</td>
-            <td>양잔디</td>
-            <td>yhj</td>
-          </tr> -->
         </tbody>
       </table>
 
@@ -158,18 +128,107 @@ pageEncoding="UTF-8"%>
       </form>
 
       <h3>관리자 계정 생성 </h3>
-      <form class="create-pro">
-      <h3 class="produce1"> 이름 : <div class="ui input"><input class="pd1" type="text" placeholder="name"></div> </h3>
-      <h3 class="produce2"> 닉네임 : <div class="ui input"><input class="pd2" type="text" placeholder="nickname"></div> </h3>
-      <h3 class="produce3"> 아이디 : <div class="ui input"> <input class="pd3" type="text" placeholder="ID"></div> </h3>
-      <h3 class="produce4"> 비밀번호 : <div class="ui input"><input class="pd4" type="text" placeholder="password"></div> </h3>
-      <input class="create btn" type="submit" value="계정 생성">
+      <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post">
+      <div><h3 class="produce1"> 이름 : <div class="ui input"><input class="pd1" id="mngName" type="text" placeholder="name"></div> </h3>
+      <span class="nameCheck"></span></div>
+       <div><h3 class="produce2"> 닉네임 : <div class="ui input"><input class="pd2" id="mngNickName" type="text" placeholder="nickname"></div> </h3>
+      <span id="nickNamecheck"></span></div>
+       <div><h3 class="produce3"> 아이디 : <div class="ui input"> <input class="pd3" id="mngId" type="text" placeholder="ID"></div> </h3>
+      <span id="emailcheck"></span></div>
+       <div><h3 class="produce4"> 비밀번호 : <div class="ui input"><input class="pd4" id="password" type="password" placeholder="password"></div> </h3></div>
+       <div><h3 class="produce5"> 비밀번호확인 : <div class="ui input"><input class="pd5" id="password2" type="password" placeholder="password"></div> </h3>
+      <span id="pwdcheck"></span></div>
+      <input class="create btn" id="create" type="submit" value="계정 생성">
       </form>
 
       <script>
-        /* 관리자 계정 등록하기 */
+      
+      /* 이름 체크 */
+       $(function () {
+          $("#mngName").keyup(function () {
+            let filter = /^[가-힣]+$/;
+
+            if (!filter.test($(this).val())) {
+              $(".nameCheck")
+                .html("올바르지 않은 이름 형식입니다.")
+              $(this).focus().css("background", "lightpink");
+            } else {
+              $(".nameCheck")
+                .html("올바른 이름 형식입니다.")
+              $(this).focus().css("background", "#E3FFEC");
+            }
+          });
+        });
+      
+      /* 이메일 체크 */
+              $('#mngId').on('keyup',function(){
+        	const email = $('#mngId').val();
+        	$.ajax({
+              	url:"${ pageContext.servletContext.contextPath }/manager/emailCheck",
+              	data: {email : email},
+              	type: "POST",
+              	success: function(data){
+              		if(data == "true"){
+              			console.log(data);
+              			$('#emailcheck').html('이미 있는 이메일 주소입니다.');
+                        $('#mngId').focus().css("background", "lightpink");
+              		} else {
+              			$('#emailcheck').html('사용 가능한 이메일입니다.');
+                        $('#mngId').focus().css("background", "#E3FFEC");
+              		}
+              	},
+              	error: function(xhr, status, error){
+              		console.log(error);
+              		
+              	}
+              });
+        });
+      
+      /* 비밀번호 확인 체크 */
+              $(function () {
+                  $("#password2").keyup(function () {
+                    if ($("#password").val() != $("#password2").val()) {
+                      $("#pwdcheck")
+                        .html("비밀번호가 일치하지 않습니다.")
+                      $(this).focus().css("background", "lightpink");
+                      $("#password").css("background", "lightpink");
+                    } else {
+                      $("#pwdcheck")
+                        .html("비밀번호가 일치합니다.")
+                      $(this).focus().css("background", "#E3FFEC");
+                      $("#password").css("background", "#E3FFEC");
+                    }
+                  });
+                });
+      
+              /* 닉네임 체크 */
+              $('#mngNickName').on('keyup',function(){
+        	const nickName = $('#mngNickName').val();
+        	$.ajax({
+              	url:"${ pageContext.servletContext.contextPath }/manager/nickNameCheck",
+              	data: {nickName : nickName},
+              	type: "POST",
+              	success: function(data){
+              		if(data == "true"){
+              			console.log(data);
+              			$('#nickNamecheck').html('이미 있는 닉네임입니다.')
+                        $('#mngNickName').focus().css("background", "lightpink");
+              		} else {
+              			$('#nickNamecheck').html('사용 가능한 닉네임입니다.')
+                        $('#mngNickName').focus().css("background", "#E3FFEC");
+              		}
+              	},
+              	error: function(xhr, status, error){
+              		console.log(error);
+              		
+              	}
+              });
+        
+        });
+      
+        /* 관리자 계정 등록하기 전체조건 확인 */
         $(function(){
-          $(".create").click(function(e){
+          $("#create").click(function(e){
             
             let name = $(".pd1").val();
             let nickName = $(".pd2").val();
@@ -201,10 +260,10 @@ pageEncoding="UTF-8"%>
             } else {
               /* 취소 버튼 누르면 창이 꺼지고, 확인 버튼을 눌러야 데이터가 넘어가도록 추후에 처리 필요 */
               $("#createModal").fadeIn();
-              $(".btn").click(function(){
+              $("#crebtn").click(function(){
                 $("#createModal").fadeOut();
                 $("#resultModal").fadeIn();
-              $(".btn").click(function(){
+              $("#nobtn").click(function(){
                 window.location.reload();
               });
               });
@@ -289,8 +348,8 @@ pageEncoding="UTF-8"%>
   <div class="content">
     <p class="title">관리자를 등록하시겠습니까?</p>
     <div class="re-modal-btn">
-    <button class="ui button btn">확인</button>
-    <button class="ui button btn">취소</button>
+    <button class="ui button btn" id="crebtn">확인</button>
+    <button class="ui button btn" id="">취소</button>
   </div>
   </div>
 </div>
@@ -299,7 +358,7 @@ pageEncoding="UTF-8"%>
   <div class="content">
     <p class="title">계정 등록이 완료되었습니다.</p>
     <div class="re-modal-btn">
-    <button class="ui button btn">확인</button>
+    <button class="ui button btn" onclick="location.href='${ pageContext.servletContext.contextPath }/manager/manproduce'">확인</button>
   </div>
   </div>
 </div>

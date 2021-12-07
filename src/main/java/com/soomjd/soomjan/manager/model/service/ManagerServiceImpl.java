@@ -67,4 +67,22 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.ssackMember(searchMap);
 	}
 
+
+	@Override
+	public boolean msregistMember(ManagerDTO manager) {
+		return mapper.insertMsMember(manager) > 0? true:false;
+	}
+
+
+	@Override
+	public boolean emailCheck(Map<String, String> map) {
+		return mapper.emailCheck(map) > 0? true:false;
+	}
+
+
+	@Override
+	public boolean nickNameCheck(Map<String, String> map) {
+		return mapper.nickNameCheck(map) > 0? true:false;
+	}
+
 }

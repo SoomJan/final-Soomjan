@@ -54,7 +54,7 @@ p {
 }
 
 .manager-search {
-  width: 50%;
+  width: 65%;
   margin: 0 auto;
   overflow: hidden;
   height: 50px;
@@ -113,34 +113,6 @@ p {
   height: 25px;
   background-color: #91c788;
   float: right;
-}
-
-.produce1 {
-  width: 50%;
-  position: relative;
-  left: 2%;
-  top: 5%;
-}
-
-.produce2 {
-  width: 50%;
-  position: relative;
-  left: 50%;
-  bottom: 60px;
-}
-
-.produce3 {
-  width: 50%;
-  position: relative;
-  bottom: 35px;
-  left: 5px;
-}
-
-.produce4 {
-  width: 50%;
-  position: relative;
-  left: 48%;
-  bottom: 110px;
 }
 
 .create {

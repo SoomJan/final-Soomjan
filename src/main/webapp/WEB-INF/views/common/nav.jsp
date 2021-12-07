@@ -86,7 +86,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
              <ul>
 
             <li>
-              <a href="#">
+              <a href="${ pageContext.servletContext.contextPath }/member/modify">
               <span>✋</span>
               <span>마이페이지</span>
              </a>
@@ -107,7 +107,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
              <ul>
 
             <li>
-          <a href="${ pageContext.servletContext.contextPath }/manager/managermain">
+          <a href="${ pageContext.servletContext.contextPath }/manager/mentilist">
               <span>✋</span>
               <span>관리자 페이지</span>
           </a>
