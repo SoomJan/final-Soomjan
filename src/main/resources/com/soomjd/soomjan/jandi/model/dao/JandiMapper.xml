@@ -60,5 +60,25 @@
     
     
     </update>
+    
+    <select id="selectClassesList" resultType="String">
+    	SELECT 
+    		   TITLE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL=#{email} 		   
+    </select>
+    
+    <select id="selectClassesCode" resultType="_int">
+    	SELECT 
+    	       CLASS_CODE
+    	  FROM CLASS_TBL
+    	 WHERE EMAIL=#{myClass}      
+    </select>
+    
+    
+    
+    <insert id="insertAd">
+    	INSERT 
+    </insert>
 
 </mapper>

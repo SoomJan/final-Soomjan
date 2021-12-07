@@ -18,4 +18,10 @@ public interface JandiMapper {
 
 	int updateIntro(Map<String, Object> key);
 
+	List<String> selectClassesList(String email);
+
+	int insertAd(Map<String, Object> key);
+
+	int selectClassesCode(String myClass);
+
 }
