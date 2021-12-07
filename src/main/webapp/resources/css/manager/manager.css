@@ -1,7 +1,8 @@
 .main-content {
   width: 70%;
-/*  overflow: auto; */
- /* border : 1px solid red; */ 
+  height: 800px;
+  overflow: auto;
+  /* border : 1px solid red; */
 }
 
 #category {
@@ -9,19 +10,19 @@
 }
 
 .warningtable tbody {
-   text-align: center;
+  text-align: center;
 }
 
 .warningtable thead {
   background-color: #e3ffec;
-   text-align: center;   
-  }
+  text-align: center;
+}
 
 .introduce-detail img {
   width: 60%;
   height: 60%;
   text-align: center;
- }
+}
 
 p {
   font-weight: bold;
@@ -56,24 +57,25 @@ p {
 .manager-search {
   width: 50%;
   margin: 0 auto;
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 50px;
   /* border: 1px solid blue; */
 }
 
 .menti-search {
-	
+  width: 50%;
+  /* border: 1px solid blue; */
 }
 
 .input-search {
-	width: 400px;
-    position: relative;
-    left: 18%;
-    top: 10px;
+  width: 100%;
+  position: relative;
+  left: 18%;
+  top: 10px;
 }
 
 .manager-searchbox {
- /* width: 70%;
+  /* width: 70%;
   margin: 0 auto;
   height: 100%;
   border: 1px solid rgb(200, 200, 200); */
@@ -96,9 +98,9 @@ p {
 
 .date-search {
   padding: 5px;
-	border-radius: 0.5rem;
-	font-size: 12px;
-	border-color: #91c788;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
   width: 8%;
   height: 25px;
   background-color: #91c788;
@@ -106,9 +108,9 @@ p {
 
 .calculate {
   padding: 5px;
-	border-radius: 0.5rem;
-	font-size: 12px;
-	border-color: #91c788;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
   width: 8%;
   height: 25px;
   background-color: #91c788;
@@ -159,11 +161,10 @@ p {
 }
 
 .delete {
-
   padding: 5px;
-	border-radius: 0.5rem;
-	font-size: 12px;
-	border-color: #91c788;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
   width: 10%;
   height: 30px;
   position: relative;
@@ -173,8 +174,8 @@ p {
 
 .modal {
   height: 150px;
- top: 45%;
- left: 50%;
+  top: 45%;
+  left: 50%;
 }
 
 .title {
@@ -191,8 +192,8 @@ p {
   background-color: white !important;
 }
 
-.content{
+.content {
   height: 150px;
   text-align: center;
-  background-color: #91C788 !important;
+  background-color: #91c788 !important;
 }

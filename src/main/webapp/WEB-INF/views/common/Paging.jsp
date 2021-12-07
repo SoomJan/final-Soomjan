@@ -17,7 +17,7 @@
 </head>
 <body>
 
-	<nav style="text-align : center">
+	<div style="text-align : center">
 	  <ul class="ui pagination menu">
 	  
 		<!-- 이전 페이지 버튼 -->
@@ -66,7 +66,7 @@
 		</c:if>
 
 	  </ul>        
-  	</nav>
+  	</div>
 						
 	<script>
 	

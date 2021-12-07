@@ -262,7 +262,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </a>
                <a
                 href="${ pageContext.servletContext.contextPath }/member/regist"
-                ><button type="button" class="btn">회원가입</button>
+                ><button type="button" class="btn" style="background-color:#91c788 ;">회원가입</button>
               </a>
             </div>
           </c:if>
