@@ -240,7 +240,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </div>
           <div>
             <a
-              href="${ pageContext.servletContext.contextPath }/matching/manteeMain"
+              href="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email }"
               >매칭</a
             >
           </div>

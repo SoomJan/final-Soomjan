@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +61,8 @@
 				<div class="request-list">
 					<p class="explain">전체 견적 요청</p>
 					<div id="allrequest">
-						<table style="width: 100%">
+						<table style="width: 100%" class="estimateList">
+						
 							<thead>
 								<tr class="table_title">
 									<th>No</th>
@@ -69,66 +71,31 @@
 								</tr>
 							</thead>
 							<tbody>
+								<tr></tr>
+								
+							<c:forEach var="estimate" items="${ estimateList }">
 								<tr>
-									<th width="10">1</th>
-									<th width="60">절 성장시켜주실 고수 분!</th>
-									<th width="30">Y</th>
+									<th width="10">${ estimate.estimateCode }</th>
+									<th width="60">${ estimate.title }</th>
+									<th width="30">${ estimate.isMatched }</th>
 								</tr>
-								<tr>
+								</c:forEach>
+								<!-- <tr>
 									<th width="10">2</th>
 									<th width="60">재미있게 강습하고 싶어요~</th>
 									<th width="30">N</th>
-								</tr>
+								</tr> -->
 								
 							</tbody>
 						</table>
 					</div>
 					<br><br><br><br><br>
-					<p class="explain">매칭된 견적 요청</p>
-					<div id="ing-request">
-						<table style="width: 100%">
-							<thead>
-								<tr class="table_title">
-									<th>No</th>
-									<th>제목</th>
-									<th>진행상태</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th width="10">1</th>
-									<th width="60">절 성장시켜주실 고수 분!</th>
-									<th width="30">Y</th>
-								</tr>
-							</tbody>
-						</table>
+					
 					</div>
-					<br><br><br><br><br>
-					<p class="explain">매칭중인 견적 요청</p>
-					<div id="yet-request">
-						<table style="width: 100%">
-							<thead>
-								<tr class="table_title">
-									<th>No</th>
-									<th>제목</th>
-									<th>진행상태</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th width="10">1</th>
-									<th width="60">재미있게 강습하고 싶어요~</th>
-									<th width="30">N</th>
-								</tr>
-							</tbody>
-						</table>
+					
 					</div>
 				</div>
-				<div class="write">
-				<a href="${ pageContext.servletContext.contextPath }/matching/manteeWrite">
-				<button class="writeBtn">견적서 작성</button>
-				</a>
-				</div>
+
 			</div>
 
 		</div>

@@ -1,6 +1,7 @@
 package com.soomjd.soomjan.matching.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,14 @@ public class MatchingServiceImpl implements MatchingService{
 		
 		return mapper.selectCategory(category);
 	}
+	
+	//매칭 메인에서 자신이 작성한 리스트만 보여주는 서비스
+	@Override
+	public List<EstimateDTO> selectEstimate(Map<String, Object> map) {
+		return mapper.selectEstimate(map);
+	}
+
+	
 	
 	
 

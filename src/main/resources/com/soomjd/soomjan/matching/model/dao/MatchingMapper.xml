@@ -5,7 +5,7 @@
 <mapper namespace="com.soomjd.soomjan.matching.model.dao.MatchingMapper">
 
 
-    <resultMap id="memberResultSet" type="EstimateDTO">
+    <resultMap id="estimateList" type="EstimateDTO">
         <id column="ESTIMATE_CODE" property="estimateCode"/>
         <result column="CATEGORY_CODE" property="categoryCode"/>
         <result column="IS_MATCHED" property="isMatched"/>
@@ -52,6 +52,15 @@
 		       CATEGORY_CODE
 		     , CATEGORY_NAME
 		  FROM CATEGORY_TBL
+    </select>
+    
+    <select id="selectEstimate" resultMap="estimateList" parameterType="hashMap">
+        SELECT
+		       ESTIMATE_CODE
+		     , TITLE
+		     , IS_MATCHED
+		  FROM ESTIMATE_TBL
+		 WHERE EMAIL = #{ email }
     </select>
     
     
