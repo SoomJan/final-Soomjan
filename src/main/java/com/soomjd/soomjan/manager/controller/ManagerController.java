@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
+import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
@@ -151,8 +152,9 @@ public class ManagerController {
 		return "manager/manproduce";
 	}
 	
+	/* 관리자 계정 생성 */
 	@PostMapping("/msregist")
-	public String msRegistMember(ManagerDTO manager, HttpServletRequest request) {
+	public String msRegistMember(@ModelAttribute ManagerDTO manager, HttpServletRequest request) throws MemberRegistException {
 		
 		System.out.println("manager : " + manager);
 		
@@ -160,11 +162,11 @@ public class ManagerController {
 		
 		if(!managerService.msregistMember(manager)) {
 			
-			System.out.println("계정 생성 실패");
+			throw new MemberRegistException("관리자 계정 생성에 실패하셨습니다.");
 		} else {
-			System.out.println("계정 생성 성공");
+			
+			return "redirect:/";
 		}
-		return "redirect:/";
 	}
 	
 	@PostMapping("/emailCheck")
