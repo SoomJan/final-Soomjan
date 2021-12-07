@@ -43,15 +43,7 @@ pageEncoding="UTF-8"%>
     #phone { position: relative; left: 21%; text-align: left;}
     .introduce-detail1 > div > label {position: relative; left: 15%;} /* 내 정보 그룹 */
 
-    .warningtable thead tr th {border-bottom: none !important;} /* 누적경고 테이블 */
-
-      /* 회원탈퇴 모달창 */
-    #endmodal { height: 600px; left: 40%; top: 20%; }
-    .modal-header{text-align: center;}
-    .modal-content{height: 540px;}
-    .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
-    .context-modal-btn { position: relative; left: 40%; top: 11%;}
-    .inputpwd { width: 600px; height: 50px; color: gray; border: 3px solid #91c788; border-radius: 10px; padding-left: 2%; position: relative; left: 4%;}
+    .warningtable thead tr th {border-bottom: none !important;} /* 누적경고 테이블 */   
     </style>
   </head>
   <body>
@@ -69,26 +61,26 @@ pageEncoding="UTF-8"%>
           <div class="introduce-detail1">
             <div>
               <label for="name"><span>이름</span></label>
-              <input type="text" class="myinfo" name="member_info" id="name" value="이지환" readonly>
+              <input type="text" class="myinfo" name="member_info" id="name" value="${ member.name }" readonly>
           </div>
 
           <div>
               <label for="email"><span>이메일주소</span></label>
-              <input type="text" class="myinfo" name="member_info" id="email" value="ljh2194@naver.com" readonly>
+              <input type="text" class="myinfo" name="member_info" id="email" value="${ member.email }" readonly>
           </div>
 
           <div>
               <label for="nickname"><span>닉네임</span></label>
-              <input type="text" class="myinfo" name="member_info" id="nickname" value="환잔디" readonly>
+              <input type="text" class="myinfo" name="member_info" id="nickname" value="${ member.nickName }" readonly>
           </div>
 
           <div>
               <label for="phone"><span>핸드폰번호</span></label>
-              <input type="text" class="myinfo" name="member_info" id="phone" value="010-1234-5678" readonly>
+              <input type="text" class="myinfo" name="member_info" id="phone" value="${ member.phone }" readonly>
           </div>
           <br><br>
           <div>
-            <button type="submit" class="modify_myinfo" onclick="modify_myinfo(this);">수정하기</button>
+            <button type="submit" class="modify_myinfo" onclick="return modify_myinfo();">수정하기</button>
         </div>
           </div>
         </div>
@@ -117,33 +109,10 @@ pageEncoding="UTF-8"%>
       </div>
       </div>
     </div>
-               <!-- 회원탈퇴 모달창 -->
-               <div class="ui small modal" id="endmodal">
-                <div class="header modal-header">회원탈퇴</div>
-                <div class="content modal-content">
-                  <br>
-                  <p>회원탈퇴 안내사항</p>
-                  <br>
-                    <div class="modal-content-text">숨은잔디에 만족하지 못하셨나요? 탈퇴하기 전에 먼저 개선 요청을 해보시는 건 어떨까요?<br>
-                    그래도 탈퇴하시겠다면 탈퇴 전에 아래 유의사항을 꼭 읽어주세요!<br>
-                    감사합니다. <br>
-                    <br>
-                    1. 회원이 작성한 콘텐츠(동영상, 게시물, 댓글 등)는 자동적으로 삭제되지 않으며, <br>
-                    &nbsp&nbsp 만일 삭제를 원하시면 탈퇴 이전에 삭제가 필요합니다.<br>
-                    2. 탈퇴 후 동일한 메일로 재가입이 가능하지만, 탈퇴 한 계정과 연동되지 않습니다.<br>
-                    3. 현재 비밀번호를 입력하고 탈퇴하기를 누르시면 위 내용에 동의하는 것으로 간주됩니다.<br>
-                    <hr>
-                    <input type="text" class="inputpwd" value="현재 비밀번호">
-                    </div>
-                    <div class="context-modal-btn">
-                      <button class="ui button btn" style="background-color: #91C788;">확인</button>
-                      <button class="ui button btn">취소</button>
-                    </div>
-                </div>
-              </div>
+               
               <script>
-                 function modify_myinfo(item) {
-                  $('#endmodal').show();
+                 function modify_myinfo() {
+                   location.href="${ pageContext.servletContext.contextPath }/mypage/modify";
                 }
               </script>
   </body>

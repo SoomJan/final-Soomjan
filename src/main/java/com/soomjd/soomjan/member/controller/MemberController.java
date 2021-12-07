@@ -203,6 +203,31 @@ public class MemberController {
 		return mv;
 	}
 	
+	@PostMapping("updatePwd")
+	public void updatePwd(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("pwd") String pwd) throws IOException {
+		
+		System.out.println("비밀번호를 수정할 이메일 : " + email);
+		System.out.println("수정될 패스워드 : " + pwd);
+		
+		/* 비밀번호 암호화 처리 */
+		String setPwd = passwordEncoder.encode(pwd);
+		System.out.println("암호화된 패스워드 : " + setPwd);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("email", email);
+		map.put("pwd", setPwd);
+		
+		boolean updatePwd = memberService.updatePwd(map);
+		
+		if(updatePwd) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
+	}
+	
+	
+	
 	@GetMapping("/logout")
 	public String logout(SessionStatus status) {
 		

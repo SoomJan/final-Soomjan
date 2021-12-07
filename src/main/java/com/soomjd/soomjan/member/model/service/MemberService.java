@@ -21,4 +21,6 @@ public interface MemberService {
 
 	boolean findPwd(Map<String, String> map);
 
+	boolean updatePwd(Map<String, String> map);
+
 }

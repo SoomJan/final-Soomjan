@@ -23,4 +23,6 @@ public interface MemberMapper {
 
 	int findPwd(Map<String, String> map);
 
+	int updatePwd(Map<String, String> map);
+
 }

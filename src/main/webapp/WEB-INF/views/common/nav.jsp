@@ -86,7 +86,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
              <ul>
 
             <li>
-              <a href="#">
+              <a href="${ pageContext.servletContext.contextPath }/mypage/main">
               <span>✋</span>
               <span>마이페이지</span>
              </a>

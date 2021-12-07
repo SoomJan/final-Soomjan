@@ -70,4 +70,10 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.findPwd(map) > 0? true:false;
 	}
 
+	@Override
+	public boolean updatePwd(Map<String, String> map) {
+		
+		return mapper.updatePwd(map) > 0? true:false;
+	}
+
 }

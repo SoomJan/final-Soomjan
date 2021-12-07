@@ -59,25 +59,12 @@ input{
     border-radius: 5px;
     height: 40px;
     width: 600px;
-
-
 }
 
-.emailCheck{
-    font-size: 10px;
-    color: #3456CE;
+.pwdCheck, .pwdCheck2 {
+    position: relative;
+    left: 15%;
 }
-
-.authenticationCheck{
-    font-size: 10px;
-    color: #3456CE;
-}
-
-.nickNameCheck{
-    font-size: 10px;
-    color: #F02525;
-}
-
 
 /* button{
     border-radius: 2px;

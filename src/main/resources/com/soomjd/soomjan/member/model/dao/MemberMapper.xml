@@ -67,6 +67,7 @@
 			 , A.IS_BLACK
 			 , A.ENROLL_DATE
 			 , A.IS_EXIT
+			 , A.NAME
 		  FROM SSACK_TBL A
 		 WHERE A.EMAIL = #{ email }
 		   AND A.IS_EXIT = 'N'
@@ -101,5 +102,12 @@
 		 WHERE A.NAME= #{ name }
            AND A.EMAIL= #{ email }
     </select>
+    
+    <update id="updatePwd" parameterType="HashMap">
+        UPDATE 
+		       SSACK_TBL A
+		   SET A.PASSWORD = #{ pwd }
+		 WHERE A.EMAIL = #{ email }
+    </update>
 
 </mapper>
