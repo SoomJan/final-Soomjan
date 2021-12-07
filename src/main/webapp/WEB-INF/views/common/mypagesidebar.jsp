@@ -29,6 +29,7 @@ pageEncoding="UTF-8"%>
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
     <style>
+      /* 회원탈퇴 모달창 */
     #endmodal { height: 600px; left: 40%; top: 20%; }
     .modal-header{text-align: center;}
     .modal-content{height: 533px;}
@@ -50,10 +51,10 @@ pageEncoding="UTF-8"%>
       top: 45%;
       left: 50%;
     }
-    .end-content-title {font-size: 15px; text-align: center; position: relative; top: 7px;}
+    /* .end-content-title {font-size: 15px; text-align: center; position: relative; top: 7px;}
     .re-modal-btn {position: relative; left: 27%; top: 7px; background-color: white;}
     .endcontent {height: 150px;}
-    #comp-btn{background-color: #91c788;}
+    #comp-btn{background-color: #91c788;} */
     </style>
   </head>
 
@@ -67,7 +68,7 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="sidebar">
       <div class="sidebar-inner-name">
-        <h1>환잔디 님</h1>
+        <h1>${ member.nickName } 님</h1>
         <hr class="border-1px-black" />
       </div>
       <div class="sidebar-inner-name1">
@@ -83,8 +84,8 @@ pageEncoding="UTF-8"%>
         <ul>
           <h3>설정</h3>
           <!-- <hr class="border-1px-black" /> -->
-          <li><a href="#">정보수정</a></li>
-          <li><a href="#">비밀번호 변경</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/modify">정보수정</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/modifyPwd">비밀번호 변경</a></li>
           <li><a href="#" id="endbtn">회원탈퇴</a></li>
         </ul>
       </div>

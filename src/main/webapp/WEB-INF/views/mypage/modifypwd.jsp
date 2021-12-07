@@ -14,8 +14,7 @@
     <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/modify.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/modify.css" rel="stylesheet"/>
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">

@@ -42,9 +42,7 @@ pageEncoding="UTF-8"%>
     #nickname { position: relative; left: 27%; text-align: left;}
     #phone { position: relative; left: 21%; text-align: left;}
     .introduce-detail1 > div > label {position: relative; left: 15%;} /* 내 정보 그룹 */
-
-    .warningtable thead tr th {border-bottom: none !important;} /* 누적경고 테이블 */
-
+    .warningtable thead tr th {border-bottom: none !important;} /* 누적경고 테이블 */   
     </style>
   </head>
   <body>
@@ -62,26 +60,26 @@ pageEncoding="UTF-8"%>
           <div class="introduce-detail1">
             <div>
               <label for="name"><span>이름</span></label>
-              <input type="text" class="myinfo" name="member_info" id="name" value="이지환" readonly>
+              <input type="text" class="myinfo" name="member_info" id="name" value="${ member.name }" readonly>
           </div>
 
           <div>
               <label for="email"><span>이메일주소</span></label>
-              <input type="text" class="myinfo" name="member_info" id="email" value="ljh2194@naver.com" readonly>
+              <input type="text" class="myinfo" name="member_info" id="email" value="${ member.email }" readonly>
           </div>
 
           <div>
               <label for="nickname"><span>닉네임</span></label>
-              <input type="text" class="myinfo" name="member_info" id="nickname" value="환잔디" readonly>
+              <input type="text" class="myinfo" name="member_info" id="nickname" value="${ member.nickName }" readonly>
           </div>
 
           <div>
               <label for="phone"><span>핸드폰번호</span></label>
-              <input type="text" class="myinfo" name="member_info" id="phone" value="010-1234-5678" readonly>
+              <input type="text" class="myinfo" name="member_info" id="phone" value="${ member.phone }" readonly>
           </div>
           <br><br>
           <div>
-            <button type="submit" class="modify_myinfo" onclick="modify_myinfo(this);">수정하기</button>
+            <button type="submit" class="modify_myinfo" onclick="return modify_myinfo();">수정하기</button>
         </div>
           </div>
         </div>
@@ -110,6 +108,12 @@ pageEncoding="UTF-8"%>
       </div>
       </div>
     </div>
+               
+	<script>
+	   function modify_myinfo() {
+	     location.href="${ pageContext.servletContext.contextPath }/mypage/modify";
+	  }
+	</script>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

@@ -15,7 +15,12 @@ pageEncoding="UTF-8"%>
      <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
    <link href="${ pageContext.servletContext.contextPath }/resources/css/userAgreement.css" rel="stylesheet" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
+    />
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="css/bootstrap.js"></script>
@@ -387,27 +392,64 @@ pageEncoding="UTF-8"%>
         
         
     <div class="buttons" >
-      <button type="submit" onclick="finishbtn();">확인</button>
+      <button id="goRegist" type="submit">확인</button>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <button type="reset">취소</button>
   </div>
         
-        
+  <script>
 
+  /* 전체 선택, 전체 취소 */
+  $(this).ready(function(){
+    $("#checkAll").click(function(){
+      if($("#checkAll").prop("checked")){
+        $("#check1").prop("checked", true);
+        $("#check2").prop("checked", true);
+        $("#check3").prop("checked", true);
+        $("#check4").prop("checked", true);
+      } else {
+        $("#check1").prop("checked", false);
+        $("#check2").prop("checked", false);
+        $("#check3").prop("checked", false);
+        $("#check4").prop("checked", false);
+      }
+    });
+  });
+
+  /* 회원가입 폼으로 */
+
+  $(function(){
+
+    $("#goRegist").click(function(e){
+
+      let ck1 = $("#check1").prop("checked");
+      let ck2 = $("#check2").prop("checked");
+      e.preventDefault();
+
+      if(!ck1 || !ck2) {
+        $("#Modal").fadeIn();
+        $(".btn").click(function(){
+          $("#Modal").fadeOut();
+        });
+      } else {
+        location.href="${ pageContext.servletContext.contextPath }/member/regist";
+      }
+    });
+  });
+
+  </script>
     </main>
-
-
-
-
-
-
-
-
-
-
     <jsp:include page="../common/footer.jsp" />
-
-
     <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
+
+<!-- 모달창 모아두는 곳 -->
+<div class="ui mini modal" id="Modal">
+  <div class="contents">
+    <p class="titles" id="modalTitle">필수 이용 약관에 동의해주세요.</p>
+    <div class="re-modal-btn">
+      <button class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>

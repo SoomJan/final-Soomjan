@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
@@ -43,6 +44,12 @@ public class MemberController {
 	public String memberClassChat(Model model) {
 
 		return "mypage/class/classChat";
+	}
+	
+	@GetMapping("terms")
+	public String termsForm() {
+		
+		return "join/userAgreement";
 	}
 
 	@GetMapping("regist")
@@ -119,8 +126,107 @@ public class MemberController {
 		
 
 		return "redirect:/";
-
 	}
+	
+	@GetMapping("findEmail")
+	public String findEmailForm() {
+		
+		return "join/findEmail";
+	}
+	
+	@PostMapping("findEmail")
+	public void findEmail(HttpServletResponse response, @RequestParam("name") String name, @RequestParam("phone") String phone) throws IOException {
+		
+		System.out.println("이메일 조회할 이름 : " + name);
+		System.out.println("이메일 조회할 핸드폰 번호 : " + phone);
+		
+	    Map<String, String> map = new HashMap<>();
+	    map.put("name", name);
+	    map.put("phone", phone);
+	    
+	    String findEmail = memberService.findEmail(map);
+	    System.out.println("찾아온 이메일 : " + findEmail);
+	    
+	    if(findEmail != null) {
+	    	response.getWriter().write(findEmail);
+	    } else {
+	    	response.getWriter().write("");
+	    }
+	}
+	
+	
+	@GetMapping("findPwd")
+	public String findPwdForm() {
+		
+		return "join/findPwd1";
+	}
+	
+	@PostMapping("findPwd")
+	public void findPwd(HttpServletResponse response, @RequestParam("name") String name, @RequestParam("email") String email) throws IOException {
+		
+		System.out.println("비밀번호를 조회할 이름 : " + name);
+		System.out.println("비밀번호를 조회할 이메일 : " + email);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("email", email);
+		
+		boolean findPwd = memberService.findPwd(map);
+		System.out.println("계정(비밀번호) 조회 여부 : " + findPwd);
+		
+		if(findPwd) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
+	}
+	
+	@PostMapping("findPwd2")
+	public ModelAndView findPwd2(@RequestParam("email") String email, ModelAndView mv) {
+		
+		System.out.println("넘어온 이메일 : " + email);
+		
+		mv.addObject("email", email);
+		mv.setViewName("join/findPwd2");
+		
+		return mv;
+	}
+	
+	@PostMapping("findPwd3")
+	public ModelAndView findPwd3(@RequestParam("email") String email, ModelAndView mv) {
+		
+		System.out.println("넘어온 이메일 : " + email);
+		
+		mv.addObject("email", email);
+		mv.setViewName("join/findPwd3");
+		
+		return mv;
+	}
+	
+	@PostMapping("updatePwd")
+	public void updatePwd(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("pwd") String pwd) throws IOException {
+		
+		System.out.println("비밀번호를 수정할 이메일 : " + email);
+		System.out.println("수정될 패스워드 : " + pwd);
+		
+		/* 비밀번호 암호화 처리 */
+		String setPwd = passwordEncoder.encode(pwd);
+		System.out.println("암호화된 패스워드 : " + setPwd);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("email", email);
+		map.put("pwd", setPwd);
+		
+		boolean updatePwd = memberService.updatePwd(map);
+		
+		if(updatePwd) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
+	}
+	
+	
 	
 	@GetMapping("/logout")
 	public String logout(SessionStatus status) {
