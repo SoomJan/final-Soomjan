@@ -118,21 +118,28 @@
   font-size: 20px;
 }
 
-/* 초록색 박스 */
-#allrequest,
-#ing-request,
-#yet-request {
+/* 메인 표 초록색 박스 */
+#allrequest{
   background-color: #e1f2e7;
   border-radius: 15px;
-  height: 150px;
-  padding: 10px;
+  height: 650px;
+  padding: 15px;
 }
 
 /* 표 제목 */
 .table_title {
   height: 35px;
-  font-size: 18px;
+  font-size: 21px;
   color: #005e23;
+}
+
+/* 표 내용 */
+.estimateList{
+	
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 18px;
+  
 }
 
 /* estimate에서 '견적서 작성하기'문구 */
@@ -453,6 +460,7 @@
   padding: 20px;
   border-radius: 10px;
 }
+
 
 iframe {
   display: none;

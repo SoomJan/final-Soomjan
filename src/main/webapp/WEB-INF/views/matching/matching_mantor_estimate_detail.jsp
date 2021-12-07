@@ -51,7 +51,7 @@
 	<jsp:include page="../common/nav.jsp" />
 
 	<div class="common-sidebar">
-		<jsp:include page="../common/matching_mantor_sidebar.jsp" />
+		<jsp:include page="../common/matching_mantee_sidebar.jsp" />
 		<div class="introduce">
 
 			<div class="matching-content">

@@ -5,7 +5,7 @@
 <mapper namespace="com.soomjd.soomjan.matching.model.dao.MatchingMapper">
 
 
-    <resultMap id="memberResultSet" type="EstimateDTO">
+    <resultMap id="estimateList" type="EstimateDTO">
         <id column="ESTIMATE_CODE" property="estimateCode"/>
         <result column="CATEGORY_CODE" property="categoryCode"/>
         <result column="IS_MATCHED" property="isMatched"/>
@@ -14,6 +14,11 @@
         <result column="CONTENTS" property="contents"/>
         <result column="EMAIL" property="email"/>
         <result column="IS_DELETED" property="isDeleted"/>
+    </resultMap>
+    
+    <resultMap id="categoryList" type="CategoryDTO">
+    	<id column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
     </resultMap>
     
     <insert id="registEstimate" parameterType="EstimateDTO">
@@ -42,12 +47,20 @@
 		)
     </insert>
     
-    <select id="selectEncPassword" resultType="java.lang.String" parameterType="MemberDTO">
+    <select id="selectCategory" resultMap="categoryList">
         SELECT
-		       A.PASSWORD
-		  FROM SSACK_TBL A
-		 WHERE A.EMAIL = #{ email }
-		   AND IS_EXIT = 'N'
+		       CATEGORY_CODE
+		     , CATEGORY_NAME
+		  FROM CATEGORY_TBL
+    </select>
+    
+    <select id="selectEstimate" resultMap="estimateList" parameterType="hashMap">
+        SELECT
+		       ESTIMATE_CODE
+		     , TITLE
+		     , IS_MATCHED
+		  FROM ESTIMATE_TBL
+		 WHERE EMAIL = #{ email }
     </select>
     
     
