@@ -228,8 +228,10 @@ public class JandiController {
 			System.out.println(savedName);
 			
 			Map<String,Object> key = new HashMap<>();
+			key.put("originFileName", originFileName);
 			key.put("savedName", savedName);
 			key.put("classCode", classCode);
+			key.put("adContents",ads.getAdContents());
 			
 			
 			
