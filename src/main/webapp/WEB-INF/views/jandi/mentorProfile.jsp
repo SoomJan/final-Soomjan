@@ -95,7 +95,7 @@ p {
 			<div class="introduce">
 				<button class="btnStyle">닉네임 변경</button>
 				<div class="introduce-detail">
-					<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/${ requestScope.jandi.profile_path}"
+					<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ requestScope.jandi.profile_path}"
 						id="profile" onclick="modifyProfile();">
 					<h3>${ requestScope.jandi.nickName }</h3>
 				</div>
