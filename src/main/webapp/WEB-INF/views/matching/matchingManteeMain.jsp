@@ -76,7 +76,7 @@
 							<c:forEach var="estimate" items="${ estimateList }">
 								<tr>
 									<th width="10">${ estimate.estimateCode }</th>
-									<th width="60">${ estimate.title }</th>
+									<th width="60"><a href="#">${ estimate.title }</a></th>
 									<th width="30">${ estimate.isMatched }</th> 
 								
 								</tr>
