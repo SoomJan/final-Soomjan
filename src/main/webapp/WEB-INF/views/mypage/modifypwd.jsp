@@ -51,7 +51,7 @@
 <body>
 	 <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-      <jsp:include page="../common/sidebar.jsp" />
+      <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">비밀번호 변경</p>
         <div class="input-pwd">

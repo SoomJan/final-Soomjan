@@ -89,7 +89,7 @@ public class ManagerController {
 	}
 	
 	// 새싹멤버 조회
-	@GetMapping("/mentilist")
+	@GetMapping("mentilist")
 	   public String mentilist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 	      
 	      System.out.println("===== ssackList =====");
@@ -134,11 +134,45 @@ public class ManagerController {
 	
 	// 잔디멤버 조회
 	@GetMapping("/mentolist")
-	public String mentolist(JandiDTO jandi, Model model) {
+	public String mentolist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 		
-		List<JandiDTO> jandiList = managerService.jandiMember(jandi);
+		System.out.println("===== jandiList =====");
+	      
+	      Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	      int totalCount = managerService.selectTotalCount(searchMap);
+	      System.out.println("totalCount : " + totalCount);
+	      
+	      int limit = 10;
+	      int buttonAmount = 5;
+	      
+	      SelectCriteria selectCriteria = null;
+		
+	      if(searchCondition != null && !"".equals(searchCondition)) {
+		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		      } else {
+		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		      }
+		      
+		      System.out.println("selectCriteria : " + selectCriteria);
+		      
+		      
+		        List<JandiDTO> jandiList = managerService.jandiMember(selectCriteria);
+		        System.out.println("jandiList : " + jandiList);
+		        
+		        model.addAttribute("jandiList", jandiList);
+		        model.addAttribute("selectCriteria", selectCriteria);
+		        
+		        System.out.println("selectCriteria : " + selectCriteria);
+		
+		
+		
+	/*	List<JandiDTO> jandiList = managerService.jandiMember(jandi);
 		System.out.println(jandiList);
-		model.addAttribute("jandiList", jandiList);
+		model.addAttribute("jandiList", jandiList); */
 		
 		
 		return "manager/mentolist";
@@ -156,7 +190,7 @@ public class ManagerController {
 	}
 	
 	/* 관리자 계정 생성 */
-	@PostMapping("/msregist")
+	@PostMapping("msregist")
 	public String msRegistMember(@ModelAttribute ManagerDTO manager, HttpServletRequest request) throws MemberRegistException {
 		
 		System.out.println("manager : " + manager);
@@ -168,7 +202,7 @@ public class ManagerController {
 			throw new MemberRegistException("관리자 계정 생성에 실패하셨습니다.");
 		} else {
 			
-			return "redirect:/";
+			return "redirect:/manager/manproduce";
 		}
 	}
 	

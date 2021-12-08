@@ -19,7 +19,7 @@ public interface ManagerService {
 
 	List<MemberDTO> ssackMember(SelectCriteria searchMap);
 
-	List<JandiDTO> jandiMember(JandiDTO jandi);
+	List<JandiDTO> jandiMember(SelectCriteria searchMap);
 
 	List<ManagerDTO> managerMember(ManagerDTO manager);
 
