@@ -9,7 +9,7 @@
 
 .sidebar-content {
   width: 69% !important;
-  overflow: auto;
+  /* overflow: auto; */
  /* border: 1px solid pink; */
 }
 

@@ -10,4 +10,8 @@ public interface MypageService {
 
 	MemberDTO selectNewMember(Map<String, String> map);
 
+	String selectEncPassword(Map<String, String> map);
+
+	boolean modifyPwd(Map<String, String> map);
+
 }
