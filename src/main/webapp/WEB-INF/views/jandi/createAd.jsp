@@ -98,10 +98,10 @@ table{
 					<br>
 					결제 완료한 그 다음날 부터 일주일 동안 광고가 노출됩니다.
 					<br><br>
-					<b>상기 내용에 대하여 충분히 인지하였습니다. <input type="checkbox" value="Y"></b>
+					<b>상기 내용에 대하여 충분히 인지하였습니다. <input type="checkbox" value="Y" id="checking"></b>
 				</div>
 				<br>
-				<input class="btnStyle" type="submit" value="광고 신청하기">
+				<input class="btnStyle" type="submit" value="광고 신청하기" id="submitted">
 			</form>
 		</div>
 	</div>

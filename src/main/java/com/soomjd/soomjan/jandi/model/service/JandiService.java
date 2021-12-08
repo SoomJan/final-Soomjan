@@ -20,7 +20,7 @@ public interface JandiService {
 
 	List<String> selectClassesList(String email);
 
-	int insertAd(Map<String, Object> key);
+	boolean insertAd(Map<String, Object> key);
 
 	int selectClassesCode(String myClass);
 

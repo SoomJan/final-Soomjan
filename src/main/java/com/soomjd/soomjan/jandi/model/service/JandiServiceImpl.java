@@ -55,9 +55,9 @@ public class JandiServiceImpl implements JandiService{
 	}
 
 	@Override
-	public int insertAd(Map<String, Object> key) {
+	public boolean insertAd(Map<String, Object> key) {
 		
-		return jandiMapper.insertAd(key);
+		return jandiMapper.insertAd(key)>0? true:false;
 	}
 
 	@Override
