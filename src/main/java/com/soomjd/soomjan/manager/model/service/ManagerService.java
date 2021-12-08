@@ -48,7 +48,7 @@ public interface ManagerService {
 	// 관리자 측면 공지사항 세부내용 조회
 	FaqDTO noticeDetail(FaqDTO noticeDetail);
 
-	// 공지사항 수정
+	// 공지사항 수정 사항
 	boolean modifyContents(FaqDTO faq);
 
 }
