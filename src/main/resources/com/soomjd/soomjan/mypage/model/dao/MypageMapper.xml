@@ -36,13 +36,26 @@
 	</select>
 
 	<update id="modifyInfo" parameterType="HashMap">
-    UPDATE 
-	       SSACK_TBL A
-	   SET A.NICKNAME = #{ nickName }
-	     , A.PHONE = #{ phone }
-	 WHERE A.EMAIL = #{ email }
+	    UPDATE 
+		       SSACK_TBL A
+		   SET A.NICKNAME = #{ nickName }
+		     , A.PHONE = #{ phone }
+		 WHERE A.EMAIL = #{ email }
 	</update>
 	
+	<select id="selectEncPassword" resultType="java.lang.String" parameterType="HashMap">
+	    SELECT
+		       A.PASSWORD
+		  FROM SSACK_TBL A
+		 WHERE A.EMAIL = #{ email }
+		   AND IS_EXIT = 'N'
+	</select>
+	
+	<update id="modifyPwd" parameterType="HashMap">
+	    UPDATE SSACK_TBL A
+		   SET A.PASSWORD = #{ setPwd }
+		 WHERE A.EMAIL = #{ email }
+	</update>
 	
 
 

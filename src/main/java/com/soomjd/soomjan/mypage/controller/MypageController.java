@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.soomjd.soomjan.member.model.dao.MemberMapper;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.mypage.model.service.MypageService;
 
@@ -25,10 +27,12 @@ import com.soomjd.soomjan.mypage.model.service.MypageService;
 public class MypageController {
 	
 	private final MypageService mypageService;
+	private final BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public MypageController(MypageService mypageService) {
+	public MypageController(MypageService mypageService, BCryptPasswordEncoder passwordEncoder) {
 		this.mypageService = mypageService;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	@GetMapping("main")
@@ -78,12 +82,39 @@ public class MypageController {
 	}
 	
 	@GetMapping("modifyPwd")
-	public ModelAndView modifyPwd(ModelAndView mv) {
+	public ModelAndView modifyPwdForm(ModelAndView mv) {
 		
 		mv.setViewName("mypage/modifypwd");
 		
 		return mv;
+	}
+	
+	@PostMapping("modifyPwd")
+	public void modifyPwd(HttpServletResponse response, @RequestParam("originPwd") String originPwd, @RequestParam("newPwd") String newPwd, HttpSession session) throws IOException {
 		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		Map<String, String> map = new HashMap<>();
+		map.put("email", member.getEmail());
+		
+		System.out.println("변경 될 비밀번호 : " + originPwd);
+		System.out.println("변경 할 비밀번호 : " + newPwd);
+		
+		if(!passwordEncoder.matches(originPwd, mypageService.selectEncPassword(map))) {
+			response.getWriter().write("false");
+		} else {
+			
+			/* 비밀번호 암호화 처리 */
+			String setPwd = passwordEncoder.encode(newPwd);
+			map.put("setPwd", setPwd);
+			
+			boolean modifyPwd = mypageService.modifyPwd(map);
+			
+			if(modifyPwd) {
+				response.getWriter().write("true");
+			} else {
+				response.getWriter().write("fail");
+			}
+		}
 	}
 	
 

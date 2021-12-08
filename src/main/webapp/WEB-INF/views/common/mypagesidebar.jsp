@@ -35,7 +35,7 @@ pageEncoding="UTF-8"%>
     .modal-content{height: 533px;}
     .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
     .context-modal-btn { position: relative; left: 40%; top: 11%;}
-    .inputpwd {
+    .inputpwd2 {
             width: 600px; 
             height: 50px; 
             color: gray;
@@ -106,7 +106,7 @@ pageEncoding="UTF-8"%>
           2. 탈퇴 후 동일한 메일로 재가입이 가능하지만, 탈퇴 한 계정과 연동되지 않습니다.<br>
           3. 현재 비밀번호를 입력하고 탈퇴하기를 누르시면 위 내용에 동의하는 것으로 간주됩니다.<br>
           <hr>
-          <input type="text" class="inputpwd" value="현재 비밀번호">
+          <input type="text" class="inputpwd2" value="현재 비밀번호">
           </div>
             <div class="context-modal-btn">
             <button class="ui button btn" id="con-btn" style="background-color: #91C788;">확인</button>

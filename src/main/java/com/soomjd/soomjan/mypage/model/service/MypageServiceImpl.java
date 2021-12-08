@@ -31,6 +31,20 @@ public class MypageServiceImpl implements MypageService{
 		
 		return newMember;
 	}
+
+	@Override
+	public String selectEncPassword(Map<String, String> map) {
+		
+		String encPwd = mapper.selectEncPassword(map);
+		
+		return encPwd;
+	}
+
+	@Override
+	public boolean modifyPwd(Map<String, String> map) {
+		
+		return mapper.modifyPwd(map) > 0? true:false;
+	}
 	
 	
 
