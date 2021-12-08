@@ -78,6 +78,13 @@ pageEncoding="UTF-8"%>
     	left: 18%;
     	top: 10px;
 	}
+	
+	#searchCondition {
+		float: left;
+   		position: relative;
+    	left: 15%;
+    	top: 35%;
+	}
 
     </style>
   </head>
@@ -98,43 +105,13 @@ pageEncoding="UTF-8"%>
               </tr>
             </thead>
             <tbody>
-            <c:forEach var="jandiMember" items="${ jandiList }">
+            <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
               <tr class="move">
                 <td>${ jandiMember.email }</td>
                 <td>${ jandiMember.nickName }</td>
                 <td>${ jandiMember.enroll_date }</td>
               </tr>
             </c:forEach>
-<!--               <tr class="move">
-                <td>yhj@gmail.com</td>
-                <td>양잔디</td>
-                <td>2021-11-24</td>
-              </tr>
-              <tr class="move">
-                <td>osb@gmail.com </td>
-                <td>오잔디</td>
-                <td>2021-11-24</td>
-              </tr>
-              <tr class="move">
-                <td>ysm@gmail.com </td>
-                <td>유잔디</td>
-                <td>2021-11-24</td>
-              </tr>
-              <tr class="move">
-                <td>lsh@gmail.com </td>
-                <td>이잔디</td>
-                <td>2021-11-24</td>
-              </tr>
-              <tr class="move">
-                <td>ljh@gmail.com </td>
-                <td>환잔디</td>
-                <td>2021-11-24</td>
-              </tr>
-              <tr class="move">
-                <td>iyr@gmail.com </td>
-                <td>임잔디</td>
-                <td>2021-11-24</td>
-              </tr> -->
             </tbody>
           </table>
 
@@ -154,32 +131,33 @@ pageEncoding="UTF-8"%>
             });
           });
 
-          </script>   
-
-         <div class="manager-search">
+          </script>
+          <div class="manager-search">
+          <input type="hidden" name="currentPage" value="1" />
+          <select
+            class="menu"
+            id="searchCondition"
+            name="searchCondition"
+            style="outline: none"
+          >
+            <option value="1">이메일</option>
+            <option value="2">닉네임</option>
+          </select>   
+          <form action="${ pageContext.servletContext.contextPath }/manager/mentolist" method="get">
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
-    			<input class="prompt" type="text">
-    			<i class="search icon"></i>
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
+    			<i class="search icon"><input type="submit" style="display: none;"></i>
   				</div>
  			 	<div class="results"></div>
 			</div>
+			</form>
           </div>
           <div>
-            <div class="manager-paging">
-              <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">next</a></li>
-              </ul>
-            </div>
           </div>
-
+			 <jsp:include page="../common/Paging.jsp" />
         </div>
-      </div>
-    </div>
+        </div>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

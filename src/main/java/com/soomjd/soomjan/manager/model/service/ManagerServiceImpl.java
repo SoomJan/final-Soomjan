@@ -47,8 +47,8 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public List<JandiDTO> jandiMember(JandiDTO jandi) {
-		return mapper.jandiMember(jandi);
+	public List<JandiDTO> jandiMember(SelectCriteria searchMap) {
+		return mapper.jandiMember(searchMap);
 	}
 
 
@@ -72,7 +72,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public boolean msregistMember(ManagerDTO manager) {
-		return mapper.insertMsMember(manager) > 0? true:false;
+		return mapper.registMsMember(manager) > 0? true:false;
 	}
 
 

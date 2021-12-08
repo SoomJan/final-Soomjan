@@ -162,18 +162,54 @@
      			WHERE F.RNUM >= #{ startRow }	  	 
 	</select>
 	
-	<select id="jandiMember" resultMap="jandiResultSet" parameterType="JandiDTO">
-    	SELECT 
-    		   JAN.EMAIL
-			 , JAN.NICKNAME
-			 , JAN.CAREER
-			 , JAN.INTRO
-			 , JAN.PROFILE_PATH
-			 , JAN.ENROLL_DATE
-			 , JAN.ACCOUNT
-			 , JAN.BANK
-			 , JAN.ACC_NAME
-		FROM JANDI_TBL JAN
+	<select id="jandiMember" resultMap="jandiResultSet">
+				SELECT
+		       F.RNUM
+		     , F.NICKNAME
+		     , F.CAREER
+		     , F.INTRO
+		     , F.PROFILE_PATH
+		     , F.ENROLL_DATE
+		     , F.ACCOUNT
+		     , F.BANK
+		     , F.ACC_NAME
+		 FROM (SELECT ROWNUM RNUM
+		 	        , D.NICKNAME
+		 	        , D.CAREER
+		 	        , D.INTRO
+		 	        , D.PROFILE_PATH
+		 	        , D.ENROLL_DATE
+		 	        , D.ACCOUNT
+		 	        , D.BANK
+		 	        , D.ACC_NAME
+		 	     FROM (SELECT
+		 	     		      A.NICKNAME
+		 	     		    , A.CAREER
+		 	     		    , A.INTRO
+		 	     		    , A.PROFILE_PATH
+		 	     		    , A.ENROLL_DATE
+		 	     		    , A.ACCOUNT
+		 	     		    , A.BANK
+		 	     		    , A.ACC_NAME
+		 	     		 FROM JANDI_TBL A
+		 	     		 <where>
+		 	     		 	<if test='searchCondition == "1"'>
+		 	     		 		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "2"'>
+		 	     		 		A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "3"'>
+		 	     		 		A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 </where>
+		 	     	 ORDER BY A.ENROLL_DATE DESC
+		 	    	  ) D
+		 	    <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+	        	) F
+     			WHERE F.RNUM >= #{ startRow }
     </select>
     
      <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
@@ -207,7 +243,7 @@
 		  </where>
 	</select>
 	
-	<insert id="insertMsMember" parameterType="ManagerDTO">
+	<insert id="registMsMember" parameterType="ManagerDTO">
 		INSERT
 		  INTO MANAGER_TBL
 		(
@@ -221,7 +257,7 @@
 		)
 		VALUES
 		(
-		  SEQ_MNG_NO.NEXTVAL
+		  SEQ_MANAGER_TBL.NEXTVAL
 		, #{ mngId }
 		, #{ password }
 		, #{ mngName }

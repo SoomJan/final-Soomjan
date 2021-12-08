@@ -12,18 +12,10 @@ pageEncoding="UTF-8"%>
 
     <title>관리자 계정 관리</title>
     
-    <link
-    href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
-    rel="stylesheet"
-    />
-    <link
-    href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-    rel="stylesheet"
-    /> 
-    <link
-    href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
-    rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/> 
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css" rel="stylesheet"/>
+        <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manproduce.css" rel="stylesheet"/>
     
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
@@ -69,7 +61,7 @@ pageEncoding="UTF-8"%>
   		font-size: 12px;
   		border-color: #91c788;
   		width: 10%;
-  		height: 30px;
+  		height: 35px;
   		position: relative;
   		left: 85%;
  		background-color: #91c788;
@@ -128,17 +120,22 @@ pageEncoding="UTF-8"%>
       </form>
 
       <h3>관리자 계정 생성 </h3>
-      <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post">
-      <div><h3 class="produce1"> 이름 : <div class="ui input"><input class="pd1" id="mngName" type="text" placeholder="name"></div> </h3>
-      <span class="nameCheck"></span></div>
-       <div><h3 class="produce2"> 닉네임 : <div class="ui input"><input class="pd2" id="mngNickName" type="text" placeholder="nickname"></div> </h3>
-      <span id="nickNamecheck"></span></div>
-       <div><h3 class="produce3"> 아이디 : <div class="ui input"> <input class="pd3" id="mngId" type="text" placeholder="ID"></div> </h3>
-      <span id="emailcheck"></span></div>
-       <div><h3 class="produce4"> 비밀번호 : <div class="ui input"><input class="pd4" id="password" type="password" placeholder="password"></div> </h3></div>
-       <div><h3 class="produce5"> 비밀번호확인 : <div class="ui input"><input class="pd5" id="password2" type="password" placeholder="password"></div> </h3>
-      <span id="pwdcheck"></span></div>
-      <input class="create btn" id="create" type="submit" value="계정 생성">
+      <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post" id="createForm">
+      <div><h3 class="produce1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           이름 : <div class="ui input"><input class="pd1" id="mngName" name="mngName" type="text" placeholder="name"></div></h3>
+      <div class="nameCheck"></div></div>
+       <div><h3 class="produce2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           닉네임 : <div class="ui input"><input class="pd2" id="mngNickName" name="mngNickName" type="text" placeholder="nickname"></div></h3> 
+      <div id="nickNamecheck"></div></div>
+       <div><h3 class="produce3"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            아이디 : <div class="ui input"> <input class="pd3" id="mngId" name="mngId" type="text" placeholder="ID"></div> </h3>
+      <div id="emailcheck"></div></div>
+       <div><h3 class="produce4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            비밀번호 : <div class="ui input"><input class="pd4" id="password" name="password" type="password" placeholder="password"></div> </h3>
+       <div id="pwd"></div></div>
+       <div><h3 class="produce5"> 비밀번호확인 : <div class="ui input"><input class="pd5" id="password2" name="password2" type="password" placeholder="password"></div> </h3>
+      <div id="pwdcheck"></div></div>
+      <input class="create btn" id="create" type="button" value="계정 생성">
       </form>
 
       <script>
@@ -263,6 +260,7 @@ pageEncoding="UTF-8"%>
               $("#crebtn").click(function(){
                 $("#createModal").fadeOut();
                 $("#resultModal").fadeIn();
+                $('#createForm').submit();
               $("#nobtn").click(function(){
                 window.location.reload();
               });

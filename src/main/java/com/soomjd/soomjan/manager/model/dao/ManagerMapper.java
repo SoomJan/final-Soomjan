@@ -20,13 +20,9 @@ public interface ManagerMapper {
 
 	List<MemberDTO> ssackMember(SelectCriteria searchMap);
 
-	List<JandiDTO> jandiMember(JandiDTO jandi);
-
 	List<ManagerDTO> managerMember(ManagerDTO manager);
 
 	int selectTotalCount(Map<String, String> searchMap);
-
-	int insertMsMember(ManagerDTO manager);
 
 	int emailCheck(Map<String, String> map);
 
@@ -47,4 +43,8 @@ public interface ManagerMapper {
 	FaqDTO noticeDetail(FaqDTO noticeDetail);
 
 	boolean modifyContents(FaqDTO faq);
+
+	int registMsMember(ManagerDTO manager);
+
+	List<JandiDTO> jandiMember(SelectCriteria searchMap);
 }
