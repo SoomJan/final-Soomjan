@@ -62,7 +62,7 @@ public class JandiServiceImpl implements JandiService{
 
 	@Override
 	public int selectClassesCode(String myClass) {
-		// TODO Auto-generated method stub
+		
 		return jandiMapper.selectClassesCode(myClass);
 	}
 

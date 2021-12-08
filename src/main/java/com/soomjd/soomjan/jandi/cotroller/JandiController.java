@@ -71,7 +71,7 @@ public class JandiController {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		
-		String filePath=root+"/uploadFiles";
+		String filePath=root+"/uploadFiles/profile";
 		
 		System.out.println(filePath);
 		
