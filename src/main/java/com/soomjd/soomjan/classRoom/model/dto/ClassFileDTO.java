@@ -12,20 +12,22 @@ public class ClassFileDTO {
 	private int mokchaCode;
 	private int postCode;
 	private String isDeleted;
+	private String nickName;
 	
 	public ClassFileDTO() {	}
 
-	public ClassFileDTO(String filePath, String email, String orgFilePath, Date writeDate, int fileCode, int postCode,
-			int mokchaCode, String isDeleted) {
+	public ClassFileDTO(int fileCode, String filePath, String email, String orgFilePath, Date writeDate, int mokchaCode,
+			int postCode, String isDeleted, String nickName) {
 		super();
+		this.fileCode = fileCode;
 		this.filePath = filePath;
 		this.email = email;
 		this.orgFilePath = orgFilePath;
 		this.writeDate = writeDate;
-		this.fileCode = fileCode;
-		this.postCode = postCode;
 		this.mokchaCode = mokchaCode;
+		this.postCode = postCode;
 		this.isDeleted = isDeleted;
+		this.setNickName(nickName);
 	}
 
 	public String getFilePath() {
@@ -92,11 +94,19 @@ public class ClassFileDTO {
 		this.isDeleted = isDeleted;
 	}
 
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	@Override
 	public String toString() {
 		return "ClassFileDTO [filePath=" + filePath + ", email=" + email + ", orgFilePath=" + orgFilePath
 				+ ", writeDate=" + writeDate + ", fileCode=" + fileCode + ", postCode=" + postCode + ", mokchaCode="
-				+ mokchaCode + ", isDeleted=" + isDeleted + "]";
+				+ mokchaCode + ", isDeleted=" + isDeleted + ", nickName=" + nickName + "]";
 	}
 	
 	

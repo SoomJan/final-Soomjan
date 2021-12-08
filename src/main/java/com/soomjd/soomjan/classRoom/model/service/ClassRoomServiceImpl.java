@@ -114,6 +114,16 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 			return classRoomMapper.registLearningFile(classFile);
 		}
 
+		@Override
+		public boolean registLearnigPost(LearningPostDTO learningPost) {
+			return classRoomMapper.registLearnigPost(learningPost);
+		}
+
+		@Override
+		public int selectNewPostCode(LearningPostDTO learningPost) {
+			return classRoomMapper.selectNewPostCode(learningPost);
+		}
+
 
 
 }

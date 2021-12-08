@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.async.StandardServletAsyncWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,6 +31,7 @@ import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/*/class/*")
@@ -232,6 +234,24 @@ private final ClassRoomService classRoomService;
 		return "redirect:/jandi/class/classLecture";
 	}
 	
+	@GetMapping("registLearningPost")
+	public String registLearningPost(Model model) {
+		
+		LearningPostDTO learningPost = new LearningPostDTO();
+		learningPost.setEmail(((JandiDTO)model.getAttribute("jandi")).getEmail());
+		learningPost.setClassCode((int)model.getAttribute("classCode"));
+		
+		System.out.println("learning: " + learningPost);
+		
+		int postCode = 0;
+		
+		if(classRoomService.registLearnigPost(learningPost)) {
+			postCode = classRoomService.selectNewPostCode(learningPost);
+		}
+		
+		return "redirect:/jandi/class/classLearningPost?postCode=" + postCode;
+	}
+	
 	
 	@PostMapping("modifyLearnigPost")
 	public String modifyLearnigPost(Model model, RedirectAttributes rttr
@@ -251,13 +271,18 @@ private final ClassRoomService classRoomService;
 		}else {
 			rttr.addFlashAttribute("modifyMessage", "수정에 실패했습니다.");
 		}
-		
+			
 		return "redirect:/jandi/class/classLearningPost?postCode=" + postCode;
+		
 	}
 	
 	@PostMapping("uploadLearningFile")
 	public String uploadLearningFile(@RequestParam MultipartFile file, @RequestParam int postCode
 			, HttpSession session, RedirectAttributes rttr) {
+		
+		// 해당 잔디인지 아닌지 구분하기 위해 선언
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		ClassDTO classDTO = (ClassDTO) session.getAttribute("classDTO");
 		
 		//파일 저장 객체(따로 뺌)
 		FileWrapper fileWrapper = new FileWrapper();
@@ -281,7 +306,7 @@ private final ClassRoomService classRoomService;
 			
 			// DB에 저장할 파일 DTO
 			ClassFileDTO classFile = new ClassFileDTO();
-			classFile.setEmail(((JandiDTO)session.getAttribute("jandi")).getEmail());
+			classFile.setEmail(member.getEmail());
 			classFile.setFilePath(dir + "/" + savedName);
 			classFile.setOrgFilePath(originFileName);
 			classFile.setPostCode(postCode);
@@ -294,24 +319,30 @@ private final ClassRoomService classRoomService;
 			rttr.addFlashAttribute("uploadMessage", "업로드에 실패했습니다.");
 		}
 		
-		return "redirect:/jandi/class/classLearningPost?postCode=" + postCode;
+		return (member.getEmail() == classDTO.getEmail())
+				? "redirect:/jandi/class/classLearningPost?postCode=" + postCode 
+				: "redirect:/mypage/class/classLearningPost?postCode=" + postCode;
 	}
 	
-	@GetMapping("*/download/{ filePath }")
-	public void download(@PathVariable String filePath, HttpServletRequest request, HttpServletResponse response) {
+	@GetMapping("*/download")
+	public void download(HttpServletRequest request, HttpServletResponse response) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		
+		String filePath = request.getParameter("filePath");
+		String originFileName = request.getParameter("fileName");
 		//파일 저장 객체(따로 뺌)
 		FileWrapper fileWrapper = new FileWrapper();
-		File file = new File(filePath);
-		// 파일명 변경처리
-		String originFileName = file.getName();
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+		File file = new File(root + filePath);
+		System.out.println(file.getName());
 		
 		try {
-			if(fileWrapper.downloadSingleFile(file, savedName, response.getOutputStream())) {
+			// 파일을 UTF-8로 변환 (한국어 깨짐 방지)
+			originFileName = new String(originFileName.getBytes("UTF-8"), "iso-8859-1");
+			response.setHeader("Content-type", "application/octet-stream; charset=UTF-8");
+			response.setHeader("Content-Disposition", "filename=" + originFileName);
+			
+			if(fileWrapper.downloadSingleFile(file, response.getOutputStream())) {
+				System.out.println("다운로드 성공");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

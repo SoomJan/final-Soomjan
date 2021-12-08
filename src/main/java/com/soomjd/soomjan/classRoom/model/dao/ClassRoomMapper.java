@@ -49,5 +49,9 @@ public interface ClassRoomMapper {
 
 	int registLearningFile(ClassFileDTO classFile);
 
+	boolean registLearnigPost(LearningPostDTO learningPost);
+
+	int selectNewPostCode(LearningPostDTO learningPost);
+
 
 }

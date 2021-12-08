@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,7 +119,15 @@ img {
 				<form action="${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost" method="post">
 					<div>
 						<p style="font-size: x-large; font-weight: 700;" align="center">
-							<input class="inputStyle" type="text" name="title" value="${ learnigPost.title }"></p>
+							<c:if test="${ learnigPost.title == '제목 없음' }">
+								<input class="inputStyle" type="text" name="title" 
+									value="" placeholder="제목을 입력해 주세요.">
+							</c:if>
+							<c:if test="${ learnigPost.title != '제목 없음' }">
+								<input class="inputStyle" type="text" name="title" 
+									value="${ learnigPost.title }" placeholder="제목을 입력해 주세요.">
+							</c:if>
+						</p>
 						<p align="right">작성일: ${ learnigPost.writeDate }</p>
 						<p align="right">최종 수정일: ${ learnigPost.reDate }</p>
 					</div>
@@ -129,18 +136,22 @@ img {
 					<br>
 					<div id="contents">
 						<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
-							placeholder="강의 소개를 입력해주세요.">${ learnigPost.contents }</textarea>
+							placeholder="내용을 입력해 주세요.">${ learnigPost.contents }</textarea>
 					</div>
 					<input type="hidden" name="postCode" value="${ learnigPost.postCode }">
 				</form>
 				<br>
 				<br>
 				<h3>첨부파일</h3>
+				<div style="max-height:200px; overflow-y: auto;">
 				<c:forEach var="file" items="${ learnigFileList }">
-					<c:set var="fileName" value="${fn:  file.filePath }" />
-					<b style="float:right;">작성일: ${ file.writeDate }</b>
-					<a href="${pageContext.servletContext.contextPath }/jandi/class/learningPost/download/${ file.filePath }"></a>
+					<c:if test="${ file.email == learnigPost.email }">
+						<b style="float:right;">${ file.writeDate }</b>
+						<a style="float:left;"href="${pageContext.servletContext.contextPath }/jandi/class/learningPost/download?filePath=${ file.filePath }&fileName=${file.orgFilePath}">${ file.orgFilePath }</a>
+						<br>
+					</c:if>
 				</c:forEach>
+				</div>
 				<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadLearningFile" method="post" enctype="multipart/form-data">
 					<input type="hidden" value="${ learnigPost.postCode }" name="postCode">
 					<br><b>파일 업로드</b> <br> <input type="file" name="file" style="border: none;">
@@ -149,17 +160,20 @@ img {
 				<br>
 				<h3>제출</h3>
 				<hr>
-				<div class="ui steps">
-					<div class="step" style="border: 3px solid #91C788;">
-						<div class="title">익명의잔디1</div>
-						<div class="description">homework_chap01.pdf</div>
+				 <div style="max-height:500px; overflow-y: auto;" align="center">
+				<c:forEach var="file" items="${ learnigFileList }">
+					<c:if test="${ file.email != learnigPost.email }">
+					<div class="ui steps">
+						<div class="step" style="border: 3px solid #91C788; width:350px;">
+							<div class="title">${ file.nickName }</div>
+							<div class="description">
+								<b style="float:right;">${ file.writeDate }</b>
+								<a style="float:left;"href="${pageContext.servletContext.contextPath }/jandi/class/learningPost/download?filePath=${ file.filePath }&fileName=${file.orgFilePath}">${ file.orgFilePath }</a>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="ui steps">
-					<div class="step" style="border: 3px solid #91C788;">
-						<div class="title">익명의잔디2</div>
-						<div class="description">homework_chap01.pdf</div>
-					</div>
+					</c:if>
+				</c:forEach>
 				</div>
 			</div>
 		</div>

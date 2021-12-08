@@ -48,6 +48,7 @@
     	<result column="MOKCHA_CODE" property="mokchaCode"/>
     	<result column="POST_CODE" property="postCode"/>
     	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="NICKNAME" property="nickName"/>
     </resultMap>
     
     
@@ -68,6 +69,8 @@
     	  FROM CLASS_TBL C
     	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)
     	 WHERE C.CLASS_CODE = #{ classCode }
+    	   AND C.IS_DELETED = 'N'
+    	  ORDER BY C.CREATE_DATE DESC
     </select>
     
     <select id="selectCurrentCount" resultType="_int">
@@ -102,6 +105,8 @@
 		  FROM LEARNING_TBL L
 		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
 		 WHERE L.CLASS_CODE = #{ classCode }
+		   AND L.IS_DELETED = 'N'
+		  ORDER BY L.WRITE_DATE DESC
     </select>
     
     <select id="selectChatRoomList" resultType="hashMap" parameterType="hashMap">
@@ -150,6 +155,8 @@
     		 , TITLE
     	  FROM CLASS_TBL
     	 WHERE EMAIL = #{ email }
+    	   AND IS_DELETED = 'N'
+    	  ORDER BY CREATE_DATE DESC
     </select>
     
     <delete id="deleteClass">
@@ -190,11 +197,6 @@
     	)
     </insert>
     
-    <delete id="deleteLecture">
-    	DELETE FROM LECTURE_MOKCHA_TBL
-    	 WHERE MOKCHA_CODE = SEQ_LECTURE_MOKCHA_TBL.CURRVAL
-    </delete>
-    
     <select id="selectPostByPostCode" resultMap="learningPostResultMap">
     	SELECT
     		   L.POST_CODE
@@ -209,6 +211,8 @@
 		  FROM LEARNING_TBL L
 		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
 		 WHERE L.POST_CODE = #{ postCode }
+		   AND L.IS_DELETED = 'N'
+		  ORDER BY L.WRITE_DATE DESC
     </select>
     
     <select id="selectLearningFileList" resultMap="fileResultMap">
@@ -220,10 +224,12 @@
 			 , F.FILE_CODE
 			 , F.POST_CODE
 			 , F.IS_DELETED
-			 , J.NICKNAME
+			 , S.NICKNAME
 		  FROM LEARNING_FILE_TBL F
-		  JOIN JANDI_TBL J ON (J.EMAIL = F.EMAIL)
+		  JOIN SSACK_TBL S ON (S.EMAIL = F.EMAIL)
 		 WHERE F.POST_CODE = #{ postCode }
+		   AND F.IS_DELETED = 'N'
+		  ORDER BY F.WRITE_DATE DESC
     </select>
     
     <select id="selectMokchaFileList" resultMap="fileResultMap">
@@ -240,6 +246,7 @@
 		  JOIN JANDI_TBL J ON (J.EMAIL = F.EMAIL)
 		  JOIN LECTURE_MOKCHA_TBL M ON (M.MOKCHA_CODE = F.MOKCHA_CODE)
 		 WHERE M.CLASS_CODE = #{ classCode }
+		   AND F.IS_DELETED = 'N'
     </select>
     
       <update id="modifyLearnigPost" parameterType="LearningPostDTO">
@@ -250,7 +257,7 @@
     </update>
     
     <insert id="registLearningFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
-    	INSERT INTO LEARNING_FILE_TBL
+    	INSERT INTO LEARNING_TBL
     	VALUES
     	(
     		  #{ filePath }
@@ -262,5 +269,27 @@
     		, 'N'
     	)
     </insert>
+    
+    <insert id="registLearnigPost">
+    	INSERT INTO LEARNING_TBL
+    	VALUES
+    	(
+    		  SEQ_LEARNING_TBL.NEXTVAL
+    		, SYSDATE
+    		, SYSDATE
+    		, 'N'
+    		, NULL
+    		, #{ email }
+    		, #{ classCode }
+    		, '제목 없음'
+    	)
+    </insert>
+    
+    <select id="selectNewPostCode" resultType="_int">
+    	SELECT MAX(POST_CODE)
+    	  FROM LEARNING_TBL
+    	 WHERE EMAIL = #{ email }
+    	   AND IS_DELETED = 'N'
+    </select>
     
 </mapper>

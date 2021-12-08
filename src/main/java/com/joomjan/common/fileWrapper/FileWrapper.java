@@ -29,7 +29,7 @@ public class FileWrapper {
 		return result;
 	}
 	
-	public boolean downloadSingleFile(File file, String savedName, OutputStream os) {
+	public boolean downloadSingleFile(File file, OutputStream os) {
 		
 		boolean result = false;
 		
