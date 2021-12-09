@@ -113,7 +113,6 @@ a {
 		</div>
 		<script>
 			$('#okBtn').click(function() {
-				
 				if (confirm("한번 설정된 클래스의 설정은 변경할 수 없습니다. 생성하시겠습니까?")) {
 					$('#modalForm').submit();
 				}

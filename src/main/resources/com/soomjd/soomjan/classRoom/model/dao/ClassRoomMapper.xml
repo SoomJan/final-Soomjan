@@ -16,6 +16,8 @@
     	<result column="MAX_COUNT" property="maxCount"/>
     	<result column="TITLE" property="title"/>
     	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
     	<result column="NICKNAME" property="nickName" />
     </resultMap>
     
@@ -65,6 +67,8 @@
 		    	, C.MAX_COUNT
 		    	, C.TITLE
 		    	, C.PRICE
+		    	, C.FILE_PATH
+		    	, C.ORG_FILE_PATH
 		    	, J.NICKNAME
     	  FROM CLASS_TBL C
     	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)
@@ -89,6 +93,8 @@
 			 , M.CLASS_CODE
 		 FROM LECTURE_MOKCHA_TBL M
 		WHERE M.CLASS_CODE = #{ classCode }
+		  AND M.IS_DELETED = 'N'
+		ORDER BY M.MOKCHA_CODE DESC
     </select>
     
     <select id="selectLearningPostList" resultMap="learningPostResultMap">
@@ -159,10 +165,11 @@
     	  ORDER BY CREATE_DATE DESC
     </select>
     
-    <delete id="deleteClass">
-    	DELETE FROM CLASS_TBL
+    <update id="deleteClass">
+    	UPDATE CLASS_TBL
+    	   SET IS_DELETED = 'Y'
     	 WHERE CLASS_CODE = #{ classCode }
-    </delete>
+    </update>
     
     <update id="modifyClass" parameterType="ClassDTO">
     	UPDATE CLASS_TBL
@@ -180,6 +187,7 @@
     		, SYSDATE
     		, #{ contents }
     		, #{ classCode }
+    		, 'N'
     	)
     </insert>
     
@@ -253,11 +261,12 @@
     	UPDATE LEARNING_TBL
     	   SET CONTENTS = #{ contents }
     	   	 , TITLE =  #{ title } 
+    	   	 , RE_DATE = SYSDATE
     	 WHERE POST_CODE = #{ postCode }
     </update>
     
     <insert id="registLearningFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
-    	INSERT INTO LEARNING_TBL
+    	INSERT INTO LEARNING_FILE_TBL
     	VALUES
     	(
     		  #{ filePath }
@@ -267,6 +276,7 @@
     		, SEQ_LEARNING_FILE_TBL.NEXTVAL
     		, #{ postCode }
     		, 'N'
+    		
     	)
     </insert>
     
@@ -290,6 +300,49 @@
     	  FROM LEARNING_TBL
     	 WHERE EMAIL = #{ email }
     	   AND IS_DELETED = 'N'
+    </select>
+    
+    <update id="modifyClassFile" parameterType="ClassDTO">
+    	UPDATE CLASS_TBL
+    	   SET FILE_PATH = #{ filePath }
+    	     , ORG_FILE_PATH = #{ orgFilePath }
+    	WHERE CLASS_CODE = #{ classCode }
+    </update>
+    
+    <update id="modifyLectureIsDeleted">
+    	UPDATE LECTURE_MOKCHA_TBL
+    	   SET IS_DELETED = 'Y'
+    	 WHERE MOKCHA_CODE = #{ mokchaCode }
+    </update>
+    
+    <update id="modifyLectureFileIsDeleted">
+    	UPDATE LECTURE_FILE_TBL
+    	   SET IS_DELETED = 'Y'
+    	 WHERE MOKCHA_CODE = #{ mokchaCode }
+    </update>
+    
+    <select id="selectMokchaFileListByMokchaCode" resultMap="fileResultMap">
+    	SELECT FILE_PATH
+    	  FROM LEARNING_TBL
+    	 WHERE MOKCHA_CODE = #{ mokchaCode }
+    </select>
+    
+    <update id="modifyLearnigPostIsDeleted">
+    	UPDATE LEARNING_TBL
+    	   SET IS_DELETED = 'Y'
+    	 WHERE POST_CODE = #{ postCode }
+    </update>
+    
+    <update id="modifyLearningFileIsDeleted">
+    	UPDATE LEARNING_FILE_TBL
+    	   SET IS_DELETED = 'Y'
+    	 WHERE POST_CODE = #{ postCode }
+    </update>
+    
+    <select id="selectLearningFileListByPostCode" resultMap="fileResultMap">
+    	SELECT FILE_PATH
+    	  FROM LEARNING_FILE_TBL
+    	 WHERE POST_CODE = #{ postCode }
     </select>
     
 </mapper>

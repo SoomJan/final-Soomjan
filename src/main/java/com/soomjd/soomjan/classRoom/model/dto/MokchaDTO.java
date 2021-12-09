@@ -9,16 +9,19 @@ public class MokchaDTO {
 	private java.sql.Date writeDate;
 	private String contents;
 	private int classCode;
+	private int countMokcha;
 	
 	public MokchaDTO() {}
 
-	public MokchaDTO(int mokchaCode, String mokchaName, Date writeDate, String contents, int classCode) {
+	public MokchaDTO(int mokchaCode, String mokchaName, Date writeDate, String contents, int classCode,
+			int countMokcha) {
 		super();
 		this.mokchaCode = mokchaCode;
 		this.mokchaName = mokchaName;
 		this.writeDate = writeDate;
 		this.contents = contents;
 		this.classCode = classCode;
+		this.countMokcha = countMokcha;
 	}
 
 	public int getMokchaCode() {
@@ -61,10 +64,18 @@ public class MokchaDTO {
 		this.classCode = classCode;
 	}
 
+	public int getCountMokcha() {
+		return countMokcha;
+	}
+
+	public void setCountMokcha(int countMokcha) {
+		this.countMokcha = countMokcha;
+	}
+
 	@Override
 	public String toString() {
 		return "MokchaDTO [mokchaCode=" + mokchaCode + ", mokchaName=" + mokchaName + ", writeDate=" + writeDate
-				+ ", contents=" + contents + ", classCode=" + classCode + "]";
+				+ ", contents=" + contents + ", classCode=" + classCode + ", countMokcha=" + countMokcha + "]";
 	}
 	
 	

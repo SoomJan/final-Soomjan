@@ -36,6 +36,8 @@
     		 , TITLE
     	  FROM CLASS_TBL
     	 WHERE EMAIL = #{ email }
+    	   AND IS_DELETED = 'N'
+    	 ORDER BY CREATE_DATE DESC
     </select>
     
     <update id="updateProfileImage">

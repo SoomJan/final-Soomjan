@@ -47,7 +47,7 @@ table th{
 </script>
 </head>
 <body>
-	<div class="sidebar-content">
+	<div class="sidebar-content" style="background:">
 		<button class="btn btn-primary" style="float:right" onclick="deleteClass();">삭제</button>
 		<p class="title"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
 		<p align="right"><b>인원 ${ sessionScope.currentCount } / ${ sessionScope.classDTO.maxCount } 명</b></p>

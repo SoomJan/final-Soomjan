@@ -110,7 +110,7 @@ img {
 		
 		if(chatInfo != null){
 			
-			let socket = io("http://125.132.252.115:3000");
+			let socket = io("http://125.132.252.115:3000/classChat");
 			
 			socket.emit("chat_info", chatInfo);
 			

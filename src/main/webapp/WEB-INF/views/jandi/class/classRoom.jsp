@@ -23,10 +23,11 @@
 
 </head>
 <style>
-img {
-	width: 250px;
+.classImg{
+	width: 80%;
 	text-align: center;
-	border: none !important;
+	border: 1px solid green;
+	border-radius: 0.5rem;
 }
 
 .content {
@@ -45,7 +46,14 @@ img {
 }
 
 </style>
-
+<script>
+$(function(){
+	if('${ requestScope.uploadMessage }' != ''){
+		alert('${ requestScope.uploadMessage }');
+		console.log('${ requestScope.uploadMessage }');
+	}
+});
+</script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -65,8 +73,12 @@ img {
 				</div>
 				<br>
 				<br>
-				<h4>썸네일 사진</h4>
-					<img src="">
+				<h4>썸네일 <button type="button" style="margin-left:50px; border-radius:1rem;  border: 3px solid #91C788; background: none; padding:5px;"
+						data-toggle="modal" data-target="#imageModal">썸네일 변경하기</button>
+				</h4>
+				<div align="center">
+					<img class="classImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ classDTO.filePath }">
+				</div>
 				<br>
 				<br>
 				<div class="tag">
@@ -77,7 +89,7 @@ img {
 					placeholder="태그를 입력해주세요.">${ classDTO.tag }</textarea>
 				<script>
 					$(function(){
-						let tags = $('#tag').text().replace(" ","");
+						let tags = $('#tag').val().replace(" ","");
 						let tagArr = tags.split('#');
 						for(let tag of tagArr){
 							if(tag !== ""){
@@ -91,6 +103,8 @@ img {
 							if($('#tag').val().length >= 300){
 								alert("300byte를 초과할 수 없습니다.");
 								$('#tag').val().substr(0, 1500);
+							}else{
+								
 							}
 						});
 						
@@ -102,8 +116,6 @@ img {
 						});
 						
 						let message = '${ requestScope.modifyMessage }';
-						console.log(message);
-						
 						if( message !== "" ){
 							alert(message);
 						}
@@ -144,6 +156,47 @@ img {
 			</form>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+		<div class="modal fade" id="imageModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">썸네일 변경하기</h4>
+					</div>
+					<div class="modal-body" align="center">
+						<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadClassFile" 
+							method="post" enctype="multipart/form-data" id="uploadForm">
+							<input type="hidden" value="${ classDTO.classCode }" name="classCode">
+							<br>
+							<b>파일 업로드</b> 
+							<br> 
+							<input type="file" id="fileInput" name="file" style="border: none;" accept="image/*">
+							<br>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btnBD"
+							data-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="modifyBtn">변경하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$('#modifyBtn').click(function() {
+				if ($('#fileInput').val() != "") {
+					$('#uploadForm').submit();
+				}else{
+					alert("변경할 썸네일을 선택해 주세요.");
+				}
+			});
+		</script>
 </body>
 <jsp:include page="../../common/footer.jsp" />
 </html>

@@ -63,7 +63,7 @@ table{
 				<tr>
 				<th align="center" width="25"></th>
 				<th align="center" width="50"><h3>${ sessionScope.classDTO.title } 클래스룸 학습방</h3></th>
-				<th align="center" width="25"><a href="${pageContext.servletContext.contextPath}/jandi/class/registLearningPost">작성하기</a></th>
+				<th align="center" width="25"><a href="${pageContext.servletContext.contextPath}/jandi/class/registLearningPost">게시물추가</a></th>
 				</tr>
 			</table>
 			<hr class="border-1px-black" />

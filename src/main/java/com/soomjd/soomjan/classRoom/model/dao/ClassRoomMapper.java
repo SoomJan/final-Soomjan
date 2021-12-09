@@ -53,5 +53,20 @@ public interface ClassRoomMapper {
 
 	int selectNewPostCode(LearningPostDTO learningPost);
 
+	int modifyClassFile(ClassDTO classDTO);
+
+	boolean modifyLectureIsDeleted(int mokchaCode);
+
+	boolean modifyLectureFileIsDeleted(int mokchaCode);
+	
+	List<ClassFileDTO> selectMokchaFileListByMokchaCode(int mokchaCode);
+
+	boolean modifyLearnigPostIsDeleted(int postCode);
+
+	boolean modifyLearningFileIsDeleted(int postCode);
+
+	List<ClassFileDTO> selectLearningFileListByPostCode(int postCode);
+
+
 
 }
