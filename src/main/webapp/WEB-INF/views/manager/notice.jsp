@@ -63,6 +63,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <div class="sidebar-content">
         <h1>공지사항 관리</h1>
         <br />
+        <a href="${ pageContext.servletContext.contextPath }/manager/addnotice" class="addnotice">
+          <button>공지사항 작성</button></a>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
@@ -83,23 +85,33 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </c:forEach>
           </tbody>
         </table>
-        
        
-        
-        <a href="${ pageContext.servletContext.contextPath }/manager/addnotice">
-          <button>공지사항 작성</button></a
-        >
-
         <div class="manager-search">
-          <div class="ui search menti-search">
-            <div class="ui icon input input-search">
-              <input class="prompt" type="text" />
-              <i class="search icon"></i>
-            </div>
-            <div class="results"></div>
-          </div>
-        </div>
+          <input type="hidden" name="currentPage" value="1" />
+          <form
+            action="${ pageContext.servletContext.contextPath }/manager/notice"
+            method="get">
+          <input
+            class="menu"
+            id="searchCondition"
+            name="searchCondition"
+            style="display: none"
+            value="title"
+          >
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
+    			<i class="search icon"><input type="submit" style="display: none;"></i>
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
+			</form>
       </div>
+      <br>
+      <jsp:include page="../common/Paging.jsp" />
+      </div>
+
+
     </div>
   </body>
 

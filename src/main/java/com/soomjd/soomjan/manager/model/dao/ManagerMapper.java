@@ -38,7 +38,7 @@ public interface ManagerMapper {
 
 	int addnotice(FaqDTO faq);
 
-	List<FaqDTO> selectnotice(FaqDTO faq);
+	List<FaqDTO> selectnotice(SelectCriteria selectCriteria);
 
 	FaqDTO noticeDetail(FaqDTO noticeDetail);
 
@@ -47,4 +47,6 @@ public interface ManagerMapper {
 	int registMsMember(ManagerDTO manager);
 
 	List<JandiDTO> jandiMember(SelectCriteria searchMap);
+
+	int selectFaqTotalCount(Map<String, String> searchMap);
 }

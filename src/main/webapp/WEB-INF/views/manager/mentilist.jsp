@@ -157,12 +157,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
  			 	<div class="results"></div>
 			</div>
 			</form>
-          </div>
-          <div>   
-          </div>
-			<jsp:include page="../common/Paging.jsp" />
-        </div>
       </div>
+      <jsp:include page="../common/Paging.jsp" />
+      </div>
+
+    
+    </div>
+
+    
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

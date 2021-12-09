@@ -94,6 +94,7 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 
+	// 카테고리 수정(1 or 0)
 	@Override
 	public boolean modifycategory(CategoryDTO category) {
 		return mapper.modifycategory(category)> 0? true:false;
@@ -120,8 +121,8 @@ public class ManagerServiceImpl implements ManagerService {
 
 	// 공지사항 조회
 	@Override
-	public List<FaqDTO> selectnotice(FaqDTO faq) {
-		return mapper.selectnotice(faq);
+	public List<FaqDTO> selectnotice(SelectCriteria selectCriteria) {
+		return mapper.selectnotice(selectCriteria);
 	}
 
 	// 관리자 측면 공지사항 세부내용 조회
@@ -134,6 +135,13 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public boolean modifyContents(FaqDTO faq) {
 		return mapper.modifyContents(faq);
+	}
+
+
+	// 공지사항 갯수 조회(페이징 처리)
+	@Override
+	public int selectFaqTotalCount(Map<String, String> searchMap) {
+		return mapper.selectFaqTotalCount(searchMap);
 	}
 
 }

@@ -72,7 +72,7 @@
 						
 	<script>
 	
-		const link = "${ pageContext.servletContext.contextPath }/manager/mentilist";
+		const link = window.location.pathname;
 		let searchText = "";
 		
 		if(${ !empty sessionScope.selectCriteria.searchCondition? true: false }) {

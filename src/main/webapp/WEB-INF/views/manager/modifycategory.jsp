@@ -105,10 +105,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             />
             <button type="button" onclick="checkCategoryCode()">입력하기</button>
           <script>
-          	function checkCategoryCode() {
+          $('#categoryCode').keyup(	function checkCategoryCode() {
           		let categoryCode = $('#categoryCode').val();
           		
-          			
           		$.ajax({
                     url: "${ pageContext.servletContext.contextPath }/manager/checkCategoryCode",
                     type: "post", 
@@ -117,25 +116,27 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     	/* alert(categoryName); */
                     	if(categoryName == "false"){
                     		$("#changeName").attr('style', "display:none;");
+                        	$("#checkName").attr('disabled', true);
+
                     	} else {
                     	$("#checkCategoryName").prop("placeholder", categoryName);
                     	$("#changeName").attr('style', "display:block;");
-                    	console.log(categoryName);
+                    	$("#checkName").attr('disabled', false);
+                    	$('#checkName').val('');
                     	} 
                     },
                     error: function(error) {
                         console.log(error);
                       }
           		});
-          		
-          	};
+          	});
           
           </script>
           <br>
           <br>
             <div id="changeName" style="display:none">
       	    <input type="text" id="checkCategoryName" name="categoryName">
-            <button type="submit">수정하기</button>
+            <button type="submit" id="checkName" disabled>수정하기</button>
             </div>
          	 </form>
         </div>
