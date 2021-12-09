@@ -2,6 +2,7 @@ package com.soomjd.soomjan.jandi.cotroller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.CreateAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiIntroDTO;
@@ -266,7 +268,36 @@ public class JandiController {
 	
 	
 	@GetMapping("/myAd")
-	public String myAd(){
+	public String myAd(HttpSession session){
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
+		
+		List<Integer> classesCodeList  =null;
+		
+		for(int i=0; i<classes.size(); i++) {
+			
+			int classesCode = classes.get(i).getClassCode();
+			
+			classesCodeList  =new ArrayList<Integer>();
+			
+			classesCodeList.add(classesCode);
+			
+			
+		}
+		
+		
+		if(classesCodeList==null) {
+			
+			
+		}
+		
+		
+		
+		
+		
+		
 		return "jandi/myAd";
 	}
 	

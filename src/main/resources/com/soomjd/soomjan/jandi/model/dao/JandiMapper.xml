@@ -16,6 +16,23 @@
     	<result column="ACC_NAME" property="acc_name"/>
     </resultMap>
     
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.ClassesDTO" id="classesResultMap">
+    	<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>  
+    	<result column="TAG" property="tag"/>  
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>    
+    	<result column="VIEWS" property="view"/>    	
+    	<result column="MAX_COUNT" property="maxCount"/>    	
+    	<result column="TITLE" property="title"/>    	
+    	<result column="PRICE" property="price"/>    	
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    </resultMap>
+    
     <select id="selectJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
 			 , JAN.NICKNAME
@@ -104,5 +121,26 @@
     	
     	
     </insert>
+
+	<select id="selectClasses" resultMap="classesResultMap">
+		SELECT 
+			   CLASS_CODE
+			 , CREATE_DATE
+			 , CONTENTS
+			 , TAG
+			 , CATEGORY_CODE
+			 , EMAIL
+			 , BOARD_TYPE
+			 , VIEWS
+			 , MAX_COUNT
+			 , TITLE
+			 , PRICE
+			 , IS_DELETED
+			 , FILE_PATH
+			 , ORG_FILE_PATH
+		  FROM CLASS_TBL
+		 WHERE EMAIL=#{ email } 	   	
+	
+	</select>
 
 </mapper>
