@@ -206,6 +206,22 @@ public class ManagerController {
 		}
 	}
 	
+	/* 관리자 계정 비활성화 */
+	@PostMapping("inactiveManager")
+	public void inactiveManager(@ModelAttribute ManagerDTO manager, HttpServletRequest request, @RequestParam("checkbox") String checkbox ) throws MemberRegistException {
+		
+		System.out.println("manager : " + manager);
+		
+		String[] str = checkbox.split(",");
+		System.out.println(str);
+
+		int result = managerService.inactiveManager(str);
+		System.out.println("result : " + result);
+			
+	}
+	
+	
+	/* 이메일 중복 체크 */
 	@PostMapping("/emailCheck")
 	public void emailCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
 		
@@ -224,6 +240,7 @@ public class ManagerController {
 		}
 	}
 	
+	/* 닉네임 중복 체크 */
 	@PostMapping("/nickNameCheck")
 	public void nickNameCheck(HttpServletResponse response, @RequestParam("nickName") String nickName) throws IOException {
 		

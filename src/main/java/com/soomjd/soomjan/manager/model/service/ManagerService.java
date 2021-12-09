@@ -54,4 +54,6 @@ public interface ManagerService {
 	// 잔디멤버 리스트
 	int selectTotalCount2(Map<String, String> searchMap);
 
+	int inactiveManager(String[] str);
+
 }

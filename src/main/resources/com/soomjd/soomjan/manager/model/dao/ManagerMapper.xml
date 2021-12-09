@@ -364,4 +364,14 @@
 	<update id="modifyContents">
 		update FAQ_TBL SET CONTENTS = #{contents} WHERE POST_CODE = #{postCode}
 	</update> 
+	
+	<update id="inactivemanager" parameterType="arraylist">
+		UPDATE MANAGER_TBL
+		   SET IS_DELETED = 'Y'
+		 WHERE MNG_NO IN (
+        <foreach collection="str" item="item" index="index" separator=",">
+            ${item}
+        </foreach>
+    )
+	</update>
 </mapper>

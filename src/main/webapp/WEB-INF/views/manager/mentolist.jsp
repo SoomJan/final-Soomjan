@@ -148,7 +148,7 @@ pageEncoding="UTF-8"%>
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
-    			<i class="search icon"><input type="submit" style="display: none;"></i>
+    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
   				</div>
  			 	<div class="results"></div>
 			</div>

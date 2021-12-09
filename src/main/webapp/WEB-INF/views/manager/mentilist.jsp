@@ -151,8 +151,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
-    			<!-- <i class="search icon"><input type="button" id="searchbtn" style="display: none;"></i> -->  
-    			<input type="button" id="searchbtn">
+    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+    		<!-- 	<input type="button" id="searchbtn"> -->
   				</div>
  			 	<div class="results"></div>
 			</div>

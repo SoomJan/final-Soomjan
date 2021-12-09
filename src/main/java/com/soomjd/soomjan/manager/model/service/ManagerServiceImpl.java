@@ -142,4 +142,10 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.selectTotalCount2(searchMap);
 	}
 
+
+	@Override
+	public int inactiveManager(String[] str) {
+		return mapper.inactivemanager(str);
+	}
+
 }
