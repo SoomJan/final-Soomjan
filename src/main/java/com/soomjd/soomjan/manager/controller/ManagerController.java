@@ -169,12 +169,6 @@ public class ManagerController {
 		        System.out.println("selectCriteria : " + selectCriteria);
 		
 		
-		
-	/*	List<JandiDTO> jandiList = managerService.jandiMember(jandi);
-		System.out.println(jandiList);
-		model.addAttribute("jandiList", jandiList); */
-		
-		
 		return "manager/mentolist";
 	}
 	
@@ -366,12 +360,34 @@ public class ManagerController {
 	
 	// 공지사항 조회
 	@GetMapping("notice")
-	public String notice(Model model, FaqDTO faq) {
+	public String notice(Model model, FaqDTO faq, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 		
-		List<FaqDTO> faqList = managerService.selectnotice(faq);
+		Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	      int totalCount = managerService.selectFaqTotalCount(searchMap);
+	      System.out.println("totalCount : " + totalCount);
+	      
+	      int limit = 10;
+	      int buttonAmount = 5;
+	      
+	      SelectCriteria selectCriteria = null;
+		
+	      if(searchCondition != null && !"".equals(searchCondition)) {
+		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		      } else {
+		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		      }
+		
+	      System.out.println("selectCriteria : " + selectCriteria);
+ 
+	      
+		List<FaqDTO> faqList = managerService.selectnotice(selectCriteria);
 		
 		model.addAttribute("faqList",faqList);
-		
+		model.addAttribute("selectCriteria", selectCriteria);
 		
 		return "manager/notice";
 	}

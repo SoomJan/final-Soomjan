@@ -43,7 +43,7 @@ public interface ManagerService {
 	boolean addnotice(FaqDTO faq);
 	
 	// 공지사항 조회
-	List<FaqDTO> selectnotice(FaqDTO faq);
+	List<FaqDTO> selectnotice(SelectCriteria selectCriteria);
 
 	// 관리자 측면 공지사항 세부내용 조회
 	FaqDTO noticeDetail(FaqDTO noticeDetail);
@@ -53,5 +53,8 @@ public interface ManagerService {
 
 	// 잔디멤버 리스트
 	int selectTotalCount2(Map<String, String> searchMap);
+	
+	// 공지사항 갯수 조회 (페이징 처리)
+	int selectFaqTotalCount(Map<String, String> searchMap);
 
 }

@@ -335,8 +335,18 @@
              , A.IS_DELETED
              , A.MNG_NO
              FROM FAQ_TBL A
-              ORDER BY A.WRITE_DATE DESC
-              ) B) C
+              <where>
+	 	 <if test='searchCondition == "title"'>
+	 	  A.TITLE LIKE '%' || #{ searchValue } || '%'
+	 	 </if>
+	  </where>
+              ORDER BY A.POST_CODE DESC
+              ) B
+               <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+              ) C
+              WHERE C.RNUM >= #{ startRow }	  
 	</select>
 	
 	<select id="selectTotalCount2" resultType="_int" parameterType="hashMap">
@@ -361,7 +371,21 @@
 	 SELECT * FROM FAQ_TBL WHERE POST_CODE = #{postCode}
 	</select>
 	
+	<!-- 공지사항 수정 -->
 	<update id="modifyContents">
 		update FAQ_TBL SET CONTENTS = #{contents} WHERE POST_CODE = #{postCode}
 	</update> 
+	
+	<!-- faq조회 페이징 처리 -->
+	<select id="selectFaqTotalCount" resultType="_int" parameterType="hashMap">
+	SELECT
+	       COUNT(*)
+	  FROM FAQ_TBL
+	  
+	   <where>
+	 	 <if test='searchCondition == "title"'>
+	 	   TITLE LIKE '%' || #{ searchValue } || '%'
+	 	 </if>
+	  </where>
+	</select>
 </mapper>
