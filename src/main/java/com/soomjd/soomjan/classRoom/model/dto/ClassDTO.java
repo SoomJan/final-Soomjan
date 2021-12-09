@@ -16,6 +16,8 @@ public class ClassDTO {
 	private String nickName;
 	private String title;
 	private int price;
+	private String filePath;
+	private String orgFilePath;
 	
 	public ClassDTO() {	}
 	
@@ -28,7 +30,7 @@ public class ClassDTO {
 	}
 	
 	public ClassDTO(int classCode, Date createDate, String contents, String tag, int categoryCode, String email,
-			String boardType, int views, int maxCount, String nickName, String title, int price) {
+			String boardType, int views, int maxCount, String nickName, String title, int price, String filePath, String orgFilePath) {
 		super();
 		this.classCode = classCode;
 		this.createDate = createDate;
@@ -42,6 +44,8 @@ public class ClassDTO {
 		this.nickName = nickName;
 		this.title = title;
 		this.price = price;
+		this.setFilePath(filePath);
+		this.setOrgFilePath(orgFilePath);
 	}
 
 	public int getClassCode() {
@@ -140,11 +144,28 @@ public class ClassDTO {
 		this.price = price;
 	}
 
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getOrgFilePath() {
+		return orgFilePath;
+	}
+
+	public void setOrgFilePath(String orgFilePath) {
+		this.orgFilePath = orgFilePath;
+	}
+
 	@Override
 	public String toString() {
 		return "ClassDTO [classCode=" + classCode + ", createDate=" + createDate + ", contents=" + contents + ", tag="
 				+ tag + ", categoryCode=" + categoryCode + ", email=" + email + ", boardType=" + boardType + ", views="
-				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price = " + price + "]";
+				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price = " + price 
+				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath +  "]";
 	}
 	
 

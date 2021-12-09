@@ -72,9 +72,20 @@ img {
 	margin: 10px;
 }
 
-input {
-	border-radius: 0.2rem;
-	border: 1px solid black;
+.inputSyle{
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 30px;
+	padding:2%;
+}
+
+.contents{
+	resize: none;
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 100px;
+	padding:2%;
+	
 }
 </style>
 <script>
@@ -92,7 +103,24 @@ input {
 		}else{
 			alert("파일을 선택해 주세요.");
 		}
+	}
+	
+	function mokchaToggle(item) {
+		if($(item).next().css('display') == 'none'){
+			$(item).next().css('display', 'block');
+			$(item).html($(item).html().replace("▼", "▲"));
+		}else{
+			$(item).next().css('display','none');
+			$(item).html($(item).html().replace("▲", "▼"));
+		}
+	}
+	
+	function deleteMokcha(item){
+		console.log($(item).next());
 		
+		if(confirm("해당 목차를 삭제하시면 안의 내용까지 전부 삭제됩니댜. 삭제하시겠습니까?")){
+			$(item).parent().submit();
+		}
 	}
 	
 </script>
@@ -109,40 +137,45 @@ input {
 				<hr>
 				<c:forEach var="mokcha" items="${ mokchaList }">
 					<div class="mokcha">
-						<button type="button" class="btnStyle">수정</button>
-						<h3>${ mokcha.mokchaName }</h3>
-						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
-						
-						<c:forEach var="mokchaFile" items="${ mokchaFileList }">
-							<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
-								<video class="mokcha" controls
-									src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
-							</c:if>
-						</c:forEach>
-						
-						<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
-							<input type="hidden" value="${ mokcha.mokchaCode }" name="mokchaCode">
-							<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
-							<button type="button" class="btnStyle sendBtn" onclick="checkValue(this);">영상 추가하기</button>
+						<form action="${pageContext.servletContext.contextPath }/jandi/class/deleteMokcha" method="post">
+							<button type="button" class="btnStyle btn btn-primary" onclick="deleteMokcha(this);">삭제</button>
+							<input type="hidden" name="mokchaCode" value="${ mokcha.mokchaCode }">
 						</form>
+						<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼</h3>
+						<div class="mokchaDiv" style="display:none;">
+						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
+							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
+								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
+									<video class="mokcha" controls
+										src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
+								</c:if>
+							</c:forEach>
+							<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
+								<div>
+								<input type="hidden" value="${ mokcha.mokchaCode }" name="mokchaCode">
+								<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
+								<button type="button" class="btnStyle sendBtn btn btn-primary" onclick="checkValue(this);">영상 추가하기</button>
+								</div>
+							</form>
+						</div>
 					</div>
 					<br>
 					<hr>
 				</c:forEach>
 				<!-- 유튜브 영상 링크... 왜 안되나요..ㅜㅠ -->
-				<!-- <iframe width="560" height="315"
+				<iframe width="560" height="315"
 					src="https://www.youtube.com/embed/cbuZfY2S2UQ"
 					title="YouTube video player" frameborder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowfullscreen>
-				</iframe> -->
+				</iframe>
 				<div class="newMokcha">
 					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
 						목차 제목<br> 
-						<input type="text" name="mockchaName" placeholder="목차 제목을 입력하세요."> 
+						<input type="text" class="inputSyle" name="mockchaName" placeholder="목차 제목을 입력하세요."> 
 						<br> 목차 내용<br>
-						<textarea name="contents" placeholder="목차 내용을 입력하세요."></textarea>
-						<button type="submit" class="btnStyle" style="margin: 10px;">목차 추가하기</button>
+						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." ></textarea>
+						<button type="submit" class="btnStyle btn btn-primary" style="margin: 10px;">목차 추가하기</button>
 					</form>
 				</div>
 			</div>

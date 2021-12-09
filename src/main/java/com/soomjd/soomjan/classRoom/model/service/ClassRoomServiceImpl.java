@@ -124,6 +124,42 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 			return classRoomMapper.selectNewPostCode(learningPost);
 		}
 
+		@Override
+		public int modifyClassFile(ClassDTO classDTO) {
+			return classRoomMapper.modifyClassFile(classDTO);
+		}
+
+		@Override
+		public boolean modifyLectureIsDeleted(int mokchaCode) {
+			return classRoomMapper.modifyLectureIsDeleted(mokchaCode);
+		}
+
+		@Override
+		public boolean modifyLectureFileIsDeleted(int mokchaCode) {
+			return classRoomMapper.modifyLectureFileIsDeleted(mokchaCode);
+		}
+		
+		@Override
+		public List<ClassFileDTO> selectMokchaFileListByMokchaCode(int mokchaCode) {
+			return classRoomMapper.selectMokchaFileListByMokchaCode(mokchaCode);
+		}
+
+		@Override
+		public boolean modifyLearnigPostIsDeleted(int postCode) {
+			return classRoomMapper.modifyLearnigPostIsDeleted(postCode);
+		}
+
+		@Override
+		public boolean modifyLearningFileIsDeleted(int postCode) {
+			return classRoomMapper.modifyLearningFileIsDeleted(postCode);
+		}
+
+		@Override
+		public List<ClassFileDTO> selectLearningFileListByPostCode(int postCode) {
+			return classRoomMapper.selectLearningFileListByPostCode(postCode);
+		}
+
+
 
 
 }

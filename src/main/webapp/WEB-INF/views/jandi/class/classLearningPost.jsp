@@ -28,7 +28,6 @@
 	border-radius: 0.5rem;
 	font-size: 12px;
 	border-color: #91c788;
-	float: right;
 }
 
 img {
@@ -69,6 +68,7 @@ img {
 </style>
 <script>
 	$(function(){
+		
 		if('${ requestScope.uploadMessage }' != ''){
 			alert('${ requestScope.uploadMessage }');
 			console.log('${ requestScope.uploadMessage }');
@@ -106,6 +106,22 @@ img {
 		
 	}
 	
+	function modifyPost(){
+		
+		$('#postForm')
+			.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost")
+			.submit();
+	}
+	
+	function deletePost(){
+		
+		if(confirm("해당 게시물을 삭제하시겠습니까?")){
+			$('#postForm')
+			.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/deleteLearnigPost")
+			.submit();
+		}
+	}
+	
 </script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
@@ -116,15 +132,20 @@ img {
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
-				<form action="${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost" method="post">
+				<div align="right">
+					<button type="button" class="btnStyle btn btn-primary" onclick="modifyPost();">게시물 수정</button>
+					&nbsp;&nbsp;&nbsp;<button type="button" class="btnStyle btn btn-primary" onclick="deletePost();">게시물 삭제</button>
+				</div>
+				<br>
+				<form id="postForm" method="post">
 					<div>
 						<p style="font-size: x-large; font-weight: 700;" align="center">
 							<c:if test="${ learnigPost.title == '제목 없음' }">
-								<input class="inputStyle" type="text" name="title" 
+								<input class="inputStyle" type="text" name="title" id="title" autofocus
 									value="" placeholder="제목을 입력해 주세요.">
 							</c:if>
 							<c:if test="${ learnigPost.title != '제목 없음' }">
-								<input class="inputStyle" type="text" name="title" 
+								<input class="inputStyle" type="text" name="title" id="title"
 									value="${ learnigPost.title }" placeholder="제목을 입력해 주세요.">
 							</c:if>
 						</p>
@@ -132,8 +153,6 @@ img {
 						<p align="right">최종 수정일: ${ learnigPost.reDate }</p>
 					</div>
 					<hr>
-						<div><button type="submit" class="btnStyle">수정</button></div>
-					<br>
 					<div id="contents">
 						<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
 							placeholder="내용을 입력해 주세요.">${ learnigPost.contents }</textarea>
@@ -155,7 +174,7 @@ img {
 				<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadLearningFile" method="post" enctype="multipart/form-data">
 					<input type="hidden" value="${ learnigPost.postCode }" name="postCode">
 					<br><b>파일 업로드</b> <br> <input type="file" name="file" style="border: none;">
-					<button type="button" class="btnStyle formBtn" onclick="checkValue(this);">파일 추가하기</button>
+					<button type="button" style="float:right;" class="btnStyle formBtn btn btn-primary" onclick="checkValue(this);">파일 추가하기</button>
 				</form>
 				<br>
 				<h3>제출</h3>

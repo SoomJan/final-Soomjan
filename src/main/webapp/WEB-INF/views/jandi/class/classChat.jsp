@@ -43,6 +43,10 @@ img {
 	font-size: small;
 }
 
+.alternate {
+	padding-left:3px;
+}
+
 </style>
 </head>
 <script src="http://125.132.252.115:3000/socket.io/socket.io.js"></script>
@@ -90,31 +94,54 @@ img {
 			
 			$('.chatRight').append($receiverBox);
 	};
-	
-	function connectChat(chatBox) { 
 		
-		let chatInfo = null;
-		let chatCode = $(chatBox).children().last().val();
-		const email = "${ sessionScope.jandi.email }";
-		
-		console.log(chatCode);
-	}
 	
-		$(document).ready(function(){
-			let socket = io("http://125.132.252.115:3000");
-			socket.emit('chatLeave');
+	$(function(){
+		
+		const email = "${ sessionScope.loginMember.email }";
+		
+		if( '${ chatRoomList[0].CHAT_CODE }' !== '' ){
 			
-			chatInfo = {
+			let chatInfo = {
 				email: email,
-				chat_code: chatCode
+				chat_code: $('.chatCodeInput').val()
 			};
+			
+			$('.chatRoomBox').first().css('background-color', 'white');
+			$('#nick').html($('.chatRoomBox').first().text());
+			
+			let socket = io("http://125.132.252.115:3000/classChat");
 			
 			socket.emit("chat_info", chatInfo);
 			
-			socket.on("connect_user", function(chatInfo){
-				console.log(chatInfo.email);
+			
+			console.log(chatInfo);
+			
+			$('.chatRoomBox').click(function(e){
+				$('.chatRoomBox').css('background-color', '#e2fcea');
+		
+				socket.emit("leaveChat", chatInfo);
+				console.log(chatInfo);
+				
+				let chatBox = e.target;
+				$(chatBox).css('background-color', 'white');
+				$('#nick').html($(chatBox).text());
+				console.log($(chatBox).children().last().val());
+				
+				let chatCode = $(chatBox).children().last().val();
+				
+				chatInfo.chat_code = chatCode;
+				
+				socket.emit("chat_info", chatInfo);
+				console.log("chat_info2 : " + chatInfo);
+				
+			
 			});
 			
+			socket.on("connect_user", function(connect_email){
+			console.log(connect_email);
+			});
+				
 			// 채팅 이력 불러오기
 			socket.on("receive_msg", function(chat_log){
 				$('.chatRight').html('');
@@ -130,8 +157,8 @@ img {
 					$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
 				}
 			});
-			
-			
+				
+				
 			$('#msg').keyup(function(key){
 				if(key.keyCode==13 && !key.shiftKey){
 					// 시프트 엔터가 아닌 경우
@@ -159,7 +186,7 @@ img {
 				}
 			});
 			
-			/* socket.on('send_msg', function(chat){
+			socket.on('send_msg', function(chat){
 				
 				if(chat.email === chatInfo.email){
 					addSenderBox(chat);
@@ -168,11 +195,11 @@ img {
 				}
 				//스크롤 맨 아래 감지
 				$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
-			}); */
-		});
+			}); 
+			
+		}
 	
-	
-	
+	});
 		
 </script>
 <body>
@@ -183,27 +210,28 @@ img {
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
+			<c:if test="${ chatRoomList != '[]' }">
 			<div class="chatDiv">
 				<div class="chatTop">
-					<h3></h3>
+					<h3 id="nick"></h3>
 					<button class="reportBtn" id="reportBtn">신고</button>
 				</div>
 				<div class="chatBottom">
 					<div class="chatLeft">
 						<c:forEach var="chatRoom" items="${ chatRoomList }">
-							<div class="chatRoomBox" onclick="connectChat(this);"><c:out value="${ chatRoom.NICKNAME }"/>
-								<input type="text" value="${ chatRoom.CHAT_CODE }" hidden="true">
+							<div class="chatRoomBox" >
+								<c:out value="${ chatRoom.NICKNAME }"/><i class="comment alternate outline icon"></i>
+								<input type="hidden" class="chatCodeInput" value="${ chatRoom.CHAT_CODE }">
 							</div>
 						</c:forEach>
-						<div class="chatRoomBox">테스트용</div>
 					</div>
 					<div style="width: 100%;">
 						<div class="chatRight">
 							<br>
 						</div>
 						<div class="sendMessage" align="center">
-							<button class="btn btn-primary" style="float:left;" id="imgBtn" data-toggle="modal" data-target="#sendImgModal">
-								<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+							<button class="btn btn-primary" style="float:left; padding:4px;" id="imgBtn" data-toggle="modal" data-target="#sendImgModal">
+								<i class="images outline icon"></i>
 							</button>
 							<textarea class="messageArea" id="msg"></textarea>
 							<input class="sendBtn" type="button" id="sendBtn" value="전송" >
@@ -211,6 +239,11 @@ img {
 					</div>
 				</div>
 			</div>
+			</c:if>
+			<c:if test="${ chatRoomList == '[]' }">
+			<br><br>
+				<h3 align="center"> 아직 클래스를 듣는 인원이 없습니다. </h3>
+			</c:if>
 		</div>
 	</div>
 
