@@ -117,5 +117,44 @@ public class MypageController {
 		}
 	}
 	
+	/* 효진 테스트 */
+	
+	// 구매내역
+	@GetMapping("buy")
+	public String buyForm() {
+		
+		return "mypage/buy";
+	}
+	
+	// 수강완료
+	@GetMapping("finish")
+	public String finishForm() {
+		
+		return "mypage/finish";
+	}
+	
+	// 수강중인
+	@GetMapping("taking")
+	public String takingForm() {
+		
+		return "mypage/taking";
+	}
+	
+	// 찜한
+	@GetMapping("jjim")
+	public String jjimForm() {
+		
+		return "mypage/jjim";
+	}
+	
+	// 수강후기
+	@GetMapping("review")
+	public String reviewForm() {
+		
+		return "mypage/review";
+	}
+	
+	
+	
 
 }

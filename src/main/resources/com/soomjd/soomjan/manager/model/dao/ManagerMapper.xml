@@ -147,7 +147,7 @@
 		 	     		 		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "2"'>
-		 	     		 		A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	     		 		A.EMAIL LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "3"'>
 		 	     		 		A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
@@ -228,7 +228,7 @@
 	<select id="selectTotalCount" resultType="_int" parameterType="hashMap">
 		SELECT
 		       COUNT(*)
-		  FROM SSACK_TBL
+		  FROM SSACK_TBL A
 		  
 		   <where>
 		 	 <if test='searchCondition == "1"'>
@@ -337,6 +337,24 @@
              FROM FAQ_TBL A
               ORDER BY A.WRITE_DATE DESC
               ) B) C
+	</select>
+	
+	<select id="selectTotalCount2" resultType="_int" parameterType="hashMap">
+		SELECT
+		       COUNT(*)
+		  FROM JANDI_TBL A
+		  
+		   <where>
+		 	 <if test='searchCondition == "1"'>
+		 	   A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		 	 <if test='searchCondition == "2"'>
+		 	   A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		 	 <if test='searchCondition == "3"'>
+		 	   A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		  </where>
 	</select>
 	
 	<select id="noticeDetail" resultMap="faqResult">

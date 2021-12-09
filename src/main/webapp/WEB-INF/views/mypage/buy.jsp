@@ -28,7 +28,7 @@
 
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
-      .dropdown { position: relative; left: 17%;} /* 정렬 */
+      .dropdown { position: relative; left: 12%;} /* 정렬 */
       .search {position: relative; right: 13%;} /* 검색 */
       .buytable thead tr th {background-color: #E3FFEC !important;} /* 구매내역 테이블 */
       .buytable thead tr th {border-bottom: none !important;}
@@ -39,7 +39,7 @@
 <body>
 	 <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-      <jsp:include page="../common/sidebar.jsp" />
+      <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">멤버쉽 구매내역</p>
         <br><br>

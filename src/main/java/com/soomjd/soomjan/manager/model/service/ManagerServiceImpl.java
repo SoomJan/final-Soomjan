@@ -136,4 +136,10 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.modifyContents(faq);
 	}
 
+
+	@Override
+	public int selectTotalCount2(Map<String, String> searchMap) {
+		return mapper.selectTotalCount2(searchMap);
+	}
+
 }

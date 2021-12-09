@@ -30,11 +30,11 @@ pageEncoding="UTF-8"%>
     ></script>
     <style>
       /* 회원탈퇴 모달창 */
-    #endmodal { height: 600px; left: 40%; top: 20%; }
+    #endmodal { height: 603px; left: 40%; top: 20%; }
     .modal-header{text-align: center;}
-    .modal-content{height: 533px;}
+    .end-content{height: 533px;}
     .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
-    .context-modal-btn { position: relative; left: 40%; top: 11%;}
+    .context-modal-btn { position: relative; left: 40%; top: 30px;}
     .inputpwd2 {
             width: 600px; 
             height: 50px; 
@@ -46,15 +46,31 @@ pageEncoding="UTF-8"%>
             left: 4%;
         }
     
-    #endbtnhmodal {
-       height: 150px;
-      top: 45%;
-      left: 50%;
-    }
+    #endbtnhmodal {height: 150px; top: 40%; left: 47%;}
     /* .end-content-title {font-size: 15px; text-align: center; position: relative; top: 7px;}
     .re-modal-btn {position: relative; left: 27%; top: 7px; background-color: white;}
     .endcontent {height: 150px;}
     #comp-btn{background-color: #91c788;} */
+    .endcontent{
+    height: 150px;
+    text-align: center;
+    background-color: #91C788 !important;
+  }
+  
+  .end-content-title {
+    position: relative;
+    top: 8%;
+    font-weight: 800;
+  }
+
+  .re-modal-btn {
+    position: relative;
+    top: 25%;
+  }
+
+  .btn {
+    background-color: white !important;
+  }
     </style>
   </head>
 
@@ -75,11 +91,11 @@ pageEncoding="UTF-8"%>
         <ul>
           <h3>클래스 관리</h3>
           <!-- <hr class="border-1px-black" /> -->
-          <li><a href="my/attending">수강중인 클래스</a></li>
-          <li><a href="#">수강완료 클래스</a></li>
-          <li><a href="#">찜한 클래스</a></li>
-          <li><a href="#">구매내역</a></li>
-          <li><a href="#">클래스 후기</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/taking">수강중인 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/finish">수강완료 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/jjim">찜한 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/buy">구매내역</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/review">클래스 후기</a></li>
         </ul>
         <ul>
           <h3>설정</h3>
@@ -93,7 +109,7 @@ pageEncoding="UTF-8"%>
   <!-- 회원탈퇴 모달창 -->
   <div class="ui small modal" id="endmodal">
      <div class="header modal-header"><h2>회원탈퇴</h2></div>
-      <div class="content modal-content">
+      <div class="content end-content">
           <br>
           <h3>회원탈퇴 안내사항</h3>
           <br>
@@ -109,22 +125,20 @@ pageEncoding="UTF-8"%>
           <input type="text" class="inputpwd2" value="현재 비밀번호">
           </div>
             <div class="context-modal-btn">
-            <button class="ui button btn" id="con-btn" style="background-color: #91C788;">확인</button>
-            <button class="ui button btn">취소</button>
+            <button class="ui button btn" id="con-btn" style="background-color: #91C788 !important;">확인</button>
+            <button class="ui button btn" id='end-btn' style="background-color: lightgray !important;">취소</button>
             </div>
           </div>
         </div>
       <!-- 회원탈퇴 완료 버튼 모달창 -->
-      <div class="ui mini modal" id="endbtnhmodal">
-        <div class="content endcontent">
-          <p class="end-content-title">회원탈퇴가 완료되었습니다.<br>
-          메인화면으로 되돌아갑니다.</p>
-          <div class="re-modal-btn">
-          <button class="ui button btn" id="comp-btn">확인</button>
-          <button class="ui button btn">취소</button>
-        </div>
-        </div>
+        <div class="ui mini modal" id="endbtnhmodal">
+      <div class="content endcontent">
+        <div class="end-content-title">회원탈퇴가 완료되었습니다.<br> 메인화면으로 되돌아갑니다.</div>
+        <div class="re-modal-btn">
+        <button class="ui button endmainbtn" id="endmainbtn" style="background-color: white;">확인</button>
       </div>
+      </div>
+    </div>
       
   <script>
   $(function(){
@@ -138,6 +152,19 @@ pageEncoding="UTF-8"%>
       $('#endbtnhmodal').show();
     });
   });
+  
+  $(function(){
+	    $('#end-btn').click(function(){
+	      $('#endmodal').hide();
+	    });
+	  });
+  
+  $(function(){
+	    $('#endmainbtn').click(function(){
+	      $('#endbtnhmodal').hide();
+	      $(location).attr('href',"${ pageContext.servletContext.contextPath }");
+	    });
+	  });
   </script>
   </body>
 

@@ -75,17 +75,18 @@ pageEncoding="UTF-8"%>
 	.input-search {
 		width: 400px;
     	position: relative;
-    	left: 18%;
+    	left: 8%;
     	top: 10px;
 	}
 	
-	#searchCondition {
+/* 	#searchCondition {
 		float: left;
    		position: relative;
     	left: 15%;
     	top: 35%;
-	}
+	} */
 
+    .dropdown {float: left; left: 6%; top:10px;} /* 정렬 */
     </style>
   </head>
   <body>
@@ -134,16 +135,16 @@ pageEncoding="UTF-8"%>
           </script>
           <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
-          <select
-            class="menu"
-            id="searchCondition"
-            name="searchCondition"
-            style="outline: none"
-          >
-            <option value="1">이메일</option>
-            <option value="2">닉네임</option>
-          </select>   
+                  <div class="dropsearch">
           <form action="${ pageContext.servletContext.contextPath }/manager/mentolist" method="get">
+		<select 
+		  	id="searchCondition"
+            name="searchCondition"
+			class="ui dropdown menu">
+  			<option value="1">이메일</option>
+  			<option value="2">닉네임</option>
+  			<option value="3">등록일자</option>
+		</select>   
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
@@ -152,10 +153,11 @@ pageEncoding="UTF-8"%>
  			 	<div class="results"></div>
 			</div>
 			</form>
+			</div>
           </div>
           <div>
           </div>
-			 <jsp:include page="../common/Paging.jsp" />
+			 <jsp:include page="../common/jandiPaging.jsp" />
         </div>
         </div>
   </body>

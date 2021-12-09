@@ -28,14 +28,14 @@
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
        .takingtable thead tr th {border-bottom: none !important;} /* 수강중인 클래스 테이블 */
-       .dropdown { position: relative; left: 17%;} /* 정렬 */
+       .dropdown { position: relative; left: 12%;} /* 정렬 */
        .search {position: relative; right: 13%;} /* 검색 */
     </style>
 </head>
 <body>
 	 <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-      <jsp:include page="../common/sidebar.jsp" />
+      <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">수강중인 클래스</p>
         <br>

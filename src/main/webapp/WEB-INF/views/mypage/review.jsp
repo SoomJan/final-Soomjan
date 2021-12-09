@@ -37,7 +37,7 @@
 <body>
 	 <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-      <jsp:include page="../common/sidebar.jsp" />
+      <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">수강후기</p>
         <br><br>
@@ -45,7 +45,7 @@
             아직 수강후기가 없습니다.<br>
             클래스 후기를 작성해보세요.
             <br><br><br>
-            <a href="#" class="review-go"><u>수강후기 작성하러가기</u></a>
+            <a href="${ pageContext.servletContext.contextPath }/mypage/finish" class="review-go"><u>수강후기 작성하러가기</u></a>
         </div>
         <br><br><br>
         <div class="ui card" id="reviewcard">
