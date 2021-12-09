@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,40 +55,30 @@
       <div class="results"></div>
     </div>
   </div>
-  <br><br><br><br><br>
-  <div class="unlist-text">
+  <br><br>
+  <!-- <div class="unlist-text">
   수강중인 클래스가 없습니다.<br>
   필터를 다시 적용하거나 새로운 클래스를 찾아보세요.
-</div>
+</div> -->
 <br><br><br>
 <table class="ui single line table takingtable">
   <thead>
     <tr>
-      <th>신청날짜</th>
+      <th>카테고리</th>
       <th>클래스제목</th>
       <th>강사닉네임</th>
       <th>수강기간</th>
     </tr>
   </thead>
   <tbody>
+  <c:forEach var="pClass" items="${ classList }">
     <tr>
-      <td>2021.11.01</td>
-      <td>나도 '메이플'</td>
-      <td>메이플러버</td>
-      <td>2021.11.01 - 2022.01.01(2개월)</td>
+      <td>${ pClass.categoryDTO.categoryName }</td>
+      <td>${ pClass.classDTO.title }</td>
+      <td>${ pClass.teacher }</td>
+      <td>${ pClass.classDTO.createDate } - ${ pClass.endDate }</td>
     </tr>
-    <tr>
-      <td>2021.11.08</td>
-      <td>웹개발 야 너도 할 수 있어</td>
-      <td>믿으면될지어다</td>
-      <td>2021.11.08 - 2022.02.08(3개월)</td>
-    </tr>
-    <tr>
-      <td>2021.11.18</td>
-      <td>웹디자인 잘 가르칠 수 있는디</td>
-      <td>천재디자인</td>
-      <td>2021.11.18 - 2021.12.18(1개월)</td>
-    </tr>
+    </c:forEach>
   </tbody>
 </table>
       </div>

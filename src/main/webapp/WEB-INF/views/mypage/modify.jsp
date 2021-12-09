@@ -208,7 +208,7 @@ pageEncoding="UTF-8"%>
 
 
 
-        <div class="warn">
+        <!-- <div class="warn">
         </div>
         <div class="warining">
         <p>누적 경고 횟수</p>
@@ -230,7 +230,7 @@ pageEncoding="UTF-8"%>
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> -->
       </div>
     </div>
     <!-- 정보 수정 확인 모달창 -->

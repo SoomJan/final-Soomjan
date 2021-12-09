@@ -17,6 +17,52 @@
         <result column="IS_EXIT" property="isExit"/>
         <result column="NAME" property="name"/>
     </resultMap>
+    
+    <resultMap id="ReportMemberSet" type="ReportMemberDTO">
+        <id column="REP_CODE" property="repCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="CONTENTS" property="contents"/>
+        <result column="REP_DATE" property="repDate"/>
+        <result column="IMG_PATH" property="imgPath"/>
+        <result column="REP_EMAIL" property="repEmail"/>
+        <result column="REP_TYPE_CODE" property="repTypeCode"/>
+        <result column="ORG_IMG_PATH" property="orgImgPath"/>
+        <result column="REP_YN" property="repYn"/>
+        <result column="REP_TYPE" property="repType"/>
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classResultMap">
+    	<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="NICKNAME" property="nickName" />
+    </resultMap>
+    
+    <resultMap id="categoryList" type="CategoryDTO">
+    	<id column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    
+    <resultMap id="purchaseClassSet" type="PurchaseClassDTO">
+        <id column="CLASS_PURC_CODE" property="classPurcCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="CLASS_CODE" property="classCode"/>
+        <result column="STATUS" property="status"/>
+        <result column="PAY_CODE" property="payCode"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="TEACHER" property="teacher"/>
+        
+        <association property="classDTO" resultMap="classResultMap"></association>
+        <association property="categoryDTO" resultMap="categoryList"></association>
+    </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
 	    SELECT
@@ -57,6 +103,33 @@
 		 WHERE A.EMAIL = #{ email }
 	</update>
 	
+	<update id="memberExit" parameterType="HashMap">
+	    UPDATE SSACK_TBL A
+		   SET A.IS_EXIT = 'Y'
+		 WHERE A.EMAIL = #{ email }
+	</update>
+	
+	<select id="selectReportMember" resultMap="ReportMemberSet" parameterType="HashMap">
+	    SELECT 
+		       *
+		  FROM REPORT_MEMBER_TBL A
+		  JOIN REPORT_STATEMENT_TBL B ON(A.REP_TYPE_CODE = B.REP_TYPE_CODE)
+		 WHERE A.REP_EMAIL = #{ email }
+		   AND A.REP_YN = 'Y'
+	</select>
+	
+	<select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	    SELECT
+		       A.*
+		     , B.*
+		     , C.*
+		     , B.EMAIL AS TEACHER
+		  FROM PURCHASE_CLASS_TBL A
+		  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
+		  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
+		 WHERE A.EMAIL = #{ email }
+		   AND A.STATUS = 'Y'
+	</select>
 
 
 
