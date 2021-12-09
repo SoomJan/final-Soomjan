@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/> 
     <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css" rel="stylesheet"/>
-        <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manproduce.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manproduce.css" rel="stylesheet"/>
     
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
@@ -77,11 +77,17 @@ pageEncoding="UTF-8"%>
     	height: 365px;
     }
 
-	.nameCheck {
+/*	.nameCheck {
 	position: relative;
     left: 7%;
     top: 5px;
-    }
+    } */
+    
+/*    .checkCheck {
+    position: relative;
+    left: 40%;
+    bottom: 70px;
+    } */
     
     .re-modal-btns{position: relative; top: 35%;}
     .title{font-weight: 800;}
@@ -109,7 +115,8 @@ pageEncoding="UTF-8"%>
         <tbody>
            <c:forEach var="managerMember" items="${ managerList }">
           <tr>
-            <td><input class="check" type="checkbox"></td>
+            <td><input class="check" value="${ managerMember.mngNo }" type="checkbox" name="check">
+            <input type="hidden" name="hiddenValue" id="hiddenValue" value=""/></td>
             <td>${ managerMember.mngNickName }</td>
             <td>${ managerMember.mngId }</td>
             <td>${ managerMember.isDeleted }</td>
@@ -124,20 +131,61 @@ pageEncoding="UTF-8"%>
 
       <h3>관리자 계정 생성 </h3>
       <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post" id="createForm">
-      <div><h3 class="produce1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--      <div><h3 class="produce1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            이름 : <div class="ui input"><input class="pd1" id="mngName" name="mngName" type="text" placeholder="name"></div></h3>
-      <div class="nameCheck"></div></div>
+      <div class="nameCheck checkCheck"></div></div>
        <div><h3 class="produce2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           닉네임 : <div class="ui input"><input class="pd2" id="mngNickName" name="mngNickName" type="text" placeholder="nickname"></div></h3> 
-      <div id="nickNamecheck"></div></div>
+           닉네임 : <div class="ui input"><input class="pd2" id="mngNickName" name="mngNickName" type="text" placeholder="nickname"></div></h3>
+      <div id="nickNamecheck" class="checkCheck"></div></div>
        <div><h3 class="produce3"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             아이디 : <div class="ui input"> <input class="pd3" id="mngId" name="mngId" type="text" placeholder="ID"></div> </h3>
-      <div id="emailcheck"></div></div>
+      <div id="emailcheck" class="checkCheck"></div></div>
        <div><h3 class="produce4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             비밀번호 : <div class="ui input"><input class="pd4" id="password" name="password" type="password" placeholder="password"></div> </h3>
-       <div id="pwd"></div></div>
+       <div id="pwd" class="checkCheck"></div></div>
        <div><h3 class="produce5"> 비밀번호확인 : <div class="ui input"><input class="pd5" id="password2" name="password2" type="password" placeholder="password"></div> </h3>
-      <div id="pwdcheck"></div></div>
+      <div id="pwdcheck" class="checkCheck"></div></div> -->
+      
+      <div>
+     	 <div class="checkmain">
+      	<label id="l1">이름</label>
+    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"></div>
+    	</div>
+    	<div class="nameCheck checkCheck"></div>
+      </div>
+      <br>
+      <div>
+      	<div class="checkmain">
+      	<label id="l2">닉네임</label>
+    	<div class="ui input"><input type="text" class="pd2" id="mngNickName" name="mngNickName"></div>
+    	</div>
+    	<div id="nickNamecheck" class="checkCheck"></div>
+      </div>
+      <br>
+      <div>
+      	<div class="checkmain">
+      	<label id="l3">아이디</label>
+    	<div class="ui input"><input type="text" class="pd3" id="mngId" name="mngId"></div>
+    	</div>
+    	<div id="emailcheck" class="checkCheck"></div>
+      </div>
+      <br>
+      <div>
+      	<div class="checkmain">
+      	<label id="l4">비밀번호</label>
+    	<div class="ui input"><input type="password" class="pd4" id="password" name="password"></div>
+    	</div>
+    	<div id="pwd" class="checkCheck"></div>
+      </div>
+      <br>
+      <div>
+      	<div class="checkmain">	
+      	<label id="l5">비밀번호 확인</label>
+    	<div class="ui input"><input type="password" class="pd5" id="password2" name="password2"></div>
+    	</div>
+    	<div id="pwdcheck" class="checkCheck"></div>
+      </div>
+      
       <input class="create btn" id="create" type="button" value="계정 생성">
       </form>
 
@@ -276,12 +324,29 @@ pageEncoding="UTF-8"%>
         $(function(){
           $(".delete").click(function(e){
 
-            let checkNum = $("input:checked").length;
-            console.log(checkNum);
+       /* 	let str = '';
+        	$("input:checkbox[name='check']:checked").each(function(){
+        		str += this.value + ",";
+        	}); 
+        	console.log(str); */
+      /*      let checkNum = $("input:checked").length;
+            console.log(checkNum); */
+            function fnGetdata(){
+            var obj = $("[name='check']");
+            var chkArray = new Array();
+            
+            $("input:checkbox[name='check']:checked").each(function(){
+            	chkArray.push(this.value);
+            });
+            
+            $('#hiddenValue').val(chkArray);
+            	console.log($('#hiddenValue').val());
+            } 
+            
 
             e.preventDefault();
 
-            if(!checkNum) {
+            if(chkArray == '') {
               $("#nullModal").fadeIn();
               $(".btn").click(function(){
                 $("#nullModal").fadeOut();
@@ -290,10 +355,25 @@ pageEncoding="UTF-8"%>
               /* 취소 버튼 누르면 창이 꺼지고, 확인 버튼을 눌러야 데이터가 넘어가도록 추후에 처리 필요 */
               $("#deleteModal").fadeIn();
               $(".deletebtn1").click(function(){
+          /*  	const checkbox = str;  
+            	$.ajax({
+            		
+            		type: "POST",
+            		url: "${ pageContext.servletContext.contextPath }/manager/inactiveManager",
+            		data: {checkbox : checkbox},
+            		success: function(data){
+            			console.log("들어감");
+            			// window.location.href='${ pageContext.servletContext.contextPath }/manager/manproduce';
+            		},
+            		error: function(xhr,status,error){
+            			console.log("에러");
+            		}
+            	}); */
+            	  
                 $("#deleteModal").fadeOut();
                 $("#resultModal2").fadeIn();
               $(".resultbtn").click(function(){
-                window.location.reload();
+                 window.location.reload();
               });
               });
               $(".deletebtn2").click(function(){

@@ -51,4 +51,7 @@ public interface ManagerMapper {
 	int selectTotalCount2(Map<String, String> searchMap);
 	
 	int selectFaqTotalCount(Map<String, String> searchMap);
+
+	int inactivemanager(String[] str);
+	
 }
