@@ -143,7 +143,7 @@ public class ManagerController {
 	      searchMap.put("searchValue", searchValue);
 	      System.out.println("searchMap : " + searchMap);
 	      
-	      int totalCount = managerService.selectTotalCount(searchMap);
+	      int totalCount = managerService.selectTotalCount2(searchMap);
 	      System.out.println("totalCount : " + totalCount);
 	      
 	      int limit = 10;

@@ -18,7 +18,7 @@ pageEncoding="UTF-8"%>
     />
     <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <script src="resources/css/semantic/semantic.js"></script>
+    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script type="text/javascript" src="css/bootstrap.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,11 +30,11 @@ pageEncoding="UTF-8"%>
     ></script>
     <style>
       /* 회원탈퇴 모달창 */
-    #endmodal { height: 600px; left: 40%; top: 20%; }
+    #endmodal { height: 603px; left: 40%; top: 20%; }
     .modal-header{text-align: center;}
-    .modal-content{height: 533px;}
+    .end-content{height: 533px;}
     .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
-    .context-modal-btn { position: relative; left: 40%; top: 11%;}
+    .context-modal-btn { position: relative; left: 40%; top: 30px;}
     .inputpwd2 {
             width: 600px; 
             height: 50px; 
@@ -46,15 +46,31 @@ pageEncoding="UTF-8"%>
             left: 4%;
         }
     
-    #endbtnhmodal {
-       height: 150px;
-      top: 45%;
-      left: 50%;
-    }
+    #endbtnhmodal {height: 150px; top: 40%; left: 47%;}
     /* .end-content-title {font-size: 15px; text-align: center; position: relative; top: 7px;}
     .re-modal-btn {position: relative; left: 27%; top: 7px; background-color: white;}
     .endcontent {height: 150px;}
     #comp-btn{background-color: #91c788;} */
+    .endcontent{
+    height: 150px;
+    text-align: center;
+    background-color: #91C788 !important;
+  }
+  
+  .end-content-title {
+    position: relative;
+    top: 8%;
+    font-weight: 800;
+  }
+
+  .re-modal-btn {
+    position: relative;
+    top: 25%;
+  }
+
+  .btn {
+    background-color: white !important;
+  }
     </style>
   </head>
 
@@ -68,18 +84,18 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="sidebar">
       <div class="sidebar-inner-name">
-        <h1>${ member.nickName } 님</h1>
+        <h1>${ sessionScope.loginMember.nickName } 님</h1>
         <hr class="border-1px-black" />
       </div>
       <div class="sidebar-inner-name1">
         <ul>
           <h3>클래스 관리</h3>
           <!-- <hr class="border-1px-black" /> -->
-          <li><a href="my/attending">수강중인 클래스</a></li>
-          <li><a href="#">수강완료 클래스</a></li>
-          <li><a href="#">찜한 클래스</a></li>
-          <li><a href="#">구매내역</a></li>
-          <li><a href="#">클래스 후기</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/taking">수강중인 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/finish">수강완료 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/jjim">찜한 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/buy">구매내역</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/review">클래스 후기</a></li>
         </ul>
         <ul>
           <h3>설정</h3>
@@ -93,7 +109,7 @@ pageEncoding="UTF-8"%>
   <!-- 회원탈퇴 모달창 -->
   <div class="ui small modal" id="endmodal">
      <div class="header modal-header"><h2>회원탈퇴</h2></div>
-      <div class="content modal-content">
+      <div class="content end-content">
           <br>
           <h3>회원탈퇴 안내사항</h3>
           <br>
@@ -106,40 +122,101 @@ pageEncoding="UTF-8"%>
           2. 탈퇴 후 동일한 메일로 재가입이 가능하지만, 탈퇴 한 계정과 연동되지 않습니다.<br>
           3. 현재 비밀번호를 입력하고 탈퇴하기를 누르시면 위 내용에 동의하는 것으로 간주됩니다.<br>
           <hr>
-          <input type="text" class="inputpwd2" value="현재 비밀번호">
+          <input type="password" class="inputpwd2" id="pwd" placeholder="현재 비밀번호">
           </div>
             <div class="context-modal-btn">
-            <button class="ui button btn" id="con-btn" style="background-color: #91C788;">확인</button>
-            <button class="ui button btn">취소</button>
+            <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">확인</button>
+            <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">취소</button>
             </div>
           </div>
         </div>
       <!-- 회원탈퇴 완료 버튼 모달창 -->
-      <div class="ui mini modal" id="endbtnhmodal">
-        <div class="content endcontent">
-          <p class="end-content-title">회원탈퇴가 완료되었습니다.<br>
-          메인화면으로 되돌아갑니다.</p>
-          <div class="re-modal-btn">
-          <button class="ui button btn" id="comp-btn">확인</button>
-          <button class="ui button btn">취소</button>
-        </div>
-        </div>
+        <div class="ui mini modal" id="endbtnhmodal">
+      <div class="content endcontent">
+        <div class="end-content-title">회원탈퇴가 완료되었습니다.<br> 메인화면으로 되돌아갑니다.</div>
+        <div class="re-modal-btn">
+        <button class="ui button endmainbtn" id="endmainbtn" style="background-color: white;">확인</button>
       </div>
+      </div>
+    </div>
       
   <script>
+  
+  /* 회원 탈퇴 클릭 시 탈퇴 모달 띄워주기 */
   $(function(){
     $('#endbtn').click(function(){
-      $('#endmodal').show();
+      $('#endmodal').fadeIn();
     }); 
   });
   
+  /* 회원 탈퇴 처리 */
   $(function(){
     $('#con-btn').click(function(){
-      $('#endbtnhmodal').show();
+
+      let pwd = $("#pwd").val();
+
+      if(!pwd) {
+        showModal("비밀번호를 입력해주세요.");
+        return false;
+      } else {
+        
+        $.ajax({
+          url: "${ pageContext.servletContext.contextPath }/mypage/exit",
+          type: "post",
+          data: {pwd : pwd},
+          success: function(data) {
+            if(data == "true") {
+              $('#endbtnhmodal').fadeIn();
+            } else if(data == "false") {
+              showModal("비밀번호가 틀립니다.");
+            } else {
+              showModal("회원 탈퇴에 실패했습니다.");
+            }
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      }
+      return false;
     });
   });
+  
+  /* 탈퇴 취소 클릭 시 모달 끄기 */
+  $(function(){
+	    $('#end-btn').click(function(){
+	      $('#endmodal').fadeOut();
+	    });
+	  });
+  
+  /* 메인으로 돌아가는 함수 */ 
+  $(function(){
+	    $('#endmainbtn').click(function(){
+	      $('#endbtnhmodal').fadeOut();
+	      $(location).attr('href',"${ pageContext.servletContext.contextPath }");
+	    });
+	  });
+
+    /* 모달창 띄워주는 함수 */
+    function showModal(str) {
+            $("#modalTitle").html(str);
+            $("#Modal").fadeIn();
+              $(".btn").click(function () {
+                $("#Modal").fadeOut();
+              });
+          };
   </script>
   </body>
 
   <script src="css/ie10-viewport-bug-workaround.js"></script>
 </html>
+
+<!-- 모달창 -->
+<div class="ui mini modal" id="Modal">
+  <div class="contents">
+    <p class="titles" id="modalTitle"></p>
+    <div class="re-modal-btn">
+      <button class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>

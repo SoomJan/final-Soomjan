@@ -157,7 +157,10 @@
               data: {originPwd : originPwd, newPwd : newPwd},
               success: function(data) {
                 if(data == "true") {
-                  showModal("비밀번호가 수정되었습니다.");
+                  $("#nextModal").fadeIn();
+                  $("#goMain").click(function(){
+                  location.href="${ pageContext.servletContext.contextPath }/mypage/main";
+                  });
                 } else if (data == "false") {
                   showModal("기존 비밀번호가 틀렸습니다.");
                 } else {
@@ -186,6 +189,15 @@
 <jsp:include page="../common/footer.jsp" />
 </html>
 <!-- 모달 창-->
+
+<div class="ui mini modal" id="nextModal">
+  <div class="contents">
+    <p class="titles">비밀번호가 수정되었습니다.</p>
+    <div class="re-modal-btn">
+      <button id="goMain" class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>
 
 <div class="ui mini modal" id="Modal">
   <div class="contents">

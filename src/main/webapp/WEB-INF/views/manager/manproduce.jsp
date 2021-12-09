@@ -83,6 +83,9 @@ pageEncoding="UTF-8"%>
     top: 5px;
     }
     
+    .re-modal-btns{position: relative; top: 35%;}
+    .title{font-weight: 800;}
+    
     </style>
   </head>
   <body>
@@ -286,12 +289,15 @@ pageEncoding="UTF-8"%>
             } else {
               /* 취소 버튼 누르면 창이 꺼지고, 확인 버튼을 눌러야 데이터가 넘어가도록 추후에 처리 필요 */
               $("#deleteModal").fadeIn();
-              $(".btn").click(function(){
+              $(".deletebtn1").click(function(){
                 $("#deleteModal").fadeOut();
                 $("#resultModal2").fadeIn();
-              $(".btn").click(function(){
+              $(".resultbtn").click(function(){
                 window.location.reload();
               });
+              });
+              $(".deletebtn2").click(function(){
+            	  $("#deleteModal").fadeOut();
               });
             }
           });
@@ -308,8 +314,8 @@ pageEncoding="UTF-8"%>
 <!-- 모달창 모아두는 곳 -->
 <div class="ui mini modal" id="nameModal">
   <div class="content">
-    <p class="title">이름을 입력해주세요.</p>
-    <div class="re-modal-btn">
+    <div class="title">이름을 입력해주세요.</div>
+    <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
   </div>
   </div>
@@ -317,8 +323,8 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="nickModal">
   <div class="content">
-    <p class="title">닉네임을 입력해주세요.</p>
-    <div class="re-modal-btn">
+    <div class="title">닉네임을 입력해주세요.</div>
+    <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
   </div>
   </div>
@@ -326,8 +332,8 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="idModal">
   <div class="content">
-    <p class="title">아이디를 입력해주세요.</p>
-    <div class="re-modal-btn">
+    <div class="title">아이디를 입력해주세요.</div>
+    <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
   </div>
   </div>
@@ -335,8 +341,8 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="pwdModal">
   <div class="content">
-    <p class="title">비밀번호를 입력해주세요.</p>
-    <div class="re-modal-btn">
+    <div class="title">비밀번호를 입력해주세요.</div>
+    <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
   </div>
   </div>
@@ -344,8 +350,8 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="createModal">
   <div class="content">
-    <p class="title">관리자를 등록하시겠습니까?</p>
-    <div class="re-modal-btn">
+    <div class="title">관리자를 등록하시겠습니까?</div>
+    <div class="re-modal-btns">
     <button class="ui button btn" id="crebtn">확인</button>
     <button class="ui button btn" id="">취소</button>
   </div>
@@ -354,8 +360,8 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="resultModal">
   <div class="content">
-    <p class="title">계정 등록이 완료되었습니다.</p>
-    <div class="re-modal-btn">
+    <div class="title">계정 등록이 완료되었습니다.</div>
+    <div class="re-modal-btns">
     <button class="ui button btn" onclick="location.href='${ pageContext.servletContext.contextPath }/manager/manproduce'">확인</button>
   </div>
   </div>
@@ -363,8 +369,8 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="nullModal">
   <div class="content">
-    <p class="title">선택된 관리자가 존재하지 않습니다.</p>
-    <div class="re-modal-btn">
+    <div class="title">선택된 관리자가 존재하지 않습니다.</div>
+    <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
   </div>
   </div>
@@ -372,19 +378,19 @@ pageEncoding="UTF-8"%>
 
 <div class="ui mini modal" id="deleteModal">
   <div class="content">
-    <p class="title">해당 관리자계정을 삭제하시겠습니까?</p>
-    <div class="re-modal-btn">
-    <button class="ui button btn">확인</button>
-    <button class="ui button btn">취소</button>
+    <div class="title">해당 관리자계정을 비활성화하시겠습니까?</div>
+    <div class="re-modal-btns">
+    <button class="ui button btn deletebtn1">확인</button>
+    <button class="ui button btn deletebtn2">취소</button>
   </div>
   </div>
 </div>
 
 <div class="ui mini modal" id="resultModal2">
   <div class="content">
-    <p class="title">계정 삭제가 완료되었습니다.</p>
-    <div class="re-modal-btn">
-    <button class="ui button btn">확인</button>
+    <div class="title">계정 비활성화가 완료되었습니다.</div>
+    <div class="re-modal-btns">
+    <button class="ui button btn resultbtn">확인</button>
   </div>
   </div>
 </div>

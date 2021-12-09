@@ -51,4 +51,7 @@ public interface ManagerService {
 	// 공지사항 수정 사항
 	boolean modifyContents(FaqDTO faq);
 
+	// 잔디멤버 리스트
+	int selectTotalCount2(Map<String, String> searchMap);
+
 }

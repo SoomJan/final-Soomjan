@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -60,22 +62,22 @@ pageEncoding="UTF-8"%>
           <div class="introduce-detail1">
             <div>
               <label for="name"><span>이름</span></label>
-              <input type="text" class="myinfo" name="member_info" id="name" value="${ member.name }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="name" value="${ sessionScope.loginMember.name }" readonly>
           </div>
 
           <div>
               <label for="email"><span>이메일주소</span></label>
-              <input type="text" class="myinfo" name="member_info" id="email" value="${ member.email }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="email" value="${ sessionScope.loginMember.email }" readonly>
           </div>
 
           <div>
               <label for="nickname"><span>닉네임</span></label>
-              <input type="text" class="myinfo" name="member_info" id="nickname" value="${ member.nickName }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="nickname" value="${ sessionScope.loginMember.nickName }" readonly>
           </div>
 
           <div>
               <label for="phone"><span>핸드폰번호</span></label>
-              <input type="text" class="myinfo" name="member_info" id="phone" value="${ member.phone }" readonly>
+              <input type="text" class="myinfo" name="member_info" id="phone" value="${ sessionScope.loginMember.phone }" readonly>
           </div>
           <br><br>
           <div>
@@ -95,14 +97,12 @@ pageEncoding="UTF-8"%>
             </tr>
           </thead>
           <tbody>
+          <c:forEach var="reportList" items="${ reportMember }">
             <tr>
-              <td>2021.11.15</td>
-              <td>멘토를 향한 욕설 및 협박</td>
+              <td>${reportList.repDate}</td>
+              <td>${reportList.repType}</td>
             </tr>
-            <tr>
-              <td>2021.11.18</td>
-              <td>멘토에게 심한 욕설</td>
-            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
@@ -117,3 +117,12 @@ pageEncoding="UTF-8"%>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>
+
+<div class="ui mini modal" id="Modal">
+  <div class="contents">
+    <p class="titles" id="modalTitle"></p>
+    <div class="re-modal-btn">
+      <button class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>

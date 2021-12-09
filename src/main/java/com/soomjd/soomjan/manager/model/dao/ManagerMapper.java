@@ -47,4 +47,6 @@ public interface ManagerMapper {
 	int registMsMember(ManagerDTO manager);
 
 	List<JandiDTO> jandiMember(SelectCriteria searchMap);
+
+	int selectTotalCount2(Map<String, String> searchMap);
 }

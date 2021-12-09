@@ -56,8 +56,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	#searchCondition {
 		float: left;
    		position: relative;
-    	left: 15%;
-    	top: 35%;
+    	left: 16%;
+    	top: 10px;
 	}
       p {
         font-weight: bold;
@@ -134,35 +134,40 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           });
         </script>
 
+          <form
+            action="${ pageContext.servletContext.contextPath }/manager/mentilist"
+            method="get" id="searchform">
         <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
           <select
-            class="menu"
+            class="ui dropdown menu"
             id="searchCondition"
             name="searchCondition"
-            style="outline: none"
           >
             <option value="1">닉네임</option>
-            <option value="2">경고횟수</option>
+            <option value="2">이메일</option>
             <option value="3">블랙리스트</option>
           </select>
-          <form
-            action="${ pageContext.servletContext.contextPath }/manager/mentilist"
-            method="get">
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
-    			<i class="search icon"><input type="submit" style="display: none;"></i>
+    			<!-- <i class="search icon"><input type="button" id="searchbtn" style="display: none;"></i> -->  
+    			<input type="button" id="searchbtn">
   				</div>
  			 	<div class="results"></div>
 			</div>
-			</form>
-          </div>
-          <div>   
           </div>
 			<jsp:include page="../common/Paging.jsp" />
+			</form>
         </div>
       </div>
+      <script>
+      	$(function(){
+      		$("#searchbtn").click(function(){
+      			$("#searchform").submit();
+      		});
+      	});
+      </script>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

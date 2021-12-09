@@ -28,18 +28,20 @@
 
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
-      .pro {right: 30%;} /* 검색 */
-      .dropdown { position: relative; left: 16%;} /* 정렬 */
+      .pro {right: 22%;} /* 검색 */
+      .dropdown { position: relative; left: 12%;} /* 정렬 */
       .jjimtable thead tr {text-align: center;} /* 찜한 클래스 테이블 */
       .jjimtable tbody tr td {text-align: center; vertical-align : middle;}
       .jjimtable thead tr th a {color: gray !important;}
       .jjimcheck {position: relative; left: 40px;} /* 체크박스 */
+      #delete2modal {height: 150px; top: 40%; left: 47%;
+  }
     </style>
 </head>
 <body>
 	 <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-      <jsp:include page="../common/sidebar.jsp" />
+      <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">찜한 클래스</p>
         <br><br>
@@ -86,8 +88,17 @@
       <div class="content deletecontent">
         <p class="delete-content-title">체크한 클래스를 찜한 클래스<br> 목록에서 삭제하시겠습니까?</p>
         <div class="re-modal-btn">
-        <button class="ui button btn">확인</button>
+        <button class="ui button btn conbtn">확인</button>
         <button class="ui button btn">취소</button>
+      </div>
+      </div>
+    </div>
+    <!-- 삭제완료 -->
+        <div class="ui mini modal" id="delete2modal">
+      <div class="content deletecontent">
+        <p class="delete-content-title">찜한 클래스 목록에서<br> 삭제가 완료되었습니다.</p>
+        <div class="re-modal-btn">
+        <button class="ui button btn">확인</button>
       </div>
       </div>
     </div>
@@ -95,6 +106,10 @@
     $('#deletebtn').click(function(){
       $('#deletemodal').show();
     }); 
+    
+    $('.conbtn').click(function(){
+        $('#delete2modal').show();
+      }); 
     </script>
 </body>
 <jsp:include page="../common/footer.jsp" />

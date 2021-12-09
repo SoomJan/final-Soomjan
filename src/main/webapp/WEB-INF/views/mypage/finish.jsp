@@ -32,17 +32,19 @@
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
         .reviewbtn {background-color: #91C788 !important;} /* 수강후기 작성 버튼 */
-        .dropdown { position: relative; left: 17%;} /* 정렬 */
+        .dropdown { position: relative; left: 12%;} /* 정렬 */
         .search {position: relative; right: 13%;} /* 검색 */
         .finishtable thead tr th {border-bottom: none !important;} /* 수강완료 클래스 테이블 */
         .finishtable thead tr th {background-color: #E3FFEC !important;}
         .finishtable {text-align: center !important; vertical-align: middle !important;}
+        .finishbtn {position: relative; top: 30px;}
+        #finish2modal {height: 150px; top: 50%; left: 47%;}
     </style>
 </head>
 <body>
 	 <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
-      <jsp:include page="../common/sidebar.jsp" />
+      <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">수강완료 클래스</p>
         <br>
@@ -138,19 +140,59 @@
         <div class="content finishcontent">
           <p class="finish-content-title">수강후기를 올리시겠습니까?</p>
           <div class="re-modal-btn">
-          <button class="ui button btn">확인</button>
-          <button class="ui button btn">취소</button>
+          <button class="ui button btn obtn" onclick="obtn(this);">확인</button>
+          <button class="ui button btn xbtn" onclick="xbtn(this);">취소</button>
+        </div>
+        </div>
+      </div>
+      
+      <!-- 수강후기 완료 -->
+      <div class="ui mini modal" id="finish2modal">
+        <div class="content finishcontent">
+          <p class="finish-content-title">수강후기가 작성되었습니다.</p>
+          <div class="re-modal-btn">
+          <button class="ui button btn" id="o2btn">확인</button>
         </div>
         </div>
       </div>
       <script>
-        function reviewbtn(item) {
+         function reviewbtn(item) {
           $('#reviewmodal').show();
-        }
+        } 
 
         function finishbtn(item) {
           $('#finishmodal').show();
         }
+        
+         function obtn(item) {
+        	$("#reviewmodal").fadeOut();
+        	$("#finishmodal").fadeOut();
+            $('#finish2modal').show();
+            $("#o2btn").click(function(){
+            	$("#finish2modal").fadeOut();
+            });
+          } 
+         
+         function xbtn(item) {
+        	 $("#reviewmodal").fadeOut();
+        	 $("#finishmodal").fadeOut();
+         }
+         
+/*          $('.o2btn').on('click',function(){
+        
+        	 $('#finish2modal').modal('hide');
+         }; */
+    		
+    /*	function xbtn(item) {
+    		window.location.reload();
+    	 }  */
+        
+/*     $(function(){
+    	 $('#o2btn').click(function(){
+    	 ('#finish2modal').hide();
+     });
+   }); */
+  
       </script>
 </body>
 <jsp:include page="../common/footer.jsp" />
