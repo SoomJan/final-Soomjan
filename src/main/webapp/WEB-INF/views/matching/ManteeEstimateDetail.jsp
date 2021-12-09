@@ -103,7 +103,7 @@
 							<div class="chat_content">
 							
 								<div class="chat_name">
-									<p align="center" class="chat_name_p">잔디</p>
+									<p align="center" class="chat_sendman">잔디</p>
 								</div>
 								
 								<div class="chat_date">
@@ -111,7 +111,7 @@
 								</div>
 								
 								<div class="chat_pre">
-									<p align="center" class="chat_pre_p">잔디로 금방 만들어 드릴게요!</p>
+									<p align>잔디로 금방 만들어 드릴게요!</p>
 								</div>
 								
 								<div class="chat_count">

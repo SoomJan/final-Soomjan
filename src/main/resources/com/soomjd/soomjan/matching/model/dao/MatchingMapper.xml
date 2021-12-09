@@ -63,6 +63,15 @@
 		 WHERE EMAIL = #{ email }
     </select>
     
+    <select id="detailEstimate" resultMap="estimateList" parameterType="hashMap">
+    	SELECT
+		       ESTIMATE_CODE
+		     , TITLE
+		     , IS_MATCHED
+		  FROM ESTIMATE_TBL
+		 WHERE EMAIL = #{ email }
+    </select>
+    
     
 
 </mapper>

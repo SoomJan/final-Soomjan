@@ -85,7 +85,11 @@ public class MacthingSsackMainController {
 	}
 	
 
-	
+	@GetMapping("/detailEstimate")
+	public String detailEstimate() {
+		
+		return "matching/ManteeEstimateDetail";
+	}
 	
 
 	
