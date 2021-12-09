@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.jandi.model.dao.JandiMapper;
+import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -65,5 +66,12 @@ public class JandiServiceImpl implements JandiService{
 		
 		return jandiMapper.selectClassesCode(myClass);
 	}
+
+	@Override
+	public List<ClassesDTO> selectClasses(String email) {
+		
+		return jandiMapper.selectClassses(email);
+	}
+
 
 }

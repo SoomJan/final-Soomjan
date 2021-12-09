@@ -3,6 +3,7 @@ package com.soomjd.soomjan.jandi.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -23,5 +24,8 @@ public interface JandiService {
 	boolean insertAd(Map<String, Object> key);
 
 	int selectClassesCode(String myClass);
+
+	List<ClassesDTO> selectClasses(String email);
+
 
 }
