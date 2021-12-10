@@ -1,6 +1,7 @@
 package com.soomjd.soomjan.manager.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -202,14 +203,13 @@ public class ManagerController {
 	
 	/* 관리자 계정 비활성화 */
 	@PostMapping("inactiveManager")
-	public void inactiveManager(@ModelAttribute ManagerDTO manager, HttpServletRequest request, @RequestParam("checkbox") String checkbox ) throws MemberRegistException {
+	public void inactiveManager(@ModelAttribute ManagerDTO manager, HttpServletRequest request, @RequestParam("checkbox[]") ArrayList<Integer> checkbox ) throws MemberRegistException {
 		
 		System.out.println("manager : " + manager);
+		System.out.println("checkbox : " + checkbox);
 		
-		String[] str = checkbox.split(",");
-		System.out.println(str);
 
-		int result = managerService.inactiveManager(str);
+		int result = managerService.inactiveManager(checkbox);
 		System.out.println("result : " + result);
 			
 	}

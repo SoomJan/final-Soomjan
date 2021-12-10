@@ -162,11 +162,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
       </div>
       <script>
-      	$(function(){
+/*        	$(function(){
       		$("#searchbtn").click(function(){
       			$("#searchform").submit();
       		});
-      	});
+      	}); */
       </script>
   </body>
   <jsp:include page="../common/footer.jsp" />

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
@@ -69,6 +70,16 @@ public class MypageServiceImpl implements MypageService{
 		List<PurchaseClassDTO> pClass = mapper.selectTakingClass(map);
 		
 		return pClass;
+	}
+
+	@Override
+	public int selectFinishTotalCount(Map<String, String> searchMap) {
+		return mapper.selectFinishTotalCount(searchMap);
+	}
+
+	@Override
+	public List<PurchaseClassDTO> finishClass(SelectCriteria searchMap) {
+		return mapper.finishClass(searchMap);
 	}
 	
 	

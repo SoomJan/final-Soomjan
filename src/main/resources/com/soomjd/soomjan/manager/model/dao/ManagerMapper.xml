@@ -388,13 +388,14 @@
 	 	 </if>
 	  </where>
 	</select>
-	<update id="inactivemanager" parameterType="arraylist">
+	
+	<update id="inactivemanager" parameterType="java.util.ArrayList">
 		UPDATE MANAGER_TBL
 		   SET IS_DELETED = 'Y'
 		 WHERE MNG_NO IN (
-        <foreach collection="str" item="item" index="index" separator=",">
-            ${item}
+        <foreach collection="list" item="item" index="index" separator=",">
+           #{ item }
         </foreach>
-    )
+   		 )
 	</update>
 </mapper>
