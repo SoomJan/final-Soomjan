@@ -3,6 +3,7 @@ package com.soomjd.soomjan.mypage.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
@@ -24,5 +25,9 @@ public interface MypageMapper {
 	List<PurchaseClassDTO> selectTakingClass(Map<String, Object> map);
 
 	int selectTakingTotalCount(Map<String, Object> searchMap);
+
+	int selectFinishTotalCount(Map<String, String> searchMap);
+
+	List<PurchaseClassDTO> finishClass(SelectCriteria searchMap);
 
 }

@@ -238,6 +238,66 @@
 		   </where>
 	</select>
 
+	<select id="selectFinishTotalCount" resultType="_int" parameterType="HashMap">
+		SELECT
+		       COUNT(*)
+		  FROM PURCHASE_CLASS_TBL
+	</select>
 
+	<select id="finishClass" resultMap="purchaseClassSet">
+		SELECT
+		       F.RNUM
+		     , F.EMAIL
+		     , F.CLASS_CODE
+		     , F.STATUS
+		     , F.PAY_CODE
+		     , F.CLASS_PURC_CODE
+		     , F.END_DATE
+		     , F.CATEGORY_NAME
+		     , F.TITLE
+		     , F.NICKNAME
+		  FROM (SELECT ROWNUM RNUM
+		  			, D.EMAIL
+		  			, D.CLASS_CODE
+		  			, D.STATUS
+		  			, D.PAY_CODE
+		  			, D.CLASS_PURC_CODE
+		  			, D.END_DATE
+		  			, D.CATEGORY_NAME
+		  			, D.TITLE
+		  			, D.NICKNAME
+		  	      FROM (SELECT
+		  	      			  A.EMAIL
+		  	      			, A.CLASS_CODE
+		  	      			, A.STATUS
+		  	      			, A.PAY_CODE
+		  	      			, A.CLASS_PURC_CODE
+		  	      			, A.END_DATE
+		  	      			, C.CATEGORY_NAME
+		  	      			, L.TITLE
+		  	      			, J.NICKNAME
+		  	      		  FROM PURCHASE_CLASS_TBL A
+		  	      		  JOIN CLASS_TBL L ON (L.CLASS_CODE = A.CLASS_CODE )
+		  	      		  JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)
+		  	      		  JOIN JANDI_TBL J ON (L.EMAIL = J.EMAIL )
+		  	      		  <where>
+		 	     		 	<if test="searchCondition == '1'">
+		 	     		 		C.CATEGORY_NAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "2"'>
+		 	     		 		L.TITLE LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "3"'>
+		 	     		 		J.NICKNAME '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 </where>
+		  	               ORDER BY A.END_DATE DESC	
+		  	             ) D
+		  	   	<![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+		  	    ) F
+		  	    WHERE F.RNUM >= #{ startRow }	
+	</select>
 
 </mapper>

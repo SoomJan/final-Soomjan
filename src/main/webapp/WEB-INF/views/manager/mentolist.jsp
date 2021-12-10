@@ -157,7 +157,7 @@ pageEncoding="UTF-8"%>
           </div>
           <div>
           </div>
-			 <jsp:include page="../common/jandiPaging.jsp" />
+			 <jsp:include page="../common/Paging.jsp" />
         </div>
         </div>
   </body>

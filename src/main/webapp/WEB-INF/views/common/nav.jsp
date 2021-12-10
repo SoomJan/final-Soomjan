@@ -172,6 +172,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </li>
           </a>
         </ul>
+         <c:if test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName }">
         <ul>
           <a href="${ pageContext.servletContext.contextPath }/manager/login">
             <li>
@@ -180,7 +181,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </li>
           </a>
         </ul>
-
+		</c:if>
+		
         <hr />
         <ul class="nav-sidebar-inline">
           <a href="#">
@@ -245,10 +247,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             >
           </div>
           <div>
-            <a
-              href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile"
-              >멘토신청</a
-            >
+          <c:if test="${ !empty sessionScope.loginMember }">
+          	<c:if test="${ sessionScope.isjandi eq 'Y' }">
+            	<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토 페이지</a>
+            </c:if>
+         	<c:if test="${ sessionScope.isjandi != 'Y' }">
+           		<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile" >멘토신청</a>
+           </c:if>
+          </c:if>
+          <c:if test="${ empty sessionScope.loginMember }">
+           	<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile" >멘토신청</a>
+          </c:if>
           </div>
         </div>
 

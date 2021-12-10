@@ -149,10 +149,9 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.selectFaqTotalCount(searchMap);
 	}
 
-
 	@Override
-	public int inactiveManager(String[] str) {
-		return mapper.inactivemanager(str);
+	public int inactiveManager(List<Integer> checkbox) {
+		return mapper.inactivemanager(checkbox);
 	}
 
 }

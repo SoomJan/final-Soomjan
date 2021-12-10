@@ -3,7 +3,10 @@ package com.soomjd.soomjan.jandi.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
+import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -26,6 +29,12 @@ public interface JandiService {
 	int selectClassesCode(String myClass);
 
 	List<ClassesDTO> selectClasses(String email);
+
+	FullAdDTO selectAd(Integer integer);
+
+	List<CalculateDTO> selectcalculateList(Map<String,Object> key);
+
+	List<CalAdDTO> selectcalAdList(Map<String, Object> key);
 
 
 }

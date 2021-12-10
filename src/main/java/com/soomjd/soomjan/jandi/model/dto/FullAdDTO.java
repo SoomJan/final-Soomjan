@@ -10,12 +10,13 @@ public class FullAdDTO {
 	private int classCode;
 	private java.util.Date startDate;
 	private String originImagePath;
+	private Character isAdvertised;
 	public FullAdDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public FullAdDTO(int adCode, String adContents, String imagePath, int classCode, Date startDate,
-			String originImagePath) {
+			String originImagePath, Character isAdvertised) {
 		super();
 		this.adCode = adCode;
 		this.adContents = adContents;
@@ -23,6 +24,7 @@ public class FullAdDTO {
 		this.classCode = classCode;
 		this.startDate = startDate;
 		this.originImagePath = originImagePath;
+		this.isAdvertised = isAdvertised;
 	}
 	public int getAdCode() {
 		return adCode;
@@ -60,11 +62,17 @@ public class FullAdDTO {
 	public void setOriginImagePath(String originImagePath) {
 		this.originImagePath = originImagePath;
 	}
+	public Character getIsAdvertised() {
+		return isAdvertised;
+	}
+	public void setIsAdvertised(Character isAdvertised) {
+		this.isAdvertised = isAdvertised;
+	}
 	@Override
 	public String toString() {
 		return "FullAdDTO [adCode=" + adCode + ", adContents=" + adContents + ", imagePath=" + imagePath
 				+ ", classCode=" + classCode + ", startDate=" + startDate + ", originImagePath=" + originImagePath
-				+ "]";
+				+ ", isAdvertised=" + isAdvertised + "]";
 	}
 	
 	

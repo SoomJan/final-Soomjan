@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,81 +87,86 @@ table{
 			<hr class="border-1px-black" />
 			
 			<div class="account" style="padding-left:30px;">
-				<h4>은행 : 우리 은행</h4>
-				<h4>계좌 : 1002-111-153***</h4>
-				<h4>예금주 : 오잔디</h4>
+				<h4>은행 : ${ requestScope.bank }</h4>
+				<h4>계좌 : ${ requestScope.account }</h4>
+				<h4>예금주 : ${ requestScope.accName }</h4>
 			</div>
 			<br><br>
-			
-			<div class="title-div">
-				<h3>정산 내역</h3>
-				<div style="float:right;">
-					<input type="date"> ~ <input type="date">
-					<button type="button" style="border:none; background: none; padding:5px; font-size: 15px;" ><b>조회</b></button>
+			<form action="${ pageContext.servletContext.contextPath }/jandi/jandiModifyCalc" method="get">
+				<div class="title-div">
+					<h3>정산 내역</h3>
+					<div style="float:right;">
+						<input type="date" id="calStartDate" name="calStartDate" value="${ requestScope.calStartDay }"> ~ <input type="date" id="calEndDate" name="calEndDate" value="${ requestScope.calEndDay }">
+						<button type="submit" id="calBtn" style="border:none; background: none; padding:5px; font-size: 15px;"><b>조회</b></button>
+					</div>
 				</div>
-			</div>
-			<br><br>
-			<hr class="border-1px-black" />
-			<table class="ui basic table learnTable" style="width:100%;">
-				<thead>
-					<tr>
-						<th width="50">정산 날짜</th>
-						<th width="10">수익</th>
-						<th width="10">수수료</th>
-						<th width="20">정산 금액(원)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>2021-09-30</td>
-						<td>50,000</td>
-						<td>1,500</td>
-						<td>48,500</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th>총 합계</th>
-						<th>50,000</th>
-						<th>1,500</th>
-						<th>48,500</th>
-					</tr>
-				</tfoot>
-			</table>
-			
-			<br><br>
-			<div class="title-div">
-				<h3>광고 결제 내역</h3>
-				<div style="float:right;">
-					<input type="date"> ~ <input type="date">
-					<button type="button" style="border:none; background: none; padding:5px; font-size: 15px;" ><b>조회</b></button>
+					<br><br>
+					<hr class="border-1px-black" />
+					<table class="ui basic table learnTable" style="width:100%;">
+						<thead>
+							<tr>
+								<th width="50">정산 날짜</th>
+								<th width="10">수익</th>
+								<th width="10">수수료</th>
+								<th width="20">정산 금액(원)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="cal" items="${ requestScope.calList }">
+								<tr>
+									<td>${ cal.calDate }</td>
+									<td>${ cal.fees }*10</td>
+									<td>${ cal.fees }</td>
+									<td>${ cal.fees }*9</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>총 합계</th>
+								<th>${ fullFeeSum }</th>
+								<th>${ feeSum }</th>
+								<th>${ realFeeSum }</th>
+							</tr>
+						</tfoot>
+					</table>
+	
+				
+				<br><br>
+				<div class="title-div">
+		
+						<h3>광고 결제 내역</h3>
+	
 				</div>
-			</div>
-			<br><br>
-			<hr class="border-1px-black" />
-			<table class="ui basic table learnTable" style="width:100%;">
-				<thead>
-					<tr>
-						<th width="30">결제 날짜</th>
-						<th width="50">클래스</th>
-						<th width="20">정산 금액(원)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>2021-09-30</td>
-						<td>OH! 잔디의 JAVA</td>
-						<td>48,500</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th>총 합계</th>
-						<th></th>
-						<th>48,500</th>
-					</tr>
-				</tfoot>
-			</table>
+				<br><br>
+				<hr class="border-1px-black" />
+				<table class="ui basic table learnTable" style="width:100%;">
+					<thead>
+						<tr>
+							<th width="30">결제 날짜</th>
+							<th width="50">클래스</th>
+							<th width="20">정산 금액(원)</th>
+						</tr>
+					</thead>
+					<c:forEach var="ad" items="${ requestScope.adList }">
+						<tbody>
+							<tr>
+								<td>${ ad.payDate }</td>
+								<td>${ ad.className }</td>
+								<td>${ ad.pay }</td>
+							</tr>
+						</tbody>
+					</c:forEach>
+	
+					<tfoot>
+						<tr>
+							<th>총 합계</th>
+							<th></th>
+							<th>${ adPaySum }</th>
+						</tr>
+					</tfoot>
+				</table>
+			</form>
 		</div>
 	</div>
 		<!-- Modal -->

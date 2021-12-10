@@ -117,9 +117,9 @@ img {
               <c:if test="${ sessionScope.loginMember.email != learnigPost.email }">
 					<form action="${pageContext.servletContext.contextPath }/mypage/class/uploadLearningFile" method="post" id="fileForm" enctype="multipart/form-data">
 						<div align="center" >
-							<div class="step" style="border: 3px solid #91C788; height:65px;">
-							<div class="title" style="font-size: large;">파일 업로드</div>
-								<div class="description" style="padding-left:3%; padding-right:3%;">
+							<div class="step" style="border: 3px solid #91C788; height:50px;">
+							<!-- <div class="title" style="font-size: large;">파일 업로드</div> -->
+								<div class="description" style="padding-left:10%; padding-right:10%; padding-top: 10px;">
 									<input type="hidden" value="${ learnigPost.postCode }" name="postCode">
 									<input type="file" name="file" style="border: none; float:left;">
 									<button style="float:right;" type="button" class="btnStyle formBtn" onclick="checkValue(this);">파일 추가하기</button>

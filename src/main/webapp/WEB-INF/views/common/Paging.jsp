@@ -23,14 +23,14 @@
 	  <ul class="ui pagination menu">
 	  
 		<!-- 이전 페이지 버튼 -->
-		<c:if test="${ sessionScope.selectCriteria.pageNo <= 1 }">
+		<c:if test="${ selectCriteria.pageNo <= 1 }">
 	 	<li>
 			<a href="#" aria-label="Previous" style="cursor:pointer;">
 			 <span aria-hidden="true">&laquo;</span>
 	  	    </a>
 		</li>
 		</c:if>
-		<c:if test="${ sessionScope.selectCriteria.pageNo > 1 }">
+		<c:if test="${ selectCriteria.pageNo > 1 }">
 	 	<li id="prevPage">
 			<a href="#" aria-label="Previous" style="cursor:pointer;">
 			 <span aria-hidden="true">&laquo;</span>
@@ -39,13 +39,13 @@
 		</c:if>
 		
 		<!-- 숫자 버튼 -->
-	    <c:forEach var="p" begin="${ sessionScope.selectCriteria.startPage }" end="${ sessionScope.selectCriteria.endPage }" step="1">
+	    <c:forEach var="p" begin="${ selectCriteria.startPage }" end="${ selectCriteria.endPage }" step="1">
 		
-		<c:if test="${ sessionScope.selectCriteria.pageNo eq p }">
+		<c:if test="${ selectCriteria.pageNo eq p }">
 			<li><a disabled style="cursor:pointer;"><c:out value="${ p }"/></a></li>
 		</c:if>
 	      
-	    <c:if test="${ sessionScope.selectCriteria.pageNo ne p }">
+	    <c:if test="${ selectCriteria.pageNo ne p }">
 	   		<li><a onclick="pageButtonAction(this.innerText);" style="cursor:pointer;"><c:out value="${ p }"/></a></li>
 		</c:if>
 		</c:forEach> 
@@ -53,14 +53,14 @@
 		
 	    
 	    <!-- 다음 페이지 버튼 -->
-	    <c:if test="${ sessionScope.selectCriteria.pageNo >= sessionScope.selectCriteria.maxPage }">
+	    <c:if test="${ selectCriteria.pageNo >= selectCriteria.maxPage }">
 	    <li>  
 	      <a href="#" aria-label="Next" style="cursor:pointer;">
 	        <span aria-hidden="true">&raquo;</span>
 	      </a>
 	    </li>    
 	    </c:if>
-		<c:if test="${ sessionScope.selectCriteria.pageNo < sessionScope.selectCriteria.maxPage }">
+		<c:if test="${ selectCriteria.pageNo < selectCriteria.maxPage }">
 		<li>
 		 <a href="#" aria-label="Next" style="cursor:pointer;">
 	        <span aria-hidden="true" id="nextPage">&raquo;</span>
@@ -76,12 +76,12 @@
 		const link = window.location.pathname;
 		let searchText = "";
 		
-		if(${ !empty sessionScope.selectCriteria.searchCondition? true: false }) {
-			searchText += "&searchCondition=${ sessionScope.selectCriteria.searchCondition }";
+		if(${ !empty selectCriteria.searchCondition? true: false }) {
+			searchText += "&searchCondition=${ sselectCriteria.searchCondition }";
 		}
 		
-		if(${ !empty sessionScope.selectCriteria.searchValue? true: false }) {
-			searchText += "&searchValue=${ sessionScope.selectCriteria.searchValue }";
+		if(${ !empty selectCriteria.searchValue? true: false }) {
+			searchText += "&searchValue=${ selectCriteria.searchValue }";
 		}
 			
 		if(document.getElementById("startPage")) {
@@ -94,21 +94,21 @@
 		if(document.getElementById("prevPage")) {
 			const $prevPage = document.getElementById("prevPage");
 			$prevPage.onclick = function() {
-				location.href = link + "?currentPage=${ sessionScope.selectCriteria.pageNo - 1 }" + searchText;
+				location.href = link + "?currentPage=${ selectCriteria.pageNo - 1 }" + searchText;
 			}
 		}
 		
 		if(document.getElementById("nextPage")) {
 			const $nextPage = document.getElementById("nextPage");
 			$nextPage.onclick = function() {
-				location.href = link + "?currentPage=${ sessionScope.selectCriteria.pageNo + 1 }" + searchText;
+				location.href = link + "?currentPage=${ selectCriteria.pageNo + 1 }" + searchText;
 			}
 		}
 		
 		if(document.getElementById("maxPage")) {
 			const $maxPage = document.getElementById("maxPage");
 			$maxPage.onclick = function() {
-				location.href = link + "?currentPage=${ sessionScope.selectCriteria.maxPage }" + searchText;
+				location.href = link + "?currentPage=${ selectCriteria.maxPage }" + searchText;
 			}
 		}
 		

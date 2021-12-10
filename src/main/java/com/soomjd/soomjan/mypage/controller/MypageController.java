@@ -212,8 +212,38 @@ public class MypageController {
 
 	// 수강완료
 	@GetMapping("finish")
-	public String finishForm() {
+	public String finishForm(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 
+		System.out.println("finishList");
+		Map<String, String> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue", searchValue);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = mypageService.selectFinishTotalCount(searchMap);
+		System.out.println("tatalCount : " + totalCount);
+		
+		int limit = 10;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+		
+		if(searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+		
+		List<PurchaseClassDTO> finishList = mypageService.finishClass(selectCriteria);
+		System.out.println("finishList : " + finishList);
+		
+		model.addAttribute("finishList", finishList);
+		model.addAttribute("selectCriteria", selectCriteria);
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+		
 		return "mypage/finish";
 	}
 

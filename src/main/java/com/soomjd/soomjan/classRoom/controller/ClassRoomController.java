@@ -24,20 +24,21 @@ import org.springframework.web.context.request.async.StandardServletAsyncWebRequ
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.joomjan.common.fileWrapper.FileWrapper;
-import com.joomjan.common.fileWrapper.JSchWrapper;
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
+import com.soomjd.soomjan.common.exception.ExceptionHandlerController;
+import com.soomjd.soomjan.common.fileWrapper.FileWrapper;
+import com.soomjd.soomjan.common.fileWrapper.JSchWrapper;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/*/class/*")
 @SessionAttributes({ "currentCount", "classCode", "classDTO", "jandi" })
-public class ClassRoomController {
+public class ClassRoomController{
 
 	private final ClassRoomService classRoomService;
 

@@ -63,7 +63,7 @@ $(function(){
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<form action="${ pageContext.servletContext.contextPath }/jandi/class/modifyClass" method="post" id="modifyClassForm">
-				<button type="submit" class="btn btn-primary" style="float:right">수정</button>
+				<button type="button" class="btn btn-primary" style="float:right" id="modifyClassFormBtn">수정</button>
 				<h2>강의 소개</h2>
 				<hr>
 				<br>
@@ -89,6 +89,12 @@ $(function(){
 					placeholder="태그를 입력해주세요.">${ classDTO.tag }</textarea>
 				<script>
 					$(function(){
+						
+						let message = '${ requestScope.modifyMessage }';
+						if( message !== "" ){
+							alert(message);
+						}
+						
 						let tags = $('#tag').val().replace(" ","");
 						let tagArr = tags.split('#');
 						for(let tag of tagArr){
@@ -102,9 +108,8 @@ $(function(){
 						$('#tag').keyup(function(){
 							if($('#tag').val().length >= 300){
 								alert("300byte를 초과할 수 없습니다.");
-								$('#tag').val().substr(0, 1500);
-							}else{
-								
+								$('#tag').val().substr(0, 300);
+								$('#tag').focus();
 							}
 						});
 						
@@ -112,13 +117,28 @@ $(function(){
 							if($('#contents').val().length >= 1500){
 								alert("1500byte를 초과할 수 없습니다.");
 								$('#contents').val().substr(0, 1500);
+								$('#contents').focus();
 							}
 						});
 						
-						let message = '${ requestScope.modifyMessage }';
-						if( message !== "" ){
-							alert(message);
-						}
+						$('#modifyClassFormBtn').click(function(){
+							let result = true;
+							if($('#tag').val().length >= 300){
+								alert("300byte를 초과할 수 없습니다.");
+								$('#tag').val().substr(0, 1500);
+								$('#tag').focus();
+								result = false;
+							}
+							if($('#contents').val().length >= 1500){
+								alert("1500byte를 초과할 수 없습니다.");
+								$('#contents').val().substr(0, 1500);
+								$('#tag').focus();
+								result = false;
+							}
+							if(result){
+								$('#modifyClassForm').submit();
+							}
+						});
 						
 					});
 					

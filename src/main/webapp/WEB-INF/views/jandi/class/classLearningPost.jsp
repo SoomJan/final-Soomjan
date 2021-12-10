@@ -74,10 +74,11 @@ img {
 			console.log('${ requestScope.uploadMessage }');
 		}
 		
-		$('#title').keyup(function(){
-			if($('#title').val().length >= 300){
+		$('.inputStye').keyup(function(){
+			if($('.inputStye').val().length >= 10){
 				alert("300byte를 초과할 수 없습니다.");
-				$('#title').val().substr(0, 1500);
+				$('.inputStye').val().substr(0, 10);
+				$('.inputStye').focus();
 			}
 		});
 		
@@ -85,6 +86,7 @@ img {
 			if($('#contents').val().length >= 1500){
 				alert("1500byte를 초과할 수 없습니다.");
 				$('#contents').val().substr(0, 1500);
+				$('#contents').focus();
 			}
 		});
 		
@@ -94,6 +96,7 @@ img {
 		if( message !== "" ){
 			alert(message);
 		}
+		
 	});
 	
 	function checkValue(item){
@@ -108,9 +111,25 @@ img {
 	
 	function modifyPost(){
 		
-		$('#postForm')
-			.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost")
-			.submit();
+		let result = true;
+		
+		if($('.inputStye').val().length >= 10){
+			alert("300byte를 초과할 수 없습니다.");
+			$('.inputStye').val().substr(0, 10);
+			$('.inputStye').focus();
+			result = false;
+		}
+		if($('#contents').val().length >= 1500){
+			alert("1500byte를 초과할 수 없습니다.");
+			$('#contents').val().substr(0, 1500);
+			$('#contents').focus();
+			result = false;
+		}
+		if(result){
+			$('#postForm')
+				.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost")
+				.submit();
+		}
 	}
 	
 	function deletePost(){

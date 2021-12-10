@@ -67,6 +67,7 @@
    <aop:config proxy-target-class="true">
       <aop:pointcut id="serviceMethod"
          expression="execution(* com.soonjd.soonjan..*ServiceImpl.*(..))" />
+      <aop:pointcut expression="execution(* com.soonjd.soonjan..*(..))" id="allPointcut"/>
    </aop:config>	
    
    <mybatis-spring:scan base-package="com.soomjd.soomjan.member.model.dao"/>
@@ -75,6 +76,7 @@
    <mybatis-spring:scan base-package="com.soomjd.soomjan.classRoom.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.matching.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.mypage.model.dao"/>
+   <mybatis-spring:scan base-package="com.soomjd.soomjan.faq.model.dao"/>
    
 		
 </beans>

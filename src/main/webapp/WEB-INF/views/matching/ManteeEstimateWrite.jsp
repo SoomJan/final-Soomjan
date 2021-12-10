@@ -57,19 +57,19 @@
 
 			<div class="matching-content">
 				<p class="estimate_title">견적서 작성하기</p>
-					<form action="${ pageContext.servletContext.contextPath }/matching/estimateSend" method="POST">
+					<form action="${ pageContext.servletContext.contextPath }/matching/estimateSend/${ sessionScope.loginMember.email }" method="post">
 						<table class="estimate_table" style="width: 100%">
-					
+					<br><br>
 					
 							<tr>
-								<th width="70" class="table_head">제목</th>
+								<th class="table_head" style="padding-left : 60px;">제목</th>
 						<!-- <th width="30">절 성장시켜주실 고수분!</th> -->
-								<th><input class="input_title" type="text" name="title"></th>
+								<th class="table_content1"><input class="input_title" type="text" name="title"></th>
 							</tr>
 					
 							<tr>
 								<th class="table_head">카테고리</th>
-								<th>
+								<th class="table_content1">
 									<select id="category_cb" name="categoryCode">
 										<option value="">선택하세요.</option>
 										<c:forEach var="category" items="${categoryList}" >
@@ -80,19 +80,18 @@
 							</tr>
 					 
 								<tr>
-									<th class="table_head">내용</th>
-									<th>
-										<textarea rows="50" cols="100" class="content_area" name="contents">
+									<th class="table_head" style="padding-left : 60px;">내용</th>
+									<th class="table_content1">
+										<textarea class="content_area" name="contents">
 										</textarea>
 									</th>
 								</tr>
 
 					</table>
-				<div class="back">
-					<button class="backBtn">목록으로</button>
-				</div>
+					
+				
 
-				<div class="write">
+				<div class="write" >
 						<button type="submit" class="writeBtn">매칭 요청</button>
 				</div>
 				</form>

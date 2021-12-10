@@ -190,7 +190,7 @@ span {
   z-index: 9999;
   width: 19%;
   left: 100%;
-  height: 700px;
+  height: 100vh;
   background-color: #49a66b;
   padding: 30px 40px;
   top: 0%;
@@ -209,20 +209,19 @@ span {
 .nav-sidebar-exit {
   position: absolute;
   top: 0%;
-  left: 75%;
+  left: 80%;
   margin: 20px 20px 0 0;
-  border: 1px solid red;
 }
 
 .nav-sidebar-exit img {
   width: 50%;
   height: 50%;
+
 }
 
 .nav-sidebar-content {
   width: 100%;
   height: auto;
-  /* border: 3px solid black; */
   margin-top: 40px;
 }
 
