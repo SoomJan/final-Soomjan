@@ -12,6 +12,11 @@
 	height: auto;
 }
 
+.common-sidebarsm {
+    width: 100%;
+    overflow: auto;
+}
+
 .introduce-detail {
 	width: 60%;
 	margin: 0 auto;
@@ -57,6 +62,7 @@
 	width: 100%;
 	/* border: 1px solid black; */
 }
+
 
 /* 요청한 견적서가 없습니다 문구. */
 .nothing-comment {
@@ -125,7 +131,7 @@
 #allrequest {
 	background-color: #e1f2e7;
 	border-radius: 15px;
-	height: 650px;
+	height: auto;
 	padding: 15px;
 }
 

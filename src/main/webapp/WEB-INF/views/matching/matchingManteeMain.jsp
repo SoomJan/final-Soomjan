@@ -53,9 +53,10 @@
 <body>
 	<jsp:include page="../common/nav.jsp" />
 
+<main>
 	<div class="common-sidebar">
 		<jsp:include page="../common/matching_mantee_sidebar.jsp" />
-		<div class="introduce">
+		<div class="introduce" style="width:70%">
 
 			<div class="matching-content">
 				<div class="request-list">
@@ -96,17 +97,12 @@
 								<button class="writeBtn">견적서 작성</button>
 								</a>
 							</div>
-								
-					</div>
-					
+			 <jsp:include page="../common/Paging.jsp" />
+						</div>
 					</div>
 				</div>
-
 			</div>
-			
-			<jsp:include page="../common/Paging.jsp" />
-
-	
+</main>
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>

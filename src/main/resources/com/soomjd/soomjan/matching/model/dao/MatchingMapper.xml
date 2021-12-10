@@ -54,7 +54,7 @@
 		  FROM CATEGORY_TBL
     </select>
     
-    <select id="selectEstimate" resultMap="estimateList" parameterType="hashMap">
+    <select id="selectEstimate" resultMap="estimateList" >
         SELECT
     		   C.RNUM
     		 , C.ESTIMATE_CODE
@@ -69,8 +69,14 @@
 		    	   , A.TITLE
 		    	   , A.IS_MATCHED
 		    	   FROM ESTIMATE_TBL A
-                   ORDER BY A.ESTIMATE_CODE DESC)B)C
-    
+                   ORDER BY A.ESTIMATE_CODE DESC
+                   )B 
+                   <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+              ) C
+              WHERE C.RNUM >= #{ startRow }
+                   
     
     </select>
     
@@ -85,6 +91,13 @@
 		 WHERE EMAIL = #{ email }
     </select>
     
+    <select id="selecetMainTotal" resultType="_int">
+    
+    	SELECT
+    		   COUNT(*)
+    	  FROM ESTIMATE_TBL
+    
+    </select>
     
 
 </mapper>

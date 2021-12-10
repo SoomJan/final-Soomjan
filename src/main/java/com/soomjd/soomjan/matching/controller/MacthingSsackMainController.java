@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.soomjd.soomjan.common.exception.RegistFailedException;
+import com.soomjd.soomjan.common.paging.Pagenation;
+import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
 import com.soomjd.soomjan.matching.model.service.MatchingService;
@@ -43,15 +44,26 @@ public class MacthingSsackMainController {
 	
 	// '매칭'메뉴 누르면 해당 아이디의 manteeMain으로 이동(select)
 	@GetMapping("/manteeMain/{memberEmail:.+}")
-	public String ManteeMain(Model model, @PathVariable("memberEmail") String memberEmail){
+	public String ManteeMain(Model model, @PathVariable("memberEmail") String memberEmail, @RequestParam(defaultValue = "1") int currentPage){
 		
-		System.out.println(memberEmail);
+		int totalCount = matchingService.selecetMainTotal();
+		
+		int limit = 10;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+		
+		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("email", memberEmail);
 		
-		List<EstimateDTO> estimateList = matchingService.selectEstimate(map);
+		System.out.println(selectCriteria);
+		
+		List<EstimateDTO> estimateList = matchingService.selectEstimate(selectCriteria);
+		System.out.println(estimateList);
 		model.addAttribute("estimateList",estimateList);
+		model.addAttribute("selectCriteria",selectCriteria);
 		
 		return "matching/matchingManteeMain";
 	}
