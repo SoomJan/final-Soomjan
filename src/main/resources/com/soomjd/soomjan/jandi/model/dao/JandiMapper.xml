@@ -33,6 +33,34 @@
     	<result column="ORG_FILE_PATH" property="orgFilePath"/>
     </resultMap>
     
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.FullAdDTO" id="adResultMap">
+    	<id column="AD_CODE" property="adCode"/>
+    	<result column="AD_CONTENTS" property="adContents"/>
+    	<result column="IMG_PATH" property="imagePath"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="START_DATE" property="startDate"/>
+    	<result column="ORG_IMG_PATH" property="originImagePath"/>
+    	<result column="IS_ADVERTISED" property="isAdvertised"/>
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.CalculateDTO" id="calResultMap">
+    	<id column="CALC_CODE" property="calCode"/>
+    	<result column="FEES" property="fees"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="CLASS_PURC_CODE" property="classPurchaseCode"/>
+    	<result column="MNG_NO" property="managerCode"/>
+    	<result column="CAL_DATE" property="calDate"/>
+    </resultMap>
+    
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.CalAdDTO" id="calAdResultMap">
+    	<result column="PAY_DATE" property="payDate"/>
+    	<result column="CONTENTS" property="className"/>
+    	<result column="PAY" property="pay"/>
+    
+    </resultMap>
+    
+    
+    
     <select id="selectJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
 			 , JAN.NICKNAME
@@ -142,5 +170,55 @@
 		 WHERE EMAIL=#{ email } 	   	
 	
 	</select>
+	
+	
+	<select id="selectAd" resultMap="adResultMap">
+		SELECT 
+		       AD_CODE
+			 , AD_CONTENTS
+			 , IMG_PATH
+			 , CLASS_CODE
+			 , START_DATE
+			 , ORG_IMG_PATH
+			 , IS_ADVERTISED
+		  FROM AD_TBL
+		 WHERE CLASS_CODE=#{ classesCode } 		 
+		   AND IS_ADVERTISED = 'Y'
+	</select>
+	
+	
+	<select id="selectcalculateList" resultMap="calResultMap">
+		SELECT 
+			   A.CALC_CODE
+			 , A.FEES
+			 , A.EMAIL
+			 , A.CLASS_PURC_CODE
+			 , A.MNG_NO
+			 , A.CAL_DATE
+		  FROM CALCULATE_TBL A
+		  JOIN PURCHASE_CLASS_TBL B ON(A.EMAIL=B.EMAIL)	   
+		  JOIN PAYMENT_TBL C ON(B.PAY_CODE=C.PAY_CODE)
+		 WHERE C.PAY_DATE BETWEEN #{startDay} AND #{endDay}
+		   AND A.EMAIL=#{ email } 
+	</select>
+	
+	<select id="selectcalAdList" resultMap="calAdResultMap">
+		SELECT
+		 	   A.PAY_DATE
+		 	 , D.CONTENTS
+		 	 , A.PAY
+		  FROM PAYMENT_TBL A
+		  JOIN PURCHASE_AD_TBL B ON(A.PAY_CODE=B.PAY_CODE)
+		  JOIN JANDI_TBL C ON(B.EMAIL=C.EMAIL)
+		  JOIN CLASS_TBL D ON(C.EMAIL=D.EMAIL)
+		 WHERE A.PAY_DATE BETWEEN #{startDay} AND #{endDay}
+		   AND D.EMAIL=#{ email }  
+		   	   
+	
+	
+	
+	</select>
+	
+	
 
 </mapper>

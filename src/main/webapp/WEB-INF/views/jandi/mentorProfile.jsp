@@ -217,7 +217,7 @@ p {
 								
 										$('#profile').attr("src","${ pageContext.servletContext.contextPath }/resources/uploadFiles/"+data);
 									
-										$('#openModalBtn').attr("hidden",true);
+										$('.modal fade').attr("hidden",true);
 									},
 									error:function(err){
 										console.log(err);

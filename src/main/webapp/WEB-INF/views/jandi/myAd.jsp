@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,20 +62,34 @@ table {
 	<div class="common-sidebar">
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
-			<h3 style="color: #147900;" align="right">광고 종료 D - 5</h3>
+			<c:set var="days" value="${ requestScope.calDateDays }"/>
+			<c:choose>
+				<c:when test="${ days eq 0 }">
+					<h3 style="color: #147900;" align="right">오늘 광고 종료!!</h3>
+				</c:when>
+				<c:otherwise>
+					<h3 style="color: #147900;" align="right">광고 종료 D - ${ requestScope.calDateDays }</h3>
+				</c:otherwise>
+			</c:choose>
+		
+
 			<h3>광고 중</h3>
 			<hr class="border-1px-black" />
-			<h4 style="padding-left: 30px;">광고 중인 클래스 : &nbsp; OH! 잔디의 JAVA</h4>
-			<div style="margin: 20px; width: 90%;">
+			<h4 style="padding-left: 30px;">광고 중인 클래스 : &nbsp; ${ requestScope.className }</h4>
+<!-- 			<div style="margin: 20px; width: 90%;">
 				이 클래스는 OH! 잔디만의 특급 공부 비법을 담은<br>
 				JAVA 강의 클래스입니다.<br>
 				여태 들었던 JAVA는 지워버리세요!<br>
-			</div>
-			<h4>등록한 이미지</h4>
+			</div> -->
+			<textArea name="adContents" cols="5" rows="5" placeholder="광고 문구를 입력해주세요."
+				style="resize:none; margin-left: 30px; border:1px solid black; width:90%;" readonly>
+				${ requestScope.adContents }
+			</textArea>
+			<h4>등록한 이미지: ${requestScope.originImagePath}</h4>
 			<hr style="margin-top: 10px; margin-bottom: 10px;">
 			<div style="margin: 20px; width: 90%;" align="center">
 				<img style="width: 80%;"
-					src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png">
+					src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${requestScope.imagePath}">
 			</div>
 			<br>
 			<br>

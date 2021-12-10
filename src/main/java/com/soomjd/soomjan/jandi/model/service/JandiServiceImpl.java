@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.jandi.model.dao.JandiMapper;
+import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
+import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -70,7 +73,25 @@ public class JandiServiceImpl implements JandiService{
 	@Override
 	public List<ClassesDTO> selectClasses(String email) {
 		
-		return jandiMapper.selectClassses(email);
+		return jandiMapper.selectClasses(email);
+	}
+
+	@Override
+	public FullAdDTO selectAd(Integer classesCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectAd(classesCode);
+	}
+
+	@Override
+	public List<CalculateDTO> selectcalculateList(Map<String,Object> key) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectcalculateList(key);
+	}
+
+	@Override
+	public List<CalAdDTO> selectcalAdList(Map<String, Object> key) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectcalAdList(key);
 	}
 
 
