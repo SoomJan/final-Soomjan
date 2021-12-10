@@ -28,8 +28,6 @@
 
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
-      .pro {right: 22%;} /* 검색 */
-      .dropdown { position: relative; left: 12%;} /* 정렬 */
       .jjimtable thead tr {text-align: center;} /* 찜한 클래스 테이블 */
       .jjimtable tbody tr td {text-align: center; vertical-align : middle;}
       .jjimtable thead tr th a {color: gray !important;}

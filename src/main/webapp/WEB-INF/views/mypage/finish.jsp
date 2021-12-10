@@ -32,8 +32,7 @@
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
         .reviewbtn {background-color: #91C788 !important;} /* 수강후기 작성 버튼 */
-        .dropdown { position: relative; left: 12%;} /* 정렬 */
-        .search {position: relative; right: 13%;} /* 검색 */
+        .dropdown { position: relative;} /* 정렬 */
         .finishtable thead tr th {border-bottom: none !important;} /* 수강완료 클래스 테이블 */
         .finishtable thead tr th {background-color: #E3FFEC !important;}
         .finishtable {text-align: center !important; vertical-align: middle !important;}
@@ -49,11 +48,13 @@
         <p class="taking-title">수강완료 클래스</p>
         <br>
         <div class="dropsearch">
-		<select class="ui dropdown">
-  			<option value="">정렬순</option>
-  			<option value="1">최신클래스순</option>
-  			<option value="0">제목순</option>
-		</select>
+          <div>
+	      	<select class="ui dropdown">
+  		    	<option value="">정렬순</option>
+  		     	<option value="1">최신클래스순</option>
+  		    	<option value="0">제목순</option>
+          </select>
+        </div>
     <div class="ui search">
       <div class="ui icon input">
         <input class="prompt" type="text">
@@ -62,11 +63,11 @@
       <div class="results"></div>
     </div>
   </div>
-  <br><br><br><br><br>
+  <br>
   <div class="unlist-text">
   수강이 완료된 클래스가 없습니다.
 </div>
-<br><br><br>
+<br>
 <table class="ui single line table finishtable">
   <thead>
     <tr>

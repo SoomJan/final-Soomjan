@@ -28,8 +28,6 @@
 
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
-      .dropdown { position: relative; left: 12%;} /* 정렬 */
-      .search {position: relative; right: 13%;} /* 검색 */
       .buytable thead tr th {background-color: #E3FFEC !important;} /* 구매내역 테이블 */
       .buytable thead tr th {border-bottom: none !important;}
       .buytable tbody tr td {text-align: center; vertical-align : middle;}
