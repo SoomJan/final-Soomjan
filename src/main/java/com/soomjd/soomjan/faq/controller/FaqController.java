@@ -43,7 +43,7 @@ public class FaqController {
 
 	//사용자 공지사항 조회
 	@GetMapping("/notice")
-	public String notice(Model model, FaqDTO faq, @RequestParam(defaultValue = "1") int currentPage) {
+	public String notice(Model model, @RequestParam(defaultValue = "1") int currentPage) {
 	      
       int totalCount = faqService.selectFaqTotalCount();
       
