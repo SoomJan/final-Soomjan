@@ -98,81 +98,80 @@ img {
 	};
 	
 		
-	$(document).ready(function(){
+	$(function(){
 		
 		const email = "${ sessionScope.loginMember.email }";
-		const chatCode = 2;
+		const chatCode = ${ chatRoomList[0].CHAT_CODE };
 		// 테스트 채팅방 정보 
 		let chatInfo = {
 			email: email,
 			chat_code: chatCode
 		};
 		
-		if(chatInfo != null){
-			
-			let socket = io("http://125.132.252.115:3000/classChat");
-			
-			socket.emit("chat_info", chatInfo);
-			
-			socket.on("connect_user", function(chatInfo){
-				console.log(chatInfo.email);
-			});
-			
-			// 채팅 이력 불러오기
-			socket.on("receive_msg", function(chat_log){
-				console.log(chat_log);
-				for(const chat of chat_log){
-					if(chat.email === chatInfo.email){
-						addSenderBox(chat);
-					}else {
-						addReceiveBox(chat);
-					}
-					
-					$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
-				}
-			});
-			
-			
-			$('#msg').keyup(function(key){
-				if(key.keyCode==13 && !key.shiftKey){
-					// 시프트 엔터가 아닌 경우
-					$('#sendBtn').click();
-				}
-			});
-			
-			$('#sendBtn').click(function(){
-				
-				if($('#msg').val() !== ''){
-					// CLASS_CHAT에 저장
-			        let chat = {
-			            nickName: '${ sessionScope.loginMember.nickName }',
-			            email: email,
-			            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
-			            chat_code: chatCode,
-			            chat_date: getFormatDate(new Date())
-			        };
-					
-					console.log(chat);
-					
-					socket.emit("send_msg", chat);
-					
-					$('#msg').val('');
-					
-				}
-			});
-			
-			socket.on('send_msg', function(chat){
-				
+		let socket = io("http://125.132.252.115:3000/classChat");
+		
+		socket.emit("chat_info", chatInfo);
+		
+		console.log(chatInfo);
+		
+		
+		// 채팅 이력 불러오기
+		socket.on("receive_msg", function(chat_log){
+			console.log(chat_log);
+			for(const chat of chat_log){
 				if(chat.email === chatInfo.email){
 					addSenderBox(chat);
 				}else {
 					addReceiveBox(chat);
 				}
-				//스크롤 맨 아래 감지
+				
 				$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
-			});
+			}
+		});
+		
+		socket.on("connect_user", function(chatInfo){
+			console.log(chatInfo.email);
+		});
+		
+		$('#msg').keyup(function(key){
+			if(key.keyCode==13 && !key.shiftKey){
+				// 시프트 엔터가 아닌 경우
+				$('#sendBtn').click();
+			}
+		});
+		
+		$('#sendBtn').click(function(){
 			
-		}
+			if($('#msg').val() !== ''){
+				// CLASS_CHAT에 저장
+		        let chat = {
+		            nickName: '${ sessionScope.loginMember.nickName }',
+		            email: email,
+		            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
+		            chat_code: chatCode,
+		            chat_date: getFormatDate(new Date())
+		        };
+				
+				console.log(chat);
+				
+				socket.emit("send_msg", chat);
+				
+				$('#msg').val('');
+				
+			}
+		});
+		
+		socket.on('send_msg', function(chat){
+			
+			if(chat.email === chatInfo.email){
+				addSenderBox(chat);
+			}else {
+				addReceiveBox(chat);
+			}
+			//스크롤 맨 아래 감지
+			$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
+		});
+		
 	});
 		
 </script>
@@ -186,7 +185,7 @@ img {
 			<!-- 탭 메뉴 내용 시작 -->
 			<div class="chatDiv">
 				<div class="chatTop">
-					<h3>람잔디 </h3>
+					<h3>${ sessionScope.classDTO.nickName } </h3>
 					<button class="reportBtn" id="reportBtn">신고</button>
 				</div>
 				<div class="chatBottom">
@@ -195,10 +194,8 @@ img {
 						
 						</div>
 						<div class="sendMessage" align="center">
-							<form id="sendMessageForm" method="post" action="">
-								<input class="sendInput" type="text" name="message">
-								<input class="sendBtn" type="submit" id="sendBtn" value="전송">
-							</form>
+							<textarea class="messageArea" id="msg"></textarea>
+							<input class="sendBtn" type="button" id="sendBtn" value="전송" >
 						</div>
 					</div>
 				</div>

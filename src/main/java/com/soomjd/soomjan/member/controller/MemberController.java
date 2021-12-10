@@ -27,7 +27,7 @@ import com.soomjd.soomjan.member.model.service.MemberService;
 
 @Controller
 @RequestMapping("/member/*")
-@SessionAttributes("loginMember")
+@SessionAttributes({"loginMember", "isjandi"})
 public class MemberController {
 
 	private final MemberService memberService;
@@ -39,13 +39,6 @@ public class MemberController {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	// 죄송해요 순표님 테스트하나만 넣을게요ㅜㅜ
-	@GetMapping("classChat")
-	public String memberClassChat(Model model) {
-
-		return "mypage/class/classChat";
-	}
-	
 	@GetMapping("terms")
 	public String termsForm() {
 		
@@ -122,9 +115,14 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(@ModelAttribute MemberDTO member, Model model) throws LoginFailedException {
 		
-		model.addAttribute("loginMember", memberService.loginMember(member));
+		MemberDTO loginMemeber = memberService.loginMember(member);
+		model.addAttribute("loginMember", loginMemeber);
 		
-
+		if(loginMemeber.getIsJandi() == 'Y') {
+			model.addAttribute("isjandi", "Y");
+		}else {
+			model.addAttribute("isjandi", "N");
+		}
 		return "redirect:/";
 	}
 	

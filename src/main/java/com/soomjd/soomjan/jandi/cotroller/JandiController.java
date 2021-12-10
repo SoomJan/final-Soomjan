@@ -48,7 +48,6 @@ public class JandiController {
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 			
-		
 		model.addAttribute("jandi", jandi);
 		
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));

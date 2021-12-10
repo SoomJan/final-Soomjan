@@ -32,7 +32,15 @@ pageEncoding="UTF-8"%>
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
   </head>
-
+  
+  <script>
+  	$(function(){
+  		if('${ requestScope.authMessage }' != ''){
+  			alert('${ requestScope.authMessage }');
+  		}
+  	});
+  </script>
+  
   <body>
     <!-- <div class="background"></div> -->
     <jsp:include page="../common/nav.jsp" />

@@ -48,7 +48,15 @@ pageEncoding="UTF-8"%>
     ></script>
   </head>
 
-  <script></script>
+  <script>
+  	$(function(){
+  		if('${requestScope.authMessage}' != ''){
+  			if(confirm('${requestScope.authMessage}')){
+  				alert("잔디 신청페이지로 이동! (아직 구현 X)");
+  			}
+  		}
+  	});
+  </script>
 
   <body>
     <jsp:include page="../common/nav.jsp" />

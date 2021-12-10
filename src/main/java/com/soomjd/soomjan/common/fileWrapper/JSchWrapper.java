@@ -1,4 +1,4 @@
-package com.joomjan.common.fileWrapper;
+package com.soomjd.soomjan.common.fileWrapper;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
