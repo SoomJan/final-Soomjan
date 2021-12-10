@@ -56,12 +56,25 @@
     
     <select id="selectEstimate" resultMap="estimateList" parameterType="hashMap">
         SELECT
-		       ESTIMATE_CODE
-		     , TITLE
-		     , IS_MATCHED
-		  FROM ESTIMATE_TBL
-		 WHERE EMAIL = #{ email }
+    		   C.RNUM
+    		 , C.ESTIMATE_CODE
+		     , C.TITLE
+		     , C.IS_MATCHED
+		  FROM (SELECT ROWNUM RNUM
+		   		, B.ESTIMATE_CODE
+		   		, B.TITLE
+		    	, B.IS_MATCHED
+		    	FROM(SELECT 
+		    	     A.ESTIMATE_CODE
+		    	   , A.TITLE
+		    	   , A.IS_MATCHED
+		    	   FROM ESTIMATE_TBL A
+                   ORDER BY A.ESTIMATE_CODE DESC)B)C
+    
+    
     </select>
+    
+    
     
     <select id="detailEstimate" resultMap="estimateList" parameterType="hashMap">
     	SELECT

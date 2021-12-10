@@ -103,9 +103,10 @@
 				</div>
 
 			</div>
+			
+			<jsp:include page="../common/Paging.jsp" />
 
-		</div>
-	</div>
+	
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>

@@ -61,23 +61,23 @@
 
 					<tr>
 						<th width="10">No</th>
-						<th width="60">1</th>
+						<th width="60"align="left">1</th>
 					</tr>
 					<tr>
 						<th width="10">카테고리</th>
-						<th width="60">개발,프로그래밍</th>
+						<th width="60"align="left">개발,프로그래밍</th>
 					</tr>
 					<tr>
 						<th width="10">진행상태</th>
-						<th width="60">Y</th>
+						<th width="60"align="left">Y</th>
 					</tr>
 					<tr>
 						<th width="10">작성일</th>
-						<th width="60">2021.11.18</th>
+						<th width="60" align="left">2021.11.18</th>
 					</tr>
 					<tr>
 						<th width="10">제목</th>
-						<th width="60">절 성장시켜주실 고수분!</th>
+						<th width="60"align="left">절 성장시켜주실 고수분!</th>
 					</tr>
 					<tr>
 						<th width="10">내용</th>
