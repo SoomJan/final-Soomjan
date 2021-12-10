@@ -51,6 +51,28 @@
     	<result column="CATEGORY_NAME" property="categoryName"/>
     </resultMap>
     
+    <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CAREER" property="career"/>
+    	<result column="INTRO" property="intro"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="ENROLL_DATE" property="enroll_date"/>
+    	<result column="ACCOUNT" property="account"/>
+    	<result column="BANK" property="bank"/>
+    	<result column="ACC_NAME" property="acc_name"/>
+    </resultMap>
+    
+    <resultMap id="paymentResultSet" type="PaymentDTO">
+        <id column="PAY_CODE" property="payCode"/>
+        <result column="PAY" property="pay"/>
+        <result column="BANK" property="bank"/>
+        <result column="OWNER" property="owner"/>
+        <result column="ACCOUNT" property="account"/>
+        <result column="PAY_DATE" property="payDate"/>
+        <result column="PAY_TYPE" property="payType"/>
+    </resultMap>
+    
     <resultMap id="purchaseClassSet" type="PurchaseClassDTO">
         <id column="CLASS_PURC_CODE" property="classPurcCode"/>
         <result column="EMAIL" property="email"/>
@@ -62,6 +84,8 @@
         
         <association property="classDTO" resultMap="classResultMap"></association>
         <association property="categoryDTO" resultMap="categoryList"></association>
+        <association property="jandiDTO" resultMap="jandiResultMap"></association>
+        <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
@@ -118,17 +142,100 @@
 		   AND A.REP_YN = 'Y'
 	</select>
 	
-	<select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	<!-- <select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
 	    SELECT
 		       A.*
 		     , B.*
 		     , C.*
-		     , B.EMAIL AS TEACHER
+		     , D.*
+             , E.*
 		  FROM PURCHASE_CLASS_TBL A
 		  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
 		  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
-		 WHERE A.EMAIL = #{ email }
+		  JOIN JANDI_TBL D ON (B.EMAIL = D.EMAIL)
+          JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
+          
+          <where>
+		   A.EMAIL = #{ email }
 		   AND A.STATUS = 'Y'
+		   <if test='searchCondition == "1"'>
+		       AND C.CATEGORY_NAME LIKE '%' || #{ selectCriteria.searchValue } || '%'    
+		   </if>
+		   <if test='searchCondition == "2"'>
+		       AND B.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%'
+		   </if>
+		   <if test='searchCondition == "3"'>
+		       AND D.NICKNAME LIKE '%' || #{ selectCriteria.searchValue } || '%'
+		   </if>
+          </where>
+         ORDER BY A.END_DATE DESC
+               
+	</select> -->
+	
+	
+	<select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	
+	    SELECT V2.RNUM
+		     , V2.*
+		  FROM (SELECT ROWNUM RNUM
+		                    , V.*
+		          FROM (SELECT A.END_DATE
+				             , B.TITLE
+		                     , C.CATEGORY_NAME
+		                     , D.NICKNAME
+		                     , E.PAY_DATE
+				          FROM PURCHASE_CLASS_TBL A
+				          JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
+						  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
+						  JOIN JANDI_TBL D ON (B.EMAIL = D.EMAIL)
+				          JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
+				          <where>
+				           A.EMAIL = #{ email }
+						   AND A.STATUS = 'Y'
+						   <if test='searchCondition == "1"'>
+						       AND C.CATEGORY_NAME LIKE '%' || #{ selectCriteria.searchValue } || '%'    
+						   </if>
+						   <if test='searchCondition == "2"'>
+						       AND B.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%'
+						   </if>
+						   <if test='searchCondition == "3"'>
+						       AND D.NICKNAME LIKE '%' || #{ selectCriteria.searchValue } || '%'
+						   </if>
+				          </where>
+				         ORDER BY A.END_DATE DESC
+		               )V
+		       )V2
+         WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
+         
+     </select>
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectTakingTotalCount" resultType="_int" parameterType="HashMap">
+	    SELECT
+		       COUNT(*)
+		  FROM PURCHASE_CLASS_TBL A
+		  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
+		  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
+		  JOIN JANDI_TBL D ON (B.EMAIL = D.EMAIL)
+		   
+		   <where>
+		   A.EMAIL = #{ email }
+		   AND A.STATUS = 'Y'
+		   <if test='searchCondition == "1"'>
+		       AND C.CATEGORY_NAME LIKE '%' || #{ searchValue } || '%'    
+		   </if>
+		   <if test='searchCondition == "2"'>
+		       AND B.TITLE LIKE '%' || #{ searchValue } || '%'
+		   </if>
+		   <if test='searchCondition == "3"'>
+		       AND D.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		   </if>
+		   </where>
 	</select>
 
 	<select id="selectFinishTotalCount" resultType="_int" parameterType="HashMap">

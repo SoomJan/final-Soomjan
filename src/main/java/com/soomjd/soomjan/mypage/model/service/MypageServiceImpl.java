@@ -65,7 +65,7 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List<PurchaseClassDTO> selectTakingClass(Map<String, String> map) {
+	public List<PurchaseClassDTO> selectTakingClass(Map<String, Object> map) {
 		
 		List<PurchaseClassDTO> pClass = mapper.selectTakingClass(map);
 		
@@ -80,6 +80,11 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public List<PurchaseClassDTO> finishClass(SelectCriteria searchMap) {
 		return mapper.finishClass(searchMap);
+	}
+	
+	@Override
+	public int selectTakingTotalCount(Map<String, Object> searchMap) {
+		return mapper.selectTakingTotalCount(searchMap);
 	}
 	
 	

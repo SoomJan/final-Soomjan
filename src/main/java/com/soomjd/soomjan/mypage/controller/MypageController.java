@@ -159,18 +159,43 @@ public class MypageController {
 
 	// 수강중인
 	@GetMapping("taking")
-	public ModelAndView takingForm(ModelAndView mv, HttpSession session) {
+	public ModelAndView takingForm(ModelAndView mv, HttpSession session
+			, @RequestParam(required = false) String searchCondition
+			, @RequestParam(required = false) String searchValue
+			, @RequestParam(defaultValue = "1") int currentPage
+			) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
-		Map<String, String> map = new HashMap<>();
-		map.put("email", member.getEmail());
 		
-		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(map);
-		for(PurchaseClassDTO p : pClass) {
-			System.out.println(p);
-		}
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue",searchValue);
+		searchMap.put("email", member.getEmail());
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = mypageService.selectTakingTotalCount(searchMap);
+		System.out.println("totlaCount : " + totalCount);
+		
+		int limit = 1;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+		
+		if(searchCondition != null && !"".equals(searchCondition)) {
+	         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+	      } else {
+	         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+	      }
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+		
+		searchMap.put("selectCriteria", selectCriteria);
+		
+		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(searchMap);
+		
 		
 		mv.addObject("classList", pClass);
+		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("mypage/taking");
 
 		return mv;
