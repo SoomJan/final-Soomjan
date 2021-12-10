@@ -12,6 +12,11 @@
 	height: auto;
 }
 
+.common-sidebarsm {
+    width: 100%;
+    overflow: auto;
+}
+
 .introduce-detail {
 	width: 60%;
 	margin: 0 auto;
@@ -58,6 +63,7 @@
 	/* border: 1px solid black; */
 }
 
+
 /* 요청한 견적서가 없습니다 문구. */
 .nothing-comment {
 	position: relative;
@@ -83,6 +89,7 @@
 	border: #48a66b;
 	border-radius: 35px;
 	padding-top: 3px;
+	margin-top : -130px;
 }
 
 /* 견적서 작성하기 버튼div */
@@ -124,7 +131,7 @@
 #allrequest {
 	background-color: #e1f2e7;
 	border-radius: 15px;
-	height: 650px;
+	height: auto;
 	padding: 15px;
 }
 
@@ -144,7 +151,7 @@
 
 /* estimate에서 '견적서 작성하기'문구 */
 .estimate_title {
-	font-size: 20px;
+	font-size: 22px;
 	font-weight: bold;
 }
 
@@ -157,28 +164,42 @@
 
 /* 견적서 작성하기 표 제목 */
 .table_head {
-	width: 500px;
+	width: 20%;
 	text-align: left;
 	border: none;
-	padding: 15px;
+	padding-left : 50px;
 	border-radius: 25px;
+	
+}
+
+/* .estimate_table th {
+  border : 1px solid black; 
+} */
+
+.table_content1{
+	width: 90%;
 }
 
 /* 견적서 내용 작성하는 textarea */
 .content_area {
-	width: 500px;
+	width: 85%;
 	height: 600px;
 	text-align: left;
 	border: none;
-	padding: 30px;
+	padding: 15px;
 	border-radius: 25px;
+			float:left;
+			resize : none;
+	
 }
 
 .input_title {
-	width: 500px;
+	width: 85%;
 	border: none;
 	padding: 15px;
 	border-radius: 25px;
+	float:left;
+	
 }
 
 /* 카테고리 콤보박스 */
@@ -187,6 +208,7 @@
 	border: none;
 	padding: 15px;
 	border-radius: 25px;
+	float:left;
 }
 
 /* 채팅을 전체를 감싸는 div */
