@@ -388,6 +388,7 @@
 	 	 </if>
 	  </where>
 	</select>
+	
 	<update id="inactivemanager" parameterType="arraylist">
 		UPDATE MANAGER_TBL
 		   SET IS_DELETED = 'Y'

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +17,11 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
       rel="stylesheet"
     />
+    <link
+      href="${ pageContext.servletContext.contextPath }/resources/css/faq/notice.css"
+      rel="stylesheet"
+    />
+
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
 
     <script src="css/ie-emulation-modes-warning.js"></script>
@@ -82,22 +87,33 @@ pageEncoding="UTF-8"%>
     <!-- <div class="background"></div> -->
     <jsp:include page="../common/nav.jsp" />
 
-    <div class="faq-logo">
-      <div class="test">
-        <img
-          src="${ pageContext.servletContext.contextPath }/resources/images/faq-logo2.jpg"
-          alt="Logo2"
-        />
-      </div>
-    </div>
-
     <main>
       <div class="faq-1">
         <h1>공지사항</h1>
         <hr style="border: 2px solid black" />
       </div>
+     <table class="notice-table">
+          <thead>
+            <tr>
+              <th style="width:80%;">제목</th>
+              <th>날짜</th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach var="faq" items="${ faqList }">
+              <tr onclick="location.href='${pageContext.servletContext.contextPath}/manager/noticeDetail/${ faq.postCode }'">
+                <td class="text-left">${ faq.title }</td>
+                <td>${ faq.writeDate }</td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+         <input type="hidden" name="currentPage" value="1" />
+        <jsp:include page="../common/Paging.jsp" />
     </main>
-
-    <jsp:include page="../common/footer.jsp" />
+  
   </body>
+    <jsp:include page="../common/footer.jsp" />
+
+
 </html>

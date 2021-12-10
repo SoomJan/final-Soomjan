@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
             <div>
               <a href="FAQ.html"><p>회사 소개</p></a>
               <a href="FAQ.html"><p>블로그</p></a>
-              <a href="${ pageContext.servletContext.contextPath}/faq/faq"><p>공지사항</p></a>
+              <a href="${ pageContext.servletContext.contextPath}/faq/notice"><p>공지사항</p></a>
             </div>
           </div>
           <div>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soomjd.soomjan.faq.model.dao.FaqMapper">
+    
+   <resultMap id="faqResult" type="FaqDTO">
+    	<id column="POST_CODE" property="postCode"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="MNG_NO" property="mngNo"/>
+    </resultMap>
+    
+   <select id="selectFaqTotalCount" resultType="_int">
+	SELECT
+	       COUNT(*)
+	  FROM FAQ_TBL
+	WHERE IS_DELETED = 'N'	  
+	</select>
+    
+    	<select id="selectnotice" resultMap="faqResult">
+		SELECT
+       C.RNUM
+     , C.POST_CODE
+     , C.TITLE
+     , C.CONTENTS
+     , C.WRITE_DATE
+     , C.IS_DELETED
+     , C.MNG_NO
+  FROM (SELECT ROWNUM RNUM   
+             , B.POST_CODE
+             , B.TITLE
+             , B.CONTENTS
+             , B.WRITE_DATE
+             , B.IS_DELETED
+             , B.MNG_NO
+          FROM (SELECT  
+	               A.POST_CODE
+	             , A.TITLE
+	             , A.CONTENTS
+	             , A.WRITE_DATE
+	             , A.IS_DELETED
+	             , A.MNG_NO
+           	  FROM FAQ_TBL A
+              ORDER BY A.POST_CODE DESC
+              ) B
+               <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+              ) C
+              WHERE C.RNUM >= #{ startRow }	  
+	</select>
+    
+   
+    
+</mapper>

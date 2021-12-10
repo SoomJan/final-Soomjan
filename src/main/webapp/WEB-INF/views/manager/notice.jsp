@@ -106,8 +106,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
  			 	<div class="results"></div>
 			</div>
 			</form>
-      </div>
-      <br>
+     	 </div>
+     	 <br>	
       <jsp:include page="../common/Paging.jsp" />
       </div>
 
