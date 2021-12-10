@@ -172,6 +172,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </li>
           </a>
         </ul>
+         <c:if test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName }">
         <ul>
           <a href="${ pageContext.servletContext.contextPath }/manager/login">
             <li>
@@ -180,7 +181,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </li>
           </a>
         </ul>
-
+		</c:if>
+		
         <hr />
         <ul class="nav-sidebar-inline">
           <a href="#">
