@@ -149,7 +149,7 @@ pageEncoding="UTF-8"%>
       <div>
      	 <div class="checkmain">
       	<label id="l1">이름</label>
-    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"></div>
+    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"><span class="nameCheck" ></span></div>
     	</div>
     	<div class="nameCheck checkCheck"></div>
       </div>

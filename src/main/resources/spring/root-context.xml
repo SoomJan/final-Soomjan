@@ -75,6 +75,7 @@
    <mybatis-spring:scan base-package="com.soomjd.soomjan.classRoom.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.matching.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.mypage.model.dao"/>
+   <mybatis-spring:scan base-package="com.soomjd.soomjan.faq.model.dao"/>
    
 		
 </beans>
