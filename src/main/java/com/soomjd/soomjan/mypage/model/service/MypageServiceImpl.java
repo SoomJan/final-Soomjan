@@ -64,11 +64,17 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List<PurchaseClassDTO> selectTakingClass(Map<String, String> map) {
+	public List<PurchaseClassDTO> selectTakingClass(Map<String, Object> map) {
 		
 		List<PurchaseClassDTO> pClass = mapper.selectTakingClass(map);
 		
 		return pClass;
+	}
+
+	@Override
+	public int selectTakingTotalCount(Map<String, Object> searchMap) {
+		
+		return mapper.selectTakingTotalCount(searchMap);
 	}
 	
 	

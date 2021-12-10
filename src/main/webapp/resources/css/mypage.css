@@ -64,7 +64,7 @@
 
 .taking-title {text-align: center; font-size: 25px; font-weight: 600;}
 
-.prompt { width: 500px; }
+.prompt { width: 70%; }
 
 .unlist-text{text-align: center;}
 .takingtable {text-align: center !important;}
@@ -170,3 +170,4 @@ ul.tabs li.current{
 .date {float: right; font-size: 15px; position: relative; bottom: 45px;}
 .plusbtn {float: left;}
 .plus h4 {position: relative; padding-left: 5%; top: 10px;}
+

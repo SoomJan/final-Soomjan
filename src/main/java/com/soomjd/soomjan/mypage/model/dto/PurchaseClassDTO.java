@@ -3,6 +3,8 @@ package com.soomjd.soomjan.mypage.model.dto;
 import java.sql.Date;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
+import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 
 public class PurchaseClassDTO {
@@ -17,11 +19,13 @@ public class PurchaseClassDTO {
 	
 	private ClassDTO classDTO;
     private CategoryDTO categoryDTO;
+    private JandiDTO jandiDTO;
+    private PaymentDTO paymentDTO;
 	
 	public PurchaseClassDTO() {}
 
 	public PurchaseClassDTO(String email, int classCode, char status, int payCode, int classPurcCode, Date endDate,
-			String teacher, ClassDTO classDTO, CategoryDTO categoryDTO) {
+			String teacher, ClassDTO classDTO, CategoryDTO categoryDTO, JandiDTO jandiDTO, PaymentDTO paymentDTO) {
 		super();
 		this.email = email;
 		this.classCode = classCode;
@@ -32,6 +36,8 @@ public class PurchaseClassDTO {
 		this.teacher = teacher;
 		this.classDTO = classDTO;
 		this.categoryDTO = categoryDTO;
+		this.jandiDTO = jandiDTO;
+		this.paymentDTO = paymentDTO;
 	}
 
 	public String getEmail() {
@@ -106,14 +112,30 @@ public class PurchaseClassDTO {
 		this.categoryDTO = categoryDTO;
 	}
 
+	public JandiDTO getJandiDTO() {
+		return jandiDTO;
+	}
+
+	public void setJandiDTO(JandiDTO jandiDTO) {
+		this.jandiDTO = jandiDTO;
+	}
+
+	public PaymentDTO getPaymentDTO() {
+		return paymentDTO;
+	}
+
+	public void setPaymentDTO(PaymentDTO paymentDTO) {
+		this.paymentDTO = paymentDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "PurchaseClassDTO [email=" + email + ", classCode=" + classCode + ", status=" + status + ", payCode="
 				+ payCode + ", classPurcCode=" + classPurcCode + ", endDate=" + endDate + ", teacher=" + teacher
-				+ ", classDTO=" + classDTO + ", categoryDTO=" + categoryDTO + "]";
+				+ ", classDTO=" + classDTO + ", categoryDTO=" + categoryDTO + ", jandiDTO=" + jandiDTO + ", paymentDTO="
+				+ paymentDTO + "]";
 	}
 
 	
-
 	
 }

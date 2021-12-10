@@ -21,6 +21,8 @@ public interface MypageService {
 
 	List<ReportMemberDTO> selectReportMember(Map<String, String> map);
 
-	List<PurchaseClassDTO> selectTakingClass(Map<String, String> map);
+	List<PurchaseClassDTO> selectTakingClass(Map<String, Object> searchMap);
+
+	int selectTakingTotalCount(Map<String, Object> searchMap);
 
 }
