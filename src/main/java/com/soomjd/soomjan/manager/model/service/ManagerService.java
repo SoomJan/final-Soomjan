@@ -57,6 +57,6 @@ public interface ManagerService {
 	// 공지사항 갯수 조회 (페이징 처리)
 	int selectFaqTotalCount(Map<String, String> searchMap);
 
-	int inactiveManager(String[] str);
+	int inactiveManager(List<Integer> checkbox);
 
 }

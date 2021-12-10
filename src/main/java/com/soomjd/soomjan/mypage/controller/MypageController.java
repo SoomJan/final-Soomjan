@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.soomjd.soomjan.common.paging.Pagenation;
+import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
@@ -28,7 +30,7 @@ import com.soomjd.soomjan.mypage.model.service.MypageService;
 
 @Controller
 @RequestMapping("/mypage/*")
-@SessionAttributes("loginMember")
+@SessionAttributes({"loginMember", "selectCriteria"})
 public class MypageController {
 
 	private final MypageService mypageService;
@@ -185,8 +187,38 @@ public class MypageController {
 
 	// 수강완료
 	@GetMapping("finish")
-	public String finishForm() {
+	public String finishForm(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 
+		System.out.println("finishList");
+		Map<String, String> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue", searchValue);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = mypageService.selectFinishTotalCount(searchMap);
+		System.out.println("tatalCount : " + totalCount);
+		
+		int limit = 10;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+		
+		if(searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+		
+		List<PurchaseClassDTO> finishList = mypageService.finishClass(selectCriteria);
+		System.out.println("finishList : " + finishList);
+		
+		model.addAttribute("finishList", finishList);
+		model.addAttribute("selectCriteria", selectCriteria);
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+		
 		return "mypage/finish";
 	}
 

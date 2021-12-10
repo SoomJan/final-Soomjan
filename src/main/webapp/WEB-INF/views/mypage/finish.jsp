@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,29 +40,46 @@
         .finishtable {text-align: center !important; vertical-align: middle !important;}
         .finishbtn {position: relative; top: 30px;}
         #finish2modal {height: 150px; top: 50%; left: 47%;}
+        	.input-search {
+		width: 400px;
+    	position: relative;
+    	left: 18%;
+    	top: 10px;
+	}
+	
     </style>
 </head>
 <body>
-	 <jsp:include page="../common/nav.jsp" />
+    <jsp:include page="../common/nav.jsp" />
     <div class="common-sidebar">
       <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">수강완료 클래스</p>
         <br>
+       <form
+            action="${ pageContext.servletContext.contextPath }/mypage/finish"
+            method="get" id="searchform">
         <div class="dropsearch">
-		<select class="ui dropdown">
-  			<option value="">정렬순</option>
-  			<option value="1">최신클래스순</option>
-  			<option value="0">제목순</option>
-		</select>
-    <div class="ui search">
-      <div class="ui icon input">
-        <input class="prompt" type="text">
-        <i class="search icon"></i>
-      </div>
-      <div class="results"></div>
-    </div>
+          <input type="hidden" name="currentPage" value="1" />
+          <select
+            class="ui dropdown menu"
+            id="searchCondition"
+            name="searchCondition"
+          >
+            <option value="1">카테고리</option>
+            <option value="2">클래스제목</option>
+            <option value="3">강사닉네임</option>
+          </select>
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="${ sessionScope.selectCriteria.searchValue }">
+    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+    		<!-- 	<input type="button" id="searchbtn"> -->
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
   </div>
+  </form>
   <br><br><br><br><br>
   <div class="unlist-text">
   수강이 완료된 클래스가 없습니다.
@@ -70,7 +88,7 @@
 <table class="ui single line table finishtable">
   <thead>
     <tr>
-      <th>신청날짜</th>
+      <th>카테고리</th>
       <th>클래스제목</th>
       <th>강사닉네임</th>
       <th>수강완료</th>
@@ -78,29 +96,32 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+<!--     <tr>
       <td>2021.08.18</td>
       <td>나도 '메이플'</td>
       <td>메이플러버</td>
       <td>2021.10.18</td>
       <td><p class="complete">후기작성완료</p></td>
-    </tr>
+    </tr> -->
+    <c:forEach var="finishClass" items="${ requestScope.finishList }">
     <tr>
-      <td>2021.09.04</td>
-      <td>웹개발 야 너도 할 수 있어</td>
-      <td>믿으면될지어다</td>
-      <td>2021.11.04</td>
+      <td>${ finishClass.categoryDTO.categoryName }</td>
+      <td>${ finishClass.classDTO.title }</td>
+      <td>${ finishClass.classDTO.nickName }</td>
+      <td>${ finishClass.endDate }</td>
       <td><button class="ui button reviewbtn" onclick="reviewbtn(this);">수강후기작성</button></td>
     </tr>
-    <tr>
+    </c:forEach>
+<!--     <tr>
       <td>2021.07.19</td>
       <td>웹디자인 잘 가르칠 수 있는디</td>
       <td>천재디자인</td>
       <td>2021.11.19</td>
       <td><button class="ui button reviewbtn" onclick="reviewbtn(this);">수강후기작성</button></td>
-    </tr>
+    </tr> -->
   </tbody>
 </table>
+  <jsp:include page="../common/Paging.jsp" />
       </div>
     </div>
     <!-- 수강후기 모달창 -->
@@ -165,31 +186,31 @@
         }
         
          function obtn(item) {
-        	$("#reviewmodal").fadeOut();
-        	$("#finishmodal").fadeOut();
+           $("#reviewmodal").fadeOut();
+           $("#finishmodal").fadeOut();
             $('#finish2modal').show();
             $("#o2btn").click(function(){
-            	$("#finish2modal").fadeOut();
+               $("#finish2modal").fadeOut();
             });
           } 
          
          function xbtn(item) {
-        	 $("#reviewmodal").fadeOut();
-        	 $("#finishmodal").fadeOut();
+            $("#reviewmodal").fadeOut();
+            $("#finishmodal").fadeOut();
          }
          
 /*          $('.o2btn').on('click',function(){
         
-        	 $('#finish2modal').modal('hide');
+            $('#finish2modal').modal('hide');
          }; */
-    		
-    /*	function xbtn(item) {
-    		window.location.reload();
-    	 }  */
+          
+    /*   function xbtn(item) {
+          window.location.reload();
+        }  */
         
 /*     $(function(){
-    	 $('#o2btn').click(function(){
-    	 ('#finish2modal').hide();
+        $('#o2btn').click(function(){
+        ('#finish2modal').hide();
      });
    }); */
   

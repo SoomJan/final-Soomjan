@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
       rel="stylesheet"
     />
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/login.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/login.css?"
       rel="stylesheet"
     />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
@@ -40,14 +40,14 @@ pageEncoding="UTF-8"%>
     <main class="login">
       <table id="login-table">
         <tr>
-          <td>
-            <img
+          <td style="text-align: center;">
+              <img
               src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"
-              style="width: 100%"
+              style="width: 40%"
             />
           </td>
-          <td>
-            <h1 style="text-align: center">로그인</h1>
+          <td class="logintd">
+            <h1 style="text-align: left;">로그인</h1>
             <form
               action="${ pageContext.servletContext.contextPath }/member/login"
               method="post"
@@ -55,16 +55,18 @@ pageEncoding="UTF-8"%>
               <div class="login-box">
                 <input type="text" name="email" placeholder="이메일" />
                 <input type="password" name="password" placeholder="비밀번호" />
-
-                <input type="submit" value="로그인" />
+				<br><br>
+                <div class="loginbtnGroup">
+                <input type="submit" value="로그인" style="background-color: #91C788;" />
+                <input type="button" value="회원가입" onclick="location.href='${ pageContext.servletContext.contextPath }/member/terms'" style="background-color: lightgray;" />
+                </div>
                 <!--  <button>로그인</button> -->
-
-                <br /><br />
+                <br />
                 <div>
                   <a href="${ pageContext.servletContext.contextPath }/member/findEmail">이메일찾기</a>
                   &nbsp;&nbsp;&nbsp;
-                  <a href="${ pageContext.servletContext.contextPath }/member/terms">회원가입</a>
-                  &nbsp;&nbsp;&nbsp;
+<%--                   <a href="${ pageContext.servletContext.contextPath }/member/terms">회원가입</a>
+                  &nbsp;&nbsp;&nbsp; --%>
                   <a href="${ pageContext.servletContext.contextPath }/member/findPwd">비밀번호찾기</a>
                 </div>
               </div>
