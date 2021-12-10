@@ -15,7 +15,7 @@ public class ClassesDTO {
 	private int maxCount;
 	private String title;
 	private int price;
-	private char isDeleted;
+	private Character isDeleted;
 	private String filePath;
 	private String orgFilePath;
 	public ClassesDTO() {

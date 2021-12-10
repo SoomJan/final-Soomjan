@@ -2,7 +2,11 @@ package com.soomjd.soomjan.jandi.cotroller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.CreateAdDTO;
+import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiIntroDTO;
 import com.soomjd.soomjan.jandi.model.service.JandiService;
@@ -149,16 +156,189 @@ public class JandiController {
 	
 	
 	
+	
+	
+	
+	
+	
 	@GetMapping("/jandiCalc")
-	public String jandiCalc(){
+	public String jandiCalc(HttpSession session,Model model){
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		
+		model.addAttribute("account", jandi.getAccount());
+		model.addAttribute("accName", jandi.getAcc_name());
+		model.addAttribute("bank", jandi.getBank());
+		
+		
+		Date calStartDay = new Date();
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(calStartDay);
+		cal.add(Calendar.DATE, 7);
+		Date calEndDay=cal.getTime();
+		
+		model.addAttribute("calStartDay", calStartDay);
+		model.addAttribute("calEndDay", calEndDay);
+
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		
+		
+		Map<String,Object> key1 = new HashMap<>();	
+		key1.put("startDay", calStartDay);
+		key1.put("endDay",calEndDay);
+		key1.put("email", jandi.getEmail());
+		
+		
+		List<CalculateDTO> calList=jandiService.selectcalculateList(key1);
+		for(int i=0; i<calList.size();i++) {
+			Date date=calList.get(i).getCalDate();
+			try {
+				calList.get(i).setCalDate(sdf.parse(sdf.format(date))); 
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
 		
 		
 		
+		int feeSum=0;
+		
+		for(int i=0;i<calList.size();i++) {
+			
+			feeSum+=calList.get(i).getFees();
+		}
+		
+		
+		List<Integer> FullfeeList=new ArrayList<Integer>();
+		for(int i=0; i<calList.size(); i++) {
+			
+			FullfeeList.add(calList.get(i).getFees()*10);
+			
+		}
+		
+		List<Integer> RealFeeList=new ArrayList<Integer>();
+		for(int i=0; i<calList.size(); i++) {
+			
+			RealFeeList.add(calList.get(i).getFees()*9);
+			
+		}
+		
+		
+		
+		model.addAttribute("FullfeeList", FullfeeList);
+		model.addAttribute("RealFeeList", RealFeeList);
+		model.addAttribute("calList", calList);
+		model.addAttribute("fullFeeSum", feeSum*10);
+		model.addAttribute("feeSum", feeSum);
+		model.addAttribute("realFeeSum", feeSum*9);
+		
+		
+		
+		
+		
+		
+		List<CalAdDTO> adList= jandiService.selectcalAdList(key1);
+		for(int i=0; i<adList.size();i++) {
+			Date date=adList.get(i).getPayDate();
+			try {
+				adList.get(i).setPayDate(sdf.parse(sdf.format(date))); 
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		int adPaySum=0;
+		for(int i=0;i<adList.size();i++) {
+			
+			adPaySum+=adList.get(i).getPay();
+		}
+		
+		
+		model.addAttribute("adList", adList);
+		model.addAttribute("adFeeSum", adPaySum );
 		
 		
 		
 		return "jandi/mentorCalc";
 	}
+	
+	
+	@GetMapping("/jandiModifyCalc")
+	public String jandiCalc1(HttpSession session,Model model, 
+							@RequestParam(name="calStartDate", required=true) String calStartDate,  	
+							@RequestParam(name="calEndDate", required=true) String calEndDate) {
+		
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		
+		model.addAttribute("account", jandi.getAccount());
+		model.addAttribute("accName", jandi.getAcc_name());
+		model.addAttribute("bank", jandi.getBank());
+		
+		Date startDay=null;
+		Date endDay=null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		try {
+			startDay = sdf.parse(calStartDate);
+			endDay = sdf.parse(calEndDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		Map<String,Object> key1 = new HashMap<>();	
+		key1.put("startDay", startDay);
+		key1.put("endDay",endDay);
+		key1.put("email", jandi.getEmail());
+		
+		
+		List<CalculateDTO> calList=jandiService.selectcalculateList(key1);
+		for(int i=0; i<calList.size();i++) {
+			Date date=calList.get(i).getCalDate();
+			try {
+				calList.get(i).setCalDate(sdf.parse(sdf.format(date))); 
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		
+		model.addAttribute("calList", calList);
+		
+		List<CalAdDTO> adList= jandiService.selectcalAdList(key1);
+		for(int i=0; i<adList.size();i++) {
+			Date date=adList.get(i).getPayDate();
+			try {
+				adList.get(i).setPayDate(sdf.parse(sdf.format(date))); 
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		model.addAttribute("adList", adList);
+		
+		return "jandi/mentorCalc";
+	}
+	
+	
 	
 	// 매핑 주소와 동일한 jsp파일이 있는 경우 해당 jsp를 띄워준다.
 	@GetMapping("/createAd")
@@ -252,50 +432,82 @@ public class JandiController {
 		
 		}
 		
-		
-
-		
-		
-		
-		
-		
-		
-		
 		return "jandi/createAd";
 	}
 	
 	
 	
 	@GetMapping("/myAd")
-	public String myAd(HttpSession session){
+	public String myAd(HttpSession session, Model model){
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
 		
-		List<Integer> classesCodeList  =null;
+		List<Integer> classesCodeList  =new ArrayList<Integer>();
 		
 		for(int i=0; i<classes.size(); i++) {
 			
 			int classesCode = classes.get(i).getClassCode();
 			
-			classesCodeList  =new ArrayList<Integer>();
+			
 			
 			classesCodeList.add(classesCode);
 			
 			
 		}
+		System.out.println("classes : "+classes);
+		System.out.println("classesCodeList size : "+classesCodeList.size());
+
+		FullAdDTO myAd=null;
+		int classesCode=-1;
 		
+		if(classesCodeList.size()==0) {
+			model.addAttribute("message", "만들어진 클래스가 없습니다.");
+			return "jandi/failedPage";
+			
+		}else {
+			
+			for(int i=0;i<classesCodeList.size();i++) {
+				myAd= jandiService.selectAd(classesCodeList.get(i));
+				
+				if(myAd!=null) {
+					classesCode=i;
+					break;
+				}
+			}
+		}
 		
-		if(classesCodeList==null) {
-			
-			
+		System.out.println("myAd : "+myAd);
+		
+		if(myAd==null) {
+			model.addAttribute("message", "진행중인 광고가 없습니다");
+			return "jandi/failedPage";
 		}
 		
 		
 		
+		ClassesDTO adClass=classes.get(classesCode);
 		
 		
+		model.addAttribute("imagePath",myAd.getImagePath());
+		model.addAttribute("originImagePath", myAd.getOriginImagePath());
+		model.addAttribute("adContents",myAd.getAdContents());
+		model.addAttribute("className",adClass.getContents());
+		
+		
+		Date startDate= myAd.getStartDate();
+		
+		Date today= new Date();
+		
+		
+		long calDate=startDate.getTime() - today.getTime();
+		
+		long calDateDays =7- calDate/(24*60*60*1000);
+		
+		System.out.println(calDateDays);
+		
+		model.addAttribute("calDateDays",calDateDays);
 		
 		return "jandi/myAd";
 	}
