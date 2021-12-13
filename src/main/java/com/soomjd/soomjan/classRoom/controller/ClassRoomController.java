@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.async.StandardServletAsyncWebRequest;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
@@ -34,6 +38,7 @@ import com.soomjd.soomjan.common.fileWrapper.FileWrapper;
 import com.soomjd.soomjan.common.fileWrapper.JSchWrapper;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.sun.mail.iap.Response;
 
 @Controller
 @RequestMapping("/*/class/*")
@@ -100,27 +105,13 @@ public class ClassRoomController{
 		HashMap<String, Object> chatRoomMap = new HashMap<String, Object>();
 		chatRoomMap.put("classCode", classCode);
 		chatRoomMap.put("email", email);
-
-		model.addAttribute("chatRoomList", classRoomService.selectChatRoomList(chatRoomMap));
+		
+		List<Map<String, Object>> chatRoomList = classRoomService.selectChatRoomList(chatRoomMap);
+		System.out.println(chatRoomList);
+		
+		model.addAttribute("chatRoomList", chatRoomList);
 
 	}
-
-	/*
-	 * @GetMapping("classChat/{chatCode}") public String classChatEnter(Model
-	 * model, @PathVariable int chatCode) {
-	 * 
-	 * int classCode = (int) model.getAttribute("classCode"); String email =
-	 * ((ClassDTO) model.getAttribute("classDTO")).getEmail();
-	 * System.out.println(email);
-	 * 
-	 * HashMap<String, Object> chatRoomMap = new HashMap<String, Object>();
-	 * chatRoomMap.put("classCode", classCode); chatRoomMap.put("email", email);
-	 * 
-	 * model.addAttribute("chatRoomList",
-	 * classRoomService.selectChatRoomList(chatRoomMap));
-	 * 
-	 * return "jandi/class/chat"; }
-	 */
 
 	@PostMapping("createClass")
 	public String createClass(@RequestParam Map<String, Object> classMap, HttpSession session) {
@@ -433,6 +424,47 @@ public class ClassRoomController{
 			}
 		}
 		return "redirect:/jandi/class/classLearningBoard";
+	}
+	
+	@PostMapping("chatFileUpload")
+	public @ResponseBody Map<String, String> chatFileUpload(MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpServletResponse response ) {
+
+		// 파일 저장 객체(따로 뺌)
+		FileWrapper fileWrapper = new FileWrapper();
+		
+		MultipartFile file = multipartRequest.getFile("sendFile");
+		
+		// 파일 , 파라미터 확인
+		System.out.println("file : " + file.getOriginalFilename());
+
+		// 파일 경로 설정
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String dir = "/uploadFiles/chatFile/";
+		String filePath = root + dir;
+
+		// 파일명 변경처리
+		String originFileName = file.getOriginalFilename();
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+		Map<String, String> chatFileMap = null;
+		
+		// 파일 저장
+		if (fileWrapper.uploadSingleFile(file, savedName, filePath)) {
+
+			chatFileMap = new HashMap<String, String>();
+
+			chatFileMap.put("savedName", savedName);
+			chatFileMap.put("ext", ext);
+			chatFileMap.put("originFileName", originFileName);
+			
+			System.out.println("성공!");
+		} else {
+			
+		}
+		
+		return chatFileMap;
+		
 	}
 
 }

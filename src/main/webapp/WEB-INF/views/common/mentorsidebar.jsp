@@ -97,7 +97,7 @@ a {
 									<option value="${ category.CATEGORY_CODE }">${ category.CATEGORY_NAME }</option>
 								</c:forEach>
 							</select> <br>
-							<br> 클래스 제목 <input type="text" name="title" id="title"><br>
+							<br> 클래스 제목 <input type="text" name="title" id="classTitle"><br>
 							<br> 클래스 정원 <input type="number" name="maxCount" id="maxCount"> 명 <br>
 							<br> 클래스 가격 <input type="number" name="price" id="price"> 원
 						</div>
@@ -115,7 +115,7 @@ a {
 			$('#okBtn').click(function() {
 				if (confirm("한번 설정된 클래스의 설정은 변경할 수 없습니다. 생성하시겠습니까?")) {
 					let result = true;
-					if($('#title').val().length >= 300){
+					if($('#classTitle').val().length >= 300){
 						alert("제목은 300byte를 초과할 수 없습니다.");
 						$('#title').focus();
 						$('#title').val().substr(0, 300);

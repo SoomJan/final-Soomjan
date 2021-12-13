@@ -74,28 +74,15 @@ img {
 			console.log('${ requestScope.uploadMessage }');
 		}
 		
-		$('.inputStye').keyup(function(){
-			if($('.inputStye').val().length >= 10){
-				alert("300byte를 초과할 수 없습니다.");
-				$('.inputStye').val().substr(0, 10);
-				$('.inputStye').focus();
-			}
-		});
-		
-		$('#contents').keyup(function(){
-			if($('#contents').val().length >= 1500){
-				alert("1500byte를 초과할 수 없습니다.");
-				$('#contents').val().substr(0, 1500);
-				$('#contents').focus();
-			}
-		});
-		
 		let message = '${ requestScope.modifyMessage }';
 		console.log(message);
 		
 		if( message !== "" ){
 			alert(message);
 		}
+		
+		$('#titleCheck').html($('#title').val().length);
+		$('#contentsCheck').html($('#postContents').val().length);
 		
 	});
 	
@@ -111,21 +98,7 @@ img {
 	
 	function modifyPost(){
 		
-		let result = true;
-		
-		if($('.inputStye').val().length >= 10){
-			alert("300byte를 초과할 수 없습니다.");
-			$('.inputStye').val().substr(0, 10);
-			$('.inputStye').focus();
-			result = false;
-		}
-		if($('#contents').val().length >= 1500){
-			alert("1500byte를 초과할 수 없습니다.");
-			$('#contents').val().substr(0, 1500);
-			$('#contents').focus();
-			result = false;
-		}
-		if(result){
+		if(confirm("학습방 게시물 페이지를 변경하시겠습니까?")){
 			$('#postForm')
 				.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost")
 				.submit();
@@ -138,6 +111,18 @@ img {
 			$('#postForm')
 			.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/deleteLearnigPost")
 			.submit();
+		}
+	}
+	
+	function checkLength(inputItem, spanItem, maxLength){
+		let $item = $(inputItem);
+		spanItem.html($item.val().length);
+		
+		if($item.val().length > maxLength){
+			alert(maxLength + "자를 초과할 수 없습니다.");
+			$item.val($item.val().substr(0, (maxLength-1)));
+			$item.focus();
+			spanItem.html($item.val().length);
 		}
 	}
 	
@@ -159,22 +144,22 @@ img {
 				<form id="postForm" method="post">
 					<div>
 						<p style="font-size: x-large; font-weight: 700;" align="center">
+							<c:set var="postTitle" value="${ learnigPost.title }"/>
 							<c:if test="${ learnigPost.title == '제목 없음' }">
-								<input class="inputStyle" type="text" name="title" id="title" autofocus
-									value="" placeholder="제목을 입력해 주세요.">
+								<c:set var="postTitle" value=""></c:set>
 							</c:if>
-							<c:if test="${ learnigPost.title != '제목 없음' }">
-								<input class="inputStyle" type="text" name="title" id="title"
-									value="${ learnigPost.title }" placeholder="제목을 입력해 주세요.">
-							</c:if>
-						</p>
+							<input class="inputStyle" type="text" name="title" id="title"
+								value="${ postTitle }" placeholder="제목을 입력해 주세요."  onkeyup="checkLength(this, $('#titleCheck'), 100);">
+							<span>( <span id="titleCheck"></span> / 100자 )</span>
+						 </p>
 						<p align="right">작성일: ${ learnigPost.writeDate }</p>
 						<p align="right">최종 수정일: ${ learnigPost.reDate }</p>
 					</div>
 					<hr>
 					<div id="contents">
-						<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
-							placeholder="내용을 입력해 주세요.">${ learnigPost.contents }</textarea>
+						<p align="right">( <span id="contentsCheck"></span> / 500자 )</p>
+						<textarea class="areaStyle" id="postContents" name="contents" rows="10" wrap="hard"
+							placeholder="내용을 입력해 주세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);">${ learnigPost.contents }</textarea>
 					</div>
 					<input type="hidden" name="postCode" value="${ learnigPost.postCode }">
 				</form>

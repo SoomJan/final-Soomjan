@@ -88,14 +88,9 @@ img {
 	
 }
 </style>
+
 <script>
-	$(function(){
-		if('${ requestScope.uploadMessage }' != ''){
-			alert('${ requestScope.uploadMessage }');
-			console.log('${ requestScope.uploadMessage }');
-		}
-	});
-	
+
 	function checkValue(item){
 		if($(item).prev().val() != ""){
 			$(item).parent().submit();
@@ -122,6 +117,26 @@ img {
 			$(item).parent().submit();
 		}
 	}
+	
+	function checkLength(inputItem, spanItem, maxLength){
+		let $item = $(inputItem);
+		spanItem.html($item.val().length);
+		
+		if($item.val().length > maxLength){
+			alert(maxLength + "자를 초과할 수 없습니다.");
+			$item.val($item.val().substr(0, (maxLength-1)));
+			$item.focus();
+			spanItem.html($item.val().length);
+		}
+	}
+	
+	$(function(){
+		if('${ requestScope.uploadMessage }' != ''){
+			alert('${ requestScope.uploadMessage }');
+			console.log('${ requestScope.uploadMessage }');
+		}
+	});
+	
 	
 </script>
 <body>
@@ -171,10 +186,11 @@ img {
 				</iframe>
 				<div class="newMokcha">
 					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
-						목차 제목<br> 
-						<input type="text" class="inputSyle" name="mockchaName" placeholder="목차 제목을 입력하세요."> 
-						<br> 목차 내용<br>
-						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." ></textarea>
+						목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
+						<input type="text" class="inputSyle" name="mockchaName" 
+							placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);"> 
+						<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
+						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" ></textarea>
 						<button type="submit" class="btnStyle btn btn-primary" style="margin: 10px;">목차 추가하기</button>
 					</form>
 				</div>

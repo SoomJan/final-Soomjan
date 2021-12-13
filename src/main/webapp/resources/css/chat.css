@@ -72,6 +72,8 @@
 	color: white;
 	padding: 3px;
 	display: inline-block;
+	word-break:break-all;
+	word-wrap:break-word;
 }
 
 

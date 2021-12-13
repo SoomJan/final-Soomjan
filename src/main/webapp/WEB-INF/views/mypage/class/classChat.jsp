@@ -7,28 +7,21 @@
 
 <title>멘티 채팅</title>
 
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
-	rel="stylesheet" />
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-	rel="stylesheet" />
-<link
-	href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagemain.css"
-	rel="stylesheet" />
-
-<link rel="stylesheet" type="text/css"
-	href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-
-<link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css" rel="stylesheet" />
-</head>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css?" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+
+<script src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+
 <style>
 img {
 	width: 250px;
@@ -48,8 +41,33 @@ img {
 	color:darkred;
 	font-size: small;
 }
+.btn-primary {
+	width: 30px; 
+	height:30px;
+	color: #fff;
+	background-color: #91C788;
+	border-color: #91C788;
+	border-radius: 0.3rem;
+	border-style: none;
+}
+
+.btn-primary.active, .btn-primary.focus, .btn-primary:active,
+	.btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary
+	{
+	color: #fff;
+	background-color: #599A4E;
+	border-color: #599A4E;
+	
+}
+
+.btn-primary:hover {
+	background-color: #599A4E;
+	border-color: #599A4E;
+}
+
 
 </style>
+</head>
 
 <script src="http://125.132.252.115:3000/socket.io/socket.io.js"></script>
 <script>
@@ -97,7 +115,6 @@ img {
 			$('.chatRight').append($receiverBox);
 	};
 	
-		
 	$(function(){
 		
 		const email = "${ sessionScope.loginMember.email }";
@@ -113,7 +130,6 @@ img {
 		socket.emit("chat_info", chatInfo);
 		
 		console.log(chatInfo);
-		
 		
 		// 채팅 이력 불러오기
 		socket.on("receive_msg", function(chat_log){
@@ -133,11 +149,22 @@ img {
 			console.log(chatInfo.email);
 		});
 		
+		//키보드를  뗐을 떄
 		$('#msg').keyup(function(key){
 			if(key.keyCode==13 && !key.shiftKey){
 				// 시프트 엔터가 아닌 경우
 				$('#sendBtn').click();
 			}
+		});
+		
+		// 포커스  인
+		$('#msg').focusin(function(key){
+			socket.emit("typing", chatInfo);
+		});
+		
+		// 포커스  아웃
+		$('#msg').focusout(function(key){
+			socket.emit("non-typing", chatInfo);
 		});
 		
 		$('#sendBtn').click(function(){
@@ -172,6 +199,73 @@ img {
 			$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
 		});
 		
+		// 타이핑 중인지 띄우기
+		socket.on('typing', function(typingEmail){
+			if(typingEmail != email){
+				$('#typingDiv').css('display', 'block');
+			}
+		});
+		
+		// 타이핑 중인지 띄우기
+		socket.on('non-typing', function(typingEmail){
+			if(typingEmail != email){
+				$('#typingDiv').css('display', 'none');
+			}
+		});
+		
+		// 사진 전송
+		$('#sendImgBtn').click(function(){
+			if($("#sendFile").val() == ""){
+				alert("이미지를 선택해 주세요.");
+			}else{
+				
+				let formData = new FormData($('#chatFileForm')[0]);
+				formData.append("sendFile", $("#sendFile").val());
+	
+				$.ajax({
+					type: 'post',
+					enctype: 'multipart/form-data',
+					processData: false,
+					contentType: false,
+					cache: false,
+					url: "${pageContext.servletContext.contextPath }/mypage/class/chatFileUpload",
+					data: formData,
+					dataType : "json",
+					success: function(chatFileMap){
+						console.log(chatFileMap.savedName);
+						console.log(chatFileMap.ext);
+						console.log(chatFileMap.originFileName);
+						
+						let img_contents = "<img class='classImg'" 
+							+ "src='${ pageContext.servletContext.contextPath }/resources/uploadFiles/chatFile/"
+							+ chatFileMap.savedName + "'> <br>"
+							+ "<a href='${pageContext.servletContext.contextPath }/mypage/member/classChat/download?filePath=/uploadFiles/chatFile/"
+							+ chatFileMap.savedName + "&fileName=" + chatFileMap.originFileName + "'>이미지 저장</a>";
+						
+						let chat = {
+					            nickName: '${ sessionScope.jandi.nickName }',
+					            email: chatInfo.email,
+					            chat_contents: img_contents,
+					            chat_code: chatInfo.chat_code,
+					            chat_date: getFormatDate(new Date()),
+					           	is_file: 'Y'
+					        };
+							
+						console.log(chat);
+						
+						socket.emit("send_msg", chat);
+						$("#sendFile").val() == "";
+					},
+					error: function(err){
+						console.log(err);
+					}
+					
+				});	//ajax 끝
+				$('#closeBtn').click();
+			}	//if-else 끝
+			
+		});	//사진 전송 버튼 클릭 이벤트 끝
+		
 	});
 		
 </script>
@@ -191,13 +285,47 @@ img {
 				<div class="chatBottom">
 					<div style="width: 100%;">
 						<div class="chatRight" style="background: #e2fcea">
-						
+							
+						</div>
+						<div align="center" style="background: #e2fcea; border-left: 1px solid green; display:none;" id="typingDiv">
+							<i class="comment alternate icon"></i> 상대방이 메시지를 작성중입니다...
 						</div>
 						<div class="sendMessage" align="center">
+							<button class="btn-primary" style="float:left; padding:4px; margin-left:10px; " id="imgBtn" data-toggle="modal" data-target="#sendImgModal">
+								<i class="images outline icon"></i>
+							</button>
 							<textarea class="messageArea" id="msg"></textarea>
 							<input class="sendBtn" type="button" id="sendBtn" value="전송" >
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="sendImgModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">파일 첨부</h4>
+				</div>
+				<div class="modal-body" align="center">
+					<br>	
+					<form id="chatFileForm" method="post" enctype="multipart/form-data">
+						<input type="file" name="sendFile" id="sendFile" accept="image/*">
+					</form>
+					<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="closeBtn" class="btn btn-default btnBD"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="sendImgBtn">전송</button>
 				</div>
 			</div>
 		</div>

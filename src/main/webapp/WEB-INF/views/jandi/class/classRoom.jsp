@@ -52,7 +52,44 @@ $(function(){
 		alert('${ requestScope.uploadMessage }');
 		console.log('${ requestScope.uploadMessage }');
 	}
+	
+	let message = '${ requestScope.modifyMessage }';
+	if( message !== "" ){
+		alert(message);
+	}
+	
+	let tags = $('#tag').val().replace(" ","");
+	let tagArr = tags.split('#');
+	for(let tag of tagArr){
+		if(tag !== ""){
+			$('.tag').append(
+			"<div class='ui button' style='margin:3px;' data-position='top left'>"
+			+ tag + "</div>");
+		}
+	}
+	
+	$('#tagCheck').html($('#tag').val().length);
+	$('#contentsCheck').html($('#classContents').val().length);
+	
+	$('#modifyClassFormBtn').click(function(){
+		if(confirm("강의 소개 페이지를 수정하시겠습니까?")){
+			$('#modifyClassForm').submit();
+		}
+	});
+	
 });
+
+function checkLength(inputItem, spanItem, maxLength){
+	let $item = $(inputItem);
+	spanItem.html($item.val().length);
+	
+	if($item.val().length > maxLength){
+		alert(maxLength + "자를 초과할 수 없습니다.");
+		$item.val($item.val().substr(0, (maxLength-1)));
+		$item.focus();
+		spanItem.html($item.val().length);
+	}
+}
 </script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
@@ -66,10 +103,11 @@ $(function(){
 				<button type="button" class="btn btn-primary" style="float:right" id="modifyClassFormBtn">수정</button>
 				<h2>강의 소개</h2>
 				<hr>
+				<p style="float:right;">( <span id="contentsCheck"></span> / 500자 )</p>
 				<br>
 				<div id="contents">
-					<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
-						placeholder="강의 소개를 입력해주세요.">${ classDTO.contents }</textarea>
+					<textarea class="areaStyle" id="classContents" name="contents" rows="10" wrap="hard"
+						placeholder="강의 소개를 입력해주세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);">${ classDTO.contents }</textarea>
 				</div>
 				<br>
 				<br>
@@ -84,65 +122,9 @@ $(function(){
 				<div class="tag">
 				</div>
 				<br>
-				<p class="tagName">태그 수정</p>
+				<p class="tagName">태그 수정   ( <span id="tagCheck"></span> / 150자 ) </p>
 				<textarea class="areaStyle" name="tag" id="tag" rows="2" wrap="hard" 
-					placeholder="태그를 입력해주세요.">${ classDTO.tag }</textarea>
-				<script>
-					$(function(){
-						
-						let message = '${ requestScope.modifyMessage }';
-						if( message !== "" ){
-							alert(message);
-						}
-						
-						let tags = $('#tag').val().replace(" ","");
-						let tagArr = tags.split('#');
-						for(let tag of tagArr){
-							if(tag !== ""){
-								$('.tag').append(
-								"<div class='ui button' style='margin:3px;' data-position='top left'>"
-								+ tag + "</div>");
-							}
-						}
-						
-						$('#tag').keyup(function(){
-							if($('#tag').val().length >= 300){
-								alert("300byte를 초과할 수 없습니다.");
-								$('#tag').val().substr(0, 300);
-								$('#tag').focus();
-							}
-						});
-						
-						$('#contents').keyup(function(){
-							if($('#contents').val().length >= 1500){
-								alert("1500byte를 초과할 수 없습니다.");
-								$('#contents').val().substr(0, 1500);
-								$('#contents').focus();
-							}
-						});
-						
-						$('#modifyClassFormBtn').click(function(){
-							let result = true;
-							if($('#tag').val().length >= 300){
-								alert("300byte를 초과할 수 없습니다.");
-								$('#tag').val().substr(0, 1500);
-								$('#tag').focus();
-								result = false;
-							}
-							if($('#contents').val().length >= 1500){
-								alert("1500byte를 초과할 수 없습니다.");
-								$('#contents').val().substr(0, 1500);
-								$('#tag').focus();
-								result = false;
-							}
-							if(result){
-								$('#modifyClassForm').submit();
-							}
-						});
-						
-					});
-					
-				</script>
+					placeholder="태그를 입력해주세요." onkeyup="checkLength(this, $('#tagCheck'), 150);">${ classDTO.tag }</textarea>
 				<hr>
 				<h2>강의 목차</h2>
 				<c:forEach var="mokcha" items="${ mokchaList }">
