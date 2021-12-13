@@ -1,18 +1,25 @@
 @charset "UTF-8";
 
+*:focus {
+    outline: 0;
+}
+
 .mainPage{
 	
-    margin-top: 100px;
-	width: 1000px;
-	height: 1600px;
+    margin-top: 150px;
+	width: 855px;
+	height: 1070px;
 	border: 1px solid black;
+	margin-bottom: 300px;
 	
 }
 
 #title{
     text-align: center;
-    font-size: 40px;
+    font-size: 25px;
 }
+
+.checkbox {float: left;}
 
 .checkUnit{
 	display: inline-block;
@@ -20,16 +27,18 @@
 }
 
 .checkUnit>textarea{
-    width: 900px;
+    width: 815px;
     height: 180px;
     overflow-y: auto;
 }
 
 .comment{
     display: inline-block;
-    font-size: 25px;
-    width: 900px;
+    font-size: 15px;
+    width: 788px;
     text-decoration: underline;
+    padding-left: 2%;
+    vertical-align: -webkit-baseline-middle;
 }
 
 
@@ -39,16 +48,19 @@
     align-items: center;
     width: fit-content;
     margin: auto;
+    position: relative;
+    top: 5%;
 }
 
 .buttons>button{
-    border-radius: 2px;
-    background-color: green;
+    border-radius: 10px;
+    background-color: #91c788;
     text-align: center;
     font-size: 20px;
     width: 144px;
     height: 56px;
     color: white;
+    border: none;
 }
 
 .modal {
@@ -80,3 +92,5 @@
     text-align: center;
     background-color: #91c788 !important;
   }
+  
+  #event {height: 70px !important;}

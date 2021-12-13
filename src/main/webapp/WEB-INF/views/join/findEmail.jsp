@@ -9,11 +9,11 @@ pageEncoding="UTF-8"%>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>이메일 찾기</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
      <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-   <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css" rel="stylesheet" />
+   <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css?" rel="stylesheet" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -43,7 +43,7 @@ pageEncoding="UTF-8"%>
             <div class="thumbnail" id="ttext">이메일 찾기 </div>
         </div>
  
-        <br><br><br><br><br><br>
+        <br><br><br><br>
         <form method="post" id="submitForm">
         <div class="content">
             <div class="title">이름</div>
@@ -59,9 +59,9 @@ pageEncoding="UTF-8"%>
 
        
         <br><br><br><br><br><br><br><br>
-        <div style="align-items: center; width: fit-content; margin: auto;">
+        <div style="position: relative; left: 38%; bottom: 90px;" class="emailbtn">
             <button id="goFind" type="submit">확인</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="reset">취소</button>
         </div>
       </form>

@@ -16,13 +16,13 @@
     <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/nav.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/finish.css" rel="stylesheet" />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css?" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/finish.css?" rel="stylesheet" />
   <!--  <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagemain.css" rel="stylesheet"/> -->
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet"/>
 
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css?">
     <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>
@@ -38,15 +38,9 @@
         .finishtable thead tr th {border-bottom: none !important;} /* 수강완료 클래스 테이블 */
         .finishtable thead tr th {background-color: #E3FFEC !important;}
         .finishtable {text-align: center !important; vertical-align: middle !important;}
-        .finishbtn {position: relative; top: 30px;}
         #finish2modal {height: 150px; top: 50%; left: 47%;}
-        	.input-search {
-		width: 400px;
-    	position: relative;
-    	left: 18%;
-    	top: 10px;
-	}
-	
+        .jandi-search{margin-right: 12%;}
+        #searchbtn > img {position: relative; right: 70%;}
     </style>
 </head>
 <body>
@@ -70,7 +64,7 @@
             <option value="2">클래스제목</option>
             <option value="3">강사닉네임</option>
           </select>
-            <div class="ui search menti-search">
+            <div class="ui search jandi-search">
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="${ sessionScope.selectCriteria.searchValue }">
     			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
@@ -80,10 +74,12 @@
 			</div>
   </div>
   </form>
-  <br><br><br><br><br>
+  <br><br><br>
+ <c:if test="${ empty finishList[0].status }">
   <div class="unlist-text">
   수강이 완료된 클래스가 없습니다.
 </div>
+</c:if>
 <br><br><br>
 <table class="ui single line table finishtable">
   <thead>
@@ -92,24 +88,20 @@
       <th>클래스제목</th>
       <th>강사닉네임</th>
       <th>수강완료</th>
+      <th></th>
       <th>수강후기</th>
     </tr>
   </thead>
   <tbody>
-<!--     <tr>
-      <td>2021.08.18</td>
-      <td>나도 '메이플'</td>
-      <td>메이플러버</td>
-      <td>2021.10.18</td>
-      <td><p class="complete">후기작성완료</p></td>
-    </tr> -->
+
     <c:forEach var="finishClass" items="${ requestScope.finishList }">
     <tr>
       <td>${ finishClass.categoryDTO.categoryName }</td>
       <td>${ finishClass.classDTO.title }</td>
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
-      <td><button class="ui button reviewbtn" onclick="reviewbtn(this);">수강후기작성</button></td>
+      <td><input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }"></td>
+      <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
     </tr>
     </c:forEach>
 <!--     <tr>
@@ -125,37 +117,48 @@
       </div>
     </div>
     <!-- 수강후기 모달창 -->
+   <form action="${ pageContext.servletContext.contextPath }/mypage/finishReview" method="post" id="reviewform">
     <div class="ui small modal" id="reviewmodal">
-        <div class="header modal-header">나도 만들 수 있어 '메이플'</div>
+        <div class="header modal-header"><input type="text" class="t-title" style="border:none; text-align:center;"></div>
         <div class="content modal-content">
           <br>
           <table class="ui basic table modal-table">
             <thead>
               <tr>
+              	<th>카테고리</th>
                 <th>강사</th>
                 <th>수강기간</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>메이플러버</td>
-                <td>2021.06.10 - 2021. 11.10(5개월)</td>
+              	<td><input type="text" class="t-categoryName" name="t-categoryName" style="border:none; text-align:center;"></td>
+                <td><input type="text" class="t-nickName" name="t-nickName" style="border:none; text-align:center;"></td>
+                <td><input type="text" class="t-date" name="t-date" style="border:none; text-align:center;"></td>
+                <td><input type="hidden" name="classCode" id="classCode" value="${ finishClass.classCode }"></td>
               </tr>
             </tbody>
           </table>
             <br>
             <div class="review">
           <p class="review-title">클래스는 만족하셨나요?</p>
-         <div class="star"><i class="big star icon"></i> <i class="big star icon"></i> <i
-          class="big star icon"></i> <i class="big star icon"></i> <i
-          class="big star icon"></i></div> 
+            <p id="star"> <!-- 부모 -->
+			   <a href="#" value="1">★</a> <!-- 자식들-->
+			   <a href="#" value="2">★</a>
+			   <a href="#" value="3">★</a>
+			   <a href="#" value="4">★</a>
+			   <a href="#" value="5">★</a>
+ 			 <p>
         </div>
         <br><br>
-          <input type="textarea" class="review-text">
+          <input type="textarea" name="contents" class="review-text">
           <br><br><br>
-          <button class="ui button finishbtn" onclick="finishbtn(this);">작성완료</button>
+          <button class="ui button finishbtn">작성완료</button>
+          <button class="ui button exitbtn" style="width:100px;">취소</button>
         </div>
       </div>
+      </form>
       <!-- 수강후기 작성완료 버튼 모달창 -->
       <div class="ui mini modal" id="finishmodal">
         <div class="content finishcontent">
@@ -166,7 +169,6 @@
         </div>
         </div>
       </div>
-      
       <!-- 수강후기 완료 -->
       <div class="ui mini modal" id="finish2modal">
         <div class="content finishcontent">
@@ -177,15 +179,31 @@
         </div>
       </div>
       <script>
-         function reviewbtn(item) {
-          $('#reviewmodal').show();
-        } 
-
-        function finishbtn(item) {
-          $('#finishmodal').show();
-        }
+  		$(".reviewbtn").on('click', function(e){
+  			let $reviewbtn = e.target;
+  			let $tr = $($reviewbtn).parent().parent();
+  			console.log($tr);
+  			console.log($($tr).children().eq(0).html());
+  			console.log($($tr).children().eq(4).children().eq(0).val());
+   			$('.t-categoryName').val($($tr).children().eq(0).html()); 
+    		$('.t-title').val($($tr).children().eq(1).html());
+  			$('.t-nickName').val($($tr).children().eq(2).html());
+  			$('.t-date').val($($tr).children().eq(4).children().eq(0).val() + "-" + $($tr).children().eq(3).html());  
+  			$('#reviewmodal').fadeIn();
+  			e.preventDefault();
+  		});
         
-         function obtn(item) {
+        $(".finishbtn").on('click', function(e) {
+        	$('#finishmodal').fadeIn();
+        	e.preventDefault();
+        });
+        
+        $(".exitbtn").click(function(e){
+        	$('#reviewmodal').fadeOut();
+        	e.preventDefault();
+        });
+        
+    	function obtn(item) {
            $("#reviewmodal").fadeOut();
            $("#finishmodal").fadeOut();
             $('#finish2modal').show();
@@ -213,6 +231,12 @@
         ('#finish2modal').hide();
      });
    }); */
+   
+	   $('#star a').click(function(){ 
+			 $(this).parent().children("a").removeClass("on");    
+			 $(this).addClass("on").prevAll("a").addClass("on");
+			 console.log($(this).attr("value"));
+		 });
   
       </script>
 </body>

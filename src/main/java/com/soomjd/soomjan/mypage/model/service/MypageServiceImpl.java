@@ -78,15 +78,24 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List<PurchaseClassDTO> finishClass(SelectCriteria searchMap) {
-		return mapper.finishClass(searchMap);
+	public List<PurchaseClassDTO> finishClass(Map<String, Object> criteriaMap) {
+		return mapper.finishClass(criteriaMap);
 	}
 	
 	@Override
 	public int selectTakingTotalCount(Map<String, Object> searchMap) {
 		return mapper.selectTakingTotalCount(searchMap);
 	}
-	
-	
+
+	@Override
+	public List<PurchaseClassDTO> finishReviewClass(Map<String, Object> reviewMap) {
+		return mapper.selectReviewClass(reviewMap);
+	}
+
+	@Override
+	public List<PurchaseClassDTO> insertReviewContent(Map<String, Object> reviewMap) {
+		return mapper.insertReviewContent(reviewMap);
+	}
+
 
 }

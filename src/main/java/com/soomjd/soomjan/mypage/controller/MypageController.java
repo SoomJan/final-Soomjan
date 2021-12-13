@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
@@ -212,18 +214,21 @@ public class MypageController {
 
 	// 수강완료
 	@GetMapping("finish")
-	public String finishForm(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
-
+	public String finishForm(Model model, HttpSession session, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+				
 		System.out.println("finishList");
 		Map<String, String> searchMap = new HashMap<>();
 		searchMap.put("searchCondition", searchCondition);
 		searchMap.put("searchValue", searchValue);
+		searchMap.put("email", member.getEmail());
 		System.out.println("searchMap : " + searchMap);
 		
 		int totalCount = mypageService.selectFinishTotalCount(searchMap);
 		System.out.println("tatalCount : " + totalCount);
 		
-		int limit = 10;
+		int limit = 5;
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = null;
@@ -234,9 +239,13 @@ public class MypageController {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		}
 		
+		Map<String, Object> criteriaMap = new HashMap<String, Object>();
+		criteriaMap.put("selectCriteria", selectCriteria);
+		criteriaMap.put("email", member.getEmail());
+		
 		System.out.println("selectCriteria : " + selectCriteria);
 		
-		List<PurchaseClassDTO> finishList = mypageService.finishClass(selectCriteria);
+		List<PurchaseClassDTO> finishList = mypageService.finishClass(criteriaMap);
 		System.out.println("finishList : " + finishList);
 		
 		model.addAttribute("finishList", finishList);
@@ -246,7 +255,35 @@ public class MypageController {
 		
 		return "mypage/finish";
 	}
-
+	
+	// 수강후기 작성
+	@PostMapping("finishReview")
+	public String finishReview(HttpServletRequest request, HttpSession session, Model model, @RequestParam int classCode) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		String categoryName = request.getParameter("t-categoryName");
+		String nickName = request.getParameter("t-nickName");
+		String date = request.getParameter("t-date");
+		String contents = request.getParameter("contents");
+		
+		Map<String, Object> reviewMap = new HashMap<>();
+		reviewMap.put("email", member.getEmail());
+		reviewMap.put("classCode", classCode);
+		reviewMap.put("categoryName", categoryName);
+		reviewMap.put("nickName", nickName);
+		reviewMap.put("date", date);
+		reviewMap.put("contents", contents);
+		
+		System.out.println("reviewMap : " + reviewMap);
+		
+		List<PurchaseClassDTO> reviewContent = mypageService.insertReviewContent(reviewMap);
+		System.out.println("reviewContent : " + reviewContent);
+		
+		model.addAttribute("reviewContent", reviewContent);
+		
+		
+		return "redirect:/mypage/review";
+	}
 
 	// 찜한
 	@GetMapping("jjim")

@@ -6,7 +6,7 @@
 }
 
 .sidebar-content {
-  width: 69%;
+  width: 69% !important;
   /* overflow: auto; */
 /*  border: 1px solid pink; */
 }
@@ -58,7 +58,7 @@
 
 /* taking 페이지 */
 .dropsearch { margin: 10px auto; width: 90%; }
-.dropdown { border-radius: 15px; float: left;}
+.dropdown { border-radius: 15px; float: left; margin-left: 18%;}
 
 .search {border-radius: 15px; float: right;}
 

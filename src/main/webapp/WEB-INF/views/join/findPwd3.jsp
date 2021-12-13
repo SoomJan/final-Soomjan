@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
      <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-   <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css" rel="stylesheet" />
+   <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css?" rel="stylesheet" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
       rel="stylesheet"
