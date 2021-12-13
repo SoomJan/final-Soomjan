@@ -27,6 +27,7 @@ import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 import com.soomjd.soomjan.mypage.model.service.MypageService;
 
@@ -166,7 +167,50 @@ public class MypageController {
 			, @RequestParam(required = false) String searchValue
 			, @RequestParam(defaultValue = "1") int currentPage
 			) {
-		
+
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue",searchValue);
+		searchMap.put("email", member.getEmail());
+		System.out.println("searchMap : " + searchMap);
+
+		int totalCount = mypageService.selectTakingTotalCount(searchMap);
+		System.out.println("totlaCount : " + totalCount);
+
+		int limit = 1;
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+
+		if(searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
+
+		System.out.println("selectCriteria : " + selectCriteria);
+
+		searchMap.put("selectCriteria", selectCriteria);
+
+		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(searchMap);
+
+
+		mv.addObject("classList", pClass);
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("mypage/taking");
+
+		return mv;
+	}
+
+	// 찜한
+	@GetMapping("jjim")
+	public ModelAndView jjimForm(ModelAndView mv, HttpSession session
+			, @RequestParam(required = false) String searchCondition
+			, @RequestParam(required = false) String searchValue
+			, @RequestParam(defaultValue = "1") int currentPage) {
+
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		
 		Map<String, Object> searchMap = new HashMap<>();
@@ -174,33 +218,44 @@ public class MypageController {
 		searchMap.put("searchValue",searchValue);
 		searchMap.put("email", member.getEmail());
 		System.out.println("searchMap : " + searchMap);
-		
-		int totalCount = mypageService.selectTakingTotalCount(searchMap);
+
+		int totalCount = mypageService.selectJjimTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
 		
-		int limit = 1;
+		int limit = 5;
 		int buttonAmount = 5;
-		
+
 		SelectCriteria selectCriteria = null;
 		
 		if(searchCondition != null && !"".equals(searchCondition)) {
-	         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
-	      } else {
-	         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
-	      }
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
 		
 		System.out.println("selectCriteria : " + selectCriteria);
-		
+
 		searchMap.put("selectCriteria", selectCriteria);
 		
-		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(searchMap);
-		
-		
-		mv.addObject("classList", pClass);
+		List<JjimDTO> jjimList = mypageService.selectJjimClass(searchMap);
+
+		mv.addObject("jjimList", jjimList);
 		mv.addObject("selectCriteria", selectCriteria);
-		mv.setViewName("mypage/taking");
+		mv.setViewName("mypage/jjim");
 
 		return mv;
+	}
+	
+	@PostMapping("jjimCancel")
+	public void jjimCancel(HttpServletResponse response, @RequestParam("classNo") String classNo, HttpSession session) {
+		
+		System.out.println(classNo);
+		String[] classNo2 = classNo.split(",");
+		for(String c : classNo2) {
+			System.out.println(c);
+		}
+		
+		
 	}
 
 	// 구매내역
@@ -224,15 +279,15 @@ public class MypageController {
 		searchMap.put("searchValue", searchValue);
 		searchMap.put("email", member.getEmail());
 		System.out.println("searchMap : " + searchMap);
-		
+
 		int totalCount = mypageService.selectFinishTotalCount(searchMap);
 		System.out.println("tatalCount : " + totalCount);
 		
 		int limit = 5;
 		int buttonAmount = 5;
-		
+
 		SelectCriteria selectCriteria = null;
-		
+
 		if(searchCondition != null && !"".equals(searchCondition)) {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
 		} else {
@@ -247,12 +302,12 @@ public class MypageController {
 		
 		List<PurchaseClassDTO> finishList = mypageService.finishClass(criteriaMap);
 		System.out.println("finishList : " + finishList);
-		
+
 		model.addAttribute("finishList", finishList);
 		model.addAttribute("selectCriteria", selectCriteria);
-		
+
 		System.out.println("selectCriteria : " + selectCriteria);
-		
+
 		return "mypage/finish";
 	}
 	
@@ -285,12 +340,7 @@ public class MypageController {
 		return "redirect:/mypage/review";
 	}
 
-	// 찜한
-	@GetMapping("jjim")
-	public String jjimForm() {
 
-		return "mypage/jjim";
-	}
 
 	// 수강후기
 	@GetMapping("review")

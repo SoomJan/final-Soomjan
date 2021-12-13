@@ -60,11 +60,11 @@
 .dropsearch { margin: 10px auto; width: 90%; }
 .dropdown { border-radius: 15px; float: left; margin-left: 18%;}
 
-.search {border-radius: 15px; float: right;}
+.search {border-radius: 15px; float: left; margin-left: 20px; width: 60%;}
 
 .taking-title {text-align: center; font-size: 25px; font-weight: 600;}
 
-.prompt { width: 70%; }
+.prompt { width: 100%; }
 
 .unlist-text{text-align: center;}
 .takingtable {text-align: center !important;}

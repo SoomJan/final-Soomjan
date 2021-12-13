@@ -6,6 +6,7 @@ import java.util.Map;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 public interface MypageService {
@@ -34,6 +35,10 @@ public interface MypageService {
 
 	List<PurchaseClassDTO> insertReviewContent(Map<String, Object> reviewMap);
 
+
+	int selectJjimTotalCount(Map<String, Object> searchMap);
+
+	List<JjimDTO> selectJjimClass(Map<String, Object> searchMap);
 
 
 }

@@ -45,26 +45,25 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="dropsearch">
           <form action="${ pageContext.servletContext.contextPath }/mypage/taking" method="get">
             <input type="hidden" name="currentPage" value="1" />
-		<select class="ui dropdown" name="searchCondition">
+		<select class="ui dropdown" id="searchCondition" name="searchCondition">
   			<option value="1">카테고리</option>
   			<option value="2">클래스명</option>
   			<option value="3">잔디 닉네임</option>
 		</select>
     <div class="ui search">
       <div class="ui icon input">
-        <input class="prompt" type="search" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
-        <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+        <input class="prompt" type="search" name="searchValue" id="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
+        <button id="searchbtn" style="border: none; background:none; position: relative; right: 18%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
       </div>
       <div class="results"></div>
     </div>
   </div>
 </form>
-  <br><br>
+  <br>
   <!-- <div class="unlist-text">
   수강중인 클래스가 없습니다.<br>
   필터를 다시 적용하거나 새로운 클래스를 찾아보세요.
 </div> -->
-<br><br><br>
 <table class="ui single line table takingtable">
   <thead>
     <tr>
@@ -100,12 +99,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       /* 클릭 시 클래스 인포로 이동 */
       $(function() {
         $(".classInfo${ size + 1 }").click(function(){
-          location.href="${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ classList[size].classDTO.classCode }"
-
+          location.href="${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ classList[size].classDTO.classCode }";
         });
-
       });
-
     </script>
     
     </c:forEach>
