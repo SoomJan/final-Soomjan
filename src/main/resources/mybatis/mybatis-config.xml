@@ -20,6 +20,7 @@
   		<typeAlias type="com.soomjd.soomjan.member.model.dto.ReportMemberDTO" alias="ReportMemberDTO"/>
   		<typeAlias type="com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO" alias="PurchaseClassDTO"/>
   		<typeAlias type="com.soomjd.soomjan.classRoom.model.dto.PaymentDTO" alias="PaymentDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.mypage.model.dto.JjimDTO" alias="JjimDTO"/>
     </typeAliases>
     
   </configuration>

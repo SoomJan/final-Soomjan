@@ -87,6 +87,14 @@
         <association property="jandiDTO" resultMap="jandiResultMap"></association>
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
+    
+    <resultMap id="JjimResultSet" type="JjimDTO">
+        <result column="CLASS_CODE" property="classCode"/>
+        <result column="TITLE" property="title"/>
+        <result column="FILE_PATH" property="filePath"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="NICKNAME" property="nickName"/>
+    </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
 	    SELECT
@@ -142,37 +150,6 @@
 		   AND A.REP_YN = 'Y'
 	</select>
 	
-	<!-- <select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
-	    SELECT
-		       A.*
-		     , B.*
-		     , C.*
-		     , D.*
-             , E.*
-		  FROM PURCHASE_CLASS_TBL A
-		  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
-		  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
-		  JOIN JANDI_TBL D ON (B.EMAIL = D.EMAIL)
-          JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
-          
-          <where>
-		   A.EMAIL = #{ email }
-		   AND A.STATUS = 'Y'
-		   <if test='searchCondition == "1"'>
-		       AND C.CATEGORY_NAME LIKE '%' || #{ selectCriteria.searchValue } || '%'    
-		   </if>
-		   <if test='searchCondition == "2"'>
-		       AND B.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%'
-		   </if>
-		   <if test='searchCondition == "3"'>
-		       AND D.NICKNAME LIKE '%' || #{ selectCriteria.searchValue } || '%'
-		   </if>
-          </where>
-         ORDER BY A.END_DATE DESC
-               
-	</select> -->
-	
-	
 	<select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
 	
 	    SELECT V2.RNUM
@@ -181,6 +158,7 @@
 		                    , V.*
 		          FROM (SELECT A.END_DATE
 				             , B.TITLE
+				             , B.CLASS_CODE
 		                     , C.CATEGORY_NAME
 		                     , D.NICKNAME
 		                     , E.PAY_DATE
@@ -208,12 +186,6 @@
          WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
          
      </select>
-	
-	
-	
-	
-	
-	
 	
 	<select id="selectTakingTotalCount" resultType="_int" parameterType="HashMap">
 	    SELECT
@@ -298,6 +270,59 @@
 	        	]]>	
 		  	    ) F
 		  	    WHERE F.RNUM >= #{ startRow }	
+	</select>
+	
+	<select id="selectJjimTotalCount" resultType="_int" parameterType="HashMap">
+	    SELECT
+		       COUNT(*)
+		  FROM LIKED_CLASS_TBL A
+		  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
+		  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
+		  JOIN JANDI_TBL D ON (B.EMAIL = D.EMAIL)
+		  
+		   <where>
+		   A.EMAIL = #{ email }
+		   <if test='searchCondition == "1"'>
+		       AND C.CATEGORY_NAME LIKE '%' || #{ searchValue } || '%'    
+		   </if>
+		   <if test='searchCondition == "2"'>
+		       AND B.TITLE LIKE '%' || #{ searchValue } || '%'
+		   </if>
+		   <if test='searchCondition == "3"'>
+		       AND D.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		   </if>
+		   </where>
+	</select>
+	
+	<select id="selectJjimClass" resultMap="JjimResultSet" parameterType="HashMap">
+	    SELECT V2.RNUM
+             , V2.*
+		  FROM (SELECT ROWNUM RNUM
+		              , V.*
+				  FROM (SELECT A.CLASS_CODE
+						     , B.TITLE
+						     , B.FILE_PATH
+						     , C.CATEGORY_NAME
+						     , D.NICKNAME
+						  FROM LIKED_CLASS_TBL A
+						  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
+						  JOIN CATEGORY_TBL C ON (B.CATEGORY_CODE = C.CATEGORY_CODE)
+						  JOIN JANDI_TBL D ON (B.EMAIL = D.EMAIL)
+						  <where>
+				           A.EMAIL = #{ email }
+						   <if test='searchCondition == "1"'>
+						       AND C.CATEGORY_NAME LIKE '%' || #{ selectCriteria.searchValue } || '%'    
+						   </if>
+						   <if test='searchCondition == "2"'>
+						       AND B.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%'
+						   </if>
+						   <if test='searchCondition == "3"'>
+						       AND D.NICKNAME LIKE '%' || #{ selectCriteria.searchValue } || '%'
+						   </if>
+				          </where>
+				       )V
+			   )V2
+		WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
 	</select>
 
 </mapper>

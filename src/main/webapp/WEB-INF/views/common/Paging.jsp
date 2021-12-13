@@ -77,7 +77,7 @@
 		let searchText = "";
 		
 		if(${ !empty selectCriteria.searchCondition? true: false }) {
-			searchText += "&searchCondition=${ sselectCriteria.searchCondition }";
+			searchText += "&searchCondition=${ selectCriteria.searchCondition }";
 		}
 		
 		if(${ !empty selectCriteria.searchValue? true: false }) {
