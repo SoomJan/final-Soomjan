@@ -38,10 +38,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     p { font-weight: bold; font-size: 20px;}
 
     .myinfo{border-radius:10px; height:40px; width: 250px; font-size: 18px; padding-left: 15px; border: 2px solid #91C788 !important;} /* 내 정보 input */
-    .modify_myinfo {width: 90px; height: 40px; background-color: #e2e2e2; border: none; border-radius: 10px; position: relative; left: 35%;} /* 수정하기 버튼 */
-    #name {position: relative; left: 30%; text-align: left;} /* 내 정보 input */
+    .modify_myinfo {width: 90px; height: 40px; background-color: #e2e2e2; border: none; border-radius: 10px; position: relative; left: 45%;} /* 수정하기 버튼 */
+    #name {position: relative; left: 30%; text-align: left; margin-left: 2%;} /* 내 정보 input */
     #email {position: relative; left: 21%; text-align: left;}
-    #nickname { position: relative; left: 27%; text-align: left;}
+    #nickname { position: relative; left: 27%; text-align: left; margin-left: 2%;}
     #phone { position: relative; left: 21%; text-align: left;}
     .introduce-detail1 > div > label {position: relative; left: 15%;} /* 내 정보 그룹 */
     .warningtable thead tr th {border-bottom: none !important;} /* 누적경고 테이블 */   

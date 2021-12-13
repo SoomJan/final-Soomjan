@@ -12,11 +12,11 @@ pageEncoding="UTF-8"%>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>비밀번호 찾기</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
      <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-   <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css" rel="stylesheet" />
+   <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css?" rel="stylesheet" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -47,7 +47,7 @@ pageEncoding="UTF-8"%>
             <div class="thumbnail" id="ttext">비밀번호 찾기 </div>
         </div>
  
-        <br><br><br><br><br><br>
+        <br><br><br><br>
         <form method="post" id="submitForm"> 
         <div class="content">
             <div class="title">이름</div>
@@ -58,14 +58,14 @@ pageEncoding="UTF-8"%>
         
         <div class="content">
             <div class="title">이메일</div>
-            <input type="text" placeholder="이메일을 입력하세요" name="email" id="email">
+            <input type="text" placeholder="이메일을 입력하세요" name="email" id="email" style="margin-left: 47px;">
         </div>
 
        
         <br><br><br><br><br><br><br><br>
-        <div style="align-items: center; width: fit-content; margin: auto;">
+        <div style="position: relative; left: 35%; bottom: 90px;" class="pwdbtn">
             <button type="button" onclick="return finishbtn()">확인</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="reset">취소</button>
         </div>
       </form>

@@ -4,6 +4,10 @@
 iframe {
     display: none;
   }
+  
+  *:focus {
+    outline: 0;
+}
 
   #reviewmodal {
     height: 700px;
@@ -38,6 +42,7 @@ iframe {
     position: relative;
     /* left: 15%; */
     font-size: 20px;
+    margin-left: 18%;
   }
 
   .review-text {
@@ -76,4 +81,17 @@ iframe {
     top: 50%;
     left: 47%;
   }
+  
+  #star {
+      margin-right: 15%;
+  }
+  
+   #star a{
+   text-decoration: none;
+   color: gray;
+   font-size: 30px;
+  }
+  #star a.on{
+   color: red;
+  } 
  

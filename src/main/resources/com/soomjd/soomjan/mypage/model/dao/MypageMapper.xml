@@ -87,6 +87,16 @@
         <association property="jandiDTO" resultMap="jandiResultMap"></association>
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
+    
+    <resultMap id="reviewSet" type="ReviewDTO">
+    	<id column="REVIEW_CODE" property="rvCode"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="STAR" property="star"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="IS_DELETED" property="isDelete"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="EMAIL" property="email"/>
+    </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
 	    SELECT
@@ -242,6 +252,17 @@
 		SELECT
 		       COUNT(*)
 		  FROM PURCHASE_CLASS_TBL
+		 <where>
+			<if test="searchCondition == '1'">
+				C.CATEGORY_NAME LIKE '%' || #{ searchValue } || '%'
+			</if>
+			<if test='searchCondition == "2"'>
+				L.TITLE LIKE '%' || #{ searchValue } || '%'
+			</if>
+			<if test='searchCondition == "3"'>
+				J.NICKNAME '%' || #{ searchValue } || '%'
+			</if>
+		</where>
 	</select>
 
 	<select id="finishClass" resultMap="purchaseClassSet">
@@ -256,6 +277,7 @@
 		     , F.CATEGORY_NAME
 		     , F.TITLE
 		     , F.NICKNAME
+		     , F.PAY_DATE
 		  FROM (SELECT ROWNUM RNUM
 		  			, D.EMAIL
 		  			, D.CLASS_CODE
@@ -266,6 +288,7 @@
 		  			, D.CATEGORY_NAME
 		  			, D.TITLE
 		  			, D.NICKNAME
+		  			, D.PAY_DATE
 		  	      FROM (SELECT
 		  	      			  A.EMAIL
 		  	      			, A.CLASS_CODE
@@ -276,28 +299,70 @@
 		  	      			, C.CATEGORY_NAME
 		  	      			, L.TITLE
 		  	      			, J.NICKNAME
+		  	      			, E.PAY_DATE
 		  	      		  FROM PURCHASE_CLASS_TBL A
 		  	      		  JOIN CLASS_TBL L ON (L.CLASS_CODE = A.CLASS_CODE )
 		  	      		  JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)
 		  	      		  JOIN JANDI_TBL J ON (L.EMAIL = J.EMAIL )
+		  	      		  JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
+		  	      		 WHERE A.STATUS = 'N'
+		  	      		   AND A.EMAIL = #{ email }
 		  	      		  <where>
 		 	     		 	<if test="searchCondition == '1'">
-		 	     		 		C.CATEGORY_NAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 		C.CATEGORY_NAME LIKE '%' || #{ selectCriteria.searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "2"'>
-		 	     		 		L.TITLE LIKE '%' || #{ searchValue } || '%'
+		 	     		 		L.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "3"'>
-		 	     		 		J.NICKNAME '%' || #{ searchValue } || '%'
+		 	     		 		J.NICKNAME '%' || #{ selectCriteria.searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
 		  	               ORDER BY A.END_DATE DESC	
 		  	             ) D
 		  	   	<![CDATA[
-	        	WHERE ROWNUM <= #{ endRow } 
+	        	WHERE ROWNUM <= #{ selectCriteria.endRow } 
 	        	]]>	
 		  	    ) F
-		  	    WHERE F.RNUM >= #{ startRow }	
+		  	    WHERE F.RNUM >= #{ selectCriteria.startRow }	
 	</select>
+	
+	<select id="selectReviewClass" resultMap="purchaseClassSet" parameterType="HashMap">
+		SELECT
+		       C.EMAIL
+		     , C.END_DATE
+		     , L.TITLE
+		     , P.PAY_DATE
+		     , J.NICKNAME
+		     , T.CATEGORY_NAME
+		  JOIN CLASS_TBL L ON (L.CLASS_CODE = C.CLASS_CODE )
+		  JOIN PAYMENT_TBL E ON (C.PAY_CODE = E.PAY_CODE)
+		  JOIN JANDI_TBL J ON ( L.EMAIL = J.EMAIL )
+		  JOIN CATEGORY_TBL T ON (T.CATEGORY_CODE = L.CATEGORY_CODE)
+		 WHERE C.EMAIL = #{ email }
+	</select>
+	
+<!-- 	<insert id="insertReviewContent" parameterType="HashMap">
+		INSERT INTO CLASS_REVIEW_TBL
+		(
+			REVIEW_CODE
+		  , WRITE_DATE
+		  , STAR
+		  , CONTENTS
+		  , IS_DELETED
+		  , CLASS_CODE
+		  , EMAIL
+		)
+		VALUES
+		(
+			SEQ_CLASS_REVIEW_TBL.NEXTVAL
+		  , SYSDATE
+		  , 5
+		  , #{ contents }
+		  , 'N'
+		  , #{ classCode }
+		  , #{ email }
+		)
+	</insert> -->
 
 </mapper>

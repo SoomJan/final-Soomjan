@@ -1,10 +1,14 @@
 
 @charset "UTF-8";
 
+*:focus {
+    outline: 0;
+}
+
 .fullJoin{
     border: 1px solid black;
-    width: 930px;
-    height: 700px;
+    width: 800px;
+    height: 500px;
     align-items: center;
     margin-top: 200px;
 }
@@ -37,28 +41,31 @@
 }
 
 .title{
-    position: relative;
-    left: 15%;
     font-size: 20px;
-    width: 160px; 
-    text-align: left;
+    float: left;
+    margin-left: 5%;
+    margin-right: 2%;
+
 
 }
+
+#name { margin-left: 66px;}
 
 
 .content{
 
-    margin-right: 20px;
+    margin-left: 12%;
 }
 
 
 input{
-    position: relative;
-    left: 15%;
-    border: 3px solid green;
+    border: 3px solid #91c788;
     border-radius: 5px;
-    height: 40px;
-    width: 600px;
+    height: 50px;
+    width: 400px;
+    position: relative;
+    bottom: 14px;
+    padding-left: 2%;
 }
 
 .pwdCheck, .pwdCheck2 {
@@ -83,7 +90,7 @@ input{
 
 .modal {
     height: 150px;
-    top: 70%;
+    top: 35%;
     left: 40%;
   }
   
@@ -101,13 +108,29 @@ input{
   
   .btn {
     position: relative;
-    top: 40px;
+    top: 10px;
     background-color: white !important;
   }
   
   .contents {
     height: 150px;
     text-align: center;
+    background-color: #91c788 !important;
+  }
+  
+  .emailbtn > button {
+  	width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
+    background-color: #91c788 !important;
+  }
+  
+  .pwdbtn > button {
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
     background-color: #91c788 !important;
   }
   

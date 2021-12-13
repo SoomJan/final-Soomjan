@@ -38,10 +38,10 @@ pageEncoding="UTF-8"%>
     p {font-weight: bold; font-size: 20px;}
 
     .myinfo{border-radius:10px; height:40px; width: 250px; font-size: 18px; padding-left: 15px; background-color: #e2e2e2 !important;} /* 내 정보 input */
-    .modify_myinfo {width: 90px; height: 40px; background-color: #91C788; border: none; border-radius: 10px; position: relative; left: 40%;} /* 수정 버튼 */
-    #name {position: relative; left: 30%; text-align: left;} /* 내 정보 input */
+    .modify_myinfo {width: 90px; height: 40px; background-color: #91C788; border: none; border-radius: 10px; position: relative; left: 45%;} /* 수정 버튼 */
+    #name {position: relative; left: 30%; text-align: left; margin-left: 2%;} /* 내 정보 input */
     #email {position: relative; left: 21%; text-align: left;}
-    #nickName { position: relative; left: 27%; text-align: left;}
+    #nickName { position: relative; left: 27%; text-align: left; margin-left: 2%;}
     #dupCheck { position: relative; left: 125%; bottom:35px;}
     #phone, .phone { position: relative; left: 21%; text-align: left;}
     .phoneCheck { position: relative; left: 45%;}

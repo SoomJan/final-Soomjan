@@ -28,6 +28,10 @@ public interface MypageMapper {
 
 	int selectFinishTotalCount(Map<String, String> searchMap);
 
-	List<PurchaseClassDTO> finishClass(SelectCriteria searchMap);
+	List<PurchaseClassDTO> finishClass(Map<String, Object> criteriaMap);
+
+	List<PurchaseClassDTO> selectReviewClass(Map<String, Object> reviewMap);
+
+	List<PurchaseClassDTO> insertReviewContent(Map<String, Object> reviewMap);
 
 }
