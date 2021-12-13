@@ -22,6 +22,7 @@ import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
 import com.soomjd.soomjan.matching.model.service.MatchingService;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/matching/*")
@@ -43,8 +44,11 @@ public class MacthingSsackMainController {
 //	}
 	
 	// '매칭'메뉴 누르면 해당 아이디의 manteeMain으로 이동(select)
-	@GetMapping("/manteeMain/{memberEmail:.+}")
-	public String ManteeMain(Model model, @PathVariable("memberEmail") String memberEmail, @RequestParam(defaultValue = "1") int currentPage){
+	@GetMapping("/manteeMain")
+	public String ManteeMain(Model model, @RequestParam(defaultValue = "1") int currentPage){
+		
+		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
+		System.out.println("loginMember : "+ loginMember);
 		
 		int totalCount = matchingService.selecetMainTotal();
 		
@@ -53,10 +57,8 @@ public class MacthingSsackMainController {
 		
 		SelectCriteria selectCriteria = null;
 		
-		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, "email", loginMember.getEmail());
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("email", memberEmail);
 		
 		System.out.println(selectCriteria);
 		
@@ -65,7 +67,7 @@ public class MacthingSsackMainController {
 		model.addAttribute("estimateList",estimateList);
 		model.addAttribute("selectCriteria",selectCriteria);
 		
-		return "matching/matchingManteeMain";
+		return "/matching/matchingManteeMain";
 	}
 
 	// 카테고리db에서 정보 찾아오기

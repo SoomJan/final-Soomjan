@@ -47,6 +47,8 @@
 	text-align: center;
 }
 
+main { width: 90% !important;}
+.common-sidebar{ width: 80% !important;}
 
 </style>
 </head>

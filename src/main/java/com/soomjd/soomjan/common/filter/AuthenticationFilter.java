@@ -38,6 +38,7 @@ public class AuthenticationFilter implements Filter{
 		allPermitList.add("faq");
 		allPermitList.add("css");
 		allPermitList.add("resources");
+		allPermitList.add("matching");
 		
 		List<String> memberPermitList = new ArrayList<String>();
 		memberPermitList.add("mypage");
