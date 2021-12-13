@@ -54,7 +54,7 @@
 		  FROM CATEGORY_TBL
     </select>
     
-    <select id="selectEstimate" resultMap="estimateList" >
+    <select id="selectEstimate" resultMap="estimateList">
         SELECT
     		   C.RNUM
     		 , C.ESTIMATE_CODE
@@ -69,6 +69,7 @@
 		    	   , A.TITLE
 		    	   , A.IS_MATCHED
 		    	   FROM ESTIMATE_TBL A
+		    	   WHERE A.EMAIL = #{ searchValue }
                    ORDER BY A.ESTIMATE_CODE DESC
                    )B 
                    <![CDATA[
@@ -76,6 +77,7 @@
 	        	]]>	
               ) C
               WHERE C.RNUM >= #{ startRow }
+                
                    
     
     </select>
