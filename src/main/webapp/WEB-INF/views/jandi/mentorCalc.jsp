@@ -94,7 +94,7 @@ table{
 			<br><br>
 			<form action="${ pageContext.servletContext.contextPath }/jandi/jandiModifyCalc" method="get">
 				<div class="title-div">
-					<h3>정산 내역</h3>
+					<h3>정산 내역 : ${ requestScope.calStartDay }  -  ${ requestScope.calEndDay }</h3>
 					<div style="float:right;">
 						<input type="date" id="calStartDate" name="calStartDate" value="${ requestScope.calStartDay }"> ~ <input type="date" id="calEndDate" name="calEndDate" value="${ requestScope.calEndDay }">
 						<button type="submit" id="calBtn" style="border:none; background: none; padding:5px; font-size: 15px;"><b>조회</b></button>
@@ -112,12 +112,12 @@ table{
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="cal" items="${ requestScope.calList }">
+							<c:forEach var="feeSet" items="${ requestScope.feeSetList }">
 								<tr>
-									<td>${ cal.calDate }</td>
-									<td>${ cal.fees }*10</td>
-									<td>${ cal.fees }</td>
-									<td>${ cal.fees }*9</td>
+									<td>${ feeSet.calDate }</td>
+									<td>${ feeSet.fullFee }</td>
+									<td>${ feeSet.fees }</td>
+									<td>${ feeSet.realFeeSet }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -148,16 +148,17 @@ table{
 							<th width="20">정산 금액(원)</th>
 						</tr>
 					</thead>
-					<c:forEach var="ad" items="${ requestScope.adList }">
-						<tbody>
-							<tr>
-								<td>${ ad.payDate }</td>
-								<td>${ ad.className }</td>
-								<td>${ ad.pay }</td>
-							</tr>
-						</tbody>
-					</c:forEach>
-	
+					<tbody>
+						<c:forEach var="ad" items="${ requestScope.adList }">
+							
+								<tr>
+									<td>${ ad.payDate }</td>
+									<td>${ ad.className }</td>
+									<td>${ ad.pay }</td>
+								</tr>
+							
+						</c:forEach>
+					</tbody>
 					<tfoot>
 						<tr>
 							<th>총 합계</th>

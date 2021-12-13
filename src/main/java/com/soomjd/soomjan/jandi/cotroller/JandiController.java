@@ -159,7 +159,7 @@ public class JandiController {
 	
 	
 	
-	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@GetMapping("/jandiCalc")
 	public String jandiCalc(HttpSession session,Model model){
@@ -176,13 +176,16 @@ public class JandiController {
 		cal.setTime(calStartDay);
 		cal.add(Calendar.DATE, 7);
 		Date calEndDay=cal.getTime();
-		
-		model.addAttribute("calStartDay", calStartDay);
-		model.addAttribute("calEndDay", calEndDay);
 
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
+	
+		model.addAttribute("calStartDay", sdf.format(calStartDay));
+		model.addAttribute("calEndDay",  sdf.format(calEndDay));
+
+
 		
 		Map<String,Object> key1 = new HashMap<>();	
 		key1.put("startDay", calStartDay);
@@ -213,24 +216,28 @@ public class JandiController {
 		}
 		
 		
-		List<Integer> FullfeeList=new ArrayList<Integer>();
-		for(int i=0; i<calList.size(); i++) {
+
+		
+		
+		
+		List<Map<String,Object>> feeSetList = new ArrayList<>();
+		
+		for(int i=0;i<calList.size();i++) {
 			
-			FullfeeList.add(calList.get(i).getFees()*10);
+			
+			Map<String, Object> feeSet = new HashMap<String, Object>();
+			feeSet.put("calDate", sdf.format( calList.get(i).getCalDate()));
+			feeSet.put("fullFee",calList.get(i).getFees()*10);
+			feeSet.put("fees", calList.get(i).getFees());
+			feeSet.put("realFeeSet",calList.get(i).getFees()*9);
+			
+			feeSetList.add(feeSet);
 			
 		}
 		
-		List<Integer> RealFeeList=new ArrayList<Integer>();
-		for(int i=0; i<calList.size(); i++) {
-			
-			RealFeeList.add(calList.get(i).getFees()*9);
-			
-		}
+
 		
-		
-		
-		model.addAttribute("FullfeeList", FullfeeList);
-		model.addAttribute("RealFeeList", RealFeeList);
+		model.addAttribute("feeSetList", feeSetList);
 		model.addAttribute("calList", calList);
 		model.addAttribute("fullFeeSum", feeSum*10);
 		model.addAttribute("feeSum", feeSum);
@@ -262,14 +269,14 @@ public class JandiController {
 		
 		
 		model.addAttribute("adList", adList);
-		model.addAttribute("adFeeSum", adPaySum );
+		model.addAttribute("adPaySum", adPaySum );
 		
 		
 		
 		return "jandi/mentorCalc";
 	}
 	
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@GetMapping("/jandiModifyCalc")
 	public String jandiCalc1(HttpSession session,Model model, 
 							@RequestParam(name="calStartDate", required=true) String calStartDate,  	
@@ -297,6 +304,9 @@ public class JandiController {
 		
 		
 		
+		model.addAttribute("calStartDay", sdf.format(startDay));
+		model.addAttribute("calEndDay",  sdf.format(endDay));
+
 		
 		
 		Map<String,Object> key1 = new HashMap<>();	
@@ -319,7 +329,46 @@ public class JandiController {
 		}
 		
 		
+		
+		int feeSum=0;
+		
+		for(int i=0;i<calList.size();i++) {
+			
+			feeSum+=calList.get(i).getFees();
+		}
+		
+		
+
+		
+		
+		
+		List<Map<String,Object>> feeSetList = new ArrayList<>();
+		
+		for(int i=0;i<calList.size();i++) {
+			
+			
+			Map<String, Object> feeSet = new HashMap<String, Object>();
+			feeSet.put("calDate", sdf.format( calList.get(i).getCalDate()));
+			feeSet.put("fullFee",calList.get(i).getFees()*10);
+			feeSet.put("fees", calList.get(i).getFees());
+			feeSet.put("realFeeSet",calList.get(i).getFees()*9);
+			
+			feeSetList.add(feeSet);
+			
+		}
+		
+
+		
+		model.addAttribute("feeSetList", feeSetList);
 		model.addAttribute("calList", calList);
+		model.addAttribute("fullFeeSum", feeSum*10);
+		model.addAttribute("feeSum", feeSum);
+		model.addAttribute("realFeeSum", feeSum*9);
+		
+		
+		
+		
+		
 		
 		List<CalAdDTO> adList= jandiService.selectcalAdList(key1);
 		for(int i=0; i<adList.size();i++) {
@@ -333,7 +382,18 @@ public class JandiController {
 			
 			
 		}
+		
+		int adPaySum=0;
+		for(int i=0;i<adList.size();i++) {
+			
+			adPaySum+=adList.get(i).getPay();
+		}
+		
+		
 		model.addAttribute("adList", adList);
+		model.addAttribute("adPaySum", adPaySum );
+		
+		
 		
 		return "jandi/mentorCalc";
 	}
@@ -360,6 +420,10 @@ public class JandiController {
 		
 		return "jandi/createAd";
 	}
+	
+	
+	
+	
 	
 	@PostMapping("/createAd")
 	public String createAd(@ModelAttribute CreateAdDTO ads
