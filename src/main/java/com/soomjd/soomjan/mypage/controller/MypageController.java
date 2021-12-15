@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 import com.soomjd.soomjan.mypage.model.dto.ReviewDTO;
@@ -249,20 +249,70 @@ public class MypageController {
 	}
 
 	@PostMapping("jjimCancel")
-	public void jjimCancel(HttpServletResponse response, @RequestParam("classNo") String classNo, HttpSession session) {
-
+	public void jjimCancel(HttpServletResponse response, @RequestParam("classNo") String classNo, HttpSession session) throws IOException {
+		
 		System.out.println(classNo);
+        List<String> classNoList = new ArrayList<>();
 		String[] classNo2 = classNo.split(",");
 		for (String c : classNo2) {
 			System.out.println(c);
+			
+			classNoList.add(c);
 		}
-
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("email", member.getEmail());
+		map.put("classNoList", classNoList);
+		
+	    int jjimCancel = mypageService.jjimCancel(map);
+		System.out.println("삭제된 행 갯수 : " + jjimCancel);
+		
+		if(jjimCancel == classNoList.size()) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
 	}
 
 	// 구매내역
 	@GetMapping("buy")
-	public ModelAndView buyForm(ModelAndView mv) {
+	public ModelAndView buyForm(ModelAndView mv, HttpSession session
+			, @RequestParam(required = false) String searchCondition
+			, @RequestParam(required = false) String searchValue
+			, @RequestParam(defaultValue = "1") int currentPage) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue",searchValue);
+		searchMap.put("email", member.getEmail());
+		System.out.println("searchMap : " + searchMap);
 
+		int totalCount = mypageService.selectBuyTotalCount(searchMap);
+		System.out.println("totlaCount : " + totalCount);
+		
+		int limit = 5;
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = null;
+		
+		if(searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+
+		searchMap.put("selectCriteria", selectCriteria);
+		
+		List<BuyDTO> buyList = mypageService.selectBuyList(searchMap);
+		
+		mv.addObject("buyList", buyList);
+		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("mypage/buy");
 
 		return mv;

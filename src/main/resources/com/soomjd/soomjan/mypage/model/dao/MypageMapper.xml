@@ -88,7 +88,7 @@
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
     
-   <!--  <resultMap id="reviewSet" type="ReviewDTO">
+    <resultMap id="reviewSet" type="ReviewDTO">
     	<id column="REVIEW_CODE" property="rvCode"/>
     	<result column="WRITE_DATE" property="writeDate"/>
     	<result column="STAR" property="star"/>
@@ -96,7 +96,7 @@
     	<result column="IS_DELETED" property="isDelete"/>
     	<result column="CLASS_CODE" property="classCode"/>
     	<result column="EMAIL" property="email"/>
-   	</resultMap> -->
+   	</resultMap>
    	
     <resultMap id="JjimResultSet" type="JjimDTO">
         <result column="CLASS_CODE" property="classCode"/>
@@ -104,6 +104,15 @@
         <result column="FILE_PATH" property="filePath"/>
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="NICKNAME" property="nickName"/>
+    </resultMap>
+    
+    <resultMap id="buyResultSet" type="BuyDTO">
+        <result column="CLASS_CODE" property="classCode"/>
+        <result column="TITLE" property="title"/>
+        <result column="FILE_PATH" property="filePath"/>
+        <result column="NICKNAME" property="nickName"/>
+        <result column="PAY_DATE" property="payDate"/>
+        <result column="PAY" property="pay"/>
     </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
@@ -392,6 +401,65 @@
 				       )V
 			   )V2
 		WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
+	</select>
+	
+	<delete id="jjimCancel" parameterType="HashMap">
+        DELETE
+          FROM LIKED_CLASS_TBL A
+         WHERE A.EMAIL = #{ email }
+           AND A.CLASS_CODE IN
+          
+          <foreach collection="classNoList" item="noList" open="(" separator=", " close=")">
+          #{ noList }
+          </foreach>
+	</delete>
+	
+	<select id="selectBuyTotalCount" resultType="_int" parameterType="HashMap">
+	    SELECT 
+		       COUNT(*)
+		  FROM PURCHASE_CLASS_TBL A
+		  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
+		  JOIN JANDI_TBL C ON (B.EMAIL = C.EMAIL)
+		  
+		  <where>
+		   A.EMAIL = #{ email }
+		   <if test='searchCondition == "1"'>
+		       AND B.TITLE LIKE '%' || #{ searchValue } || '%'    
+		   </if>
+		   <if test='searchCondition == "2"'>
+		       AND C.NICKNAME LIKE '%' || #{ searchValue } || '%'    
+		   </if>
+		   </where>
+	</select>
+	
+	<select id="selectBuyList" resultMap="buyResultSet" parameterType="HashMap">
+	    SELECT V2.RNUM
+		     , V2.*
+		  FROM ( SELECT ROWNUM RNUM
+		              , V.*
+		           FROM ( SELECT A.CLASS_CODE
+		                       , B.TITLE
+						       , B.FILE_PATH
+						       , C.NICKNAME
+						       , D.PAY_DATE 
+						       , D.PAY 
+						    FROM PURCHASE_CLASS_TBL A
+					    	JOIN CLASS_TBL B ON(A.CLASS_CODE = B.CLASS_CODE)
+						    JOIN JANDI_TBL C ON(B.EMAIL = C.EMAIL)
+						    JOIN PAYMENT_TBL D ON(A.PAY_CODE = D.PAY_CODE)
+						    <where>
+						    A.EMAIL = #{ email }
+						    <if test='searchCondition == "1"'>
+						        AND B.TITLE LIKE '%' || #{ searchValue } || '%'    
+						    </if>
+						    <if test='searchCondition == "2"'>
+						       AND C.NICKNAME LIKE '%' || #{ searchValue } || '%'    
+						   </if>
+						    </where>
+						    ORDER BY D.PAY_DATE DESC 
+		                )V
+		       )V2
+		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
 	</select>
 
 </mapper>
