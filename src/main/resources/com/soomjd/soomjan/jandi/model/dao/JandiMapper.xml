@@ -182,8 +182,7 @@
 			 , ORG_IMG_PATH
 			 , IS_ADVERTISED
 		  FROM AD_TBL
-		 WHERE CLASS_CODE=#{ classesCode } 		 
-		   AND IS_ADVERTISED = 'Y'
+		 WHERE CLASS_CODE=#{ classesCode } 
 	</select>
 	
 	

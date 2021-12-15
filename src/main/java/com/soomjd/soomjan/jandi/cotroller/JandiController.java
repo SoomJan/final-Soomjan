@@ -499,7 +499,7 @@ public class JandiController {
 		return "jandi/createAd";
 	}
 	
-	
+	///////////////////////////////////////////////////////////////////////////////////
 	
 	@GetMapping("/myAd")
 	public String myAd(HttpSession session, Model model){
@@ -521,10 +521,12 @@ public class JandiController {
 			
 		}
 		System.out.println("classes : "+classes);
+		System.out.println("classesCodeList : "+classesCodeList);
 		System.out.println("classesCodeList size : "+classesCodeList.size());
-
+		
+		
 		FullAdDTO myAd=null;
-		int classesCode=-1;
+		
 		
 		if(classesCodeList.size()==0) {
 			model.addAttribute("message", "만들어진 클래스가 없습니다.");
@@ -532,17 +534,38 @@ public class JandiController {
 			
 		}else {
 			
+			String resultValue="N";
+			
 			for(int i=0;i<classesCodeList.size();i++) {
-				myAd= jandiService.selectAd(classesCodeList.get(i));
+				FullAdDTO ad= jandiService.selectAd(classesCodeList.get(i));
 				
-				if(myAd!=null) {
-					classesCode=i;
-					break;
+				if(ad!=null) {
+					System.out.println(ad);
+					
+					Date startDate= ad.getStartDate();
+					
+					Date today= new Date();
+					
+					
+					long calDate=today.getTime()-startDate.getTime() ;
+					
+					long calDateDays =7- calDate/(24*60*60*1000);
+					
+					if(calDateDays>=0 && 7>=calDateDays) {
+						myAd = ad;
+						resultValue="Y";
+						model.addAttribute("calDateDays",calDateDays);
+						
+						break;
+					}	
 				}
+
+
 			}
+			
+			model.addAttribute("resultValue", resultValue);
 		}
 		
-		System.out.println("myAd : "+myAd);
 		
 		if(myAd==null) {
 			model.addAttribute("message", "진행중인 광고가 없습니다");
@@ -551,7 +574,7 @@ public class JandiController {
 		
 		
 		
-		ClassesDTO adClass=classes.get(classesCode);
+		ClassesDTO adClass=classes.get(myAd.getClassCode());
 		
 		
 		model.addAttribute("imagePath",myAd.getImagePath());
@@ -560,18 +583,30 @@ public class JandiController {
 		model.addAttribute("className",adClass.getContents());
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
 		Date startDate= myAd.getStartDate();
 		
 		Date today= new Date();
 		
 		
-		long calDate=startDate.getTime() - today.getTime();
+		long calDate=today.getTime()-startDate.getTime() ;
 		
 		long calDateDays =7- calDate/(24*60*60*1000);
 		
 		System.out.println(calDateDays);
 		
 		model.addAttribute("calDateDays",calDateDays);
+		
+		
+		
+		
 		
 		return "jandi/myAd";
 	}
