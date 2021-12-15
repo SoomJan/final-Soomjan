@@ -107,7 +107,7 @@ img {
               <c:forEach var="file" items="${ learnigFileList }">
 					<c:if test="${ file.email == learnigPost.email }">
 						<b style="float:right;">${ file.writeDate }</b>
-						<a style="float:left;"href="${pageContext.servletContext.contextPath }/jandi/class/learningPost/download?filePath=${ file.filePath }&fileName=${file.orgFilePath}">${ file.orgFilePath }</a>
+						<a style="float:left;"href="${pageContext.servletContext.contextPath }/member/class/learningPost/download?filePath=${ file.filePath }&fileName=${file.orgFilePath}">${ file.orgFilePath }</a>
 						<br>
 					</c:if>
 			  </c:forEach>
@@ -137,7 +137,7 @@ img {
 									<div class="title">${ file.nickName }</div>
 									<div class="description">
 										<b style="float:right;">${ file.writeDate }</b>
-										<a style="float:left;"href="${pageContext.servletContext.contextPath }/jandi/class/learningPost/download?filePath=${ file.filePath }&fileName=${file.orgFilePath}">${ file.orgFilePath }</a>
+										<a style="float:left;"href="${pageContext.servletContext.contextPath }/member/class/learningPost/download?filePath=${ file.filePath }&fileName=${file.orgFilePath}">${ file.orgFilePath }</a>
 									</div>
 								</div>
 							</div>

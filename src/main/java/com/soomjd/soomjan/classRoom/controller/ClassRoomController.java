@@ -40,6 +40,8 @@ import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.sun.mail.iap.Response;
 
+import oracle.jdbc.proxy.annotation.GetProxy;
+
 @Controller
 @RequestMapping("/*/class/*")
 @SessionAttributes({ "currentCount", "classCode", "classDTO", "jandi" })
@@ -466,5 +468,5 @@ public class ClassRoomController{
 		return chatFileMap;
 		
 	}
-
+	
 }

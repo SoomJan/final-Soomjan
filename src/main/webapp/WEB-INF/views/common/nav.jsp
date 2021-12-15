@@ -38,6 +38,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           $("#nav-sidebar").css("left", "100%");
         });
       });
+      
+      $(function(){
+    	  if( '${ jandiRegistMessage }' != ''){
+    		  alert('${ jandiRegistMessage }');
+    	  }
+      });
     </script>
   </head>
 
@@ -249,14 +255,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <div>
           <c:if test="${ !empty sessionScope.loginMember }">
           	<c:if test="${ sessionScope.isjandi eq 'Y' }">
-            	<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">멘토 페이지</a>
+            	<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">잔디 페이지</a>
             </c:if>
          	<c:if test="${ sessionScope.isjandi != 'Y' }">
-           		<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile" >멘토신청</a>
+           		<a href="${ pageContext.servletContext.contextPath }/member/joinJandi" >잔디 신청</a>
            </c:if>
           </c:if>
           <c:if test="${ empty sessionScope.loginMember }">
-           	<a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile" >멘토신청</a>
+           		<a href="${ pageContext.servletContext.contextPath }/member/joinJandi" >잔디 신청</a>
           </c:if>
           </div>
         </div>

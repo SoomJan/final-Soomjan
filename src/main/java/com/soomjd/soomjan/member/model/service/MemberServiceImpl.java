@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
+import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dao.MemberMapper;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -74,6 +75,16 @@ public class MemberServiceImpl implements MemberService {
 	public boolean updatePwd(Map<String, String> map) {
 		
 		return mapper.updatePwd(map) > 0? true:false;
+	}
+
+	@Override
+	public boolean registJandi(JandiDTO jandi) {
+		return mapper.registJandi(jandi);
+	}
+
+	@Override
+	public boolean modifyIsJandi(String email) {
+		return mapper.modifyIsJandi(email);
 	}
 
 }

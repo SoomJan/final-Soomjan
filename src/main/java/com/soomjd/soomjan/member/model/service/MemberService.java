@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
+import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MemberService {
@@ -22,5 +23,9 @@ public interface MemberService {
 	boolean findPwd(Map<String, String> map);
 
 	boolean updatePwd(Map<String, String> map);
+
+	boolean registJandi(JandiDTO jandi);
+
+	boolean modifyIsJandi(String email);
 
 }
