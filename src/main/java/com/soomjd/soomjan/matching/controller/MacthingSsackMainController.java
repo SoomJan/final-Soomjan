@@ -44,8 +44,8 @@ public class MacthingSsackMainController {
 //	}
 	
 	// '매칭'메뉴 누르면 해당 아이디의 manteeMain으로 이동(select)
-	@GetMapping("/manteeMain")
-	public String ManteeMain(Model model, @RequestParam(defaultValue = "1") int currentPage){
+	@GetMapping("/manteeMain/{memberEmail:.+}")
+	public String ManteeMain(Model model,@PathVariable("memberEmail") String memberEmail, @RequestParam(defaultValue = "1") int currentPage){
 		
 		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
 		System.out.println("loginMember : "+ loginMember);

@@ -10,6 +10,7 @@ import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dao.MatchingMapper;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
 public class MatchingServiceImpl implements MatchingService{
@@ -48,11 +49,13 @@ public class MatchingServiceImpl implements MatchingService{
 	public List<EstimateDTO> selectEstimate(SelectCriteria selectCriteria) {
 		return mapper.selectEstimate(selectCriteria);
 	}
-	
+
+
 
 	@Override
 	public int selecetMainTotal() {
 		return mapper.selecetMainTotal();
+
 	}
 
 //
