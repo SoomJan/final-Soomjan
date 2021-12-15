@@ -42,7 +42,7 @@
 		, SYSDATE
 		, #{ title }
 		, #{ contents }
-		, 'yosm113@naver.com'
+		, #{ email }
 		, DEFAULT
 		)
     </insert>
@@ -98,7 +98,7 @@
     	SELECT
     		   COUNT(*)
     	  FROM ESTIMATE_TBL
-    
+    	 <!-- WHERE EMAIL = #{ email } -->
     </select>
     
 

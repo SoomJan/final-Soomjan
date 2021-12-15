@@ -92,6 +92,7 @@
 				
 
 				<div class="write" >
+					<input type="text" value="${ sessionScope.loginMember.email }" name="email" style="display:none">
 						<button type="submit" class="writeBtn">매칭 요청</button>
 				</div>
 				</form>

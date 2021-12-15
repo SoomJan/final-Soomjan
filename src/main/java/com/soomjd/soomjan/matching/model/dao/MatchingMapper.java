@@ -6,6 +6,7 @@ import java.util.Map;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MatchingMapper {
 
