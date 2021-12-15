@@ -15,6 +15,7 @@ import com.soomjd.soomjan.manager.model.dao.ManagerMapper;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -152,6 +153,13 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public int inactiveManager(List<Integer> checkbox) {
 		return mapper.inactivemanager(checkbox);
+	}
+
+
+	// 모든 결제내역 조회
+	@Override
+	public List<PurchaseClassDTO> selectPurchaseClass() {
+		return mapper.selectPurchaseClass();
 	}
 
 }

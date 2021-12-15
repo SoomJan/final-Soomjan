@@ -9,6 +9,7 @@ import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 public interface ManagerMapper {
 
@@ -53,5 +54,7 @@ public interface ManagerMapper {
 	int selectFaqTotalCount(Map<String, String> searchMap);
 
 	int inactivemanager(List<Integer> checkbox);
+
+	List<PurchaseClassDTO> selectPurchaseClass();
 	
 }

@@ -10,6 +10,7 @@ import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 public interface ManagerService {
 	
@@ -58,5 +59,8 @@ public interface ManagerService {
 	int selectFaqTotalCount(Map<String, String> searchMap);
 
 	int inactiveManager(List<Integer> checkbox);
+
+	// 모든 결제상황 조회
+	List<PurchaseClassDTO> selectPurchaseClass();
 
 }

@@ -53,6 +53,21 @@
     	<result column="MNG_NO" property="mngNo"/>
     </resultMap>
     
+      <resultMap id="purchaseClassSet" type="PurchaseClassDTO">
+        <id column="CLASS_PURC_CODE" property="classPurcCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="CLASS_CODE" property="classCode"/>
+        <result column="STATUS" property="status"/>
+        <result column="PAY_CODE" property="payCode"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="TEACHER" property="teacher"/>
+        
+        <association property="classDTO" resultMap="classResultMap"></association>
+        <association property="categoryDTO" resultMap="categoryList"></association>
+        <association property="jandiDTO" resultMap="jandiResultMap"></association>
+        <association property="paymentDTO" resultMap="paymentResultSet"></association>
+    </resultMap>
+    
   <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="ssackDTO">
         SELECT
 		       A.EMAIL
@@ -398,4 +413,19 @@
         </foreach>
    		 )
 	</update>
+	
+	<!-- <select id="selectPurchaseClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	
+	SELECT
+		       C.EMAIL
+		     , C.END_DATE
+		     , L.TITLE
+		     , P.PAY_DATE
+		     , J.NICKNAME
+		     , T.CATEGORY_NAME
+		  JOIN CLASS_TBL L ON (L.CLASS_CODE = C.CLASS_CODE )
+		  JOIN PAYMENT_TBL E ON (C.PAY_CODE = E.PAY_CODE)
+		  JOIN JANDI_TBL J ON ( L.EMAIL = J.EMAIL )
+		  JOIN CATEGORY_TBL T ON (T.CATEGORY_CODE = L.CATEGORY_CODE)
+	</select> -->
 </mapper>
