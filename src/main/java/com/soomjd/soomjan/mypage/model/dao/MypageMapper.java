@@ -6,6 +6,7 @@ import java.util.Map;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
@@ -38,5 +39,11 @@ public interface MypageMapper {
 	int selectJjimTotalCount(Map<String, Object> searchMap);
 
 	List<JjimDTO> selectJjimClass(Map<String, Object> searchMap);
+
+	int jjimCancel(Map<String, Object> map);
+
+	int selectBuyTotalCount(Map<String, Object> searchMap);
+
+	List<BuyDTO> selectBuyList(Map<String, Object> searchMap);
 
 }

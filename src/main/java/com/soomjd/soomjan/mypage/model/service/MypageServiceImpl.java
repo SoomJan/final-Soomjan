@@ -10,6 +10,7 @@ import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
+import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
@@ -108,6 +109,24 @@ public class MypageServiceImpl implements MypageService{
 	public List<JjimDTO> selectJjimClass(Map<String, Object> searchMap) {
 		
 		return mapper.selectJjimClass(searchMap);
+	}
+
+	@Override
+	public int jjimCancel(Map<String, Object> map) {
+		
+		return mapper.jjimCancel(map);
+	}
+
+	@Override
+	public int selectBuyTotalCount(Map<String, Object> searchMap) {
+		
+		return mapper.selectBuyTotalCount(searchMap);
+	}
+
+	@Override
+	public List<BuyDTO> selectBuyList(Map<String, Object> searchMap) {
+		
+		return mapper.selectBuyList(searchMap);
 	}
 	
 	

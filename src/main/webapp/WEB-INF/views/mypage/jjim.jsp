@@ -51,8 +51,13 @@
             left: 40px;
           }
 
-          /* 체크박스 */
           #delete2modal {
+            height: 150px;
+            top: 40%;
+            left: 47%;
+          }
+
+          #nullmodal {
             height: 150px;
             top: 40%;
             left: 47%;
@@ -91,13 +96,13 @@
   찜한 클래스가 없습니다.<br>
   새로운 클래스를 추가해주세요.
 </div> -->
-            <br>
+            <br><br><br>
             <table class="ui single line table jjimtable">
               <thead>
                 <tr>
                   <th colspan="3">클래스정보</th>
                   <th id="th1"><a id="deletebtn">삭제하기</a></th>
-                  <th id="th2" style="display: none;"><a id="deletebtn2">되돌리기</a></th>
+                  <th id="th2" style="display: none;"><a id="returnbtn">되돌리기</a></th>
                 </tr>
               </thead>
               <tbody>
@@ -121,7 +126,7 @@
                   <script>
 
                     /* 마우스 커서 이벤트 */
-                    $(function () {
+                    $(function() {
                       $(".classInfo${ size + 1 }").hover(
                         function () {
                           $(this).css("color", "green").css("cursor", "pointer");
@@ -132,16 +137,17 @@
                       );
                     });
 
-                    /* 클릭시 클래스 인포로 이동 */
-                    $(function () {
+                    /* 클릭시 클래스 정보로 이동 */
+                    $(function() {
                       $(".classInfo${ size + 1 }").click(function () {
                         location.href = "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ jjimList[size].classCode }";
                       });
                     });
 
-                    /* 삭제하기 버튼 클릭시 체크박스 생성 */
+                    /* 삭제하기 버튼 클릭 */
                     $(function () {
                       $("#deletebtn").click(function () {
+
                         /* 기존에 있던 마우스 이벤트들 제거 */
                         $(".classInfo${ size + 1 }").off("click");
                         $(".classInfo${ size + 1}").off("mouseenter mouseleave");
@@ -152,9 +158,42 @@
 
                         /* 체크박스 버튼 보여주기 */
                         $(".label${ size + 1 }").css("display", "");
+
+                        /* 클래스 삭제 버튼 보여주기 */
+                        $("#deleteClass").css("display", "");
                       });
                     });
 
+                    /* 되돌리기 버튼 클릭 */
+                    $(function() {
+                      $("#returnbtn").click(function() {
+
+                        /* 기존에 있던 마우스 커서 이벤트 재생 */
+                        $(".classInfo${ size + 1 }").hover(
+                        function () {
+                          $(this).css("color", "green").css("cursor", "pointer");
+                        },
+                        function () {
+                          $(this).css("color", "black").css("cursor", "default");
+                        }
+                      );
+
+                      /* 기존에 있던 마우스 클릭 이벤트 재생 */
+                      $(".classInfo${ size + 1 }").click(function () {
+                        location.href = "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ jjimList[size].classCode }";
+                      });
+
+                        /* 되돌리기 버튼 -> 삭제하기 버튼으로 */
+                        $("#th1").css("display", "");
+                        $("#th2").css("display", "none");
+
+                        /* 체크박스 버튼 숨기기 */
+                        $(".label${ size + 1 }").css("display", "none");
+
+                        /* 클래스 삭제 버튼 숨기기 */
+                        $("#deleteClass").css("display", "none");
+                      });
+                    });
                   </script>
 
                 </c:forEach>
@@ -179,39 +218,51 @@
                   });
                   console.log(classNo);
 
+                  if(!classNo) {
+                    $("#nullmodal").fadeIn();
+                    $(".btn").click(function() {
+                      $("#nullmodal").fadeOut();
+                    });
+                  } else {
+
                   $.ajax({
                     url: "${ pageContext.servletContext.contextPath }/mypage/jjimCancel",
                     type: "post",
                     data: { classNo: classNo },
                     success: function (data) {
-                      if (!data) {
-                        alert("삭제 실패!");
+                      if (data == "true") {
+                        $("#delete2modal").fadeIn();
+                        $(".btn").click(function() {
+                          location.href="${ pageContext.servletContext.contextPath }/mypage/jjim"
+                        });
                       } else {
-                        alert("삭제 성공");
+                        $("#deletemodal").fadeIn();
+                        $(".btn").click(function() {
+                          $("#deletemodal").fadeOut();
+                        });
                       }
                     },
                     error: function (error) {
                       console.log(error);
                     }
                   });
+                }
+                return false;
                 });
-
               });
 
 
             </script>
-            <input id="deleteClass" type="button" value="클래스 삭제">
-            <input type="button" value="되돌리기">
+            <input id="deleteClass" type="button" value="클래스 삭제" style="float: right; display: none;">
             <jsp:include page="../common/Paging.jsp" />
           </div>
         </div>
-        <!-- 삭제 버튼 모달창 -->
+        <!-- 삭제 실패 모달창 -->
         <div class="ui mini modal" id="deletemodal">
           <div class="content deletecontent">
-            <p class="delete-content-title">체크한 클래스를 찜한 클래스<br> 목록에서 삭제하시겠습니까?</p>
+            <p class="delete-content-title">클래스 삭제에 실패하였습니다.</p>
             <div class="re-modal-btn">
-              <button class="ui button btn conbtn">확인</button>
-              <button class="ui button btn">취소</button>
+              <button class="ui button btn">확인</button>
             </div>
           </div>
         </div>
@@ -224,6 +275,17 @@
             </div>
           </div>
         </div>
+        <!-- 빈값 체크 모달창 -->
+        <div class="ui mini modal" id="nullmodal">
+          <div class="content deletecontent">
+            <p class="delete-content-title">체크된 클래스가 존재하지 않습니다.</p>
+            <div class="re-modal-btn">
+              <button class="ui button btn">확인</button>
+            </div>
+          </div>
+        </div>
+
+
         <!-- <script>
     $('#deletebtn').click(function(){
       $('#deletemodal').show();
@@ -237,3 +299,5 @@
       <jsp:include page="../common/footer.jsp" />
 
       </html>
+
+      <!-- 모달창 모아두는 곳 -->
