@@ -88,7 +88,7 @@
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
     
-    <resultMap id="reviewSet" type="ReviewDTO">
+<!--     <resultMap id="reviewSet" type="ReviewDTO">
     	<id column="REVIEW_CODE" property="rvCode"/>
     	<result column="WRITE_DATE" property="writeDate"/>
     	<result column="STAR" property="star"/>
@@ -96,7 +96,7 @@
     	<result column="IS_DELETED" property="isDelete"/>
     	<result column="CLASS_CODE" property="classCode"/>
     	<result column="EMAIL" property="email"/>
-   	</resultMap>
+   	</resultMap> -->
    	
     <resultMap id="JjimResultSet" type="JjimDTO">
         <result column="CLASS_CODE" property="classCode"/>
