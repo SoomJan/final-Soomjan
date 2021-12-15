@@ -32,7 +32,7 @@ public class AuthenticationFilter implements Filter{
 		
 		List<String> allPermitList = new ArrayList<String>();
 		allPermitList.add("main");
-		allPermitList.add("findmentor");
+		allPermitList.add("findJandi");
 		allPermitList.add("findclass");
 		allPermitList.add("member");
 		allPermitList.add("faq");

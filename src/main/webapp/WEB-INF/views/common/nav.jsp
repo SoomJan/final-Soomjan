@@ -236,7 +236,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="nav-menu-item">
           <div>
             <a
-              href="${ pageContext.servletContext.contextPath }/findmentor/findAllMentorMain"
+              href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain"
               >멘토보기</a
             >
           </div>
