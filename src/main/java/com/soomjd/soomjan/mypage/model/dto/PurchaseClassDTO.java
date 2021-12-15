@@ -21,11 +21,13 @@ public class PurchaseClassDTO {
     private CategoryDTO categoryDTO;
     private JandiDTO jandiDTO;
     private PaymentDTO paymentDTO;
+    private ReviewDTO reviewDTO;
 	
 	public PurchaseClassDTO() {}
 
 	public PurchaseClassDTO(String email, int classCode, char status, int payCode, int classPurcCode, Date endDate,
-			String teacher, ClassDTO classDTO, CategoryDTO categoryDTO, JandiDTO jandiDTO, PaymentDTO paymentDTO) {
+			String teacher, ClassDTO classDTO, CategoryDTO categoryDTO, JandiDTO jandiDTO, PaymentDTO paymentDTO,
+			ReviewDTO reviewDTO) {
 		super();
 		this.email = email;
 		this.classCode = classCode;
@@ -38,6 +40,7 @@ public class PurchaseClassDTO {
 		this.categoryDTO = categoryDTO;
 		this.jandiDTO = jandiDTO;
 		this.paymentDTO = paymentDTO;
+		this.reviewDTO = reviewDTO;
 	}
 
 	public String getEmail() {
@@ -128,13 +131,22 @@ public class PurchaseClassDTO {
 		this.paymentDTO = paymentDTO;
 	}
 
+	public ReviewDTO getReviewDTO() {
+		return reviewDTO;
+	}
+
+	public void setReviewDTO(ReviewDTO reviewDTO) {
+		this.reviewDTO = reviewDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "PurchaseClassDTO [email=" + email + ", classCode=" + classCode + ", status=" + status + ", payCode="
 				+ payCode + ", classPurcCode=" + classPurcCode + ", endDate=" + endDate + ", teacher=" + teacher
 				+ ", classDTO=" + classDTO + ", categoryDTO=" + categoryDTO + ", jandiDTO=" + jandiDTO + ", paymentDTO="
-				+ paymentDTO + "]";
+				+ paymentDTO + ", reviewDTO=" + reviewDTO + "]";
 	}
+
 
 	
 	

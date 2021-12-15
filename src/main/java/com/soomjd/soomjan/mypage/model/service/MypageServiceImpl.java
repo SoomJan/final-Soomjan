@@ -12,6 +12,7 @@ import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
+import com.soomjd.soomjan.mypage.model.dto.ReviewDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -94,7 +95,7 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List<PurchaseClassDTO> insertReviewContent(Map<String, Object> reviewMap) {
+	public int insertReviewContent(Map<String, Object> reviewMap) {
 		return mapper.insertReviewContent(reviewMap);
 	}
 	
@@ -109,7 +110,6 @@ public class MypageServiceImpl implements MypageService{
 		
 		return mapper.selectJjimClass(searchMap);
 	}
-	
-	
+
 
 }

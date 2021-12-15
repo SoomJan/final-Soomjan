@@ -88,6 +88,7 @@
       <th>강사닉네임</th>
       <th>수강완료</th>
       <th></th>
+      <th></th>
       <th>수강후기</th>
     </tr>
   </thead>
@@ -100,7 +101,14 @@
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
       <td><input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }"></td>
+      <td><input type="hidden" value="${ finishClass.classCode }"></td>
+      <%-- <c:out value="${ reviewList[0].classCode}"/> --%>
+      <c:if test="${ finishClass.reviewDTO.rvCode eq null  }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
+      </c:if>
+      <c:if test="${ finishClass.reviewDTO.rvCode ne null  }">
+      <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
+      </c:if>
     </tr>
     </c:forEach>
 <!--     <tr>
@@ -142,16 +150,22 @@
             <br>
             <div class="review">
           <p class="review-title">클래스는 만족하셨나요?</p>
-            <p id="star"> <!-- 부모 -->
-			   <a href="#" value="1">★</a> <!-- 자식들-->
-			   <a href="#" value="2">★</a>
-			   <a href="#" value="3">★</a>
-			   <a href="#" value="4">★</a>
-			   <a href="#" value="5">★</a>
+            <p id="star">
+			   <a href="#" class="on" id="1">★</a>
+			   <a href="#" class="on" id="2">★</a>
+			   <a href="#" class="on" id="3">★</a>
+			   <a href="#" id="4">★</a>
+			   <a href="#" id="5">★</a>
+			   <input type="hidden" id="reviewStar" name="reviewStar" value="3">
  			 <p>
+ 			 <!--  1. 클래스가 on이 붙어있는 요소의 갯수 찾기  -->
+ 			 
+ 			 <!-- 2. 갯수를  hidden 담기 -> script로 작성  -->
+ 			 
+ 			 <!-- 3. 작성된값 체크  -->
         </div>
         <br><br>
-          <input type="textarea" name="contents" class="review-text">
+          <textarea name="contents" class="review-text"></textarea>
           <br><br><br>
           <button class="ui button finishbtn">작성완료</button>
           <button class="ui button exitbtn" style="width:100px;">취소</button>
@@ -163,8 +177,8 @@
         <div class="content finishcontent">
           <p class="finish-content-title">수강후기를 올리시겠습니까?</p>
           <div class="re-modal-btn">
-          <button class="ui button btn obtn" onclick="obtn(this);">확인</button>
-          <button class="ui button btn xbtn" onclick="xbtn(this);">취소</button>
+          <button class="ui button btn obtn" id="obtn" >확인</button>
+          <button class="ui button btn xbtn">취소</button>
         </div>
         </div>
       </div>
@@ -187,6 +201,7 @@
    			$('.t-categoryName').val($($tr).children().eq(0).html()); 
     		$('.t-title').val($($tr).children().eq(1).html());
   			$('.t-nickName').val($($tr).children().eq(2).html());
+  			$('#classCode').val($($tr).children().eq(5).children().eq(0).val());
   			$('.t-date').val($($tr).children().eq(4).children().eq(0).val() + "-" + $($tr).children().eq(3).html());  
   			$('#reviewmodal').fadeIn();
   			e.preventDefault();
@@ -202,19 +217,38 @@
         	e.preventDefault();
         });
         
-    	function obtn(item) {
+/*     	function obtn(item) {
            $("#reviewmodal").fadeOut();
            $("#finishmodal").fadeOut();
             $('#finish2modal').show();
             $("#o2btn").click(function(){
                $("#finish2modal").fadeOut();
             });
-          } 
+          }  */
+          
+        $("#obtn").on('click', function(e){
+        	$("#reviewmodal").fadeOut();
+        	$("#finishmodal").fadeOut();
+        	$("#finish2modal").fadeIn();
+        	$("#reviewform").submit();
+        	e.preventDefault();
+        });
+          
+          $("#o2btn").click(function(e){
+              $("#finish2modal").fadeOut();
+              e.preventDefault();
+          });
+          
+          $(".xbtn").on('click', function(e){
+        	 $("#reviewmodal").fadeOut();
+        	 $("#finishmodal").fadeOut();
+        	 e.preventDefault();
+          });
          
-         function xbtn(item) {
+/*          function xbtn(item) {
             $("#reviewmodal").fadeOut();
             $("#finishmodal").fadeOut();
-         }
+         } */
          
 /*          $('.o2btn').on('click',function(){
         
@@ -231,11 +265,22 @@
      });
    }); */
    
-	   $('#star a').click(function(){ 
+/* 	   $('#star a').click(function(){ 
 			 $(this).parent().children("a").removeClass("on");    
 			 $(this).addClass("on").prevAll("a").addClass("on");
 			 console.log($(this).attr("value"));
-		 });
+		 }); */
+		 
+	$( document ).ready(function() {
+		$( "#star a" ).click(function() {
+			$(this).parent().children("a").removeClass("on");
+			$(this).addClass("on").prevAll("a").addClass("on");
+				var starRate = $(this).attr('id');
+				console.log(starRate);
+			$("#reviewStar").val(starRate);
+				return false;
+		});
+	}); 
   
       </script>
 </body>
