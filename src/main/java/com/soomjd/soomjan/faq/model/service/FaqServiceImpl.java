@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.faq.model.dao.FaqMapper;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
@@ -28,6 +29,11 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public List<FaqDTO> selectnotice(SelectCriteria selectCriteria) {
 		return mapper.selectnotice(selectCriteria);
+	}
+
+	@Override
+	public List<ClassDTO> mainClass() {
+		return mapper.mainClass();
 	}
 
 }

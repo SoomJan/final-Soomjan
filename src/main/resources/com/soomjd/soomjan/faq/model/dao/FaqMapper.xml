@@ -13,6 +13,22 @@
     	<result column="MNG_NO" property="mngNo"/>
     </resultMap>
     
+     <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classResultMap">
+    	<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    </resultMap>
+    
    <select id="selectFaqTotalCount" resultType="_int">
 	SELECT
 	       COUNT(*)
@@ -53,6 +69,23 @@
               WHERE C.RNUM >= #{ startRow }	  
 	</select>
     
+   <select id="mainClass" resultMap="classResultMap">
+   	SELECT
+    			  C.CLASS_CODE
+		    	, C.CREATE_DATE
+		    	, C.CONTENTS
+		    	, C.TAG
+		    	, C.CATEGORY_CODE
+		    	, C.EMAIL
+		    	, C.BOARD_TYPE
+		    	, C.VIEWS
+		    	, C.MAX_COUNT
+		    	, C.TITLE
+		    	, C.PRICE
+		    	, C.FILE_PATH
+		    	, C.ORG_FILE_PATH
+    	  FROM CLASS_TBL C
+   </select>
    
     
 </mapper>

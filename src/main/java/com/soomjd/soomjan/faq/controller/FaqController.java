@@ -1,9 +1,8 @@
 package com.soomjd.soomjan.faq.controller;
 
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
@@ -62,5 +62,22 @@ public class FaqController {
 	  return "faq/notice";
 	}
 	
-	///sss
-}
+	@GetMapping("/test")
+	public String test(Model model) {
+		
+		ClassDTO class1 = new ClassDTO();
+		
+		List <ClassDTO> class2 = faqService.mainClass();
+		
+		System.out.print(class2);
+		
+		Collections.shuffle(class2);
+		
+		System.out.print(class2);
+		
+		model.addAttribute("class2", class2);
+		
+		return "test/main";
+	}
+	
+	}

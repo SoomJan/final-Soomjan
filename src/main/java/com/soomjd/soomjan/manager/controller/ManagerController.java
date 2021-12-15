@@ -32,6 +32,7 @@ import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.service.ManagerService;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 @Controller
 @RequestMapping("/manager/*")
@@ -360,12 +361,7 @@ public class ManagerController {
 		return "manager/classadvertisment";
 	}
 	
-	// 클래스 결제 내역
-	@GetMapping("/classcal")
-	public String classcal() {
-					
-		return "manager/classcal";
-	}
+
 	
 	// 현재 광고 중
 	@GetMapping("/advertcal")
@@ -462,6 +458,19 @@ public class ManagerController {
 		} else {
 			throw new MemberRegistException("수정에 실패하였습니다.");
 		}
+	}
+	
+	// 모든 결제내역 조회
+	@GetMapping("/classcal")
+	public String classcal(Model model) {
+
+		List<PurchaseClassDTO> reviewContent = managerService.selectPurchaseClass();
+		System.out.println("reviewContent : " + reviewContent);
+		
+		model.addAttribute("reviewContent", reviewContent);
+		
+		return "manager/classcal";
+
 	}
 	
 }
