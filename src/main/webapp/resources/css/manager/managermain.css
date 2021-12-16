@@ -94,7 +94,7 @@ body {
 }
 
 .manager-search {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   height: 100%;
   /* overflow: auto; */
@@ -137,7 +137,7 @@ body {
 }
 
 .input-search {
-  width: 100%;
+  width: 60%;
   height: auto;
   position: relative;
   margin: 0 auto;
