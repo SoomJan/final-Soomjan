@@ -22,4 +22,6 @@ public interface MatchingMapper {
 	List<EstimateDTO> selectEstimate(SelectCriteria selectCriteria);
 
 	List<EstimateDTO> ssackList(SelectCriteria selectCriteria);
+
+	List<EstimateDTO> estimateDetail(String estimateCode);
 }

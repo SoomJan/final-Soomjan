@@ -1,8 +1,8 @@
 package com.soomjd.soomjan.matching.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -105,9 +105,21 @@ public class MacthingSsackMainController {
 		return mv;
 	}
 	
-	// 작성된 견적서 보여주기
-	@GetMapping("/detailEstimate")
-	public String detailEstimate(Model model, @PathVariable("memberEmail") String memberEmail) {
+	// 작성된 견적서 디테일 보여주기
+	@GetMapping("/detailEstimate/{memberEmail:.+}")
+	public String detailEstimate(Model model , HttpServletRequest request ,@PathVariable("memberEmail") String memberEmail) {
+		
+		String estimateCode = request.getParameter("estimateCode");
+		
+		
+		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
+		System.out.println("loginMember : "+ loginMember);
+		
+		
+		List<EstimateDTO> estimateDetail = matchingService.estimateDetail(estimateCode);
+		System.out.println(estimateDetail);
+		model.addAttribute("estimateDetail",estimateDetail);
+		
 		
 		return "matching/ManteeEstimateDetail";
 	}

@@ -61,7 +61,7 @@
 
 					<tr>
 						<th width="10">No</th>
-						<th width="60"align="left">1</th>
+						<th width="60"align="left" name="estimateCode">1</th>
 					</tr>
 					<tr>
 						<th width="10">카테고리</th>
