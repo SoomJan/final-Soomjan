@@ -77,6 +77,10 @@ public interface ClassRoomService {
 	boolean registReportMember(ReportMemberDTO reportMember);
 
 	List<Map<String, Object>> selectAllReportStatement();
+	
+	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
+
+	List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap);
 
 
 

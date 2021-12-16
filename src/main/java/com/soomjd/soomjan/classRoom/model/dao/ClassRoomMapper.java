@@ -70,6 +70,10 @@ public interface ClassRoomMapper {
 	List<ClassFileDTO> selectLearningFileListByPostCode(int postCode);
 
 	boolean registPurchaseClass(ClassPurchaseDTO classPurchase);
+	
+	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
+
+	List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap);
 
 	boolean registChatRoom(HashMap<String, Object> chatRoomMap);
 

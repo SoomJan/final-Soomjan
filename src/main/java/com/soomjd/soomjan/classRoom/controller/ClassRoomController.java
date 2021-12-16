@@ -39,6 +39,8 @@ import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
 import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
 import com.soomjd.soomjan.common.fileWrapper.FileWrapper;
+import com.soomjd.soomjan.common.paging.Pagenation;
+import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
@@ -46,7 +48,7 @@ import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 @Controller
 @RequestMapping("/*/class/*")
-@SessionAttributes({ "currentMemberList", "classCode", "classDTO", "jandi", "currentCount"})
+@SessionAttributes({ "currentCount", "classCode", "classDTO", "jandi", "selectCriteria", "currentMemberList"})
 public class ClassRoomController{
 
 	private final ClassRoomService classRoomService;
@@ -85,9 +87,32 @@ public class ClassRoomController{
 	}
 
 	@GetMapping("classLearningBoard")
-	public void classLearningBoard(Model model) {
+	public void classLearningBoard(Model model, @RequestParam(defaultValue = "1") int currentPage) {
 
 		int classCode = (int) model.getAttribute("classCode");
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("classCode", classCode);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = classRoomService.selectLearningBoardTotalCount(searchMap);
+		System.out.println("totalCount : " + totalCount);
+		
+		int limit = 10;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		
+		Map<String, Object> learningMap = new HashMap<>();
+		learningMap.put("selectCriteria", selectCriteria);
+		learningMap.put("classCode", classCode);
+		System.out.println("learningMap : " + learningMap);
+		
+		List<LearningPostDTO> learningList = classRoomService.selectLearningBoardList(learningMap);
+		System.out.println("learningList : " + learningList);
+		
+		model.addAttribute("learningList", learningList);
+		model.addAttribute("selectCriteria", selectCriteria);
 		model.addAttribute("learningPostList", classRoomService.selectLearningPostList(classCode));
 
 	}

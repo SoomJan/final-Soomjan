@@ -185,6 +185,16 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		public List<Map<String, Object>> selectAllReportStatement() {
 			return classRoomMapper.selectAllReportStatement();
 		}
+		
+		@Override
+		public int selectLearningBoardTotalCount(Map<String, Object> searchMap) {
+			return classRoomMapper.selectLearningBoardTotalCount(searchMap);
+		}
+
+		@Override
+		public List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap) {
+			return classRoomMapper.selectLearningBoardList(learningMap);
+		}
 
 
 
