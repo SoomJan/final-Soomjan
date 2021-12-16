@@ -21,7 +21,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
@@ -115,17 +114,32 @@ public class MemberController {
 	}
 
 	@PostMapping("login")
-	public String login(@ModelAttribute MemberDTO member, Model model) throws LoginFailedException {
+	public void login(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
 		
-		MemberDTO loginMemeber = memberService.loginMember(member);
-		model.addAttribute("loginMember", loginMemeber);
-		
-		if(loginMemeber.getIsJandi() == 'Y') {
-			model.addAttribute("isjandi", "Y");
-		}else {
-			model.addAttribute("isjandi", "N");
-		}
-		return "redirect:/";
+		System.out.println("로그인할 이메일 : " + email);
+	    System.out.println("로그인할 패스워드 : " + password);
+	    
+	    Map<String, String> map = new HashMap<>();
+	    map.put("email", email);
+	    map.put("password", password);
+	    
+	    if(!memberService.selectEmail(map)) {
+	    	response.getWriter().write("emailFalse");
+	    } else if (!passwordEncoder.matches(password, memberService.selectEncPassword(map))) {
+	    	response.getWriter().write("pwdFalse");
+	    } else {
+	    	
+	    	MemberDTO loginMember = memberService.loginMember(map);
+	    	model.addAttribute("loginMember", loginMember);
+	    	
+	    	if(loginMember.getIsJandi() == 'Y') {
+				model.addAttribute("isjandi", "Y");
+			}else {
+				model.addAttribute("isjandi", "N");
+			}
+	    	
+	    	response.getWriter().write("true");
+	    }
 	}
 	
 	@GetMapping("findEmail")

@@ -59,11 +59,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
   </div>
 </form>
-  <br>
-  <!-- <div class="unlist-text">
-  수강중인 클래스가 없습니다.<br>
-  필터를 다시 적용하거나 새로운 클래스를 찾아보세요.
-</div> -->
+  <br><br><br><br>
+<c:choose>
+  <c:when test="${ empty classList }">
+    <div class="unlist-text">
+      수강중인 클래스가 없습니다.<br>
+      필터를 다시 적용하거나 새로운 클래스를 찾아보세요.
+    </div>
+  </c:when>
+  <c:when test="${ not empty classList }">
 <table class="ui single line table takingtable">
   <thead>
     <tr>
@@ -108,6 +112,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   </tbody>
 </table>
 <jsp:include page="../common/Paging.jsp" />
+</c:when>
+</c:choose>
       </div>
     </div>
 </body>

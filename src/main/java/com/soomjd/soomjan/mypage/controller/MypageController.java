@@ -281,14 +281,18 @@ public class MypageController {
 	public ModelAndView buyForm(ModelAndView mv, HttpSession session
 			, @RequestParam(required = false) String searchCondition
 			, @RequestParam(required = false) String searchValue
-			, @RequestParam(defaultValue = "1") int currentPage) {
+			, @RequestParam(defaultValue = "1") int currentPage
+			, @RequestParam(required = false) String sort) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		
+		System.out.println("넘어온 정렬값 : " + sort);
 		
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchCondition", searchCondition);
 		searchMap.put("searchValue",searchValue);
 		searchMap.put("email", member.getEmail());
+		searchMap.put("sort", sort);
 		System.out.println("searchMap : " + searchMap);
 
 		int totalCount = mypageService.selectBuyTotalCount(searchMap);
@@ -313,6 +317,7 @@ public class MypageController {
 		
 		mv.addObject("buyList", buyList);
 		mv.addObject("selectCriteria", selectCriteria);
+		mv.addObject("sort", sort);
 		mv.setViewName("mypage/buy");
 
 		return mv;
