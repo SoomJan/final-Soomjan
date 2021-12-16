@@ -63,10 +63,11 @@ table {
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
 			<c:set var="days" value="${ requestScope.calDateDays }"/>
+			<c:set var="resultValue" value="${ requestScope.resultValue}"></c:set>
 			
 			<c:choose>
-				<c:when test="${ resultValue eq N }">
-					<button type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/'">결제하</button>
+				<c:when test="${ resultValue eq Y }">
+					<button type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy'">결제하기</button>
 				</c:when>
 				<c:otherwise>
 					<c:choose>
@@ -77,7 +78,7 @@ table {
 							<h3 style="color: #147900;" align="right">광고 종료 D - ${ requestScope.calDateDays }</h3>
 						</c:otherwise>
 					</c:choose>
-				</c:otherwise>
+				</c:otherwise> 
 			</c:choose>
 			
 			

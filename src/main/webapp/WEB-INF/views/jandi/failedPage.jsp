@@ -59,11 +59,13 @@ table {
 	<jsp:include page="/WEB-INF/views/common/nav.jsp" />
 	<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 
-	<div align="center">
-		<img src="${ pageContext.servletContext.contextPath }/resources/images/레드잔디.png">
+	<div class="sidebar-content">
+		<div align="center">
+			<img src="${ pageContext.servletContext.contextPath }/resources/images/레드잔디.png">
+		</div>
+		<h1 align="center">${ requestScope.message }</h1>
 	</div>
-	<h1 align="center">${ requestScope.message }</h1>
-	
+
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>

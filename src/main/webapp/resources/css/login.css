@@ -76,3 +76,33 @@ a {
 	color : #005E23 !important;
 	font-size: 12px;
 }
+
+.modal {
+  height: 150px;
+  top: 30%;
+  left: 40%;
+}
+
+.titles {
+  position: relative;
+  margin: 0 auto;
+  top: 15%;
+  font-size: 20px;
+}
+
+.re-modal-btn {
+  position: relative;
+  top: 20%;
+}
+
+.btn {
+  position: relative;
+  top: 40px;
+  background-color: white !important;
+}
+
+.contents {
+  height: 150px;
+  text-align: center;
+  background-color: #91c788 !important;
+}

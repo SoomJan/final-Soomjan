@@ -86,9 +86,10 @@
         <association property="categoryDTO" resultMap="categoryList"></association>
         <association property="jandiDTO" resultMap="jandiResultMap"></association>
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
+        <association property="reviewDTO" resultMap="reviewResultSet"></association>
     </resultMap>
     
-    <resultMap id="reviewSet" type="ReviewDTO">
+    <resultMap id="reviewResultSet" type="ReviewDTO">
     	<id column="REVIEW_CODE" property="rvCode"/>
     	<result column="WRITE_DATE" property="writeDate"/>
     	<result column="STAR" property="star"/>
@@ -96,6 +97,12 @@
     	<result column="IS_DELETED" property="isDelete"/>
     	<result column="CLASS_CODE" property="classCode"/>
     	<result column="EMAIL" property="email"/>
+    	
+<!--     	<association property="classDTO" resultMap="classResultMap"></association>
+        <association property="categoryDTO" resultMap="categoryList"></association>
+        <association property="jandiDTO" resultMap="jandiResultMap"></association>
+        <association property="paymentDTO" resultMap="paymentResultSet"></association>
+        <association property="purchaseClassDTO" resultMap="purchaseClassSet"></association> -->
    	</resultMap>
    	
     <resultMap id="JjimResultSet" type="JjimDTO">
@@ -455,11 +462,89 @@
 						    <if test='searchCondition == "2"'>
 						       AND C.NICKNAME LIKE '%' || #{ searchValue } || '%'    
 						   </if>
+						   <if test='sort == "D"'>
+						   ORDER BY D.PAY_DATE ASC
+						   </if>
+						   <if test='sort == "P"'>
+						   ORDER BY D.PAY DESC
+						   </if>
+						   <if test='sort == null or sort == "DA"'>
+						   ORDER BY D.PAY_DATE DESC
+						   </if>
+						   <if test='sort == "PA"'>
+						   ORDER BY D.PAY ASC
+						   </if>
 						    </where>
-						    ORDER BY D.PAY_DATE DESC 
 		                )V
 		       )V2
 		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
+	</select>
+	
+	<select id="selectReviewTotalCount" resultType="_int" parameterType="HashMap">
+		SELECT
+		       COUNT(*)
+		  FROM CLASS_REVIEW_TBL
+		 WHERE EMAIL = #{ email }
+	</select>
+	
+	<select id="selectReviewList" resultType="hashmap">
+		SELECT
+		       F.RNUM
+		     , F.EMAIL
+		     , F.REVIEW_CODE
+		     , F.WRITE_DATE
+		     , F.STAR
+		     , F.CONTENTS
+		     , F.IS_DELETED
+		     , F.CLASS_CODE
+		     , F.END_DATE
+		  	 , F.CATEGORY_NAME
+		  	 , F.TITLE
+		  	 , F.NICKNAME
+		  	 , F.PAY_DATE
+		  	 , F.ORG_FILE_PATH
+		 FROM (SELECT ROWNUM RNUM
+		            , D.EMAIL
+		            , D.REVIEW_CODE
+		            , D.WRITE_DATE
+		            , D.STAR
+		            , D.CONTENTS
+		            , D.IS_DELETED
+		            , D.CLASS_CODE
+		            , D.END_DATE
+		  	      	, D.CATEGORY_NAME
+		  	      	, D.TITLE
+		  	      	, D.NICKNAME
+		  	      	, D.PAY_DATE
+		  	      	, D.ORG_FILE_PATH
+		        FROM (SELECT
+		                     R.EMAIL
+		                   , R.REVIEW_CODE
+		                   , R.WRITE_DATE
+		                   , R.STAR
+		                   , R.CONTENTS
+		                   , R.IS_DELETED
+		                   , R.CLASS_CODE
+	  	      			   , A.END_DATE
+		  	      		   , C.CATEGORY_NAME
+		  	      		   , L.TITLE
+		  	      		   , J.NICKNAME
+		  	      		   , E.PAY_DATE
+		  	      		   , L.ORG_FILE_PATH
+		                FROM CLASS_REVIEW_TBL R
+		                JOIN PURCHASE_CLASS_TBL A ON(A.CLASS_CODE = R.CLASS_CODE)
+		  	      		JOIN CLASS_TBL L ON (L.CLASS_CODE = R.CLASS_CODE )
+		  	      		JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)
+		  	      		JOIN JANDI_TBL J ON (L.EMAIL = J.EMAIL )
+		  	      		JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
+		               WHERE R.EMAIL = #{ email }
+		               ORDER BY R.WRITE_DATE DESC	
+		  	             ) D
+		  	   	<![CDATA[
+	        	WHERE ROWNUM <= #{ selectCriteria.endRow } 
+	        	]]>	
+		  	    ) F
+		  	    WHERE F.RNUM >= #{ selectCriteria.startRow }   
 	</select>
 
 </mapper>

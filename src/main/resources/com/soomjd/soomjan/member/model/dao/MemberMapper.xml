@@ -48,7 +48,7 @@
 		)
     </insert>
     
-    <select id="selectEncPassword" resultType="java.lang.String" parameterType="MemberDTO">
+    <select id="selectEncPassword" resultType="java.lang.String" parameterType="HashMap">
         SELECT
 		       A.PASSWORD
 		  FROM SSACK_TBL A
@@ -56,11 +56,18 @@
 		   AND IS_EXIT = 'N'
     </select>
     
+    <select id="selectEmail" resultType="_int" parameterType="HashMap">
+        SELECT 
+		       COUNT(*)
+		  FROM SSACK_TBL A
+		 WHERE A.EMAIL = #{ email }
+           AND IS_EXIT = 'N'
+    </select>
+    
     <select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
         SELECT
 		       A.EMAIL
 			 , A.NICKNAME
-			 , A.PASSWORD
 			 , A.PHONE
 			 , A.IS_JANDI
 			 , A.WARNING

@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>숨은잔디</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.css"

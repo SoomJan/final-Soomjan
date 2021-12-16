@@ -1,10 +1,7 @@
 package com.soomjd.soomjan.member.model.dao;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -12,10 +9,6 @@ public interface MemberMapper {
 	
 	int insertMember(MemberDTO member);
 	
-	String selectEncPassword(MemberDTO member);
-	
-	MemberDTO selectMember(MemberDTO member);
-
 	int idDupCheck(Map<String, String> map);
 
 	int nickDupCheck(Map<String, String> map);
@@ -29,5 +22,11 @@ public interface MemberMapper {
 	boolean registJandi(JandiDTO jandi);
 
 	boolean modifyIsJandi(String email);
+
+	String selectEncPassword(Map<String, String> map);
+
+	int selectEmail(Map<String, String> map);
+
+	MemberDTO selectMember(Map<String, String> map);
 
 }

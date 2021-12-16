@@ -97,6 +97,16 @@
   새로운 클래스를 추가해주세요.
 </div> -->
             <br><br><br>
+
+            <c:choose>
+                <c:when test="${ empty jjimList }">
+                  <div class="unlist-text">
+                    찜한 클래스가 없습니다.<br>
+                    새로운 클래스를 추가해주세요.
+                  </div>
+                </c:when>
+                <c:when test="${ not empty jjimList }">
+
             <table class="ui single line table jjimtable">
               <thead>
                 <tr>
@@ -199,7 +209,7 @@
                 </c:forEach>
               </tbody>
             </table>
-
+            
             <script>
               $(function () {
                 /* 삭제하기 */
@@ -255,6 +265,9 @@
             </script>
             <input id="deleteClass" type="button" value="클래스 삭제" style="float: right; display: none;">
             <jsp:include page="../common/Paging.jsp" />
+          </c:when>
+        </c:choose>
+
           </div>
         </div>
         <!-- 삭제 실패 모달창 -->
@@ -286,18 +299,10 @@
         </div>
 
 
-        <!-- <script>
-    $('#deletebtn').click(function(){
-      $('#deletemodal').show();
-    }); 
     
-    $('.conbtn').click(function(){
-        $('#delete2modal').show();
-      }); 
-    </script> -->
       </body>
       <jsp:include page="../common/footer.jsp" />
 
       </html>
 
-      <!-- 모달창 모아두는 곳 -->
+  

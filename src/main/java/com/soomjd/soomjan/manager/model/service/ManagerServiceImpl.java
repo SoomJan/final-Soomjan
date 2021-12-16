@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
+import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dao.ManagerMapper;
@@ -155,11 +156,16 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.inactivemanager(checkbox);
 	}
 
-
-	// 모든 결제내역 조회
+	// 모든 결제내역 조회(페이징, 날짜, 검색)
 	@Override
-	public List<PurchaseClassDTO> selectPurchaseClass() {
-		return mapper.selectPurchaseClass();
+	public List<PurchaseClassDTO> selectPurchaseClass(SelectCriteriawithdate selectCriteriawithdate) {
+		return mapper.selectPurchaseClass(selectCriteriawithdate);
+	}
+
+	// 결제 정보 갯수 조회(날짜, 검색 조건, 검색 내용)
+	@Override
+	public int PurchaseClassTotalCount(Map<String, String> searchMap) {
+		return mapper.PurchaseClassTotalCount(searchMap);
 	}
 
 }

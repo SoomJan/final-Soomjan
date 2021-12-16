@@ -13,7 +13,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <title>등록된 멘토 조회</title>
 
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/nav.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/nav.css?"
       rel="stylesheet"
     />
 
@@ -135,10 +135,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <div>
         <hr />
         <ul class="find-grass">
-          <a href="#">
+          <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">
             <li>
               <span>🌿</span>
-              <span>잔디 둘러보기</span>
+              <span>클래스 둘러보기</span>
             </li>
           </a>
         </ul>
@@ -236,7 +236,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="nav-menu-item">
           <div>
             <a
-              href="${ pageContext.servletContext.contextPath }/findmentor/findAllMentorMain"
+              href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain"
               >멘토보기</a
             >
           </div>

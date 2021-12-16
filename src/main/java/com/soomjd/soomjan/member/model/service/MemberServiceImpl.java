@@ -1,14 +1,10 @@
 package com.soomjd.soomjan.member.model.service;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dao.MemberMapper;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
@@ -17,12 +13,10 @@ import com.soomjd.soomjan.member.model.dto.MemberDTO;
 public class MemberServiceImpl implements MemberService {
 	
 	private MemberMapper mapper;
-	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public MemberServiceImpl(MemberMapper mapper, BCryptPasswordEncoder passwordEncoder) {
+	public MemberServiceImpl(MemberMapper mapper) {
 		this.mapper = mapper;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -31,15 +25,22 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.insertMember(member) > 0? true:false;
 	}
 
-
 	@Override
-	public MemberDTO loginMember(MemberDTO member) throws LoginFailedException {
+	public String selectEncPassword(Map<String, String> map) {
 		
-		if(!passwordEncoder.matches(member.getPassword(), mapper.selectEncPassword(member))) {
-			throw new LoginFailedException("로그인에 실패하셨습니다");
-		}
+		return mapper.selectEncPassword(map);
+	}
+	
+	@Override
+	public boolean selectEmail(Map<String, String> map) {
 		
-		return mapper.selectMember(member);
+		return mapper.selectEmail(map) > 0? true:false;
+	}
+	
+	@Override
+	public MemberDTO loginMember(Map<String, String> map) {
+		
+		return mapper.selectMember(map);
 	}
 
 
@@ -86,5 +87,11 @@ public class MemberServiceImpl implements MemberService {
 	public boolean modifyIsJandi(String email) {
 		return mapper.modifyIsJandi(email);
 	}
+
+	
+
+	
+
+	
 
 }

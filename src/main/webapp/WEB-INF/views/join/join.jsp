@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>숨은잔디 회원가입</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link
@@ -354,7 +354,7 @@ pageEncoding="UTF-8"%>
               },
               error: function (error) {
                 console.log(error);
-              },
+              }
             });
           }
           return false;

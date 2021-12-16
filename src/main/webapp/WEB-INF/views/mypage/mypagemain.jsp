@@ -88,7 +88,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="warn">
         </div>
         <div class="warining">
-        <p>누적 경고 횟수</p>
+          <c:choose>
+        <c:when test="${ empty reportMember }">
+          <!-- 경고가 없으면 빈 화면이 나옵니다. -->
+        </c:when>
+        <c:when test="${ not empty reportMember }">
+        <p>누적된 경고</p>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
@@ -105,6 +110,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </c:forEach>
           </tbody>
         </table>
+        </c:when>
+        </c:choose>
       </div>
       </div>
     </div>

@@ -1,6 +1,9 @@
 package com.soomjd.soomjan.manager.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +28,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
+import com.soomjd.soomjan.common.paging.Pagenationwithdate;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
+import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
@@ -375,7 +380,7 @@ public class ManagerController {
 	@GetMapping("notice")
 	public String notice(Model model, FaqDTO faq, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 		
-		Map<String, String> searchMap = new HashMap<>();
+		  Map<String, String> searchMap = new HashMap<>();
 	      searchMap.put("searchCondition", searchCondition);
 	      searchMap.put("searchValue", searchValue);
 	      System.out.println("searchMap : " + searchMap);
@@ -395,7 +400,6 @@ public class ManagerController {
 		      }
 		
 	      System.out.println("selectCriteria : " + selectCriteria);
- 
 	      
 		List<FaqDTO> faqList = managerService.selectnotice(selectCriteria);
 		
@@ -462,12 +466,52 @@ public class ManagerController {
 	
 	// 모든 결제내역 조회
 	@GetMapping("/classcal")
-	public String classcal(Model model) {
-
-		List<PurchaseClassDTO> reviewContent = managerService.selectPurchaseClass();
+	public String classcal(Model model,
+			@RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String startDate,
+			@RequestParam(required = false) String endDate) throws ParseException {
+		
+		
+		 Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      searchMap.put("startDate", startDate);
+	      searchMap.put("endDate", endDate);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	    int totalCount = managerService.PurchaseClassTotalCount(searchMap);
+	    
+	    System.out.println("totalCount : " + totalCount);
+	      
+	    int limit = 10;
+	    int buttonAmount = 5;
+	      
+	    SelectCriteriawithdate selectCriteriawithdate = null;
+		
+	    if((startDate != null && !"".equals(startDate)) && (searchCondition != null && !"".equals(searchCondition))) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, startDate, endDate);
+	    } else if(startDate != null && !"".equals(startDate)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, null, null, startDate, endDate);
+	    } else if(searchCondition != null && !"".equals(searchCondition)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, null, null);
+	    } else {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		  }
+	    
+	    System.out.println("selectCriteria : " + selectCriteriawithdate);
+	    
+		List<PurchaseClassDTO> reviewContent = managerService.selectPurchaseClass(selectCriteriawithdate);
+		
 		System.out.println("reviewContent : " + reviewContent);
 		
 		model.addAttribute("reviewContent", reviewContent);
+		model.addAttribute("selectCriteria", selectCriteriawithdate);
+		model.addAttribute("searchCondition", searchCondition);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
 		return "manager/classcal";
 

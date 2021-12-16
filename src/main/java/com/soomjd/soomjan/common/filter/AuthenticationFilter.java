@@ -32,7 +32,7 @@ public class AuthenticationFilter implements Filter{
 		
 		List<String> allPermitList = new ArrayList<String>();
 		allPermitList.add("main");
-		allPermitList.add("findmentor");
+		allPermitList.add("findJandi");
 		allPermitList.add("findclass");
 		allPermitList.add("member");
 		allPermitList.add("faq");
@@ -74,7 +74,7 @@ public class AuthenticationFilter implements Filter{
 			
 		}else {
 			
-			intent = intent.substring(1, intent.indexOf("/", 1)); 
+			intent = intent.substring(1, intent.indexOf("/", 1));
 			System.out.println("intent : " + intent);
 			
 			HttpSession requestSession = httpRequest.getSession();

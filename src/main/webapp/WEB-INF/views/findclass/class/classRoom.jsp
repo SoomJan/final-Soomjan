@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +23,30 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
-    <style>
-      img{width: 250px; text-align: center; border: none !important;}
-      .content {width:90%; border: none !important;}
-    </style>
+<style>
+.content {
+	width: 90%;
+	border: none !important;
+}
+
+.classImg{
+	width: 80%;
+	text-align: center;
+	border: 1px solid green;
+	border-radius: 0.5rem;
+}
+
+.areaStyle {
+	border: none;
+	width: 100%;
+	resize: none;
+}
+
+.areaStyle:focus {
+	outline: none;
+}
+
+</style>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
@@ -33,43 +55,50 @@
 		<div class="sidebar-content">
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
-			<div>
-				<h2>강의 소개</h2>
+<div>
+				<h2>강의 소개 ${ requestScope.errMessageMap.errMessage }</h2>
 				<hr>
 				<br>
-				<p>이 클래스는 OH! 잔디만의 특급 비법이 담긴 강의입니다.</p>
-				<p>이 강의를 듣는 여러분은 선택받은 사람들인거에요!</p>
-				<p>그러니까 감사하는 마음을 가지고 게을리 하지 않고 열심히 들어주세요.</p>
-				<p>제가 공을 들여 만든 강의가 아깝지 않게 해주세요.</p>
-				<p>부탁이 아닌 강요랍니다!</p>
-				<img class="content"
-					src="${ pageContext.servletContext.contextPath }/resources/images/java.png" />
-				<br>
-				<br>
+				<div id="contents">
+					<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
+						placeholder="아직 강의 소개가 없습니다." readonly>${ classDTO.contents }</textarea>
+				</div>
+				<div align="center">
+					<img class="classImg" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ classDTO.filePath }">
+				</div>
 				<br>
 				<br>
 				<div class="tag">
-					<p class="tagName">태그</p>
-					<div class="ui button" data-tooltip="Add users to your feed"
-						data-position="top left">JAVA</div>
-					<div class="ui button" data-tooltip="Add users to your feed"
-						data-position="top center">eclipse</div>
-					<div class="ui button" data-tooltip="Add users to your feed"
-						data-position="top right">spring</div>
 				</div>
+				<br>
+				<input class="areaStyle" name="tag" id="tag" type="hidden" value="${ classDTO.tag }">
+				<script>
+					$(function(){
+						let tags = $('#tag').val().replace(" ","");
+						let tagArr = tags.split('#');
+						for(let tag of tagArr){
+							if(tag !== ""){
+								$('.tag').append(
+								"<div class='ui button' style='margin:3px;' data-position='top left'>"
+								+ tag + "</div>");
+							}
+						}
+					});
+				</script>
 				<hr>
 				<h2>강의 목차</h2>
-				<p class="contents">
-					chap1. 리터럴<br> chap2. 변수<br> chap3. 메소드<br> chap4.
-					배열
-				</p>
+				<c:forEach var="mokcha" items="${ mokchaList }">
+					<p class="contents">
+						${ mokcha.mokchaName }
+					</p>
+				</c:forEach>
 				<hr>
 				<br>
 				<div class="after">
 					<h2>후기</h2>
 					<p>총 5개</p>
 				</div>
-				<div class="ui card" id="aftercard" style="margin:5%; width:90%; ">
+				<div class="ui card" id="aftercard" style="margin: 5%; width: 90%;">
 					<div class="content">
 						<div class="left aligned header afterheader">
 							<i class="star icon"></i> <i class="star icon"></i> <i
@@ -80,7 +109,7 @@
 							<p>알차고 좋은 구성이였습니다! 잘들었습니다.</p>
 						</div>
 					</div>
-					<div class="extra content">
+					<div class="extra content" id="name-date-content">
 						<div class="right aligned author">
 							<p>익명의 잔디 2021.11.18</p>
 						</div>

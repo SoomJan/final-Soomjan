@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
+import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
@@ -60,7 +61,10 @@ public interface ManagerService {
 
 	int inactiveManager(List<Integer> checkbox);
 
-	// 모든 결제상황 조회
-	List<PurchaseClassDTO> selectPurchaseClass();
+	// 모든 결제상황 조회(페이징, 검색처리)
+	List<PurchaseClassDTO> selectPurchaseClass(SelectCriteriawithdate selectCriteriawithdate);
+
+	// 결제 정보 갯수 조회(날짜, 검색 조건, 검색 내용)
+	int PurchaseClassTotalCount(Map<String, String> searchMap);
 
 }
