@@ -455,8 +455,19 @@
 						    <if test='searchCondition == "2"'>
 						       AND C.NICKNAME LIKE '%' || #{ searchValue } || '%'    
 						   </if>
+						   <if test='sort == "D"'>
+						   ORDER BY D.PAY_DATE ASC
+						   </if>
+						   <if test='sort == "P"'>
+						   ORDER BY D.PAY DESC
+						   </if>
+						   <if test='sort == null or sort == "DA"'>
+						   ORDER BY D.PAY_DATE DESC
+						   </if>
+						   <if test='sort == "PA"'>
+						   ORDER BY D.PAY ASC
+						   </if>
 						    </where>
-						    ORDER BY D.PAY_DATE DESC 
 		                )V
 		       )V2
 		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }

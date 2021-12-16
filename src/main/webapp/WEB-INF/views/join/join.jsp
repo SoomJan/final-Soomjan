@@ -354,7 +354,7 @@ pageEncoding="UTF-8"%>
               },
               error: function (error) {
                 console.log(error);
-              },
+              }
             });
           }
           return false;
