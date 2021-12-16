@@ -1,7 +1,14 @@
 package com.soomjd.soomjan.classRoom.controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,40 +18,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.request.async.StandardServletAsyncWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
+import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
-import com.soomjd.soomjan.common.exception.ExceptionHandlerController;
 import com.soomjd.soomjan.common.fileWrapper.FileWrapper;
-import com.soomjd.soomjan.common.fileWrapper.JSchWrapper;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
-import com.sun.mail.iap.Response;
+import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
-import oracle.jdbc.proxy.annotation.GetProxy;
 
 @Controller
 @RequestMapping("/*/class/*")
-@SessionAttributes({ "currentCount", "classCode", "classDTO", "jandi" })
+@SessionAttributes({ "currentMemberList", "classCode", "classDTO", "jandi", "currentCount"})
 public class ClassRoomController{
 
 	private final ClassRoomService classRoomService;
@@ -62,8 +64,11 @@ public class ClassRoomController{
 		System.out.println("classCode : " + classCode);
 		System.out.println("jandi : " + (JandiDTO) session.getAttribute("jandi"));
 
+		List<Map<String, String>> currentMemberList = classRoomService.selectCurrentMemberList(classCode);
+		
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
-		model.addAttribute("currentCount", classRoomService.selectCurrentCount(classCode));
+		model.addAttribute("currentMemberList", currentMemberList);
+		model.addAttribute("currentCount", currentMemberList.size());
 		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
 
 	}
@@ -97,8 +102,8 @@ public class ClassRoomController{
 
 	}
 
-	@GetMapping("classChat")
-	public void classChat(Model model) {
+	@GetMapping("jandiClassChat")
+	public String jandiClassChat(Model model) {
 
 		int classCode = (int) model.getAttribute("classCode");
 		String email = ((ClassDTO) model.getAttribute("classDTO")).getEmail();
@@ -112,7 +117,29 @@ public class ClassRoomController{
 		System.out.println(chatRoomList);
 		
 		model.addAttribute("chatRoomList", chatRoomList);
+		model.addAttribute("reportStateList", classRoomService.selectAllReportStatement());
 
+		return "jandi/class/classChat";
+	}
+	
+	@GetMapping("mypageClassChat")
+	public String mypageClassChat(Model model, HttpSession session) {
+		
+		int classCode = (int) model.getAttribute("classCode");
+		String email = ((MemberDTO) session.getAttribute("loginMember")).getEmail();
+		System.out.println(email);
+		
+		HashMap<String, Object> chatRoomMap = new HashMap<String, Object>();
+		chatRoomMap.put("classCode", classCode);
+		chatRoomMap.put("email", email);
+		
+		int chatCode = classRoomService.selectClassChatBySSACKEmail(chatRoomMap);
+		System.out.println("chatCode : " + chatCode);
+		
+		model.addAttribute("chatCode", chatCode);
+		model.addAttribute("reportStateList", classRoomService.selectAllReportStatement());
+		
+		return "mypage/class/classChat";
 	}
 
 	@PostMapping("createClass")
@@ -466,6 +493,183 @@ public class ClassRoomController{
 		}
 		
 		return chatFileMap;
+		
+	}
+	
+	@PostMapping("purchaseClass")
+	@ResponseBody
+	public String purchaseClass(@RequestParam String email, HttpServletRequest request) {
+		System.out.println(email);
+		System.out.println(request.getContextPath());
+		
+		ClassDTO classDTO = (ClassDTO) request.getSession().getAttribute("classDTO");
+		String returnMessage = "결제에 실패했습니다.";
+		
+		try {
+			String localPath = "http://localhost:8585" + request.getContextPath();
+			URL kakaoUrl = new URL("https://kapi.kakao.com/v1/payment/ready");
+			HttpURLConnection urlConnection = (HttpURLConnection)kakaoUrl.openConnection();
+			
+			urlConnection.setRequestMethod("POST");
+			urlConnection.setRequestProperty("Authorization", "KakaoAK b4ca33fb39dc934a8fe5ce28a439ef6e");
+			urlConnection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			urlConnection.setDoOutput(true);
+			
+			String cid = "cid=TC0ONETIME";
+			String classCode = "&partner_order_id=" + classDTO.getClassCode();
+			String ssackEmail = "&partner_user_id=" + email;
+			String className = "&item_name=" + classDTO.getTitle();
+			String amount = "&total_amount=" + classDTO.getPrice();
+			String parameters = cid + classCode + ssackEmail + className + amount + "&quantity=1&tax_free_amount=0"
+					+ "&approval_url=" + localPath + "/member/class/purchaseClass/success"
+					+ "&fail_url=" + localPath + "/member/class/purchaseClass/fail"
+					+ "&cancel_url=" + localPath + "/member/class/purchaseClass/cancel";
+			
+			DataOutputStream dos = new DataOutputStream(urlConnection.getOutputStream());
+			dos.write(parameters.getBytes("UTF-8"));
+			dos.flush();
+			dos.close();
+			
+			int result = urlConnection.getResponseCode();
+			InputStream is = null;
+			
+			if(result == 200) {
+				is = urlConnection.getInputStream(); 
+			}else {
+				is = urlConnection.getErrorStream();
+			}
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			
+			returnMessage = br.readLine();
+			System.out.println(returnMessage);
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return returnMessage;
+	}
+	
+	@GetMapping("purchaseClass/success")
+	public String purchaseClassSucceess(HttpSession session, RedirectAttributes rttr) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		ClassDTO classDTO = (ClassDTO) session.getAttribute("classDTO");
+		System.out.println("***********" + classDTO);
+		
+		PaymentDTO payment = new PaymentDTO();
+		payment.setPayType("class");
+		payment.setOwner(member.getName());
+		payment.setAccount(member.getPhone());
+		payment.setBank("카카오페이");
+		payment.setPay(classDTO.getPrice());
+		
+		ClassPurchaseDTO classPurchase = new ClassPurchaseDTO();
+		classPurchase.setClassCode(classDTO.getClassCode());
+		classPurchase.setEmail(member.getEmail());
+		classPurchase.setPayment(payment);
+		
+		String purchaseMessage = "N";
+		
+		if(classRoomService.registPurchaseClass(classPurchase)) {
+			
+			HashMap<String, Object> chatRoomMap = new HashMap<>();
+			chatRoomMap.put("email", member.getEmail());
+			chatRoomMap.put("jandiEmail", classDTO.getEmail());
+			chatRoomMap.put("classCode", classDTO.getClassCode());
+			System.out.println(chatRoomMap);
+
+			if(classRoomService.selectClassChatBySSACKEmail(chatRoomMap) > 0) {
+				purchaseMessage = "Y";
+			}else {
+				if(classRoomService.registChatRoom(chatRoomMap)) {
+					purchaseMessage = "Y";
+				}else {
+					purchaseMessage = "N";
+				}
+			}
+		}else {
+			purchaseMessage = "N";
+		}
+		
+		rttr.addFlashAttribute("purchaseMessage", purchaseMessage);
+		return "redirect:/findclass/class/classRoom?classCode=" + session.getAttribute("classCode");
+	}
+	
+	@GetMapping("purchaseClass/fail")
+	public String purchaseClassFail(HttpSession session, RedirectAttributes rttr) {
+		rttr.addFlashAttribute("purchaseMessage", "N");
+		return "redirect:/findclass/class/classRoom?classCode=" + session.getAttribute("classCode");
+	}
+	
+	@GetMapping("purchaseClass/cancel")
+	public String purchaseClassCancel(HttpSession session, RedirectAttributes rttr) {
+		rttr.addFlashAttribute("purchaseMessage", "C");
+		return "redirect:/findclass/class/classRoom?classCode=" + session.getAttribute("classCode");
+	}
+	
+	@PostMapping("reportMember")
+	public String reportMember(MultipartHttpServletRequest multipartRequest, HttpServletRequest request, RedirectAttributes rttr) {
+
+		MultipartFile file = multipartRequest.getFile("repImage");
+		ReportMemberDTO reportMember = new ReportMemberDTO();
+		reportMember.setContents(request.getParameter("repContents"));
+		reportMember.setRepTypeCode(Integer.parseInt(request.getParameter("repTypeCode")));
+		reportMember.setRepEmail(request.getParameter("repEmail"));
+		reportMember.setEmail(((MemberDTO)request.getSession().getAttribute("loginMember")).getEmail());
+		
+		String result = "";
+		
+		if(!file.isEmpty()){
+			// 파일 저장 객체(따로 뺌)
+			FileWrapper fileWrapper = new FileWrapper();
+			
+			// 파일 , 파라미터 확인
+			System.out.println("file : " + file.getOriginalFilename());
+			
+			// 파일 경로 설정
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String dir = "/uploadFiles/reportFiles/";
+			String filePath = root + dir;
+			
+			// 파일명 변경처리
+			String originFileName = file.getOriginalFilename();
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+			
+			// 파일 저장
+			if (fileWrapper.uploadSingleFile(file, savedName, filePath)) {
+				
+				System.out.println("파일 업로드 성공!");
+				
+				reportMember.setImgPath(savedName);
+				reportMember.setOrgImgPath(originFileName);
+				
+				if(classRoomService.registReportMember(reportMember)) { 
+					result="신고 접수가 완료되었습니다. 감사합니다.";	}
+				else { 
+					result="신고에 실패했습니다."; }
+				
+			} else {
+				return "신고에 실패했습니다.";
+			}
+		}else {
+			if(classRoomService.registReportMember(reportMember)) { 
+				result="신고 접수가 완료되었습니다. 감사합니다.";	}
+			else { 
+				result="신고에 실패했습니다."; }
+		}
+		
+		String requestUri = request.getRequestURI();
+		String intent = requestUri.replace(request.getContextPath(), "");
+		intent = intent.substring(1, intent.indexOf("/", 1));
+		
+		rttr.addFlashAttribute("reportSuccessMessage", result );
+		
+		return "redirect:/" + intent + "/class/"+ intent +"ClassChat";
 		
 	}
 	

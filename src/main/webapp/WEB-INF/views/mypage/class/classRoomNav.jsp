@@ -39,7 +39,7 @@ table{
 				<th width="25"><a href="${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ classCode }" class="room class">클래스</a></th>
 				<th width="25"><a href="${ pageContext.servletContext.contextPath }/mypage/class/classLecture" class="room lecture">강의 영상</a></th>
 				<th width="25"><a href="${ pageContext.servletContext.contextPath }/mypage/class/classLearningBoard" class="room learning">학습방</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/mypage/class/classChat" class="room classChat">채팅</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/mypage/class/mypageClassChat" class="room classChat">채팅</a></th>
 			</tr>
 		</table>
 		<br>

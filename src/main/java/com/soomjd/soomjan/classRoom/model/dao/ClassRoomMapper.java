@@ -6,14 +6,16 @@ import java.util.Map;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
+import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 public interface ClassRoomMapper {
 	
 	ClassDTO selectClassByClassCode(int classCode);
 
-	int selectCurrentCount(int classCode);
+	List<Map<String, String>> selectCurrentMemberList(int classCode);
 
 	List<MokchaDTO> selectMokchaList(int classCode);
 
@@ -67,6 +69,14 @@ public interface ClassRoomMapper {
 
 	List<ClassFileDTO> selectLearningFileListByPostCode(int postCode);
 
+	boolean registPurchaseClass(ClassPurchaseDTO classPurchase);
 
+	boolean registChatRoom(HashMap<String, Object> chatRoomMap);
+
+	int selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap);
+
+	boolean registReportMember(ReportMemberDTO reportMember);
+
+	List<Map<String, Object>> selectAllReportStatement();
 
 }

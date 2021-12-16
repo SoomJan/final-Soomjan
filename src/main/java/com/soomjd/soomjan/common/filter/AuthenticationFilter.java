@@ -74,7 +74,7 @@ public class AuthenticationFilter implements Filter{
 			
 		}else {
 			
-			intent = intent.substring(1, intent.indexOf("/", 1)); 
+			intent = intent.substring(1, intent.indexOf("/", 1));
 			System.out.println("intent : " + intent);
 			
 			HttpSession requestSession = httpRequest.getSession();
