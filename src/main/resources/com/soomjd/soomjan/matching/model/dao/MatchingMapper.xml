@@ -101,5 +101,35 @@
     	 <!-- WHERE EMAIL = #{ email } -->
     </select>
     
+    <select id="ssackList" resultMap="estimateList">
+        SELECT
+    		   C.RNUM
+    		 , C.ESTIMATE_CODE
+		     , C.TITLE
+		     , C.IS_MATCHED
+		  FROM (SELECT ROWNUM RNUM
+		   		, B.ESTIMATE_CODE
+		   		, B.TITLE
+		    	, B.IS_MATCHED
+		    	FROM(SELECT 
+		    	     A.ESTIMATE_CODE
+		    	   , A.TITLE
+		    	   , A.IS_MATCHED
+		    	   FROM ESTIMATE_TBL A
+		    	   WHERE A.EMAIL = #{ searchValue }
+                   ORDER BY A.ESTIMATE_CODE DESC
+                   )B 
+                   <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+              ) C
+              WHERE C.RNUM >= #{ startRow }
+                
+                   
+    
+    </select>
+    
+    
+    
 
 </mapper>
