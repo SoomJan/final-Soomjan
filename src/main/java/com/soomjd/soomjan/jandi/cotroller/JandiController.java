@@ -1,7 +1,15 @@
 package com.soomjd.soomjan.jandi.cotroller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,11 +62,15 @@ public class JandiController {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
+		
+		
 			
 		model.addAttribute("jandi", jandi);
 		
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
+		model.addAttribute("classes", classes);
 		
 		System.out.println("환영합니다. " + jandi.getEmail() + "잔디님!");
 
@@ -585,30 +597,135 @@ public class JandiController {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		Date startDate= myAd.getStartDate();
-		
-		Date today= new Date();
-		
-		
-		long calDate=today.getTime()-startDate.getTime() ;
-		
-		long calDateDays =7- calDate/(24*60*60*1000);
-		
-		System.out.println(calDateDays);
-		
-		model.addAttribute("calDateDays",calDateDays);
-		
-		
-		
-		
-		
 		return "jandi/myAd";
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@GetMapping("jandiBuy")
+	public String jandiBuy(HttpSession session, Model model) {
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
+		
+		List<Integer> classesCodeList  =new ArrayList<Integer>();
+		
+		for(int i=0; i<classes.size(); i++) {
+			
+			int classesCode = classes.get(i).getClassCode();
+			
+			
+			
+			classesCodeList.add(classesCode);
+			
+			
+		}
+		
+		FullAdDTO myAd=null;
+		
+		
+		if(classesCodeList.size()==0) {
+
+		}else {
+			
+			String resultValue="N";
+			
+			for(int i=0;i<classesCodeList.size();i++) {
+				FullAdDTO ad= jandiService.selectAd(classesCodeList.get(i));
+				
+				if(ad!=null) {
+					System.out.println(ad);
+					
+					Date startDate= ad.getStartDate();
+					
+					Date today= new Date();
+					
+					
+					long calDate=today.getTime()-startDate.getTime() ;
+					
+					long calDateDays =7- calDate/(24*60*60*1000);
+					
+					if(calDateDays>=0 && 7>=calDateDays) {
+						myAd = ad;
+						resultValue="Y";
+						
+						break;
+					}	
+				}
+			}
+			model.addAttribute("resultValue", resultValue);
+		}
+		
+		model.addAttribute("myAd", myAd);
+		
+		
+		ClassesDTO myClasses= null;
+		for(int i=0; i<classes.size();i++) {
+			
+			if(myAd.getClassCode()==classes.get(i).getClassCode()) {
+				
+				myClasses=classes.get(i);
+				break;
+			}
+			
+		}
+		
+		model.addAttribute("myClasses", myClasses);
+		
+		
+		
+		return "jandi/jandiBuy";
+	}
+	
+	
+	
+	@PostMapping("jandiPay")
+	@ResponseBody
+	public String jandiPay() {
+
+	    try {
+			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
+			HttpURLConnection serverAddress = (HttpURLConnection) address.openConnection();
+			serverAddress.setRequestMethod("POST");
+			serverAddress.setRequestProperty("Authorization", "KakaoAK 8c3ee8cfc430145172ddcb8047be3afe");
+			serverAddress.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			serverAddress.setDoOutput(true);  //input은 자동적으로 연결
+			String parameter="cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id&item_name=item_name&quantity=quantity&total_amount=total_amount&tax_free_amount=tax_free_amount&approval_url=approval_url&cancel_url=cancel_url&fail_url=fail_url";
+			OutputStream out = serverAddress.getOutputStream();
+			DataOutputStream dataOut= new DataOutputStream(out);
+			
+			dataOut.writeBytes(parameter);
+			dataOut.flush();
+			dataOut.close();
+			
+			int result = serverAddress.getResponseCode();
+			
+			InputStream input; 
+			if(result==200) {
+				input = serverAddress.getInputStream();
+				
+				
+			}else {
+				input = serverAddress.getErrorStream();
+			}
+			
+			InputStreamReader reader = new InputStreamReader(input);
+			
+			
+			BufferedReader bReader = new BufferedReader(reader);
+			
+			return bReader.readLine();
+			
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	    return "jandi/failedPage";
 	}
 	
 

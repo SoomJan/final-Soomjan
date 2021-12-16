@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,15 +58,29 @@ table {
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/nav.jsp" />
-	<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 
-	<div class="sidebar-content">
-		<div align="center">
-			<img src="${ pageContext.servletContext.contextPath }/resources/images/레드잔디.png">
+	<div class="common-sidebar">
+		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
+		<div class="sidebar-content">
+		
+			<h1 align="center">결제하기</h1>
+			<table style="width: 100%">
+				<tr>
+					<td style="width:30%">수업제목</td>
+					<td style="width:70%">${ myClasses.contents }</td>
+				</tr>
+				<tr>
+					<td style="width:30%">원하는 광고 시작날짜</td>
+					<td style="width:70%"><input type="week" id="startDate"></td>
+				</tr>
+				<tr>
+					<td style="width:30%">광고료</td>
+					<td style="width:70%">300,000</td>
+				</tr>
+			</table>
+			
 		</div>
-		<h1 align="center">${ requestScope.message }</h1>
 	</div>
-
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>
