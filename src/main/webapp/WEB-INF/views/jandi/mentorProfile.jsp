@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,31 +133,17 @@ p {
 				<div class="warining">
 					<p>"${ requestScope.jandi.nickName }" 멘토님의 진행중인 클래스</p>
 					<hr class="border-1px-black" />
-					<table style="width: 100%">
+					<table style="width: 100%; overflow-x:scroll">
 						<tr>
-							<td>
-								<div class="imgBox" align="center">
-									<h4>아직 작성된 클래스가 없습니다.</h4>
-								</div>
-							</td>
-							<%-- <td>
-									<div class="imgBox" align="center">
-										<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/maple.jpg">
-										<p>클래스 제목</p>
-									</div>
-								</td>
+
+<%-- 							<c:forEach var="classes" items="${ requestScope.classes }">
 								<td>
 									<div class="imgBox" align="center">
-										<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/maple.jpg">
-										<p>클래스 제목</p>
+										<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ requestScope.classes.filePath}" style="width:20px"> 
+										<h4>아직 작성된 클래스가 없습니다.</h4>
 									</div>
 								</td>
-								<td>
-									<div class="imgBox" align="center">
-										<img class="img" src="${ pageContext.servletContext.contextPath }/resources/images/maple.jpg">
-										<p>클래스 제목</p>
-									</div>
-								</td> --%>
+							</c:forEach> --%>
 						</tr>
 					</table>
 					<br>
@@ -215,7 +203,7 @@ p {
 									success: function(data){
 										
 								
-										$('#profile').attr("src","${ pageContext.servletContext.contextPath }/resources/uploadFiles/"+data);
+										$('#profile').attr("src","${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/"+data);
 									
 										$('.modal fade').attr("hidden",true);
 									},
