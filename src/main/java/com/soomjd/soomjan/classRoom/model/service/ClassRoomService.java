@@ -66,6 +66,10 @@ public interface ClassRoomService {
 
 	List<ClassFileDTO> selectLearningFileListByPostCode(int postCode);
 
+	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
+
+	List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap);
+
 
 
 }

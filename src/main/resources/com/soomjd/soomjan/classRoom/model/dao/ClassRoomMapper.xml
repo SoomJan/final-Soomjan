@@ -345,4 +345,52 @@
     	 WHERE POST_CODE = #{ postCode }
     </select>
     
+    <select id="selectLearningBoardTotalCount" resultType="_int" parameterType="HashMap">
+    	SELECT
+    	       COUNT(*)
+    	  FROM LEARNING_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectLearningBoardList" resultType="hashmap">
+    	SELECT
+    	       F.RNUM
+    	     , F.POST_CODE
+    	     , F.WRITE_DATE
+    	     , F.RE_DATE
+    	     , F.IS_DELETED
+    	     , F.CONTENTS
+    	     , F.EMAIL
+    	     , F.CLASS_CODE
+    	     , F.TITLE
+    	 FROM (SELECT ROWNUM RNUM
+    	 	        , D.POST_CODE
+    	 	        , D.WRITE_DATE
+    	 	        , D.RE_DATE
+    	 	        , D.IS_DELETED
+    	 	        , D.CONTENTS
+    	 	        , D.EMAIL
+    	 	        , D.CLASS_CODE
+    	 	        , D.TITLE
+    	 	     FROM (SELECT
+    	 	     			  L.POST_CODE
+    	 	     			, L.WRITE_DATE
+    	 	     			, L.RE_DATE
+    	 	     			, L.IS_DELETED
+    	 	     			, L.CONTENTS
+    	 	     			, L.EMAIL
+    	 	     			, L.CLASS_CODE
+    	 	     			, L.TITLE
+    	 	     	     FROM LEARNING_TBL L
+    	 	     	    WHERE L.CLASS_CODE = #{ classCode }
+    	 	     	      AND L.IS_DELETED = 'N'
+    	 	     	    ORDER BY L.WRITE_DATE DESC
+    	 	     ) D
+    	    <![CDATA[
+	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
+	        ]]>	
+		  	) F
+		  	WHERE F.RNUM >= #{ selectCriteria.startRow }  
+    </select>
+    
 </mapper>

@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>숨은잔디 로그인</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link

@@ -102,11 +102,10 @@
       <td>${ finishClass.endDate }</td>
       <td><input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }"></td>
       <td><input type="hidden" value="${ finishClass.classCode }"></td>
-      <%-- <c:out value="${ reviewList[0].classCode}"/> --%>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq null  }">
+      <c:if test="${ finishClass.reviewDTO.rvCode eq 0  }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne null  }">
+      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>

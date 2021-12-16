@@ -2,6 +2,11 @@ package com.soomjd.soomjan.mypage.model.dto;
 
 import java.sql.Date;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
+import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
+
 public class ReviewDTO {
 
 	private int rvCode;
@@ -12,10 +17,17 @@ public class ReviewDTO {
 	private int classCode;
 	private String email;
 	
+	private ClassDTO classDTO;
+    private CategoryDTO categoryDTO;
+    private JandiDTO jandiDTO;
+    private PaymentDTO paymentDTO;
+    private PurchaseClassDTO purchaseClassDTO;
+	
 	public ReviewDTO() {}
 
 	public ReviewDTO(int rvCode, Date writeDate, int star, String contents, String isDelete, int classCode,
-			String email) {
+			String email, ClassDTO classDTO, CategoryDTO categoryDTO, JandiDTO jandiDTO, PaymentDTO paymentDTO,
+			PurchaseClassDTO purchaseClassDTO) {
 		super();
 		this.rvCode = rvCode;
 		this.writeDate = writeDate;
@@ -24,6 +36,11 @@ public class ReviewDTO {
 		this.isDelete = isDelete;
 		this.classCode = classCode;
 		this.email = email;
+		this.classDTO = classDTO;
+		this.categoryDTO = categoryDTO;
+		this.jandiDTO = jandiDTO;
+		this.paymentDTO = paymentDTO;
+		this.purchaseClassDTO = purchaseClassDTO;
 	}
 
 	public int getRvCode() {
@@ -82,14 +99,54 @@ public class ReviewDTO {
 		this.email = email;
 	}
 
+	public ClassDTO getClassDTO() {
+		return classDTO;
+	}
+
+	public void setClassDTO(ClassDTO classDTO) {
+		this.classDTO = classDTO;
+	}
+
+	public CategoryDTO getCategoryDTO() {
+		return categoryDTO;
+	}
+
+	public void setCategoryDTO(CategoryDTO categoryDTO) {
+		this.categoryDTO = categoryDTO;
+	}
+
+	public JandiDTO getJandiDTO() {
+		return jandiDTO;
+	}
+
+	public void setJandiDTO(JandiDTO jandiDTO) {
+		this.jandiDTO = jandiDTO;
+	}
+
+	public PaymentDTO getPaymentDTO() {
+		return paymentDTO;
+	}
+
+	public void setPaymentDTO(PaymentDTO paymentDTO) {
+		this.paymentDTO = paymentDTO;
+	}
+
+	public PurchaseClassDTO getPurchaseClassDTO() {
+		return purchaseClassDTO;
+	}
+
+	public void setPurchaseClassDTO(PurchaseClassDTO purchaseClassDTO) {
+		this.purchaseClassDTO = purchaseClassDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewDTO [rvCode=" + rvCode + ", writeDate=" + writeDate + ", star=" + star + ", contents=" + contents
-				+ ", isDelete=" + isDelete + ", classCode=" + classCode + ", email=" + email + "]";
+				+ ", isDelete=" + isDelete + ", classCode=" + classCode + ", email=" + email + ", classDTO=" + classDTO
+				+ ", categoryDTO=" + categoryDTO + ", jandiDTO=" + jandiDTO + ", paymentDTO=" + paymentDTO
+				+ ", purchaseClassDTO=" + purchaseClassDTO + "]";
 	}
-	
-	
-	
+
 	
 	
 	

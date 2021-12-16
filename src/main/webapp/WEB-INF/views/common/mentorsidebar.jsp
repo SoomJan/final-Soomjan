@@ -120,7 +120,7 @@ a {
 						$('#title').focus();
 						$('#title').val().substr(0, 300);
 					}
-					if($('#'))
+					if($('#okBtn'))
 					$('#modalForm').submit();
 				}
 			});
