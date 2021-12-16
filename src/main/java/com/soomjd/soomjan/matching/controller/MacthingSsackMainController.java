@@ -112,6 +112,33 @@ public class MacthingSsackMainController {
 		return "matching/ManteeEstimateDetail";
 	}
 	
+	// 잔디의 메인화면(현황 리스트 보기 클릭 시 나와야 함)
+	@GetMapping("/mantorMain/{memberEmail:.+}")
+	public String mantorMain(Model model,@PathVariable("memberEmail") String memberEmail, @RequestParam(defaultValue = "1") int currentPage) {
+		
+		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
+		System.out.println("loginMember : "+ loginMember);
+		
+		int totalCount = matchingService.selecetMainTotal();
+		
+		int limit = 10;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+		
+		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, "email", loginMember.getEmail());
+		
+		
+		System.out.println(selectCriteria);
+		
+		List<EstimateDTO> ssackList = matchingService.ssackList(selectCriteria);
+		System.out.println(ssackList);
+		model.addAttribute("ssackList",ssackList);
+		model.addAttribute("selectCriteria",selectCriteria);
+		
+		
+		return "matching/mantorMain";
+	}
 
 	
 }

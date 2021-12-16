@@ -10,6 +10,7 @@ import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MatchingMapper {
 
+
 	int registEstimate(EstimateDTO estimate);
 
 	List<CategoryDTO> selectCategory(CategoryDTO category);
@@ -19,4 +20,6 @@ public interface MatchingMapper {
 	int selecetMainTotal();
 	
 	List<EstimateDTO> selectEstimate(SelectCriteria selectCriteria);
+
+	List<EstimateDTO> ssackList(SelectCriteria selectCriteria);
 }
