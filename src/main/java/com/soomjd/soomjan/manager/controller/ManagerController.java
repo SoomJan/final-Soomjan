@@ -481,8 +481,8 @@ public class ManagerController {
 	      searchMap.put("endDate", endDate);
 	      System.out.println("searchMap : " + searchMap);
 	      
+	      
 	    int totalCount = managerService.PurchaseClassTotalCount(searchMap);
-	    
 	    System.out.println("totalCount : " + totalCount);
 	      
 	    int limit = 10;
@@ -504,7 +504,31 @@ public class ManagerController {
 	    
 		List<PurchaseClassDTO> reviewContent = managerService.selectPurchaseClass(selectCriteriawithdate);
 		
+		// 전체 List 조회용 
+		List<PurchaseClassDTO> allContent = managerService.allContent();
+		
+		List<PurchaseClassDTO> yContent = new ArrayList<>();
+		List<PurchaseClassDTO> nContent = new ArrayList<>();
+		
+		for(int i = 0; i < allContent.size(); i++) {
+
+			String status1 = Integer.toString(allContent.get(i).getStatus());
+			
+			if(status1.equals("89")) {
+				yContent.add(allContent.get(i));
+			} else {
+				nContent.add(allContent.get(i));
+			}
+		}
+		
+		System.out.println("yContent : " + yContent);
+		System.out.println("nContent : " + nContent);
+		
 		System.out.println("reviewContent : " + reviewContent);
+		
+		model.addAttribute("allContent", allContent);  // 모든 조회
+		model.addAttribute("yContent", yContent);  // 된 정산 조회
+		model.addAttribute("nContent", nContent);  // 안된 정산 조회
 		
 		model.addAttribute("reviewContent", reviewContent);
 		model.addAttribute("selectCriteria", selectCriteriawithdate);
@@ -515,6 +539,15 @@ public class ManagerController {
 		
 		return "manager/classcal";
 
+	}
+	
+	// 인풋박스 버튼 누르면 정산하기
+	@PostMapping("/classcal")
+	public String classcal() {
+		
+		
+		
+		return "redirect:/manager/classcal";
 	}
 	
 }

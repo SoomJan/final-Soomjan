@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 
 <title>학습방</title>
 
-<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css?" rel="stylesheet"/>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
@@ -41,6 +42,7 @@
 table{
 	text-align: center;
 }
+
 </style>
 <script>
 	function movePost(item){
@@ -61,12 +63,14 @@ table{
 			<p>
 			<table style="width:100%;">
 				<tr>
-				<th align="center" width="25"></th>
+<!-- 				<th align="center" width="25"></th> -->
 				<th align="center" width="50"><h3>${ sessionScope.classDTO.title } 클래스룸 학습방</h3></th>
-				<th align="center" width="25"><a href="${pageContext.servletContext.contextPath}/jandi/class/registLearningPost">게시물추가</a></th>
+<%-- 				<th align="center" width="25"><a href="${pageContext.servletContext.contextPath}/jandi/class/registLearningPost">게시물추가</a></th> --%>
 				</tr>
 			</table>
+			<br>
 			<hr class="border-1px-black" />
+				<a href="${pageContext.servletContext.contextPath}/jandi/class/registLearningPost" style="float: right; margin: 2%; font-weight: 700;">작성하기</a>
 				<table class="learnTable ui basic table " style="width:100%;">
 				<thead>
 					<tr class="trStyle">
@@ -76,12 +80,14 @@ table{
 					</tr>
 				</thead>
 				<tbody>
+ 				<%-- <c:out value="${ requestScope.learningList }"/> --%>
 					<c:forEach var="learningPost" items="${ requestScope.learningList }">
-						<input type="hidden" value="${ learningPost.postCode }">
+ 					<c:set var="writeDate" value="${ learningPost.WRITE_DATE }"/>
+						<input type="hidden" value="${ learningPost.POST_CODE }">
 						<tr onclick="movePost(this)">
-							<td>${ learningPost.nickName }</td>
-							<td>${ learningPost.title }</td>
-							<td>${ learningPost.writeDate }</td>
+							<td>${ learningPost.NICKNAME }</td>
+							<td>${ learningPost.TITLE }</td>
+							<td>${ fn:substring(writeDate, 0, 10) }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

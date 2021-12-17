@@ -53,4 +53,6 @@ public interface MypageMapper {
 
 	List<Map<String, Object>> selectReviewList(Map<String, Object> reviewMap);
 
+	int endClass(List<PurchaseClassDTO> endClassList);
+
 }

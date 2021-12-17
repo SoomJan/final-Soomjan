@@ -113,14 +113,15 @@ function mokchaToggle(item) {
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
 				<h2>4개의 목차</h2>
-				<hr>
-				<c:forEach var="mokcha" items="${ mokchaList }">
+				<hr style="background-color:black; border: 0; height: 1px;">
+				<br>
+				<c:forEach var="mokcha" items="${ requestScope.lectureList }">
 					<div class="mokcha">
-						<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼</h3>
+						<h3 onclick="mokchaToggle(this);">${ mokcha.MOKCHA_NAME } ▼</h3>
 						<div class="mokchaDiv" style="display:none;">
-						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
+						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.CONTENTS }">
 							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
-								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
+								<c:if test="${ mokcha.MOKCHA_CODE eq mokchaFile.mokchaCode }">
 									<video class="mokcha" controls
 										src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
 								</c:if>
@@ -128,8 +129,10 @@ function mokchaToggle(item) {
 						</div>
 					</div>
 					<br>
-					<hr>
+					<hr style="background-color: lightgray; border: 0; height: 1px;">
 				</c:forEach>
+				<br><br>
+								<jsp:include page="../../common/Paging.jsp" />
 				<br>
 			</div>
 		</div>

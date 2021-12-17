@@ -437,6 +437,17 @@
    		 )
 	</update>
 	
+	
+	<select id="allContent" resultMap="purchaseClassSet">
+		 SELECT *
+		  FROM (SELECT *
+				  FROM (SELECT * 
+           				   FROM PAYMENT_TBL P
+          				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
+          				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)))
+	
+	</select>
+	
 	 <select id="selectPurchaseClass" resultMap="purchaseClassSet" parameterType="HashMap">
 	 
 	  SELECT V2.RNUM
@@ -447,14 +458,35 @@
            				   FROM PAYMENT_TBL P
           				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
           				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
-          				   <where> 
-						    	 <if test='startDate != null'>
+          				   <where>
+          				   <if test='(startDate != "" and startDate != null) and searchCondition != null'>
 						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
-						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						       	      <if test='searchCondition == "1"'>
+									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	   AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
 						     	 </if>
-						     	 <if test='startDate == null'>
+						     	 
+						     	 <if test='(startDate != "" and startDate != null) and searchCondition == null'>
+						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
 						     	 </if>
-						     </where>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition != null'>
+						    		<if test='searchCondition == "1"'>
+									 	   PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	   CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition == null'>
+						     	 </if>
+						     	 </where>
 	 						ORDER BY CLASS_PURC_CODE DESC )V)V2
 	 						WHERE V2.RNUM BETWEEN ${ startRow } AND ${ endRow }
 	</select>
@@ -469,24 +501,34 @@
           				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
           				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
 						     <where> 
-						    	 <if test='startDate != null'>
+						    	 <if test='(startDate != "" and startDate != null) and searchCondition != null'>
 						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
 						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
 						       	      <if test='searchCondition == "1"'>
 									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
 									 </if>
 									 <if test='searchCondition == "2"'>
-									 	  AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 	   AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
 									 </if>
 						     	 </if>
-						     	 <if test='startDate == null'>
-						     	 	 <if test='searchCondition == "1"'>
-									 	 AND  PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+						     	 
+						     	 <if test='(startDate != "" and startDate != null) and searchCondition == null'>
+						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition != null'>
+						    		<if test='searchCondition == "1"'>
+									 	   PC.EMAIL LIKE '%' || #{ searchValue } || '%'
 									 </if>
 									 <if test='searchCondition == "2"'>
-									 	 AND  CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 	   CT.TITLE LIKE '%' || #{ searchValue } || '%'
 									 </if>
 						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition == null'>
+						     	 </if>
+						     	
 						     </where>)V)V2
 	
 	</select>

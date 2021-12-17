@@ -94,5 +94,11 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.selectcalAdList(key);
 	}
 
+	@Override
+	public int updateAdDate(Map<String, Object> key) {
+		// TODO Auto-generated method stub
+		return jandiMapper.updateAdDate(key);
+	}
+
 
 }

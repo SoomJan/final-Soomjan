@@ -218,6 +218,14 @@
 	
 	</select>
 	
+	<update id="insertAdDate">
+		UPDATE
+			   AD_TBL
+		   SET START_DATE=#{ selectedDate }
+		 WHERE AD_CODE=#{adCode}  	   
+	
+	</update>
+	
 	
 
 </mapper>

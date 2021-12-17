@@ -156,7 +156,7 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.inactivemanager(checkbox);
 	}
 
-	// 모든 결제내역 조회(페이징, 날짜, 검색)
+	// 결제내역 조회(페이징, 날짜, 검색)
 	@Override
 	public List<PurchaseClassDTO> selectPurchaseClass(SelectCriteriawithdate selectCriteriawithdate) {
 		return mapper.selectPurchaseClass(selectCriteriawithdate);
@@ -166,6 +166,13 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public int PurchaseClassTotalCount(Map<String, String> searchMap) {
 		return mapper.PurchaseClassTotalCount(searchMap);
+	}
+
+
+	// 모든 결제 내역 조회(정산 처리용)
+	@Override
+	public List<PurchaseClassDTO> allContent() {
+		return mapper.allContent();
 	}
 
 }

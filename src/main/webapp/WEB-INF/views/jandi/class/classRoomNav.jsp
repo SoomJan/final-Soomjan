@@ -33,7 +33,20 @@ table th{
 	text-align: center;
 }
 
+.menus {
+  margin: 0 auto;
+  border: none;
+  width: 300px;
+}
+
+.menu {
+  padding: 0px;
+  text-align: center;
+  border: none;
+}
+
 </style>
+
 <script>
 	function deleteClass(){
 		if(confirm(" 해당 클래스를 삭제 하시겠습니까? "+ "(클래스를 듣는 인원이 한명이라도 있으면 삭제할 수 없습니다.)")){
@@ -44,21 +57,30 @@ table th{
 			}
 		}
 	};
+	
+/* 	$(document).on('click', '.menu', function(e){
+	    e.preventDefault();  
+	  $(this).css('background-color', 'green');
+	   $('.menu').not($(this)).css('background-color', '#fff');
+	}) */
+	
+
 </script>
 </head>
 <body>
 	<div class="sidebar-content" style="background:">
-		<button class="btn btn-primary" style="float:right" onclick="deleteClass();">삭제</button>
+		<button class="btn btn-primary" style="float:right" onclick="deleteClass();">클래스 삭제</button>
+		<br><br><br>
 		<p class="title"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
-		<p align="right"><b>인원 ${ sessionScope.currentCount } / ${ sessionScope.classDTO.maxCount } 명</b></p>
+		<p align="right"><b>(인원 ${ sessionScope.currentCount } / ${ sessionScope.classDTO.maxCount } 명)</b></p>
 		<br>
 		<!-- 탭 메뉴 상단 시작 -->
 		<table >
-			<tr>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom?classCode=${ classCode }" class="room class">클래스</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture" class="room lecture">강의 영상</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLearningBoard" class="room learning">학습방</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/jandiClassChat" class="room classChat">채팅</a></th>
+			<tr class="menus">
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom?classCode=${ classCode }" class="room class menu">클래스</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture" class="room lecture menu">강의 영상</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLearningBoard" class="room learning menu">학습방</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/jandiClassChat" class="room classChat menu">채팅</a></th>
 			</tr>
 		</table>
 		<br>

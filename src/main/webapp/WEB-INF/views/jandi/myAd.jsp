@@ -66,10 +66,8 @@ table {
 			<c:set var="resultValue" value="${ requestScope.resultValue}"></c:set>
 			
 			<c:choose>
-				<c:when test="${ resultValue eq Y }">
-					<button type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy'">결제하기</button>
-				</c:when>
-				<c:otherwise>
+				<c:when test="${ resultValue eq N }">
+					
 					<c:choose>
 						<c:when test="${ days eq 0 }">
 							<h3 style="color: #147900;" align="right">오늘 광고 종료!!</h3>
@@ -78,6 +76,9 @@ table {
 							<h3 style="color: #147900;" align="right">광고 종료 D - ${ requestScope.calDateDays }</h3>
 						</c:otherwise>
 					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<button type="button" style="float:right" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy'">결제하기</button>
 				</c:otherwise> 
 			</c:choose>
 			

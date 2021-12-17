@@ -9,6 +9,7 @@ import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ReviewDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
@@ -18,9 +19,9 @@ public interface ClassRoomService {
 
 	List<Map<String, String>> selectCurrentMemberList(int classCode);
 
-	List<MokchaDTO> selectMokchaList(int classCode);
+	List<MokchaDTO> selectMokchaList(int classCode); 
 
-	List<LearningPostDTO> selectLearningPostList(int classCode);
+	List<LearningPostDTO> selectLearningPostList(int classCode); 
 	
 	List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap);
 
@@ -80,7 +81,20 @@ public interface ClassRoomService {
 	
 	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
 
-	List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap);
+	List<Map<String, Object>> selectLearningBoardList(Map<String, Object> learningMap);
+
+	int selectClassLectureTotalCount(Map<String, Object> searchMap);
+
+	List<Map<String, Object>> selectLectureList(Map<String, Object> lectureMap);
+
+	int selectReviewListByClassCodeTotalCount(Map<String, Object> searchMap);
+
+	List<ReviewDTO> selectReviewListByClassCode(Map<String, Object> criteriaMap);
+
+	double selectAvgReviewStar(int classCode);
+
+
+	boolean viewsUp(Map<String, Object> map);
 
 
 

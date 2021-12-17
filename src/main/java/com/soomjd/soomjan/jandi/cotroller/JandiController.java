@@ -681,7 +681,7 @@ public class JandiController {
 	
 	@PostMapping("jandiPay")
 	@ResponseBody
-	public String jandiPay() {
+	public String jandiPay(@RequestParam(name="selectedDate") String selectedDate, @RequestParam(name="adCode") String adCode, Model model) {
 
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -690,7 +690,16 @@ public class JandiController {
 			serverAddress.setRequestProperty("Authorization", "KakaoAK 8c3ee8cfc430145172ddcb8047be3afe");
 			serverAddress.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 			serverAddress.setDoOutput(true);  //input은 자동적으로 연결
-			String parameter="cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id&item_name=item_name&quantity=quantity&total_amount=total_amount&tax_free_amount=tax_free_amount&approval_url=approval_url&cancel_url=cancel_url&fail_url=fail_url";
+			String parameter="cid=TC0ONETIME"
+							+"&partner_order_id=partner_order_id"
+							+"&partner_user_id=partner_user_id"
+							+"&item_name=광"
+							+"&quantity=1"
+							+"&total_amount=10"
+							+"&tax_free_amount=0"
+							+"&approval_url=http://localhost:8888/soomjan/jandi/myAd"
+							+"&cancel_url=http://localhost:8888/soomjan/jandi/failedPage"
+							+"&fail_url=http://localhost:8888/soomjan/jandi/failedPage";
 			OutputStream out = serverAddress.getOutputStream();
 			DataOutputStream dataOut= new DataOutputStream(out);
 			
@@ -714,13 +723,38 @@ public class JandiController {
 			
 			BufferedReader bReader = new BufferedReader(reader);
 			
-			return bReader.readLine();
+			
+			if(bReader.readLine() != null) {
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				
+				Date startDate=sdf.parse(selectedDate);
+				
+				Map<String, Object> key = new HashMap<>();
+				
+				key.put("startDate", startDate);
+				key.put("adCode", Integer.parseInt(adCode));
+				
+				int up = jandiService.updateAdDate(key);
+				
+				if(up>0) {
+					return bReader.readLine();
+				}else {
+					model.addAttribute("message", "결제에 실패하였습니");
+					return "/jandi/failedPage";
+				}
+				
+			}
+			
 			
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

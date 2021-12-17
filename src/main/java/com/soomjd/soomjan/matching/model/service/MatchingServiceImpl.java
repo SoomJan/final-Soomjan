@@ -64,6 +64,13 @@ public class MatchingServiceImpl implements MatchingService{
 		return mapper.ssackList(selectCriteria);
 	}
 
+	// 견적서 디테일 보는 화면
+	@Override
+	public List<EstimateDTO> estimateDetail(String estimateCode) {
+		
+		return mapper.estimateDetail(estimateCode);
+	}
+
 //
 //	@Override
 //	public List<EstimateDTO> selectEstimate(Map<String, Object> map, SelectCriteria selectCriteria) {

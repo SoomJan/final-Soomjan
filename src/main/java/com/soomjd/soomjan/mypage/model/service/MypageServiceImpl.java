@@ -140,6 +140,12 @@ public class MypageServiceImpl implements MypageService{
 	public List<Map<String, Object>> selectReviewList(Map<String, Object> reviewMap) {
 		return mapper.selectReviewList(reviewMap);
 	}
+
+	@Override
+	public int endClass(List<PurchaseClassDTO> endClassList) {
+		
+		return mapper.endClass(endClassList);
+	}
 	
 	
 

@@ -546,5 +546,10 @@
 		  	    ) F
 		  	    WHERE F.RNUM >= #{ selectCriteria.startRow }   
 	</select>
+	
+	<update id="endClass" parameterType="purchaseClassSet">
+	
+	
+	</update>
 
 </mapper>

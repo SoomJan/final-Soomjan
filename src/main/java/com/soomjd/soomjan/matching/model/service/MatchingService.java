@@ -21,6 +21,11 @@ public interface MatchingService {
 
 	List<EstimateDTO> selectEstimate(SelectCriteria selectCriteria);
 
+	// 잔디가 견적서 현황을 누르면 자신이 쓴 견적서 가져오기
 	List<EstimateDTO> ssackList(SelectCriteria selectCriteria);
+
+	
+	// 견적서 타이틀 클릭 시 디테일 데이터 가져오기
+	List<EstimateDTO> estimateDetail(String estimateCode);
 
 }

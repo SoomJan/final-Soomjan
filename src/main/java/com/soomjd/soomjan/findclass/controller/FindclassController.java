@@ -7,14 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.service.FindclassService;
 import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 
 @Controller
 @RequestMapping("/findclass/*")
 public class FindclassController {
-	
+
 	private FindclassService findClassService;
 	
 	@Autowired
@@ -24,6 +23,7 @@ public class FindclassController {
 	
 	// GETMapping-> 주소를 통해서 페이지를 이동시키기
 	// POSTMapping 
+
 	@GetMapping("/findAllClassMain")
 	public void findAllClassMain() {
 		System.out.println("확인");

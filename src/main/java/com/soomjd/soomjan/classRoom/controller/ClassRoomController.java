@@ -37,6 +37,7 @@ import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
 import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ReviewDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
 import com.soomjd.soomjan.common.fileWrapper.FileWrapper;
 import com.soomjd.soomjan.common.paging.Pagenation;
@@ -59,7 +60,8 @@ public class ClassRoomController{
 	}
 
 	@GetMapping("classRoom")
-	public void classRoom(Model model, @RequestParam int classCode, HttpSession session) {
+	public void classRoom(Model model, @RequestParam int classCode, HttpSession session, @RequestParam(required = false) String searchCondition,
+			@RequestParam(required = false) String searchValue, @RequestParam(defaultValue = "1") int currentPage) {
 
 		model.addAttribute("classCode", classCode);
 		model.addAttribute("jandi", session.getAttribute("jandi"));
@@ -68,20 +70,69 @@ public class ClassRoomController{
 
 		List<Map<String, String>> currentMemberList = classRoomService.selectCurrentMemberList(classCode);
 		
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("classCode", classCode);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = classRoomService.selectReviewListByClassCodeTotalCount(searchMap);
+		
+		int limit = 5;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		System.out.println("selectCriteria : " + selectCriteria);
+		
+		Map<String, Object> criteriaMap = new HashMap<String, Object>();
+		criteriaMap.put("selectCriteria", selectCriteria);
+		criteriaMap.put("classCode", classCode);
+		
+		List<ReviewDTO> reviewList = classRoomService.selectReviewListByClassCode(criteriaMap);
+		System.out.println(reviewList.get(0));
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
 		model.addAttribute("currentMemberList", currentMemberList);
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewCount", totalCount);
 		model.addAttribute("currentCount", currentMemberList.size());
 		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
+		model.addAttribute("selectCriteria", selectCriteria);
+		model.addAttribute("classStar", classRoomService.selectAvgReviewStar(classCode));
 
 	}
 
 	@GetMapping("classLecture")
-	public void classLecture(Model model) {
+	public void classLecture(Model model, @RequestParam(defaultValue = "1") int currentPage) {
 
 		int classCode = (int) model.getAttribute("classCode");
 		System.out.println(classCode);
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("classCode", classCode);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = classRoomService.selectClassLectureTotalCount(searchMap);
+		System.out.println("totalCount : " + totalCount);
+		
+		int limit = 5;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		
+		Map<String, Object> lectureMap = new HashMap<>();
+		lectureMap.put("selectCriteria", selectCriteria);
+		lectureMap.put("classCode", classCode);
+		System.out.println("learningMap : " + lectureMap);
+		
+		List<Map<String, Object>> lectureList = classRoomService.selectLectureList(lectureMap);
+		System.out.println("lectureList : " + lectureList);
 
-		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("lectureList", lectureList);
+		model.addAttribute("selectCriteria", selectCriteria);
+		/*
+		 * model.addAttribute("mokchaList",
+		 * classRoomService.selectMokchaList(classCode));
+		 */
 		model.addAttribute("mokchaFileList", classRoomService.selectMokchaFileList(classCode));
 
 	}
@@ -98,7 +149,7 @@ public class ClassRoomController{
 		int totalCount = classRoomService.selectLearningBoardTotalCount(searchMap);
 		System.out.println("totalCount : " + totalCount);
 		
-		int limit = 10;
+		int limit = 5;
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
@@ -108,12 +159,13 @@ public class ClassRoomController{
 		learningMap.put("classCode", classCode);
 		System.out.println("learningMap : " + learningMap);
 		
-		List<LearningPostDTO> learningList = classRoomService.selectLearningBoardList(learningMap);
+		List<Map<String, Object>> learningList = classRoomService.selectLearningBoardList(learningMap);
 		System.out.println("learningList : " + learningList);
 		
 		model.addAttribute("learningList", learningList);
 		model.addAttribute("selectCriteria", selectCriteria);
 		model.addAttribute("learningPostList", classRoomService.selectLearningPostList(classCode));
+		 
 
 	}
 
@@ -250,7 +302,8 @@ public class ClassRoomController{
 		FileWrapper fileWrapper = new FileWrapper();
 
 		// 파일 , 파라미터 확인
-		System.out.println("file : " + file.getOriginalFilename());
+		System.out.println("file : " + file.getSize());
+		System.out.println("file : " + file.getName());
 		System.out.println("mokchaCode : " + mokchaCode);
 
 		// 파일 경로 설정
@@ -695,6 +748,32 @@ public class ClassRoomController{
 		rttr.addFlashAttribute("reportSuccessMessage", result );
 		
 		return "redirect:/" + intent + "/class/"+ intent +"ClassChat";
+		
+	}
+	
+	@GetMapping("viewsUp")
+	public String viewsUp(Model model, @RequestParam String classCode, HttpSession session) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		System.out.println("받아온 클래스 코드 : " + classCode);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("classCode", classCode);
+		
+		if(member != null) {
+			System.out.println("현재 로그인 상태인 이메일 : " + member.getEmail());
+			map.put("email", member.getEmail());
+		}
+		
+		boolean viewsUp = classRoomService.viewsUp(map);
+		
+		if(viewsUp) {
+			System.out.println(classCode + "번 클래스의 조회수가 업데이트 되었습니다.");
+			return "redirect:/findclass/class/classRoom?classCode=" + classCode;
+		} else {
+			System.out.println(classCode + "번 클래스를 운영하는 잔디의 계정으로는 조회수가 올라가지 않습니다.");
+			return "redirect:/findclass/class/classRoom?classCode=" + classCode;
+		}
 		
 	}
 	
