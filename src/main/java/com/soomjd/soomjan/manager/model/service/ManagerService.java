@@ -61,10 +61,13 @@ public interface ManagerService {
 
 	int inactiveManager(List<Integer> checkbox);
 
-	// 모든 결제상황 조회(페이징, 검색처리)
+	// 결제상황 조회(페이징, 검색처리)
 	List<PurchaseClassDTO> selectPurchaseClass(SelectCriteriawithdate selectCriteriawithdate);
 
 	// 결제 정보 갯수 조회(날짜, 검색 조건, 검색 내용)
 	int PurchaseClassTotalCount(Map<String, String> searchMap);
+
+	// 모든 결제상황 조회, 정산 처리용
+	List<PurchaseClassDTO> allContent();
 
 }

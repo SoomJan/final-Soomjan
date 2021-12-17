@@ -56,10 +56,13 @@ public interface ManagerMapper {
 
 	int inactivemanager(List<Integer> checkbox);
 
-	// 모든 결제내역 조회(페이징, 날짜, 검색)
+	// 결제내역 조회(페이징, 날짜, 검색)
 	List<PurchaseClassDTO> selectPurchaseClass(SelectCriteriawithdate selectCriteriawithdate);
 
 	// 조건에 맞는 결제내역 찾기
 	int PurchaseClassTotalCount(Map<String, String> searchMap);
+
+	// 모든 결제 내역 조회(정산 처리용)
+	List<PurchaseClassDTO> allContent();
 	
 }
