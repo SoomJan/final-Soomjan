@@ -64,6 +64,7 @@ table {
 		<div class="sidebar-content">
 		
 			<h1 align="center">결제하기</h1>
+			<button type="button" id="kakao-pay" style="align-items: right">결제하기</button>
 			<table style="width: 100%">
 				<tr>
 					<td style="width:30%">수업제목</td>
@@ -78,8 +79,22 @@ table {
 					<td style="width:70%">300,000</td>
 				</tr>
 			</table>
-			
 		</div>
+		<script type="text/javascript">
+			${function(){
+				$('#kakaopay').click(function(){
+					$.ajax({
+						url:''
+					})
+					
+					
+				})
+			}}
+			
+		
+		</script>		
+		
+		
 	</div>
 </body>
 <jsp:include page="../common/footer.jsp" />

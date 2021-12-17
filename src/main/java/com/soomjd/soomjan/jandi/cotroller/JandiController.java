@@ -690,7 +690,16 @@ public class JandiController {
 			serverAddress.setRequestProperty("Authorization", "KakaoAK 8c3ee8cfc430145172ddcb8047be3afe");
 			serverAddress.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 			serverAddress.setDoOutput(true);  //input은 자동적으로 연결
-			String parameter="cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id&item_name=item_name&quantity=quantity&total_amount=total_amount&tax_free_amount=tax_free_amount&approval_url=approval_url&cancel_url=cancel_url&fail_url=fail_url";
+			String parameter="cid=TC0ONETIME"
+							+"&partner_order_id=partner_order_id"
+							+"&partner_user_id=partner_user_id"
+							+"&item_name=광"
+							+"&quantity=1"
+							+"&total_amount=10"
+							+"&tax_free_amount=0"
+							+"&approval_url=http://localhost:8888/soomjan/jandi/myAd"
+							+"&cancel_url=http://localhost:8888/soomjan/jandi/failedPage"
+							+"&fail_url=http://localhost:8888/soomjan/jandi/failedPage";
 			OutputStream out = serverAddress.getOutputStream();
 			DataOutputStream dataOut= new DataOutputStream(out);
 			
