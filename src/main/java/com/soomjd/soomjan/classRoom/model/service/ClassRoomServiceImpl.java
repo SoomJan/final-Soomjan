@@ -19,35 +19,34 @@ import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 @Service
 public class ClassRoomServiceImpl implements ClassRoomService {
 
-	private final ClassRoomMapper classRoomMapper;
+private final ClassRoomMapper classRoomMapper;
 
 	@Autowired
 	public ClassRoomServiceImpl(ClassRoomMapper classRoomMapper) {
 		this.classRoomMapper = classRoomMapper;
 	}
-
+	
 	@Override
 	public ClassDTO selectClassByClassCode(int classCode) {
 		return classRoomMapper.selectClassByClassCode(classCode);
 	}
-
+	
 	@Override
 	public List<Map<String, String>> selectCurrentMemberList(int classCode) {
 		return classRoomMapper.selectCurrentMemberList(classCode);
 	}
-
 	
-	 @Override public List<MokchaDTO> selectMokchaList(int classCode) { 
-		 return classRoomMapper.selectMokchaList(classCode); 
-	 }
+	@Override 
+	public List<MokchaDTO> selectMokchaList(int classCode) { 	 
+		return classRoomMapper.selectMokchaList(classCode); 
+	}
 	 
-
 	
-	 @Override public List<LearningPostDTO> selectLearningPostList(int classCode) { 
+	@Override 
+	public List<LearningPostDTO> selectLearningPostList(int classCode) { 
 		 return classRoomMapper.selectLearningPostList(classCode); 
-	 }
+	}
 	 
-
 	@Override
 	public List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap) {
 		return classRoomMapper.selectChatRoomList(chatRoomMap);
@@ -181,6 +180,11 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 	@Override
 	public int selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap) {
 		return classRoomMapper.selectClassChatBySSACKEmail(chatRoomMap);
+	}
+	@Override
+	public boolean viewsUp(Map<String, Object> map) {
+		
+		return classRoomMapper.viewsUp(map) > 0? true:false;
 	}
 
 	@Override

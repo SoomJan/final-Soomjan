@@ -3,6 +3,7 @@ package com.soomjd.soomjan.mypage.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -184,7 +185,7 @@ public class MypageController {
 		int totalCount = mypageService.selectTakingTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
 
-		int limit = 1;
+		int limit = 5;
 		int buttonAmount = 5;
 
 		SelectCriteria selectCriteria = null;
@@ -201,6 +202,36 @@ public class MypageController {
 		searchMap.put("selectCriteria", selectCriteria);
 
 		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(searchMap);
+		
+		List<PurchaseClassDTO> endClassList = new ArrayList<>();
+		
+		/* 종료일이 지난 클래스들 수강상태 변경하기 */
+		for(PurchaseClassDTO pc : pClass) {
+			
+			Date now = new java.util.Date();
+			
+			System.out.println(pc.getEndDate());
+			System.out.println(now);
+			
+			if(pc.getEndDate().before(now)) {
+				
+				endClassList.add(pc);
+			}
+		}
+		
+		for(PurchaseClassDTO ec : endClassList) {
+			System.out.println("기간이 지난 클래스 --------");
+			System.out.println(ec);
+		}
+		
+		int endClass = mypageService.endClass(endClassList);
+		
+		if(endClass == endClassList.size()) {
+			System.out.println("총 " + endClass + "의 클래스가 수강 완료로 전환되었습니다.");
+		} else {
+			System.out.println(endClass + "개의 클래스 수강 완료 전환이 실패하였습니다.");
+		}
+		
 
 		mv.addObject("classList", pClass);
 		mv.addObject("selectCriteria", selectCriteria);

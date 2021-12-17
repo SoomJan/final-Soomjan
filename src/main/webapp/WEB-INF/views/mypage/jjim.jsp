@@ -125,7 +125,7 @@
                       </div>
                     </td>
                     <td class="imgtd"><img
-                        src="${ pageContext.servletContext.contextPath }/resources/images/${ jjimList[size].filePath }">
+                        src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ jjimList[size].filePath }">
                     </td>
                     <td>
                       <p class="class-title">${ jjimList[size].title }</p>${ jjimList[size].categoryName }

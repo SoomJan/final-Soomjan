@@ -46,7 +46,6 @@
         <div class="dropsearch">
           <form id="form" action="${ pageContext.servletContext.contextPath }/mypage/buy" method="get">
             <input type="hidden" name="currentPage" value="1" />
-            <!-- <input type="hidden" id="dateSort" name="dateSort" value="${ dateSort }" /> -->
             <input type="hidden" id="sort" name="sort" value="${ sort }" />
 		<select class="ui dropdown" id="searchCondition" name="searchCondition">
   			<option value="1">클래스 명</option>
@@ -87,7 +86,7 @@
   <tbody>
   <c:forEach var="size" begin="0" end="${ fn:length(buyList)-1 }">
     <tr class="classInfo${ size + 1}">
-      <td class="table-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ buyList[size].filePath }"></td>
+      <td class="table-img"><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ buyList[size].filePath }"></td>
       <td style="text-align: left;"><div class="td2"><p class="table-title">${ buyList[size].title }</p><p class="table-date">${ buyList[size].nickName }</p></div></td>
       <td>${ buyList[size].payDate }</td>
       <td>${ buyList[size].pay } 원</td>

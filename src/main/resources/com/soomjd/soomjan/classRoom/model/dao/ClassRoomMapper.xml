@@ -64,7 +64,6 @@
     	<result column="NICKNAME" property="nickName"/>
     </resultMap>
     
-    
     <select id="selectClassByClassCode" resultMap="classResultMap">
     	SELECT
     			  C.CLASS_CODE
@@ -578,5 +577,18 @@
 		  	) F
 		  	WHERE F.RNUM >= #{ selectCriteria.startRow }
     </select>
+    
+    <update id="viewsUp" parameterType="HashMap">
+        UPDATE 
+		       CLASS_TBL A 
+		   SET A.VIEWS = A.VIEWS + 1
+		   <where>
+		       A.CLASS_CODE = #{ classCode }
+		    <if test='email != null'>
+		        AND A.EMAIL <![CDATA[ <> ]]> #{ email }   
+		    </if>
+		    </where>
+		   
+    </update>
     
 </mapper>

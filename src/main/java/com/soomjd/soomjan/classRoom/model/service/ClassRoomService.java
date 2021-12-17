@@ -94,6 +94,8 @@ public interface ClassRoomService {
 	double selectAvgReviewStar(int classCode);
 
 
+	boolean viewsUp(Map<String, Object> map);
+
 
 
 }
