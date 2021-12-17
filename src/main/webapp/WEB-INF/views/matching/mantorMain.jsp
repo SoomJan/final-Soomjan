@@ -75,7 +75,7 @@ main { width: 90% !important;}
 							<c:forEach var="ssack" items="${ ssackList }">
 								<tr>
 									<th width="10">${ ssack.estimateCode }</th>
-									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate">${ ssack.title }</a></th>
+									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate/${ sessionScope.loginMember.email}">${ ssack.title }</a></th>
 									<th width="30">${ ssack.isMatched }</th> 
 								
 								</tr>
@@ -89,6 +89,12 @@ main { width: 90% !important;}
 							</tbody>
 						</table>
 					</div>
+					<br>
+							<div class="write">
+								<a href="${ pageContext.servletContext.contextPath }/matching/manteeWrite">
+								<button class="writeBtn">견적서 작성</button>
+								</a>
+							</div>
 					
 			 <jsp:include page="../common/Paging.jsp" />
 						</div>
