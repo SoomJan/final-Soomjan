@@ -88,7 +88,6 @@ public class ClassRoomController{
 		criteriaMap.put("classCode", classCode);
 		
 		List<ReviewDTO> reviewList = classRoomService.selectReviewListByClassCode(criteriaMap);
-		System.out.println(reviewList.get(0));
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
 		model.addAttribute("currentMemberList", currentMemberList);
 		model.addAttribute("reviewList", reviewList);
