@@ -64,22 +64,60 @@ table {
 		<div class="sidebar-content">
 		
 			<h1 align="center">결제하기</h1>
-			<table style="width: 100%">
-				<tr>
-					<td style="width:30%">수업제목</td>
-					<td style="width:70%">${ myClasses.contents }</td>
-				</tr>
-				<tr>
-					<td style="width:30%">원하는 광고 시작날짜</td>
-					<td style="width:70%"><input type="week" id="startDate"></td>
-				</tr>
-				<tr>
-					<td style="width:30%">광고료</td>
-					<td style="width:70%">300,000</td>
-				</tr>
-			</table>
-			
+			<button type="button" id="kakao-pay" style="float: right">결제하기</button>
+			<form action="${ pageContext.servletContext.contextPath }/jandi/jandiPay" method="POST" id="dateForm">
+				<table style="width: 100%">
+					<tr>
+						<td style="width:30%">수업제목</td>
+						<td style="width:70%">${ myClasses.contents }</td>
+					</tr>
+					<tr>
+						<td style="width:30%">원하는 광고 시작날짜</td>
+						<td style="width:70%"><input type="week" name="startDate"></td>
+					</tr>
+					<tr>
+						<td style="width:30%">광고료</td>
+						<td style="width:70%">300,000</td>
+					</tr>
+				</table>
+			</form>
+
 		</div>
+		<script type="text/javascript">
+		
+			let selectedDate = $('#dateForm').startDate.val();
+			let contents=${ myClasses.contents};
+			let adCode=${ myAd.adCode };
+			
+			$(function(){
+				$('#kakao-pay').click(function(){
+					$.ajax({
+						url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
+						dataType:'json',
+						data:{"selectedDate" : selectedDate,
+							  "adCode":adCode}
+						
+					})
+					.done(function(json){
+						alert("결제가 완료되었습니다.");
+						
+						var box=resp.next_redirect_pc_url;
+						
+						location.href="${ pageContext.servletContext.contextPath }/jandi/myAd";
+
+					})
+					.fail(function(xhr, status, error){
+						alert(error);
+					});
+					
+					
+				});
+			});
+			
+		
+		</script>		
+		
+		
 	</div>
 </body>
 <jsp:include page="../common/footer.jsp" />
