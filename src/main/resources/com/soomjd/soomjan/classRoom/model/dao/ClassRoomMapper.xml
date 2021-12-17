@@ -105,7 +105,7 @@
 		 FROM LECTURE_MOKCHA_TBL M
 		WHERE M.CLASS_CODE = #{ classCode }
 		  AND M.IS_DELETED = 'N'
-		ORDER BY M.MOKCHA_CODE DESC
+		ORDER BY M.MOKCHA_CODE
     </select>
     
     <select id="selectLearningPostList" resultMap="learningPostResultMap">
@@ -449,6 +449,7 @@
     	     , F.EMAIL
     	     , F.CLASS_CODE
     	     , F.TITLE
+    	     , F.NICKNAME
     	 FROM (SELECT ROWNUM RNUM
     	 	        , D.POST_CODE
     	 	        , D.WRITE_DATE
@@ -458,6 +459,7 @@
     	 	        , D.EMAIL
     	 	        , D.CLASS_CODE
     	 	        , D.TITLE
+    	 	        , D.NICKNAME
     	 	     FROM (SELECT
     	 	     			  L.POST_CODE
     	 	     			, L.WRITE_DATE
@@ -467,7 +469,9 @@
     	 	     			, L.EMAIL
     	 	     			, L.CLASS_CODE
     	 	     			, L.TITLE
+    	 	     			, J.NICKNAME
     	 	     	     FROM LEARNING_TBL L
+    	 	     	     JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
     	 	     	    WHERE L.CLASS_CODE = #{ classCode }
     	 	     	      AND L.IS_DELETED = 'N'
     	 	     	    ORDER BY L.WRITE_DATE DESC
@@ -533,4 +537,46 @@
     	   AND IS_DELETED = 'N'
     </select>
      
+    <select id="selectClassLectureTotalCount" resultType="_int" parameterType="HashMap">
+    	SELECT
+    	       COUNT(*)
+    	  FROM LECTURE_MOKCHA_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectLectureList" resultType="hashmap">
+    	SELECT
+    	       F.RNUM
+    	     , F.MOKCHA_CODE
+    	     , F.MOKCHA_NAME
+    	     , F.WRITE_DATE
+    	     , F.CONTENTS
+    	     , F.CLASS_CODE
+    	     , F.IS_DELETED
+    	  FROM (SELECT ROWNUM RNUM
+    	             , D.MOKCHA_CODE
+    	             , D.MOKCHA_NAME
+    	             , D.WRITE_DATE
+    	             , D.CONTENTS
+    	             , D.CLASS_CODE
+    	             , D.IS_DELETED
+    	          FROM (SELECT
+    	                       L.MOKCHA_CODE
+    	                     , L.MOKCHA_NAME
+    	                     , L.WRITE_DATE
+    	                     , L.CONTENTS
+    	                     , L.CLASS_CODE
+    	                     , L.IS_DELETED
+    	                  FROM LECTURE_MOKCHA_TBL L
+    	                 WHERE L.CLASS_CODE = #{ classCode }
+    	                   AND L.IS_DELETED = 'N'
+    	                 ORDER BY L.MOKCHA_CODE
+    	                ) D
+    	    <![CDATA[
+	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
+	        ]]>	
+		  	) F
+		  	WHERE F.RNUM >= #{ selectCriteria.startRow }
+    </select>
+    
 </mapper>

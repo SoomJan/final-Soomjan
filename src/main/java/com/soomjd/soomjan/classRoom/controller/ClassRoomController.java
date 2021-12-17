@@ -101,12 +101,38 @@ public class ClassRoomController{
 	}
 
 	@GetMapping("classLecture")
-	public void classLecture(Model model) {
+	public void classLecture(Model model, @RequestParam(defaultValue = "1") int currentPage) {
 
 		int classCode = (int) model.getAttribute("classCode");
 		System.out.println(classCode);
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("classCode", classCode);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = classRoomService.selectClassLectureTotalCount(searchMap);
+		System.out.println("totalCount : " + totalCount);
+		
+		int limit = 5;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		
+		Map<String, Object> lectureMap = new HashMap<>();
+		lectureMap.put("selectCriteria", selectCriteria);
+		lectureMap.put("classCode", classCode);
+		System.out.println("learningMap : " + lectureMap);
+		
+		List<Map<String, Object>> lectureList = classRoomService.selectLectureList(lectureMap);
+		System.out.println("lectureList : " + lectureList);
 
-		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("lectureList", lectureList);
+		model.addAttribute("selectCriteria", selectCriteria);
+		/*
+		 * model.addAttribute("mokchaList",
+		 * classRoomService.selectMokchaList(classCode));
+		 */
 		model.addAttribute("mokchaFileList", classRoomService.selectMokchaFileList(classCode));
 
 	}
@@ -123,7 +149,7 @@ public class ClassRoomController{
 		int totalCount = classRoomService.selectLearningBoardTotalCount(searchMap);
 		System.out.println("totalCount : " + totalCount);
 		
-		int limit = 10;
+		int limit = 5;
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
@@ -133,12 +159,13 @@ public class ClassRoomController{
 		learningMap.put("classCode", classCode);
 		System.out.println("learningMap : " + learningMap);
 		
-		List<LearningPostDTO> learningList = classRoomService.selectLearningBoardList(learningMap);
+		List<Map<String, Object>> learningList = classRoomService.selectLearningBoardList(learningMap);
 		System.out.println("learningList : " + learningList);
 		
 		model.addAttribute("learningList", learningList);
 		model.addAttribute("selectCriteria", selectCriteria);
 		model.addAttribute("learningPostList", classRoomService.selectLearningPostList(classCode));
+		 
 
 	}
 
@@ -275,7 +302,8 @@ public class ClassRoomController{
 		FileWrapper fileWrapper = new FileWrapper();
 
 		// 파일 , 파라미터 확인
-		System.out.println("file : " + file.getOriginalFilename());
+		System.out.println("file : " + file.getSize());
+		System.out.println("file : " + file.getName());
 		System.out.println("mokchaCode : " + mokchaCode);
 
 		// 파일 경로 설정

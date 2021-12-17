@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 
-<script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
+
 <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
@@ -22,6 +23,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
+
+*:focus {
+    outline: 0;
+}
+
 .btnStyle {
 	padding: 5px;
 	background-color: #91c788;
@@ -87,6 +93,22 @@ img {
 	padding:2%;
 	
 }
+
+.write {
+	text-align: right;
+    position: relative;
+    right: 7%;
+    bottom: 32px;
+}
+
+.btn-mokcha {
+	border-radius: 20px;
+	position: relative;
+    left: 73%;
+    background-color: white;
+    border: 2px solid #91c788;
+    top: 20px;
+}
 </style>
 
 <script>
@@ -148,19 +170,25 @@ img {
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
-				<h2>1개의 목차</h2>
-				<hr>
-				<c:forEach var="mokcha" items="${ mokchaList }">
+			<br>
+				<h2 style="float: left;">${ requestScope.totalCount }개의 목차</h2>
+				<button class="btn-mokcha btn" data-toggle="modal" data-target="#addMokchaModal">목차 추가하기</button>
+				<br><br>
+				<hr style="background-color:black; border: 0; height: 1px;">
+				<br>
+				<c:forEach var="mokcha" items="${ requestScope.lectureList }">
 					<div class="mokcha">
 						<form action="${pageContext.servletContext.contextPath }/jandi/class/deleteMokcha" method="post">
 							<button type="button" class="btnStyle btn btn-primary" onclick="deleteMokcha(this);">삭제</button>
-							<input type="hidden" name="mokchaCode" value="${ mokcha.mokchaCode }">
+							<input type="hidden" name="mokchaCode" value="${ mokcha.MOKCHA_CODE }">
 						</form>
-						<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼</h3>
+						<c:set var="writeDate" value="${ mokcha.WRITE_DATE }"/>
+						 <span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
+						<h3 onclick="mokchaToggle(this);">${ mokcha.MOKCHA_NAME } ▼</h3>
 						<div class="mokchaDiv" style="display:none;">
-						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
+						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.CONTENTS }">
 							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
-								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
+								<c:if test="${ mokcha.MOKCHA_CODE eq mokchaFile.mokchaCode }">
 									<video class="mokcha" controls
 										src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
 								</c:if>
@@ -175,8 +203,11 @@ img {
 						</div>
 					</div>
 					<br>
-					<hr>
+					<hr style="background-color: lightgray; border: 0; height: 1px;">
 				</c:forEach>
+				<br><br>
+					<jsp:include page="../../common/Paging.jsp" />
+				<br>
 				<!-- 유튜브 영상 링크... 왜 안되나요..ㅜㅠ -->
 				<iframe width="560" height="315"
 					src="https://www.youtube.com/embed/cbuZfY2S2UQ"
@@ -184,7 +215,7 @@ img {
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowfullscreen>
 				</iframe>
-				<div class="newMokcha">
+<%--  				<div class="newMokcha">
 					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
 						목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
 						<input type="text" class="inputSyle" name="mockchaName" 
@@ -193,7 +224,45 @@ img {
 						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" ></textarea>
 						<button type="submit" class="btnStyle btn btn-primary" style="margin: 10px;">목차 추가하기</button>
 					</form>
+				</div> --%>
+				
+				<!-- <button class="btn-mokcha" data-toggle="modal" data-target="#addMokchaModal">추가</button> -->
+				
+			<div class="modal fade" id="addMokchaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel" style="text-align: center;">클래스 목차 추가하기</h4>
+					</div>
+					<form action="${ pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
+						<div class="modal-body" align="left">
+							목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
+						<input type="text" class="inputSyle" name="mockchaName" 
+							placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);" style="width: 550px;"> 
+							<br>
+						<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
+						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" style="width: 550px;" ></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default btnBD"
+								data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary" style="margin: 10px;">추가</button>
+						</div>
+					</form>
 				</div>
+			</div>
+		</div>
+			
+				
+				
+				
+				
+				
+				
 			</div>
 		</div>
 	</div>

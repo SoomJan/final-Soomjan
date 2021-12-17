@@ -4700,8 +4700,8 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
   line-height: 1.42857143;
   color: #337ab7;
   text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #ddd;
+/*   background-color: #fff;
+  border: 1px solid #ddd; */
 }
 .pagination > li:first-child > a,
 .pagination > li:first-child > span {
