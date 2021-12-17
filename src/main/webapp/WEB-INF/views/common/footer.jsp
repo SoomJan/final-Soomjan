@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
     <title>Signin Template for Bootstrap</title>
 
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/footer.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/footer.css?"
       rel="stylesheet"
     />
     <link

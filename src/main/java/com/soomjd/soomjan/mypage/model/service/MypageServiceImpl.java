@@ -129,6 +129,17 @@ public class MypageServiceImpl implements MypageService{
 		
 		return mapper.selectBuyList(searchMap);
 	}
+
+	@Override
+	public int selectReviewTotalCount(Map<String, Object> searchMap) {
+		
+		return mapper.selectReviewTotalCount(searchMap);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReviewList(Map<String, Object> reviewMap) {
+		return mapper.selectReviewList(reviewMap);
+	}
 	
 	
 

@@ -20,12 +20,11 @@ public class FindclassController {
 	@GetMapping("/detailclassvideo")
 	public void detailclassvideo() {}
 	
-	@GetMapping("/class/classRoomNav")
-	public void classRoomNav() {}
-	
-	@GetMapping("/class/classRoom")
-	public void classRoom() {}
-	
-	@GetMapping("/class/classLecture")
-	public void classLecture() {}
+	/*
+	 * @GetMapping("/class/classRoomNav") public void classRoomNav() {}
+	 * 
+	 * @GetMapping("/class/classRoom") public void classRoom() {}
+	 * 
+	 * @GetMapping("/class/classLecture") public void classLecture() {}
+	 */
 }

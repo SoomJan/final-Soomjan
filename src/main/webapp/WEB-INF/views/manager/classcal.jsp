@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -23,17 +25,10 @@ pageEncoding="UTF-8"%>
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
       rel="stylesheet"
     />
-
+	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="resources/css/semantic/semantic.css">
-    <script src="resources/css/semantic/semantic.js"></script>
-    <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap.js"></script>
-    <script type="text/javascript" src="css/nav.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
@@ -60,6 +55,9 @@ pageEncoding="UTF-8"%>
     }
 
     </style>
+    
+   
+    
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -70,105 +68,65 @@ pageEncoding="UTF-8"%>
       <h1 id="category"> 클래스 결제 내역 </h1> <br>
 
       <h3> 내역 </h3> 
-      <input type="date"> ~ <input type="date"> &nbsp; &nbsp;
-      <input class="date-search" type="submit" value="검색하기">
-    
+      
+        <form action="${ pageContext.servletContext.contextPath }/manager/classcal" method="get">
+     		<input type="date" name="startDate" value="${ startDate }"> ~ <input type="date" name="endDate" value="${ endDate }"> &nbsp; &nbsp;
+				 <select id="searchCondition" name="searchCondition" value="${ searchCondition }" >
+            	 <option value="">선택해주세요</option>
+            	 <option value="1">아이디</option>
+          	 	 <option value="2">강의</option>
+         	 </select>&nbsp; &nbsp;
+         	 <input type="search" id="searchValue" name="searchValue" value="${ searchValue }" placeholder="검색어를 입력해주세요">
+    		 <button type="submit">검색하기</button>
+		</form>
+         
           <table class="ui basic table warningtable">
             <thead>
               <tr>
-                <th><input class="all" type="checkbox"></th>
+              	<th><input type="checkbox"></th>
+                <th>결제 번호</th>
                 <th>결제 날짜</th>
-                <th>이메일</th>
+                <th>구매자</th>
+                <th>결제 강의</th>
                 <th>결제 금액</th>
                 <th>수수료</th>
                 <th>정산 금액(원)</th>
                 <th>정산 여부</th>
-                <th>정산 관리자</th>
               </tr>
             </thead>
             <tbody>
+          	  <c:forEach var="cal" items="${ reviewContent }">
+            	 <tr>
+	            	<td><input class="check" type="checkbox"></td>
+	                <td>${ cal.classPurcCode }</td>
+	                <td>${ cal.paymentDTO.payDate }</td>
+	                <td>${ cal.email }</td>
+	                <td>${ cal.classDTO.title }</td>
+	                <td class="payment">${ cal.classDTO.price }</td>
+	                <td class="fees">${ cal.classDTO.price * 0.1 }</td>
+	                <td>${ cal.classDTO.price * 0.9 }</td>
+	                <td class="calYn">${ cal.status }</td>
+         	    </tr>
+             </c:forEach>
+             
               <tr>
-                <td></td>
-                <td>2021-11-24</td>
-                <td>gsp@gmail.com</td>
-                <td class="payment">300,000</td>
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">Y</td>
-                <td>호날두</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>2021-11-24</td>
-                <td>yhj@gmail.com</td>
-                <td class="payment">300,000</td>
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">Y</td>
-                <td>호날두</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>2021-11-24</td>
-                <td>osb@gmail.com</td>
-                <td class="payment">300,000</td>  
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">Y</td>
-                <td>호날두</td>
-              </tr>
-              <tr>
-                <td><input class="check" type="checkbox"></td>
-                <td>2021-11-24</td>
-                <td>ysm@gmail.com</td>
-                <td class="payment">300,000</td>
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">N</td>
-                <td>호날두</td>
-              </tr>
-              <tr>
-                <td><input class="check" type="checkbox"></td>
-                <td>2021-11-24</td>
-                <td>lsh@gmail.com</td>
-                <td class="payment">300,000</td>
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">N</td>
-                <td>메시</td>
-              </tr>
-              <tr>
-                <td><input class="check" type="checkbox"></td>
-                <td>2021-11-24</td>
-                <td>ljh@gmail.com</td>
-                <td class="payment">300,000</td>
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">N</td>
-                <td>메시</td>
-              </tr>
-              <tr>
-                <td><input class="check" type="checkbox"></td>
-                <td>2021-11-24</td>
-                <td>iyr@gmail.com</td>
-                <td class="payment">300,000</td>
-                <td class="fees">30,000</td>
-                <td>270,000</td>
-                <td class="calYn">N</td>
-                <td>메시</td>
-              </tr>
-              <tr>
-                <td colspan="3"><strong>총합계</strong></td>
+                <td colspan="5"><strong>총합계</strong></td>
                 <td><strong class="paymentSum"></strong></td>
-                <td><strong class="feesSum">210,000</strong></td>
-                <td><strong class="calSum">1,890,000</strong></td>
-                <td></td>
+                <td><strong class="feesSum"></strong></td>
+                <td><strong class="calSum"></strong></td>
                 <td></td>
             </tr>
             </tbody>
           </table>
 
-          <script>
+			 <input class="calculate" type="submit" value="정산하기">
+			 
+			<jsp:include page="../common/Paging.jsp" />
+
+        </div>
+  	</div>
+  	
+  	 <script>
  
             /* 결제 금액 합계 구하기 */
             let payment = $(".payment")
@@ -248,37 +206,31 @@ pageEncoding="UTF-8"%>
               });
             });
 
+            // 완료된 정산 인풋박스 비활성화
+            let finishcal = $(".check");
+            
+            let check1 = document.getElementsByTagName('tr');
+            let check2 = document.getElementsByClassName('check');
+            
+           for(let i = 0; i < check1.length; i++ ){
+        	   if(check1[i].children[8].getInnerHTML() == 'Y' ){
+        		   check2[i-1].setAttribute("disabled",false)
+        	   } else {
+        		   console.log("good");
+        	   }
+         	  };
+            
+          /*  let select = document.getElementsByTagName('select');
+           console.log(select); */
+           
           </script>
-
-          <div class="manager-search">
-            <form class="manager-searchbox" method="post">
-              <input type="text" />
-              <button type="submit">
-                <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png"
-                />
-              </button>
-            </form>
-          </div>
-          <input class="calculate" type="submit" value="정산하기">
-          <div>
-            <div class="manager-paging">
-              <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">next</a></li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
+  	
+  	
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>
+
+
 <!-- 모달창 모아두는 곳 -->
 <div class="ui mini modal" id="checkModal">
   <div class="content">

@@ -53,6 +53,31 @@
     	<result column="MNG_NO" property="mngNo"/>
     </resultMap>
     
+      <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classResultMap">
+    	<id column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="BOARD_TYPE" property="boardType"/>
+    	<result column="VIEWS" property="views"/>
+    	<result column="MAX_COUNT" property="maxCount"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="NICKNAME" property="nickName" />
+    </resultMap>
+    
+    <resultMap id="paymentResultSet" type="PaymentDTO">
+        <id column="PAY_CODE" property="payCode"/>
+        <result column="PAY" property="pay"/>
+        <result column="BANK" property="bank"/>
+        <result column="OWNER" property="owner"/>
+        <result column="ACCOUNT" property="account"/>
+        <result column="PAY_DATE" property="payDate"/>
+        <result column="PAY_TYPE" property="payType"/>
+    </resultMap>
+    
       <resultMap id="purchaseClassSet" type="PurchaseClassDTO">
         <id column="CLASS_PURC_CODE" property="classPurcCode"/>
         <result column="EMAIL" property="email"/>
@@ -63,8 +88,6 @@
         <result column="TEACHER" property="teacher"/>
         
         <association property="classDTO" resultMap="classResultMap"></association>
-        <association property="categoryDTO" resultMap="categoryList"></association>
-        <association property="jandiDTO" resultMap="jandiResultMap"></association>
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
     
@@ -414,18 +437,59 @@
    		 )
 	</update>
 	
-	<!-- <select id="selectPurchaseClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	 <select id="selectPurchaseClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	 
+	  SELECT V2.RNUM
+             , V2.*
+		  FROM (SELECT ROWNUM RNUM
+		              , V.*
+				  FROM (SELECT * 
+           				   FROM PAYMENT_TBL P
+          				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
+          				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
+          				   <where> 
+						    	 <if test='startDate != null'>
+						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')
+						     	 </if>
+						     	 <if test='startDate == null'>
+						     	 </if>
+						     </where>
+	 						ORDER BY CLASS_PURC_CODE DESC )V)V2
+	 						WHERE V2.RNUM BETWEEN ${ startRow } AND ${ endRow }
+	</select>
 	
-	SELECT
-		       C.EMAIL
-		     , C.END_DATE
-		     , L.TITLE
-		     , P.PAY_DATE
-		     , J.NICKNAME
-		     , T.CATEGORY_NAME
-		  JOIN CLASS_TBL L ON (L.CLASS_CODE = C.CLASS_CODE )
-		  JOIN PAYMENT_TBL E ON (C.PAY_CODE = E.PAY_CODE)
-		  JOIN JANDI_TBL J ON ( L.EMAIL = J.EMAIL )
-		  JOIN CATEGORY_TBL T ON (T.CATEGORY_CODE = L.CATEGORY_CODE)
-	</select> -->
+	<select id="PurchaseClassTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT 
+		       COUNT(*)
+          FROM (SELECT ROWNUM RNUM
+		             , V.* 
+           	 	  FROM (SELECT * 
+           				   FROM PAYMENT_TBL P
+          				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
+          				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
+						     <where> 
+						    	 <if test='startDate != null'>
+						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						       	      <if test='searchCondition == "1"'>
+									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	  AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     	 <if test='startDate == null'>
+						     	 	 <if test='searchCondition == "1"'>
+									 	 AND  PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	 AND  CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     </where>)V)V2
+	
+	</select>
+	
+	
 </mapper>

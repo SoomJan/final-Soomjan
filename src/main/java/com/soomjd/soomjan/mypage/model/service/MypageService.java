@@ -48,6 +48,10 @@ public interface MypageService {
 
 	List<BuyDTO> selectBuyList(Map<String, Object> searchMap);
 
+	int selectReviewTotalCount(Map<String, Object> searchMap);
+
+	List<Map<String, Object>> selectReviewList(Map<String, Object> reviewMap);
+
 
 
 }

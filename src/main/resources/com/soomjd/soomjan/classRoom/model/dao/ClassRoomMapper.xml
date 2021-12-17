@@ -77,8 +77,8 @@
     	  ORDER BY C.CREATE_DATE DESC
     </select>
     
-    <select id="selectCurrentCount" resultType="_int">
-    	SELECT COUNT(*)
+    <select id="selectCurrentMemberList" resultType="hashmap">
+    	SELECT EMAIL
     	  FROM PURCHASE_CLASS_TBL
     	 WHERE STATUS = 'Y'
     	   AND CLASS_CODE = #{ classCode }
@@ -343,6 +343,129 @@
     	SELECT FILE_PATH
     	  FROM LEARNING_FILE_TBL
     	 WHERE POST_CODE = #{ postCode }
+    </select>
+    
+    <insert id="registPurchaseClass" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO">
+    	INSERT ALL 
+		  INTO PAYMENT_TBL VALUES(
+		  SEQ_PAYMENT_TBL.NEXTVAL,
+		  #{ payment.pay },
+		  #{ payment.bank },
+		  #{ payment.owner },
+		  #{ payment.account },
+		  SYSDATE,
+		  #{ payment.payType }
+		  )
+		  INTO PURCHASE_CLASS_TBL VALUES(
+		  #{ email },
+		  #{ classCode },
+		  'Y',
+		  SEQ_PAYMENT_TBL.CURRVAL,
+		  SEQ_PURCHASE_CLASS_TBL.NEXTVAL,
+		  SYSDATE + 30
+		  )SELECT * 
+		   FROM DUAL
+    </insert>
+    
+    <insert id="registChatRoom" parameterType="hashmap">
+    	INSERT ALL 
+		   INTO CLASS_CHAT_ROOM_TBL VALUES(
+		   SEQ_CLASS_CHAT_ROOM_TBL.NEXTVAL,
+		   #{ jandiEmail },
+		   #{ classCode }
+		   )
+		   INTO CLASS_CHAT_ROOM_TBL VALUES(
+		   SEQ_CLASS_CHAT_ROOM_TBL.CURRVAL,
+		   #{ email },
+		   #{ classCode }
+		   )SELECT * 
+		    FROM DUAL
+    </insert>
+    
+    <select id="selectClassChatBySSACKEmail" parameterType="hashmap" resultType="_int">
+    	SELECT C.CHAT_CODE
+    	  FROM CLASS_CHAT_ROOM_TBL C
+    	  JOIN SSACK_TBL S ON (C.EMAIL = S.EMAIL)
+    	 WHERE C.CLASS_CODE = #{ classCode }
+    	   AND C.EMAIL = #{ email }
+    </select>
+    
+    <select id="selectAllReportStatement" resultType="hashmap">
+    	select * FROM REPORT_STATEMENT_TBL
+    </select>
+    
+    <insert id="registReportMember" parameterType="com.soomjd.soomjan.member.model.dto.ReportMemberDTO">
+    	INSERT INTO 
+    	REPORT_MEMBER_TBL(
+			      EMAIL
+			   , REP_CODE
+			   , CONTENTS
+			   , REP_DATE
+			   , IMG_PATH
+			   , REP_EMAIL
+			   , REP_TYPE_CODE
+			   , ORG_IMG_PATH
+			   , REP_YN
+			   
+			)VALUES(
+			   #{ email }
+			   , SEQ_REPORT_MEMBER.NEXTVAL
+			   , #{ contents }
+			   , SYSDATE
+			   , #{ imgPath }
+			   , #{ repEmail }
+			   , #{ repTypeCode }
+			   , #{ orgImgPath }
+			   , 'W'
+			)
+    </insert>
+    
+    <select id="selectLearningBoardTotalCount" resultType="_int" parameterType="HashMap">
+    	SELECT
+    	       COUNT(*)
+    	  FROM LEARNING_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    </select>
+    
+    <select id="selectLearningBoardList" resultType="hashmap">
+    	SELECT
+    	       F.RNUM
+    	     , F.POST_CODE
+    	     , F.WRITE_DATE
+    	     , F.RE_DATE
+    	     , F.IS_DELETED
+    	     , F.CONTENTS
+    	     , F.EMAIL
+    	     , F.CLASS_CODE
+    	     , F.TITLE
+    	 FROM (SELECT ROWNUM RNUM
+    	 	        , D.POST_CODE
+    	 	        , D.WRITE_DATE
+    	 	        , D.RE_DATE
+    	 	        , D.IS_DELETED
+    	 	        , D.CONTENTS
+    	 	        , D.EMAIL
+    	 	        , D.CLASS_CODE
+    	 	        , D.TITLE
+    	 	     FROM (SELECT
+    	 	     			  L.POST_CODE
+    	 	     			, L.WRITE_DATE
+    	 	     			, L.RE_DATE
+    	 	     			, L.IS_DELETED
+    	 	     			, L.CONTENTS
+    	 	     			, L.EMAIL
+    	 	     			, L.CLASS_CODE
+    	 	     			, L.TITLE
+    	 	     	     FROM LEARNING_TBL L
+    	 	     	    WHERE L.CLASS_CODE = #{ classCode }
+    	 	     	      AND L.IS_DELETED = 'N'
+    	 	     	    ORDER BY L.WRITE_DATE DESC
+    	 	     ) D
+    	    <![CDATA[
+	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
+	        ]]>	
+		  	) F
+		  	WHERE F.RNUM >= #{ selectCriteria.startRow }  
     </select>
     
 </mapper>

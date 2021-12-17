@@ -58,7 +58,7 @@ table th{
 				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom?classCode=${ classCode }" class="room class">클래스</a></th>
 				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture" class="room lecture">강의 영상</a></th>
 				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLearningBoard" class="room learning">학습방</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classChat" class="room classChat">채팅</a></th>
+				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/jandiClassChat" class="room classChat">채팅</a></th>
 			</tr>
 		</table>
 		<br>

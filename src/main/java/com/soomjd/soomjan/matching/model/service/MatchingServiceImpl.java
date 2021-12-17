@@ -58,6 +58,12 @@ public class MatchingServiceImpl implements MatchingService{
 
 	}
 
+	// 잔디가 싹 리스트를 보는 화면
+	@Override
+	public List<EstimateDTO> ssackList(SelectCriteria selectCriteria) {
+		return mapper.ssackList(selectCriteria);
+	}
+
 //
 //	@Override
 //	public List<EstimateDTO> selectEstimate(Map<String, Object> map, SelectCriteria selectCriteria) {

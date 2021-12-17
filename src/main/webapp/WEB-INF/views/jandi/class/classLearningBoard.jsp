@@ -76,7 +76,7 @@ table{
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="learningPost" items="${ learningPostList }">
+					<c:forEach var="learningPost" items="${ requestScope.learningList }">
 						<input type="hidden" value="${ learningPost.postCode }">
 						<tr onclick="movePost(this)">
 							<td>${ learningPost.nickName }</td>
@@ -87,6 +87,8 @@ table{
 				</tbody>
 			</table>
 			</div>
+			<br><br>
+				<jsp:include page="../../common/Paging.jsp" />
 		</div>
 	</div>
 </body>

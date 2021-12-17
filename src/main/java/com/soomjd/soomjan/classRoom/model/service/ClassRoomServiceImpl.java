@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.soomjd.soomjan.classRoom.model.dao.ClassRoomMapper;
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
+import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 @Service
 public class ClassRoomServiceImpl implements ClassRoomService{
@@ -29,8 +31,8 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		}
 	
 		@Override
-		public int selectCurrentCount(int classCode) {
-			return classRoomMapper.selectCurrentCount(classCode);
+		public List<Map<String, String>> selectCurrentMemberList(int classCode) {
+			return classRoomMapper.selectCurrentMemberList(classCode);
 		}
 	
 		@Override
@@ -157,6 +159,41 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 		@Override
 		public List<ClassFileDTO> selectLearningFileListByPostCode(int postCode) {
 			return classRoomMapper.selectLearningFileListByPostCode(postCode);
+		}
+
+		@Override
+		public boolean registPurchaseClass(ClassPurchaseDTO classPurchase) {
+			return classRoomMapper.registPurchaseClass(classPurchase);
+		}
+
+		@Override
+		public boolean registChatRoom(HashMap<String, Object> chatRoomMap) {
+			return classRoomMapper.registChatRoom(chatRoomMap);
+		}
+
+		@Override
+		public int selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap) {
+			return classRoomMapper.selectClassChatBySSACKEmail(chatRoomMap);
+		}
+
+		@Override
+		public boolean registReportMember(ReportMemberDTO reportMember) {
+			return  classRoomMapper.registReportMember(reportMember);
+		}
+
+		@Override
+		public List<Map<String, Object>> selectAllReportStatement() {
+			return classRoomMapper.selectAllReportStatement();
+		}
+		
+		@Override
+		public int selectLearningBoardTotalCount(Map<String, Object> searchMap) {
+			return classRoomMapper.selectLearningBoardTotalCount(searchMap);
+		}
+
+		@Override
+		public List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap) {
+			return classRoomMapper.selectLearningBoardList(learningMap);
 		}
 
 

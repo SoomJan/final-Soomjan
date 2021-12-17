@@ -25,8 +25,8 @@ pageEncoding="UTF-8"%>
       <div class="sidebar-inner-name1">
         <ul>
           
-          <li><a href="${ pageContext.servletContext.contextPath }/findmentor/findAllMentorMain">전체 멘토</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/findmentor/findTopMentorMain">인기 멘토</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain">전체 멘토</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/findJandi/findTopJandiMain">인기 멘토</a></li>
         </ul>
       </div>
     </div>

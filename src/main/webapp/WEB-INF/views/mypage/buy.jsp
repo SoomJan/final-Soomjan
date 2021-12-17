@@ -46,9 +46,9 @@
         <div class="dropsearch">
           <form id="form" action="${ pageContext.servletContext.contextPath }/mypage/buy" method="get">
             <input type="hidden" name="currentPage" value="1" />
-            <input type="hidden" name="dateSort" value="N" />
-            <input type="hidden" name="paySort" value="N" />
-		<select class="ui dropdown" name="searchCondition">
+            <!-- <input type="hidden" id="dateSort" name="dateSort" value="${ dateSort }" /> -->
+            <input type="hidden" id="sort" name="sort" value="${ sort }" />
+		<select class="ui dropdown" id="searchCondition" name="searchCondition">
   			<option value="1">클래스 명</option>
         <option value="2">잔디 닉네임</option>
 		</select>
@@ -65,10 +65,17 @@
   </div>
 </form>
   <br><br><br><br><br>
-  <!-- <div class="unlist-text">
-  멤버쉽 구매내역이 없습니다.<br>
-  새로운 클래스를 구매해주세요.
-</div> -->
+
+  <c:choose>
+        <c:when test="${ empty buyList }">
+          <div class="unlist-text">
+            멤버쉽 구매내역이 없습니다.<br>
+            새로운 클래스를 구매해주세요.
+          </div>
+        </c:when>
+        <c:when test="${ not empty buyList }">
+
+  
 <table class="ui single line table buytable">
   <thead>
     <tr>
@@ -104,37 +111,77 @@
             location.href = "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ buyList[size].classCode }";
           });
 
+      });
+
+    </script>
+
+    </c:forEach>
+
+    <script>
+
+      $(function(){
+
+        /* 구입날짜 커서 이벤트 */
+        $("#dateSortBtn").hover(
+          function () {
+            $(this).css("color", "blue").css("cursor", "pointer");
+          },
+          function () {
+            $(this).css("color", "black").css("cursor", "default");
+          }
+        );
+
+        /* 결제 금액 커서 이벤트 */
+        $("#paySortBtn").hover(
+          function () {
+            $(this).css("color", "blue").css("cursor", "pointer");
+          },
+          function () {
+            $(this).css("color", "black").css("cursor", "default");
+          }
+        );
+
         /* 구입날짜 정렬 */
         $("#dateSortBtn").click(function() {
-          $("#dateSort").val("Y");
-          $("#form").submit();
 
+          let sort = $("#sort").val();
+
+        if(!sort || sort == "P" || sort == "PA" || sort == "DA") {
+          $("#sort").val("D");
+        } else if(sort == "D") {
+          $("#sort").val("DA");
+        }
+
+        $("#form").submit();
         });
 
         /* 금액 정렬 */
         $("#paySortBtn").click(function() {
-          $("#paySort").val("Y");
-          $("#form").submit();
+
+          let sort = $("#sort").val();
+
+          if(!sort || sort == "D" || sort == "PA" || sort == "DA") {
+            $("#sort").val("P");
+          } else if (sort == "P") {
+            $("#sort").val("PA");
+          }
+
+        $("#form").submit();
         });
+
+        /* 검색 조건 유지 */
+       $("#searchCondition").val("${ selectCriteria.searchCondition }");
       });
 
-
-
-
-
     </script>
-
-
-
-
-
-
-    </c:forEach>
   </tbody>
 </table>
 <jsp:include page="../common/Paging.jsp" />
+</c:when>
+</c:choose>
       </div>
     </div>
+
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>

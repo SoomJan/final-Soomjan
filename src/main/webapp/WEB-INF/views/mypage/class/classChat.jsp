@@ -21,7 +21,6 @@
 <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-
 <style>
 img {
 	width: 250px;
@@ -65,6 +64,27 @@ img {
 	border-color: #599A4E;
 }
 
+.inputSyle{
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 30px;
+	padding:2%;
+}
+
+.contents{
+	resize: none;
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 100px;
+	padding:2%;
+	
+}
+
+.modalBtn{
+	width:auto;
+	height:auto;
+	padding: 8px;
+}
 
 </style>
 </head>
@@ -118,7 +138,7 @@ img {
 	$(function(){
 		
 		const email = "${ sessionScope.loginMember.email }";
-		const chatCode = ${ chatRoomList[0].CHAT_CODE };
+		const chatCode = ${ chatCode };
 		// 테스트 채팅방 정보 
 		let chatInfo = {
 			email: email,
@@ -266,6 +286,16 @@ img {
 			
 		});	//사진 전송 버튼 클릭 이벤트 끝
 		
+		
+		// 신고 전송
+		$('#reportModalBtn').click(function(){
+			$('#reportModalForm').submit();
+		});	
+		
+		if('${ requestScope.reportSuccessMessage }' != ''){
+			alert('${ requestScope.reportSuccessMessage }');
+		}
+		
 	});
 		
 </script>
@@ -280,7 +310,7 @@ img {
 			<div class="chatDiv">
 				<div class="chatTop">
 					<h3>${ sessionScope.classDTO.nickName } </h3>
-					<button class="reportBtn" id="reportBtn">신고</button>
+					<button class="reportBtn" id="reportBtn" data-toggle="modal" data-target="#reportModal">신고</button>
 				</div>
 				<div class="chatBottom">
 					<div style="width: 100%;">
@@ -325,7 +355,50 @@ img {
 				<div class="modal-footer">
 					<button type="button" id="closeBtn" class="btn btn-default btnBD"
 						data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="sendImgBtn">전송</button>
+					<button type="button" class="btn-primary modalBtn" id="sendImgBtn">전송</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">회원 신고</h4>
+				</div>
+				<div class="modal-body" align="center">
+					<br>	
+					<form action="${pageContext.servletContext.contextPath }/mypage/class/reportMember" id="reportModalForm" method="post" enctype="multipart/form-data">
+						<b>신고 카테고리(필수): <select id="repTypeCode" name="repTypeCode">
+						<c:forEach var="reportState" items="${ reportStateList }">
+							<option value="${ reportState.REP_TYPE_CODE }">${ reportState.REP_TYPE }</option>
+						</c:forEach>
+						</select>
+						</b>
+						<br><br>
+						<b>이미지 첨부</b> (선택)
+						<br>
+						<input type="file" name="repImage" id="repImage" accept="image/*">
+						<br>
+						<b>신고 사유(필수)</b><br>
+						<textarea class="contents" name="repContents" style="width:300px;"></textarea>
+						<br><br>
+						타당한 사유 및 근거 없는 신고는 해당 신고가 반려될 수 있습니다.
+						<input name="repEmail" type="hidden" value="${ sessionScope.classDTO.email }">
+					</form>
+					<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="reportCloseBtn" class="btn btn-default btnBD"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn-primary modalBtn" id="reportModalBtn">신고하기</button>
 				</div>
 			</div>
 		</div>

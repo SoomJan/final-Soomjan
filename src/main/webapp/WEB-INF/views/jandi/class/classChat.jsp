@@ -55,6 +55,22 @@ img {
 	padding-left:3px;
 }
 
+.inputSyle{
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 30px;
+	padding:2%;
+}
+
+.contents{
+	resize: none;
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 100px;
+	padding:2%;
+	
+}
+
 </style>
 </head>
 <script src="http://125.132.252.115:3000/socket.io/socket.io.js"></script>
@@ -117,6 +133,8 @@ img {
 			
 			$('.chatRoomBox').first().css('background-color', 'white');
 			$('#nick').html($('.chatRoomBox').first().text());
+			$('#repEmail').val($('.chatRoomBox').prev().val());
+			console.log("repEmail : " + $('#repEmail').val());
 			
 			let socket = io("http://125.132.252.115:3000/classChat");
 			
@@ -134,6 +152,8 @@ img {
 				$(chatBox).css('background-color', 'white');
 				$('#nick').html($(chatBox).text());
 				console.log($(chatBox).children().last().val());
+				$('#repEmail').val($(chatBox).prev().val());
+				console.log("repEmail : " + $('#repEmail').val());
 				
 				let chatCode = $(chatBox).children().last().val();
 				
@@ -284,6 +304,15 @@ img {
 		
 		}	//채팅 서버 연결 내용 끝
 	
+		// 신고 전송
+		$('#reportModalBtn').click(function(){
+			$('#reportModalForm').submit();
+		});	
+		
+		if('${ requestScope.reportSuccessMessage }' != ''){
+			alert('${ requestScope.reportSuccessMessage }');
+		}
+		
 	}); //$(function(){}) 끝
 		
 </script>
@@ -299,11 +328,12 @@ img {
 			<div class="chatDiv">
 				<div class="chatTop">
 					<h3 id="nick"></h3>
-					<button class="reportBtn" id="reportBtn">신고</button>
+					<button class="reportBtn" id="reportBtn" data-toggle="modal" data-target="#reportModal">신고</button>
 				</div>
 				<div class="chatBottom">
 					<div class="chatLeft">
 						<c:forEach var="chatRoom" items="${ chatRoomList }">
+							<input type="hidden" class="chatEmailInput" value="${ chatRoom.EMAIL }">
 							<div class="chatRoomBox" >
 								<c:out value="${ chatRoom.NICKNAME }"/><i class="comment alternate outline icon"></i>
 								<input type="hidden" class="chatCodeInput" value="${ chatRoom.CHAT_CODE }">
@@ -363,6 +393,48 @@ img {
 		</div>
 	</div>
 
+<!-- Modal -->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">회원 신고</h4>
+				</div>
+				<div class="modal-body" align="center">
+					<br>	
+					<form action="${pageContext.servletContext.contextPath }/jandi/class/reportMember" id="reportModalForm" method="post" enctype="multipart/form-data">
+						<b>신고 카테고리(필수): <select id="repTypeCode" name="repTypeCode">
+						<c:forEach var="reportState" items="${ reportStateList }">
+							<option value="${ reportState.REP_TYPE_CODE }">${ reportState.REP_TYPE }</option>
+						</c:forEach>
+						</select>
+						</b>
+						<br><br>
+						<b>이미지 첨부</b> (선택)
+						<br>
+						<input type="file" name="repImage" id="repImage" accept="image/*">
+						<br>
+						<b>신고 사유(필수)</b><br>
+						<textarea class="contents" name="repContents" style="width:300px;"></textarea>
+						<br><br>
+						타당한 사유 및 근거 없는 신고는 해당 신고가 반려될 수 있습니다.
+						<input name="repEmail" id="repEmail" type="hidden">
+					</form>
+					<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="reportCloseBtn" class="btn btn-default btnBD"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="reportModalBtn">신고하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <jsp:include page="../../common/footer.jsp" />
 </html>

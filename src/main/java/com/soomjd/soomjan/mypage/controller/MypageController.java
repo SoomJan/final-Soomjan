@@ -1,7 +1,10 @@
 package com.soomjd.soomjan.mypage.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -249,27 +252,28 @@ public class MypageController {
 	}
 
 	@PostMapping("jjimCancel")
-	public void jjimCancel(HttpServletResponse response, @RequestParam("classNo") String classNo, HttpSession session) throws IOException {
-		
+	public void jjimCancel(HttpServletResponse response, @RequestParam("classNo") String classNo, HttpSession session)
+			throws IOException {
+
 		System.out.println(classNo);
-        List<String> classNoList = new ArrayList<>();
+		List<String> classNoList = new ArrayList<>();
 		String[] classNo2 = classNo.split(",");
 		for (String c : classNo2) {
 			System.out.println(c);
-			
+
 			classNoList.add(c);
 		}
-		
+
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("email", member.getEmail());
 		map.put("classNoList", classNoList);
-		
-	    int jjimCancel = mypageService.jjimCancel(map);
+
+		int jjimCancel = mypageService.jjimCancel(map);
 		System.out.println("삭제된 행 갯수 : " + jjimCancel);
-		
-		if(jjimCancel == classNoList.size()) {
+
+		if (jjimCancel == classNoList.size()) {
 			response.getWriter().write("true");
 		} else {
 			response.getWriter().write("false");
@@ -281,38 +285,44 @@ public class MypageController {
 	public ModelAndView buyForm(ModelAndView mv, HttpSession session
 			, @RequestParam(required = false) String searchCondition
 			, @RequestParam(required = false) String searchValue
-			, @RequestParam(defaultValue = "1") int currentPage) {
+			, @RequestParam(defaultValue = "1") int currentPage
+			, @RequestParam(required = false) String sort) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		
+		System.out.println("넘어온 정렬값 : " + sort);
+		
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchCondition", searchCondition);
-		searchMap.put("searchValue",searchValue);
+		searchMap.put("searchValue", searchValue);
 		searchMap.put("email", member.getEmail());
+		searchMap.put("sort", sort);
 		System.out.println("searchMap : " + searchMap);
 
 		int totalCount = mypageService.selectBuyTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
-		
+
 		int limit = 5;
 		int buttonAmount = 5;
 
 		SelectCriteria selectCriteria = null;
-		
-		if(searchCondition != null && !"".equals(searchCondition)) {
-			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+
+		if (searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
+					searchValue);
 		} else {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		}
-		
+
 		System.out.println("selectCriteria : " + selectCriteria);
 
 		searchMap.put("selectCriteria", selectCriteria);
-		
+
 		List<BuyDTO> buyList = mypageService.selectBuyList(searchMap);
-		
+
 		mv.addObject("buyList", buyList);
 		mv.addObject("selectCriteria", selectCriteria);
+		mv.addObject("sort", sort);
 		mv.setViewName("mypage/buy");
 
 		return mv;
@@ -370,20 +380,19 @@ public class MypageController {
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		String categoryName = request.getParameter("t-categoryName");
 		String contents = request.getParameter("contents");
-		
+
 		int classCode = Integer.parseInt(request.getParameter("classCode"));
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
-		 
 
 		System.out.println(request.getParameter("classCode"));
 		System.out.println(request.getParameter("reviewStar"));
 
 		Map<String, Object> reviewMap = new HashMap<>();
 		reviewMap.put("email", member.getEmail());
-		
-		reviewMap.put("classCode", classCode); 
+
+		reviewMap.put("classCode", classCode);
 		reviewMap.put("reviewStar", reviewStar);
-		 
+
 		reviewMap.put("categoryName", categoryName);
 		reviewMap.put("contents", contents);
 
@@ -399,7 +408,35 @@ public class MypageController {
 
 	// 수강후기
 	@GetMapping("review")
-	public String reviewForm() {
+	public String reviewForm(Model model, HttpSession session, @RequestParam(defaultValue = "1") int currentPage) {
+
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("email", member.getEmail());
+
+		System.out.println("searchMap : " + searchMap);
+
+		int totalCount = mypageService.selectReviewTotalCount(searchMap);
+		System.out.println("totalCount : " + totalCount);
+
+		int limit = 5;
+		int buttonAmount = 5;
+
+		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+
+		Map<String, Object> reviewMap = new HashMap<>();
+		reviewMap.put("selectCriteria", selectCriteria);
+		reviewMap.put("email", member.getEmail());
+		System.out.println("reviewMap : " + reviewMap);
+		
+		List<Map<String, Object>> reviewList = mypageService.selectReviewList(reviewMap);
+		System.out.println("reviewList : " + reviewList);
+		 
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("selectCriteria", selectCriteria);
+		 
+		 
 
 		return "mypage/review";
 	}
