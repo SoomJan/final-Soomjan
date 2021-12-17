@@ -30,10 +30,10 @@
 
     <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
-        .re-title {float: left;} /*후기 클래스 명 */
         #ti-date { background-color: #91C788; color: black; border-radius: 5px; height: 40px;} /*후기 클래스 수강기간*/
         .reviewList p {float: left; margin-left: 2%; width: 650px !important;} /* 후기 내용 */
         #reviewheader { color: #FDD442; margin-bottom: 2%} /* 후기 별점 */
+        .re-title {float: left;} /*후기 클래스 명 */
         .card-content {float: left; width: 630px;}
     </style>
 </head>

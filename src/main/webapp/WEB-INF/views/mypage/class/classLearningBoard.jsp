@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,6 +80,7 @@ table{
 				<th align="center" width="25"></th>
 				</tr>
 			</table>
+			<br>
 				<table class="ui basic table learnTable" style="width:100%;">
 				<thead>
 					<tr>
@@ -88,17 +90,20 @@ table{
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="learningPost" items="${ learningPostList }">
-						<input type="hidden" value="${ learningPost.postCode }">
+					<c:forEach var="learningPost" items="${ requestScope.learningList }">
+ 					<c:set var="writeDate" value="${ learningPost.WRITE_DATE }"/>
+						<input type="hidden" value="${ learningPost.POST_CODE }">
 						<tr onclick="movePost(this)">
-							<td>${ learningPost.nickName }</td>
-							<td>${ learningPost.title }</td>
-							<td>${ learningPost.writeDate }</td>
+							<td>${ learningPost.NICKNAME }</td>
+							<td>${ learningPost.TITLE }</td>
+							<td>${ fn:substring(writeDate, 0, 10) }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			</div>
+			<br><br>
+				<jsp:include page="../../common/Paging.jsp" />
 		</div>
 	</div>
 </body>
