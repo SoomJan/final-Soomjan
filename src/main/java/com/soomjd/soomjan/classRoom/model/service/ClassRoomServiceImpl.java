@@ -13,6 +13,7 @@ import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ReviewDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 @Service
@@ -196,7 +197,19 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 			return classRoomMapper.selectLearningBoardList(learningMap);
 		}
 
+		@Override
+		public int selectReviewListByClassCodeTotalCount(Map<String, Object> searchMap) {
+			return classRoomMapper.selectReviewListByClassCodeTotalCount(searchMap);
+		}
 
+		@Override
+		public List<ReviewDTO> selectReviewListByClassCode(Map<String, Object> criteriaMap) {
+			return classRoomMapper.selectReviewListByClassCode(criteriaMap);
+		}
 
+		@Override
+		public double selectAvgReviewStar(int classCode) {
+			return classRoomMapper.selectAvgReviewStar(classCode);
+		}
 
 }

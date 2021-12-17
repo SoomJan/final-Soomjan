@@ -53,6 +53,17 @@
     	<result column="NICKNAME" property="nickName"/>
     </resultMap>
     
+    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ReviewDTO" id="reviewResultMap">
+    	<id column="REVIEW_CODE" property="rvCode"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="STAR" property="star"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="IS_DELETED" property="isDelete"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    </resultMap>
+    
     
     <select id="selectClassByClassCode" resultMap="classResultMap">
     	SELECT
@@ -468,4 +479,58 @@
 		  	WHERE F.RNUM >= #{ selectCriteria.startRow }  
     </select>
     
+    <select id="selectReviewListByClassCodeTotalCount" resultType="_int">
+    	SELECT
+    	       COUNT(*)
+    	  FROM CLASS_REVIEW_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    	   AND IS_DELETED = 'N'
+    </select>
+    
+    <select id="selectReviewListByClassCode" parameterType="hashmap" resultMap="reviewResultMap">
+    	SELECT
+    	      F.RNUM
+   	     	, F.*
+    	 FROM (SELECT ROWNUM RNUM
+    	 	        , D.*
+    	 	     FROM (SELECT
+    	 	     			  CR.REVIEW_CODE
+							, CR.WRITE_DATE
+							, CR.STAR
+							, CR.CONTENTS
+							, CR.IS_DELETED
+							, CR.CLASS_CODE
+							, CR.EMAIL
+							, SS.NICKNAME
+    	 	     	     FROM CLASS_REVIEW_TBL CR
+    	 	     	     JOIN SSACK_TBL SS ON ( SS.EMAIL = CR.EMAIL )
+    	 	     	   	WHERE CR.CLASS_CODE = #{ classCode }
+    	 	     	      AND CR.IS_DELETED = 'N'
+						<if test="selectCriteria.searchCondition == null">
+							ORDER BY CR.WRITE_DATE DESC
+						</if>
+						<if test="selectCriteria.searchCondition == 'recently'">
+							ORDER BY CR.WRITE_DATE DESC
+						</if>
+						<if test="selectCriteria.searchCondition == 'starDESC'">
+							ORDER BY CR.STAR DESC
+						</if>
+						<if test="selectCriteria.searchCondition == 'starASC'">
+							ORDER BY CR.STAR ASC
+						</if>
+    	 	     ) D
+    	    <![CDATA[
+	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
+	        ]]>	
+		  	) F
+		  	WHERE F.RNUM >= #{ selectCriteria.startRow } 
+    </select>
+    
+    <select id="selectAvgReviewStar" resultType="_double">
+    	SELECT AVG(STAR)
+    	  FROM CLASS_REVIEW_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    	   AND IS_DELETED = 'N'
+    </select>
+     
 </mapper>

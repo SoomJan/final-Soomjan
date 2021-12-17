@@ -93,7 +93,7 @@ img {
 
 	function checkValue(item){
 		if($(item).prev().val() != ""){
-			$(item).parent().submit();
+			$('#mokchaFileForm').submit();
 			alert("업로드를 시작합니다.");
 		}else{
 			alert("파일을 선택해 주세요.");
@@ -165,10 +165,10 @@ img {
 										src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
 								</c:if>
 							</c:forEach>
-							<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data">
+							<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data" id="mokchaFileForm">
 								<div>
 								<input type="hidden" value="${ mokcha.mokchaCode }" name="mokchaCode">
-								<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
+								<br><b>영상 업로드 (100MB 까지 가능합니다.)</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
 								<button type="button" class="btnStyle sendBtn btn btn-primary" onclick="checkValue(this);">영상 추가하기</button>
 								</div>
 							</form>

@@ -9,6 +9,7 @@ import com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO;
 import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ReviewDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 public interface ClassRoomMapper {
@@ -82,5 +83,11 @@ public interface ClassRoomMapper {
 	boolean registReportMember(ReportMemberDTO reportMember);
 
 	List<Map<String, Object>> selectAllReportStatement();
+
+	int selectReviewListByClassCodeTotalCount(Map<String, Object> searchMap);
+
+	List<ReviewDTO> selectReviewListByClassCode(Map<String, Object> criteriaMap);
+
+	double selectAvgReviewStar(int classCode);
 
 }

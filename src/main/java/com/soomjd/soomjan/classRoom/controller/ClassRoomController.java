@@ -37,6 +37,7 @@ import com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO;
 import com.soomjd.soomjan.classRoom.model.dto.LearningPostDTO;
 import com.soomjd.soomjan.classRoom.model.dto.MokchaDTO;
 import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
+import com.soomjd.soomjan.classRoom.model.dto.ReviewDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
 import com.soomjd.soomjan.common.fileWrapper.FileWrapper;
 import com.soomjd.soomjan.common.paging.Pagenation;
@@ -59,7 +60,8 @@ public class ClassRoomController{
 	}
 
 	@GetMapping("classRoom")
-	public void classRoom(Model model, @RequestParam int classCode, HttpSession session) {
+	public void classRoom(Model model, @RequestParam int classCode, HttpSession session, @RequestParam(required = false) String searchCondition,
+			@RequestParam(required = false) String searchValue, @RequestParam(defaultValue = "1") int currentPage) {
 
 		model.addAttribute("classCode", classCode);
 		model.addAttribute("jandi", session.getAttribute("jandi"));
@@ -68,10 +70,33 @@ public class ClassRoomController{
 
 		List<Map<String, String>> currentMemberList = classRoomService.selectCurrentMemberList(classCode);
 		
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("classCode", classCode);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = classRoomService.selectReviewListByClassCodeTotalCount(searchMap);
+		
+		int limit = 5;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		System.out.println("selectCriteria : " + selectCriteria);
+		
+		Map<String, Object> criteriaMap = new HashMap<String, Object>();
+		criteriaMap.put("selectCriteria", selectCriteria);
+		criteriaMap.put("classCode", classCode);
+		
+		List<ReviewDTO> reviewList = classRoomService.selectReviewListByClassCode(criteriaMap);
+		System.out.println(reviewList.get(0));
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
 		model.addAttribute("currentMemberList", currentMemberList);
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewCount", totalCount);
 		model.addAttribute("currentCount", currentMemberList.size());
 		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
+		model.addAttribute("selectCriteria", selectCriteria);
+		model.addAttribute("classStar", classRoomService.selectAvgReviewStar(classCode));
 
 	}
 

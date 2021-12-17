@@ -12,10 +12,49 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" 
                 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
     </script>
-	<link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css" rel="stylesheet" />
+	<%-- <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css" rel="stylesheet" /> --%>
 <%--     <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
  --%>
 </head>
+<style>
+	.pagination > li > a{
+		position: relative;
+	    float: left;
+	    padding: 6px 12px;
+	    margin-left: 2px;
+	    line-height: 1.42857143;
+	    color: #fff;
+	    text-decoration: none;
+	    background-color: #91c788;
+	    border: 1px solid #91c788;
+	    border-radius: 1.5rem;
+	}
+	.pagination > li > a, .pagination > li > span {
+    	position: relative;
+	    float: left;
+	    padding: 6px 12px;
+	    margin-left: 2px;
+	    line-height: 1.42857143;
+	    color: #fff;
+	    text-decoration: none;
+	    background-color: #91c788;
+	    border: 1px solid #91c788;
+	    border-radius: 1.5rem;
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span,
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+   	 	position: relative;
+	    float: left;
+	    padding: 6px 12px;
+	    margin-left: 2px;
+	    line-height: 1.42857143;
+	    color: #fff;
+	    text-decoration: none;
+	    background-color: #91c788;
+	    border: 1px solid #91c788;
+	    border-radius: 1.5rem;
+}
+</style>
 <body>
 
 	<div style="text-align : center">
@@ -24,15 +63,15 @@
 	  
 		<!-- 이전 페이지 버튼 -->
 		<c:if test="${ selectCriteria.pageNo <= 1 }">
-	 	<li>
-			<a href="#" aria-label="Previous" style="cursor:pointer;">
+	 	<li >
+			<a aria-label="Previous" style="cursor:pointer;" >
 			 <span aria-hidden="true">&laquo;</span>
 	  	    </a>
 		</li>
 		</c:if>
 		<c:if test="${ selectCriteria.pageNo > 1 }">
 	 	<li id="prevPage">
-			<a href="#" aria-label="Previous" style="cursor:pointer;">
+			<a aria-label="Previous" style="cursor:pointer;" class="bg_a">
 			 <span aria-hidden="true">&laquo;</span>
 	  	    </a>
 		</li>
@@ -55,14 +94,14 @@
 	    <!-- 다음 페이지 버튼 -->
 	    <c:if test="${ selectCriteria.pageNo >= selectCriteria.maxPage }">
 	    <li>  
-	      <a href="#" aria-label="Next" style="cursor:pointer;">
+	      <a aria-label="Next" style="cursor:pointer;">
 	        <span aria-hidden="true">&raquo;</span>
 	      </a>
 	    </li>    
 	    </c:if>
 		<c:if test="${ selectCriteria.pageNo < selectCriteria.maxPage }">
 		<li>
-		 <a href="#" aria-label="Next" style="cursor:pointer;">
+		 <a aria-label="Next" style="cursor:pointer;">
 	        <span aria-hidden="true" id="nextPage">&raquo;</span>
 	     </a> 
 	     </li>  
@@ -75,6 +114,11 @@
 	
 		const link = window.location.pathname;
 		let searchText = "";
+		
+		let mappingurl = link.substring(link.lastIndexOf('/'));
+		if(mappingurl == '/classRoom'){
+			searchText += "&classCode=${ classCode }";
+		}
 		
 		if(${ !empty selectCriteria.searchCondition? true: false }) {
 			searchText += "&searchCondition=${ selectCriteria.searchCondition }";
