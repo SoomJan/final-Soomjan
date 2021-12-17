@@ -36,5 +36,7 @@ public interface JandiService {
 
 	List<CalAdDTO> selectcalAdList(Map<String, Object> key);
 
+	int updateAdDate(Map<String, Object> key);
+
 
 }

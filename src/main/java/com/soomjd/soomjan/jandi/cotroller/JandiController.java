@@ -681,7 +681,7 @@ public class JandiController {
 	
 	@PostMapping("jandiPay")
 	@ResponseBody
-	public String jandiPay() {
+	public String jandiPay(@RequestParam(name="selectedDate") String selectedDate, @RequestParam(name="adCode") String adCode, Model model) {
 
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -723,13 +723,38 @@ public class JandiController {
 			
 			BufferedReader bReader = new BufferedReader(reader);
 			
-			return bReader.readLine();
+			
+			if(bReader.readLine() != null) {
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				
+				Date startDate=sdf.parse(selectedDate);
+				
+				Map<String, Object> key = new HashMap<>();
+				
+				key.put("startDate", startDate);
+				key.put("adCode", Integer.parseInt(adCode));
+				
+				int up = jandiService.updateAdDate(key);
+				
+				if(up>0) {
+					return bReader.readLine();
+				}else {
+					model.addAttribute("message", "결제에 실패하였습니");
+					return "/jandi/failedPage";
+				}
+				
+			}
+			
 			
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
