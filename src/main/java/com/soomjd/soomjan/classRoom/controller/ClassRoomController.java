@@ -58,23 +58,6 @@ public class ClassRoomController{
 		this.classRoomService = classRoomService;
 	}
 
-	@GetMapping("classRoom")
-	public void classRoom(Model model, @RequestParam int classCode, HttpSession session) {
-
-		model.addAttribute("classCode", classCode);
-		model.addAttribute("jandi", session.getAttribute("jandi"));
-		System.out.println("classCode : " + classCode);
-		System.out.println("jandi : " + (JandiDTO) session.getAttribute("jandi"));
-
-		List<Map<String, String>> currentMemberList = classRoomService.selectCurrentMemberList(classCode);
-		
-		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
-		model.addAttribute("currentMemberList", currentMemberList);
-		model.addAttribute("currentCount", currentMemberList.size());
-		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
-
-	}
-
 	@GetMapping("classLecture")
 	public void classLecture(Model model) {
 
@@ -695,6 +678,32 @@ public class ClassRoomController{
 		rttr.addFlashAttribute("reportSuccessMessage", result );
 		
 		return "redirect:/" + intent + "/class/"+ intent +"ClassChat";
+		
+	}
+	
+	@GetMapping("viewsUp")
+	public String viewsUp(Model model, @RequestParam String classCode, HttpSession session) {
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		System.out.println("받아온 클래스 코드 : " + classCode);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("classCode", classCode);
+		
+		if(member != null) {
+			System.out.println("현재 로그인 상태인 이메일 : " + member.getEmail());
+			map.put("email", member.getEmail());
+		}
+		
+		boolean viewsUp = classRoomService.viewsUp(map);
+		
+		if(viewsUp) {
+			System.out.println(classCode + "번 클래스의 조회수가 업데이트 되었습니다.");
+			return "redirect:/findclass/class/classRoom?classCode=" + classCode;
+		} else {
+			System.out.println(classCode + "번 클래스를 운영하는 잔디의 계정으로는 조회수가 올라가지 않습니다.");
+			return "redirect:/findclass/class/classRoom?classCode=" + classCode;
+		}
 		
 	}
 	

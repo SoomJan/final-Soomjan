@@ -196,6 +196,13 @@ public class ClassRoomServiceImpl implements ClassRoomService{
 			return classRoomMapper.selectLearningBoardList(learningMap);
 		}
 
+		@Override
+		public boolean viewsUp(Map<String, Object> map) {
+			
+			return classRoomMapper.viewsUp(map) > 0? true:false;
+		}
+
+
 
 
 

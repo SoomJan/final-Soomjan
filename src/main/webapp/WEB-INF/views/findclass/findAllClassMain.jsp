@@ -59,7 +59,7 @@ pageEncoding="UTF-8"%>
                 <div class="pro-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/tutor1.png" alt="user"></div>
                 <h5 class="m-b-0">제주코딩베이스캠프</h5>
                 <p>코딩알못에서웹서비스런칭까지</p> <a href="javascript:void(0)" class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" style="margin-bottom:16px;" data-abc="true"
-                	onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/classRoom?classCode=4'">자세히보기</a>
+                 onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=4'">자세히보기</a>
                 <div class="row text-center m-t-20">
                     <div class="col-lg-1 col-md-4 m-t-20">
                         <h3 class="m-b-0 font-light"> </h3><small> </small>

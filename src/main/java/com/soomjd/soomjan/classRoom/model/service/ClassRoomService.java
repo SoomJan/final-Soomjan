@@ -82,6 +82,8 @@ public interface ClassRoomService {
 
 	List<LearningPostDTO> selectLearningBoardList(Map<String, Object> learningMap);
 
+	boolean viewsUp(Map<String, Object> map);
+
 
 
 }

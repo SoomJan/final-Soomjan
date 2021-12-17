@@ -82,5 +82,7 @@ public interface ClassRoomMapper {
 	boolean registReportMember(ReportMemberDTO reportMember);
 
 	List<Map<String, Object>> selectAllReportStatement();
+	
+	int viewsUp(Map<String, Object> map);
 
 }
