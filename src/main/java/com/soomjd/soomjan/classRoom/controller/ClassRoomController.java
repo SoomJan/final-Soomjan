@@ -70,10 +70,8 @@ public class ClassRoomController{
 
 		List<Map<String, String>> currentMemberList = classRoomService.selectCurrentMemberList(classCode);
 		
-		
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("classCode", classCode);
-		System.out.println("searchMap : " + searchMap);
 		
 		int totalCount = classRoomService.selectReviewListByClassCodeTotalCount(searchMap);
 		
@@ -83,19 +81,23 @@ public class ClassRoomController{
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
 		System.out.println("selectCriteria : " + selectCriteria);
 		
-		Map<String, Object> criteriaMap = new HashMap<String, Object>();
-		criteriaMap.put("selectCriteria", selectCriteria);
-		criteriaMap.put("classCode", classCode);
+		searchMap.put("selectCriteria", selectCriteria);
+		List<ReviewDTO> reviewList = classRoomService.selectReviewListByClassCode(searchMap);
 		
-		List<ReviewDTO> reviewList = classRoomService.selectReviewListByClassCode(criteriaMap);
+		double classStar = 0;
+		
+		if(reviewList.size() > 0) {
+			classStar = classRoomService.selectAvgReviewStar(classCode);
+		}
+		
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
 		model.addAttribute("currentMemberList", currentMemberList);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewCount", totalCount);
+		model.addAttribute("classStar", classStar);
 		model.addAttribute("currentCount", currentMemberList.size());
 		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
 		model.addAttribute("selectCriteria", selectCriteria);
-		model.addAttribute("classStar", classRoomService.selectAvgReviewStar(classCode));
 
 	}
 
