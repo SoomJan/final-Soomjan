@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.service.FindclassService;
-import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 
 @Controller
 @RequestMapping("/findclass/*")
@@ -28,7 +28,7 @@ public class FindclassController {
 	public void findAllClassMain() {
 		System.out.println("확인");
 	//  반환형                      변수명                	
-		List<ClassesDTO> classDTOList = findClassService.selectfindclass();
+		List<ClassDTO> classDTOList = findClassService.selectfindclass();
 		System.out.println(classDTOList);
 		// DATABAE로 필요한 데이터를 조회 
 	}

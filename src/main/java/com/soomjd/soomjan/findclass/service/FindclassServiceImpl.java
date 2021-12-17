@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.model.dao.FindclassMapper;
-import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 
 @Service
 public class FindclassServiceImpl implements FindclassService{
@@ -23,15 +23,15 @@ public class FindclassServiceImpl implements FindclassService{
 	}
 	
 	@Override
-	public List<ClassesDTO> selectfindclass() {
+	public List<ClassDTO> selectfindclass() {
 	
-		List<ClassesDTO> classDTOList = findclassMapper.selectfindclass();
+		List<ClassDTO> classDTOList = findclassMapper.selectfindclass();
 		
 		return classDTOList;
 	}
 
 	@Override
-	public List<ClassesDTO> mainClass() {
+	public List<ClassDTO> mainClass() {
 		// TODO Auto-generated method stub
 		return null;
 	}

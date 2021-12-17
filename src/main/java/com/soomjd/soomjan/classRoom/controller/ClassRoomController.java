@@ -55,7 +55,7 @@ public class ClassRoomController{
 	private final ClassRoomService classRoomService;
 
 	@Autowired
-	public ClassRoomController(ClassRoomService classRoomService) {
+	public ClassRoomController(ClassRoomService classRoomService, HttpSession session) {
 		this.classRoomService = classRoomService;
 	}
 

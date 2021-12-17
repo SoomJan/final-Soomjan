@@ -6,13 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.jandi.model.dao.JandiMapper;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
-import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
-import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
 public class JandiServiceImpl implements JandiService{
@@ -71,7 +70,7 @@ public class JandiServiceImpl implements JandiService{
 	}
 
 	@Override
-	public List<ClassesDTO> selectClasses(String email) {
+	public List<ClassDTO> selectClasses(String email) {
 		
 		return jandiMapper.selectClasses(email);
 	}

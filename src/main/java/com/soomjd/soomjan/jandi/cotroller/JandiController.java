@@ -35,9 +35,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
-import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.CreateAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
@@ -62,7 +62,7 @@ public class JandiController {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
-		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
+		List<ClassDTO> classDTO = jandiService.selectClasses(jandi.getEmail());
 		
 		
 			
@@ -70,7 +70,7 @@ public class JandiController {
 		
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
-		model.addAttribute("classes", classes);
+		model.addAttribute("classes", classDTO);
 		
 		System.out.println("환영합니다. " + jandi.getEmail() + "잔디님!");
 
@@ -518,7 +518,7 @@ public class JandiController {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
-		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
+		List<ClassDTO> classes = jandiService.selectClasses(jandi.getEmail());
 		
 		List<Integer> classesCodeList  =new ArrayList<Integer>();
 		
@@ -586,7 +586,7 @@ public class JandiController {
 		
 		
 		
-		ClassesDTO adClass=classes.get(myAd.getClassCode());
+		ClassDTO adClass=classes.get(myAd.getClassCode());
 		
 		
 		model.addAttribute("imagePath",myAd.getImagePath());
@@ -606,7 +606,7 @@ public class JandiController {
 	public String jandiBuy(HttpSession session, Model model) {
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
-		List<ClassesDTO> classes = jandiService.selectClasses(jandi.getEmail());
+		List<ClassDTO> classes = jandiService.selectClasses(jandi.getEmail());
 		
 		List<Integer> classesCodeList  =new ArrayList<Integer>();
 		
@@ -659,7 +659,7 @@ public class JandiController {
 		model.addAttribute("myAd", myAd);
 		
 		
-		ClassesDTO myClasses= null;
+		ClassDTO myClasses= null;
 		for(int i=0; i<classes.size();i++) {
 			
 			if(myAd.getClassCode()==classes.get(i).getClassCode()) {

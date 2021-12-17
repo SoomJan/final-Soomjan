@@ -3,9 +3,9 @@ package com.soomjd.soomjan.jandi.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
-import com.soomjd.soomjan.jandi.model.dto.ClassesDTO;
 import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 
@@ -27,7 +27,7 @@ public interface JandiMapper {
 
 	int selectClassesCode(String myClass);
 
-	List<ClassesDTO> selectClasses(String email);
+	List<ClassDTO> selectClasses(String email);
 
 	FullAdDTO selectAd(Integer classesCode);
 
