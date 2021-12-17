@@ -84,14 +84,17 @@
     
     
     
-    <select id="estimateDetail" resultMap="estimateList" resultType="_int" >
+    <select id="estimateDetail" resultMap="estimateList" >
     	SELECT
 		       ESTIMATE_CODE
-		     , TITLE
+		     , CATEGORY_CODE
 		     , IS_MATCHED
+		     , WRITE_DATE
+		     , TITLE
+		     , CONTENTS
 		  FROM ESTIMATE_TBL
 		 WHERE EMAIL = #{ email } 
-		   AND ESTIMATE_CODE = #{ ESTIMATE_CODE }
+		   AND ESTIMATE_CODE = #{ estimateCode }
     </select>
     
     <select id="selecetMainTotal" resultType="_int">

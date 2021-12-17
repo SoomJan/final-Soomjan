@@ -107,16 +107,13 @@ public class MacthingSsackMainController {
 	
 	// 작성된 견적서 디테일 보여주기
 	@GetMapping("/detailEstimate/{memberEmail:.+}")
-	public String detailEstimate(Model model , HttpServletRequest request ,@PathVariable("memberEmail") String memberEmail) {
-		
-		String estimateCode = request.getParameter("estimateCode");
-		
+	public String detailEstimate(Model model ,@PathVariable("memberEmail") String memberEmail ,String estimateCode) {
 		
 		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
 		System.out.println("loginMember : "+ loginMember);
 		
-		
-		List<EstimateDTO> estimateDetail = matchingService.estimateDetail(estimateCode);
+		// 견적서 받아오는 코드
+		List<EstimateDTO> estimateDetail = matchingService.estimateDetail(estimateCode); //estimateCode값 넘김
 		System.out.println(estimateDetail);
 		model.addAttribute("estimateDetail",estimateDetail);
 		
