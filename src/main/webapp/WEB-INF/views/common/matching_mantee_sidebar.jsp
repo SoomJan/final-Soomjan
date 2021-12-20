@@ -4,16 +4,15 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
     <title>Signin Template for Bootstrap</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/findmentorsidebar.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css" rel="stylesheet" />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+	<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
 
   <body>
     <div id="sidebar">
@@ -33,6 +32,4 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
   </body>
-
-  <script src="css/ie10-viewport-bug-workaround.js"></script>
 </html>

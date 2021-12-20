@@ -5,6 +5,13 @@
 <html>
 <head>
 <title>클래스룸</title>
+
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+
 <style>
 
 .title {

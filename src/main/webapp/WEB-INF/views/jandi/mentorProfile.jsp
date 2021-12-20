@@ -8,11 +8,7 @@
 
 <title>잔디 프로필</title>
 
-<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .warningtable tbody {
 	text-align: center;

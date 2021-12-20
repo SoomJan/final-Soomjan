@@ -8,7 +8,7 @@
 <title>멘티 채팅</title>
 
 <link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css?" rel="stylesheet" />
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 
 .classImg{
@@ -59,7 +59,6 @@ img {
 
 </style>
 </head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://125.132.252.115:3000/socket.io/socket.io.js"></script>
 <script>
 

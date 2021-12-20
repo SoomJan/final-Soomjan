@@ -7,6 +7,8 @@
 
 <title>클래스룸</title>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <style>
 .classImg{
@@ -32,7 +34,7 @@
 }
 
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 $(function(){
 	if('${ requestScope.uploadMessage }' != ''){

@@ -8,11 +8,7 @@
 
 <title>클래스 광고 신청</title>
 
-<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 a{
 	color:black;

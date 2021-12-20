@@ -7,7 +7,7 @@
 <head>
 
 <title>학습방</title>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
 
@@ -31,7 +31,6 @@ table{
 }
 
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	function movePost(item){
 		let postCode = $(item).prev().val();

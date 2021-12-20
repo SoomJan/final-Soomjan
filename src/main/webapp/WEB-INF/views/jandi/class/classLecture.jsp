@@ -8,6 +8,8 @@
 
 <title>강의 영상</title>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <style>
 
@@ -98,7 +100,6 @@ img {
 }
 
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
 	function checkValue(item){
