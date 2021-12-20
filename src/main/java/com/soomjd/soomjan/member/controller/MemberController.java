@@ -53,10 +53,11 @@ public class MemberController {
 	}
 
 	@PostMapping("regist")
-	public String registMember(@ModelAttribute MemberDTO member, HttpServletRequest request)
+	public String registMember(@ModelAttribute MemberDTO member, @RequestParam("proof") String proof, HttpServletRequest request)
 			throws MemberRegistException {
 
-		System.out.println(member);
+		System.out.println("회원가입할 회원의 정보 : " + member);
+		System.out.println("회원가입할 회원의 인증번호 : " + proof);
 
 		/* 비밀번호 암호화 처리 */
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
@@ -66,8 +67,19 @@ public class MemberController {
 
 			throw new MemberRegistException("회원가입에 실패하셨습니다.");
 		} else {
-
-			return "redirect:/";
+			
+			/* 인증번호 이력 테이블 업데이트 */
+			Map<String, String> map = new HashMap<>();
+			map.put("email", member.getEmail());
+			map.put("number", proof);
+			
+			boolean checkUpdate = memberService.checkUpdate(map);
+			
+			if(checkUpdate) {
+				return "redirect:/";
+			} else {
+				throw new MemberRegistException("회원가입에 실패하셨습니다.");
+			}
 		}
 	}
 	
@@ -223,6 +235,25 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	@PostMapping("pwdCheck")
+	public void pwdCheck(@RequestParam("number") String number, @RequestParam("email") String email, HttpServletResponse response) throws IOException {
+		
+		System.out.println("인증번호를 찾을 이메일 : " + email);
+		System.out.println("사용자가 입력한 인증번호 : " + number);
+		
+		int number2 = Integer.parseInt(number);
+		
+		int trueNumber = memberService.pwdCheck(email);
+		
+		if(number2 == trueNumber) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
+		
+	}
+	
 	
 	@PostMapping("findPwd3")
 	public ModelAndView findPwd3(@RequestParam("email") String email, ModelAndView mv) {

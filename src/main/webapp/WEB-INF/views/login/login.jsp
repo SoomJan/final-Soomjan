@@ -1,54 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
     <title>숨은잔디 로그인</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/login.css"
       rel="stylesheet"
     />
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/login.css?"
-      rel="stylesheet"
-    />
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
       href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
     />
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-
-    <script src="css/ie-emulation-modes-warning.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
   </head>
   
-  <script>
-  	$(function(){
-  		if('${ requestScope.authMessage }' != ''){
-  			alert('${ requestScope.authMessage }');
-  		}
-  	});
-  </script>
-  
   <body>
-    <!-- <div class="background"></div> -->
     <jsp:include page="../common/nav.jsp" />
 
     <main class="login">
@@ -71,13 +40,10 @@ pageEncoding="UTF-8"%>
                 <input type="button" id="submit" value="로그인" style="background-color: #91C788; cursor:pointer;" />
                 <input type="button" value="회원가입" onclick="location.href='${ pageContext.servletContext.contextPath }/member/terms'" style="background-color: lightgray; cursor:pointer;" />
                 </div>
-                <!--  <button>로그인</button> -->
                 <br />
                 <div>
                   <a href="${ pageContext.servletContext.contextPath }/member/findEmail" style="color: #005E23 !important;">이메일찾기</a>
                   &nbsp;&nbsp;&nbsp;
-<%--                   <a href="${ pageContext.servletContext.contextPath }/member/terms">회원가입</a>
-                  &nbsp;&nbsp;&nbsp; --%>
                   <a href="${ pageContext.servletContext.contextPath }/member/findPwd" style="color: #005E23 !important;">비밀번호찾기</a>
                 </div>
               </div>
@@ -88,6 +54,12 @@ pageEncoding="UTF-8"%>
     </main>
 
     <script>
+
+    $(function(){
+  		if('${ requestScope.authMessage }' != ''){
+  			alert('${ requestScope.authMessage }');
+  		}
+  	});
 
       $(function(){
 
@@ -126,12 +98,6 @@ pageEncoding="UTF-8"%>
         });
       });
 
-
-
-      
-
-
-
       /* 모달창 띄워주는 함수 */
       function showModal(str) {
             $("#modalTitle").html(str);
@@ -141,14 +107,9 @@ pageEncoding="UTF-8"%>
               });
           };
 
-
-
-
     </script>
 
     <jsp:include page="../common/footer.jsp" />
-
-    <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
 

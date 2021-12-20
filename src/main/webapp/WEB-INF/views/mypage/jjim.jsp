@@ -13,24 +13,10 @@
 
         <title>찜한 클래스</title>
 
-        <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
         <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
         <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet" />
         <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/jjim.css" rel="stylesheet" />
 
-        <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css"
-          href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-        <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-        <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script type="text/javascript"
-          src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>
-        <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/nav.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
         <style>
           .jjimtable thead tr {
             text-align: center;
@@ -94,10 +80,6 @@
                 </div>
             </div>
             </form>
-            <!-- <div class="unlist-text">
-  찜한 클래스가 없습니다.<br>
-  새로운 클래스를 추가해주세요.
-</div> -->
             <br><br><br><br><br>
 
             <c:choose>
@@ -299,9 +281,6 @@
             </div>
           </div>
         </div>
-
-
-    
       </body>
       <jsp:include page="../common/footer.jsp" />
 

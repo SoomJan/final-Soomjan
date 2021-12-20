@@ -1,42 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-
     <title>숨은잔디 회원가입</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-      rel="stylesheet"
-    />
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/join.css"
       rel="stylesheet"
     />
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
       href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
     />
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-
-    <script src="css/ie-emulation-modes-warning.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
   </head>
   <style>
     .body {
@@ -45,7 +22,6 @@ pageEncoding="UTF-8"%>
   </style>
 
   <body>
-    <!-- <div class="background"></div> -->
     <jsp:include page="../common/nav.jsp" />
 
     <main class="fullJoin">
@@ -210,10 +186,10 @@ pageEncoding="UTF-8"%>
               data: {email : email},
               success: function(data) {
                 if(data == "true") {
-                  showModal("이메일이 전송되었습니다.");
+                  showModal("인증번호가 전송되었습니다.");
                   $("#emailBoolean3").prop("checked", true);
                 } else {
-                  showModal("이메일 전송에 실패하였습니다.");
+                  showModal("인증번호 전송에 실패하였습니다.");
                   $("#emailBoolean3").prop("checked", false);
                 }
               },
@@ -252,19 +228,6 @@ pageEncoding="UTF-8"%>
                   console.log(error);
                 }
               });
-
-              // if(num1 == num2) {
-              //   $(".proofCheck").html("인증 번호가 일치합니다.")
-              //   .css("color", "blue");
-              //   $(this).focus().css("background", "palegreen");
-              // $("#proofBoolean").prop("checked", true);
-              // } else {
-              //   $(".proofCheck")
-              //   .html("인증 번호가 일치하지 않습니다.")
-              //   .css("color", "red");
-              // $(this).focus().css("background", "lightpink");
-              // $("#proofBoolean").prop("checked", false);
-              // }
             });
           });
           
@@ -383,6 +346,7 @@ pageEncoding="UTF-8"%>
         /* 전체 조건 체크 */
         $(function () {
           $("#confirm").click(function (e) {
+
             let name = $("#nameBoolean").prop("checked");
             let email = $("#emailBoolean").prop("checked");
             let email2 = $("#emailBoolean2").prop("checked");
@@ -442,7 +406,6 @@ pageEncoding="UTF-8"%>
 
     <jsp:include page="../common/footer.jsp" />
 
-    <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
 
