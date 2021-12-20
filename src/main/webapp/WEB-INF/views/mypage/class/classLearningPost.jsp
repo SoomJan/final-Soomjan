@@ -83,8 +83,8 @@ img {
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
 		<jsp:include page="../../common/mypagesidebar.jsp" />
-		<jsp:include page="../class/classRoomNav.jsp" />
 		<div class="sidebar-content">
+			<jsp:include page="../class/classRoomNav.jsp" />
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
@@ -98,7 +98,7 @@ img {
 				<br>
 				<div id="contents">
 					<textarea class="areaStyle" id="contents" name="contents" rows="10" wrap="hard"
-						placeholder="강의 소개를 입력해주세요." readonly>${ learnigPost.contents }</textarea>
+						placeholder="아직 작성된 내용이 없습니다." readonly>${ learnigPost.contents }</textarea>
 				</div>
 				<input type="hidden" name="postCode" value="${ learnigPost.postCode }">
               <br><br>

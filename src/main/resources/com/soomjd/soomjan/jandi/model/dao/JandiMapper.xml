@@ -80,6 +80,7 @@
     	SELECT 
     		   CLASS_CODE
     		 , TITLE
+    		 , EMAIL
     	  FROM CLASS_TBL
     	 WHERE EMAIL = #{ email }
     	   AND IS_DELETED = 'N'

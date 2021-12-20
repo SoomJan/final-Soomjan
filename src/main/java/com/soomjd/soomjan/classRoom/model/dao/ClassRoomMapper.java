@@ -13,19 +13,17 @@ import com.soomjd.soomjan.classRoom.model.dto.ReviewDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 public interface ClassRoomMapper {
-	
+
 	ClassDTO selectClassByClassCode(int classCode);
 
 	List<Map<String, String>> selectCurrentMemberList(int classCode);
 
-	
-	 List<MokchaDTO> selectMokchaList(int classCode);
-	 
-	 List<LearningPostDTO> selectLearningPostList(int classCode);
-	 
+	List<MokchaDTO> selectMokchaList(Map<String, Object> searchMap);
+
+	List<LearningPostDTO> selectLearningPostList(Map<String, Object> searchMap);
 
 	List<ClassFileDTO> selectLearningFile(int postCode);
-	
+
 	List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap);
 
 	int registClass(ClassDTO classDTO);
@@ -41,8 +39,6 @@ public interface ClassRoomMapper {
 	int registLecture(MokchaDTO mokcha);
 
 	int registLectureFile(ClassFileDTO classFile);
-
-	int deleteLecture();
 
 	LearningPostDTO selectPostByPostCode(int postCode);
 
@@ -63,7 +59,7 @@ public interface ClassRoomMapper {
 	boolean modifyLectureIsDeleted(int mokchaCode);
 
 	boolean modifyLectureFileIsDeleted(int mokchaCode);
-	
+
 	List<ClassFileDTO> selectMokchaFileListByMokchaCode(int mokchaCode);
 
 	boolean modifyLearnigPostIsDeleted(int postCode);
@@ -73,10 +69,8 @@ public interface ClassRoomMapper {
 	List<ClassFileDTO> selectLearningFileListByPostCode(int postCode);
 
 	boolean registPurchaseClass(ClassPurchaseDTO classPurchase);
-	
-	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
 
-	List<Map<String, Object>> selectLearningBoardList(Map<String, Object> learningMap);
+	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
 
 	boolean registChatRoom(HashMap<String, Object> chatRoomMap);
 
@@ -85,7 +79,7 @@ public interface ClassRoomMapper {
 	boolean registReportMember(ReportMemberDTO reportMember);
 
 	List<Map<String, Object>> selectAllReportStatement();
-	
+
 	int viewsUp(Map<String, Object> map);
 
 	int selectReviewListByClassCodeTotalCount(Map<String, Object> searchMap);
@@ -93,9 +87,17 @@ public interface ClassRoomMapper {
 	List<ReviewDTO> selectReviewListByClassCode(Map<String, Object> criteriaMap);
 
 	double selectAvgReviewStar(int classCode);
-	
+
 	int selectClassLectureTotalCount(Map<String, Object> searchMap);
 
-	List<Map<String, Object>> selectLectureList(Map<String, Object> lectureMap);
+	List<MokchaDTO> selectMokchaTitleList(int classCode);
+
+	boolean registReportClass(Map<String, Object> reportClassMap);
+
+	List<Map<String, Object>> selectJJimClassMemberList(int classCode);
+
+	boolean removeLikedClass(Map<String, Object> jjimMap);
+
+	boolean registLikedClass(Map<String, Object> jjimMap);
 
 }

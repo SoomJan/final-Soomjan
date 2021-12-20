@@ -31,8 +31,7 @@
 	src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
 <script
 	src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript"
 	src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 <script

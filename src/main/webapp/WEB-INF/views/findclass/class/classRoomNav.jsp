@@ -5,9 +5,6 @@
 <html>
 <head>
 <title>클래스룸</title>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <style>
 
 .title {
@@ -49,8 +46,18 @@ th{
 	background-color: #599A4E;
 	border-color: #599A4E;
 }
+.modalContents{
+	resize: none;
+	border-radius: 0.5rem;
+	border: 1.5px solid green;
+	height: 100px;
+	padding:2%;
+	
+}
 </style>
+
 <script>
+	//------------------결제
 	let payWindow;
 	$(function(){
 		
@@ -104,13 +111,84 @@ th{
 				payWindow.close();
 			}
 		}
+		
+		//--------------------- 신고 전송
+		$('#reportClassBtn').click(function(){
+			if('${ sessionScope.loginMember.email }' != ''){
+				let repContents = $('#repContents').val();
+				let repTypeCode =  $('#repTypeCode').val();
+					$.ajax({
+						url: "${pageContext.servletContext.contextPath }/member/class/reportClass",
+						type: "post",
+						data:  { 
+							repContents: repContents,
+							repTypeCode: repTypeCode
+							},
+						success: function(data){
+							alert(data);
+						},
+						error: function(error){
+							cnosole.log(error);
+						}
+					});
+					$('#repContents').val("");
+					$('#reportClassCloseBtn').click();
+			}else{
+				alert("로그인이 필요한 서비스입니다.");
+			}
+		});	
+		
+		//-----------찜
+		let status = "N";
+		<c:forEach var="jjimMember" items="${ sessionScope.jjimClassMemberList }">
+			<c:if test="${ jjimMember.EMAIL == loginMember.email }" >
+				status = "Y";
+			</c:if>
+		</c:forEach>
+		
+		if(status == "Y"){
+			$('#jjimBtn').html("<span style='color:red;'><i class='heart icon'></i></span>해제");
+		}else{
+			$('#jjimBtn').html("<span style='color:red;'><i class='heart outline icon'></i></span>찜");
+		}
+		
+		$('#jjimBtn').click(function(){
+			if('${ sessionScope.loginMember.email }' != ''){
+				console.log(status);
+					$.ajax({
+						url: "${pageContext.servletContext.contextPath }/member/class/jjimClass",
+						type: "get",
+						data:  { status : status},
+						success: function(data){
+							status = data;
+							if(status == "Y"){
+								$('#jjimBtn').html("<span style='color:red;'><i class='heart icon'></i></span>해제");
+							}else{
+								$('#jjimBtn').html("<span style='color:red;'><i class='heart outline icon'></i></span>찜");
+							}
+						},
+						error: function(error){
+							cnosole.log(error);
+						}
+					});
+			}else{
+				alert("로그인이 필요한 서비스입니다.");
+			}
+		});
 	});
 	
 </script>
 
 </head>
 <body>
-	<div class="sidebar-content">
+
+	<div>
+		<div >
+			<button type="button" style="float:left; color:black; background:none; border:none;" 
+					data-toggle="modal" data-target="#reportClassModal">
+				<span style="color:red;"><i class="bullhorn icon"></i></span>클래스 신고</button>
+			<button id="jjimBtn" style="float:right; color:black; background:none; border:none;"></button>
+		</div>
 		<p class="title"><b>${ classDTO.title }</b></p>
 		<p align="right"><b>${ classDTO.nickName } 잔디</b></p>
 		<c:if test="${ classDTO.email != sessionScope.loginMember.email and classDTO.maxCount > sessionScope.currentCount}">
@@ -127,6 +205,42 @@ th{
 		</table>
 		<br>
 		<br>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="reportClassModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">클래스 신고</h4>
+				</div>
+				<div class="modal-body" align="center">
+					<br>	
+						<b>신고 카테고리(필수): <select id="repTypeCode" name="repTypeCode">
+						<c:forEach var="reportState" items="${ reportStateList }">
+							<option value="${ reportState.REP_TYPE_CODE }">${ reportState.REP_TYPE }</option>
+						</c:forEach>
+						</select>
+						</b>
+						<br><br>
+						<b>신고 사유(필수)</b><br>
+						<textarea class="modalContents" id="repContents" style="width:300px;"></textarea>
+						<br><br>
+						타당한 사유 및 근거 없는 신고는 해당 신고가 반려될 수 있습니다.
+					<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="reportClassCloseBtn" class="btn btn-default btnBD"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="reportClassBtn">신고하기</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

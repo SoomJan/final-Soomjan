@@ -303,8 +303,8 @@ img {
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
 		<jsp:include page="../../common/mypagesidebar.jsp" />
-		<jsp:include page="../class/classRoomNav.jsp" />
 		<div class="sidebar-content">
+			<jsp:include page="../class/classRoomNav.jsp" />
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div class="chatDiv">

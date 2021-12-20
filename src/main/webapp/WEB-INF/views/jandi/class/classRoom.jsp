@@ -132,30 +132,63 @@ function checkLength(inputItem, spanItem, maxLength){
 						${ mokcha.mokchaName }
 					</p>
 				</c:forEach>
+				<a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture">더 보기</a>
 				<hr>
 				<br>
-				<div class="after">
-					<h2>후기</h2>
-					<p>총 5개</p>
-				</div>
-				<div class="ui card" id="aftercard" style="margin:5%; width:90%; ">
-					<div class="content">
-						<div class="left aligned header afterheader">
-							<i class="star icon"></i> <i class="star icon"></i> <i
-								class="star icon"></i> <i class="star icon"></i> <i
-								class="star icon"></i>
-						</div>
-						<div class="left aligned description">
-							<p>알차고 좋은 구성이였습니다! 잘들었습니다.</p>
-						</div>
-					</div>
-					<div class="extra content">
-						<div class="right aligned author">
-							<p>익명의 잔디 2021.11.18</p>
-						</div>
-					</div>
-				</div>
 			</form>
+			<c:if test="${ empty reviewList }">
+				<h3 align="center">아직 작성된 후기가 없습니다.</h3>
+			</c:if>
+			<c:if test="${ !empty reviewList }">
+				<div class="after">
+					<h2>후기 ( ${ classStar } / 5 )</h2>
+					<p>총 ${ reviewCount }개 </p>
+					 <form id="searchform" action="${ pageContext.servletContext.contextPath }/jandi/class/classRoom" method="get" >
+					 	<input type="hidden" name="classCode" value=${ classDTO.classCode }>
+						<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:0px; float:right;">
+			  				<option value="recently" >최신순</option>
+			        		<option value="starDESC">별점 높은순</option>
+			        		<option value="starASC">별점 낮은순</option>
+		        		</select>
+					</form>
+				</div>
+				
+				<c:forEach var="review" items="${ reviewList }">
+					<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
+						<div class="content">
+							<div class="left aligned header afterheader">
+								<c:forEach begin="1" end="${ review.star }">
+									<i class="star icon"></i>
+								</c:forEach>
+								<span>( ${ review.star } / 5)</span>
+							</div>
+							<div class="left aligned description">
+								<p>${ review.contents }</p>
+							</div>
+						</div>
+						<div class="extra content" id="name-date-content">
+							<div class="right aligned author">
+								${ review.nickName } ${ review.writeDate }
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			
+				<jsp:include page="../../common/Paging.jsp" />
+				
+				</c:if>
+				
+				<script>
+					$(function(){
+						if('${ selectCriteria.searchCondition }' != ''){
+							$("#searchCondition").val("${ selectCriteria.searchCondition }");
+						}
+					});
+					
+					$('#searchCondition').change(function(){
+						$('#searchform').submit();
+					});
+				</script>
 		</div>
 	</div>
 	

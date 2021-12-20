@@ -2,30 +2,19 @@
 pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+
 
     <title>등록된 멘토 조회</title>
-
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/nav.css?"
-      rel="stylesheet"
-    />
-
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/glyphicons-halflings-regular.svg"
-      rel="stylesheet"
-    />
-
-    <!--<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>-->
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/nav.css?after" rel="stylesheet"/>
+    
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+<!-- 	<script src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script> -->
+	    
     <script>
       $(function () {
         $("#acti").on("click", function () {

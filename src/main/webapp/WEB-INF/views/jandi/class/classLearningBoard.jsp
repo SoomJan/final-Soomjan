@@ -63,9 +63,7 @@ table{
 			<p>
 			<table style="width:100%;">
 				<tr>
-<!-- 				<th align="center" width="25"></th> -->
-				<th align="center" width="50"><h3>${ sessionScope.classDTO.title } 클래스룸 학습방</h3></th>
-<%-- 				<th align="center" width="25"><a href="${pageContext.servletContext.contextPath}/jandi/class/registLearningPost">게시물추가</a></th> --%>
+					<th align="center" width="50"><h3>${ sessionScope.classDTO.title } 클래스룸 학습방</h3></th>
 				</tr>
 			</table>
 			<br>
@@ -80,13 +78,12 @@ table{
 					</tr>
 				</thead>
 				<tbody>
- 				<%-- <c:out value="${ requestScope.learningList }"/> --%>
-					<c:forEach var="learningPost" items="${ requestScope.learningList }">
- 					<c:set var="writeDate" value="${ learningPost.WRITE_DATE }"/>
-						<input type="hidden" value="${ learningPost.POST_CODE }">
+					<c:forEach var="learningPost" items="${ requestScope.learningPostList }">
+ 					<c:set var="writeDate" value="${ learningPost.writeDate }"/>
+						<input type="hidden" value="${ learningPost.postCode }">
 						<tr onclick="movePost(this)">
-							<td>${ learningPost.NICKNAME }</td>
-							<td>${ learningPost.TITLE }</td>
+							<td>${ learningPost.nickName }</td>
+							<td>${ learningPost.title }</td>
 							<td>${ fn:substring(writeDate, 0, 10) }</td>
 						</tr>
 					</c:forEach>

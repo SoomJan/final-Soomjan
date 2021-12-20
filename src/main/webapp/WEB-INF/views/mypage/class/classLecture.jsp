@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 	
 <!DOCTYPE html>
 <html>
@@ -107,21 +108,28 @@ function mokchaToggle(item) {
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
 		<jsp:include page="../../common/mypagesidebar.jsp" />
-		<jsp:include page="../class/classRoomNav.jsp" />
 		<div class="sidebar-content">
+			<jsp:include page="../class/classRoomNav.jsp" />
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
-				<h2>4개의 목차</h2>
-				<hr style="background-color:black; border: 0; height: 1px;">
-				<br>
-				<c:forEach var="mokcha" items="${ requestScope.lectureList }">
-					<div class="mokcha">
-						<h3 onclick="mokchaToggle(this);">${ mokcha.MOKCHA_NAME } ▼</h3>
-						<div class="mokchaDiv" style="display:none;">
-						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.CONTENTS }">
+				<c:if test="${ requestScope.totalCount == 0}">
+					<hr>
+					<h3 align="center">아직 작성된 목차가 없습니다.</h3>
+				</c:if>
+				<c:if test="${ requestScope.totalCount != 0}">
+					<h2>${ requestScope.totalCount }개의 목차</h2>
+					<hr>
+					<c:forEach var="mokcha" items="${ requestScope.mokchaList }">
+						<div class="mokcha">
+							<c:set var="writeDate" value="${ mokcha.writeDate }"/>
+							<span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
+							<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaCode } ▼</h3>
+							<div class="mokchaDiv" style="display:none;">
+							<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
+							
 							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
-								<c:if test="${ mokcha.MOKCHA_CODE eq mokchaFile.mokchaCode }">
+								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
 									<video class="mokcha" controls
 										src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
 								</c:if>
@@ -130,10 +138,11 @@ function mokchaToggle(item) {
 					</div>
 					<br>
 					<hr style="background-color: lightgray; border: 0; height: 1px;">
-				</c:forEach>
-				<br><br>
-								<jsp:include page="../../common/Paging.jsp" />
-				<br>
+					</c:forEach>
+					<br><br>
+						<jsp:include page="../../common/Paging.jsp" />
+					<br>
+				</c:if>
 			</div>
 		</div>
 	</div>
