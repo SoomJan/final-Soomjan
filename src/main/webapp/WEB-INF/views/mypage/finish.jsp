@@ -207,10 +207,11 @@
   			console.log($tr);
   			console.log($($tr).children().eq(0).html());
   			console.log($($tr).children().eq(4).children().eq(0).val());
+  			console.log("classCode : " + $($tr).children().eq(6).children().eq(0).val());
    			$('.t-categoryName').val($($tr).children().eq(0).html()); 
     		$('.t-title').val($($tr).children().eq(1).html());
   			$('.t-nickName').val($($tr).children().eq(2).html());
-  			$('#classCode').val($($tr).children().eq(5).children().eq(0).val());
+  			$('#classCode').val($($tr).children().eq(6).children().eq(0).val());
   			$('.t-date').val($($tr).children().eq(4).children().eq(0).val() + "-" + $($tr).children().eq(3).html());  
   			$('#reviewmodal').fadeIn();
   			e.preventDefault();
