@@ -64,8 +64,10 @@ table {
 		<div class="sidebar-content">
 		
 			<h1 align="center">결제하기</h1>
-			<button type="button" id="kakao-pay" style="float: right">결제하기</button>
+
 			<form action="${ pageContext.servletContext.contextPath }/jandi/jandiPay" method="POST" id="dateForm">
+				<input type="hidden" value="${ myAd.adCode }" id="adCode">
+				<button type="submit" id="kakao-pay" style="float: right">결제하기</button>
 				<table style="width: 100%">
 					<tr>
 						<td style="width:30%">수업제목</td>
@@ -73,13 +75,15 @@ table {
 					</tr>
 					<tr>
 						<td style="width:30%">원하는 광고 시작날짜</td>
-						<td style="width:70%"><input type="week" name="startDate"></td>
+						<td style="width:70%"><input type="week" name="selectedDate"></td>
 					</tr>
 					<tr>
 						<td style="width:30%">광고료</td>
 						<td style="width:70%">300,000</td>
 					</tr>
 				</table>
+				
+				
 			</form>
 
 		</div>
@@ -87,27 +91,28 @@ table {
 		
 			let selectedDate = $('#dateForm').startDate.val();
 			let contents=${ myClasses.contents};
-			let adCode=${ myAd.adCode };
+			let adCode=$('#adCode').val();
+			
+			let insertData={"selectedDate" : selectedDate, "adCode" : adCode}
 			
 			$(function(){
 				$('#kakao-pay').click(function(){
 					$.ajax({
-						url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
-						dataType:'json',
-						data:{"selectedDate" : selectedDate,
-							  "adCode":adCode}
+						url:"jandiPay",
+						dataType:"JSON",
+						data:JSON.stringify(insertDate),
+						contentType: "application/json",
+						success:function(data){
+							alert("결제가 완료되었습니다.",tid);
+							
+							var box=resp.next_redirect_pc_url;
+							window.open(box);
+							
+						},
+						error:function(error){
+							alert(error);
+						}
 						
-					})
-					.done(function(json){
-						alert("결제가 완료되었습니다.");
-						
-						var box=resp.next_redirect_pc_url;
-						
-						location.href="${ pageContext.servletContext.contextPath }/jandi/myAd";
-
-					})
-					.fail(function(xhr, status, error){
-						alert(error);
 					});
 					
 					
