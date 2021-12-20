@@ -29,4 +29,8 @@ public interface MemberMapper {
 
 	MemberDTO selectMember(Map<String, String> map);
 
+	boolean mailCheckInsert(String authNum);
+
+	int numberCheck();
+
 }

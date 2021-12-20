@@ -88,6 +88,18 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.modifyIsJandi(email);
 	}
 
+	@Override
+	public boolean mailCheckInsert(String authNum) {
+		
+		return mapper.mailCheckInsert(authNum);
+	}
+
+	@Override
+	public int numberCheck() {
+		
+		return mapper.numberCheck();
+	}
+
 	
 
 	

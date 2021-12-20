@@ -204,6 +204,7 @@ public class MypageController {
 		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(searchMap);
 		
 		List<PurchaseClassDTO> endClassList = new ArrayList<>();
+		List<PurchaseClassDTO> takingClassList = new ArrayList<>();
 		
 		/* 종료일이 지난 클래스들 수강상태 변경하기 */
 		for(PurchaseClassDTO pc : pClass) {
@@ -216,6 +217,9 @@ public class MypageController {
 			if(pc.getEndDate().before(now)) {
 				
 				endClassList.add(pc);
+			} else {
+				
+				takingClassList.add(pc);
 			}
 		}
 		
@@ -224,20 +228,23 @@ public class MypageController {
 			System.out.println(ec);
 		}
 		
-		int endClass = mypageService.endClass(endClassList);
-		
-		if(endClass == endClassList.size()) {
-			System.out.println("총 " + endClass + "의 클래스가 수강 완료로 전환되었습니다.");
-		} else {
-			System.out.println(endClass + "개의 클래스 수강 완료 전환이 실패하였습니다.");
-		}
+		if(!endClassList.isEmpty()) {
+			int endClass = mypageService.endClass(endClassList);
+			
+			if(endClass == endClassList.size()) {
+				System.out.println("총 " + endClass + "의 클래스가 수강 완료로 전환되었습니다.");
+			} else {
+				System.out.println(endClass + "개의 클래스 수강 완료 전환이 실패하였습니다.");
+			}
+		} 
 		
 
-		mv.addObject("classList", pClass);
+		mv.addObject("classList", takingClassList);
 		mv.addObject("selectCriteria", selectCriteria);
 		mv.setViewName("mypage/taking");
 
 		return mv;
+		
 	}
 
 	// 찜한
