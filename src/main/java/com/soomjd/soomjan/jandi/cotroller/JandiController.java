@@ -29,6 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -558,18 +559,22 @@ public class JandiController {
 					
 					Date today= new Date();
 					
-					
-					long calDate=today.getTime()-startDate.getTime() ;
-					
-					long calDateDays =7- calDate/(24*60*60*1000);
-					
-					if(calDateDays>=0 && 7>=calDateDays) {
-						myAd = ad;
-						resultValue="Y";
-						model.addAttribute("calDateDays",calDateDays);
+					if(startDate!=null) {
+						long calDate=today.getTime()-startDate.getTime() ;
 						
-						break;
-					}	
+						long calDateDays =7- calDate/(24*60*60*1000);
+						
+						if(calDateDays>=0 && 7>=calDateDays) {
+							myAd = ad;
+							resultValue="Y";
+							model.addAttribute("calDateDays",calDateDays);
+							
+							break;
+						}	
+					}else {
+						myAd = ad;
+					}
+					
 				}
 
 
@@ -629,7 +634,7 @@ public class JandiController {
 		}else {
 			
 			String resultValue="N";
-			
+
 			for(int i=0;i<classesCodeList.size();i++) {
 				FullAdDTO ad= jandiService.selectAd(classesCodeList.get(i));
 				
@@ -640,18 +645,25 @@ public class JandiController {
 					
 					Date today= new Date();
 					
-					
-					long calDate=today.getTime()-startDate.getTime() ;
-					
-					long calDateDays =7- calDate/(24*60*60*1000);
-					
-					if(calDateDays>=0 && 7>=calDateDays) {
-						myAd = ad;
-						resultValue="Y";
+					if(startDate!=null) {
+						long calDate=today.getTime()-startDate.getTime() ;
 						
-						break;
-					}	
+						long calDateDays =7- calDate/(24*60*60*1000);
+						
+						if(calDateDays>=0 && 7>=calDateDays) {
+							myAd = ad;
+							resultValue="Y";
+							model.addAttribute("calDateDays",calDateDays);
+							
+							break;
+						}	
+					}else {
+						myAd = ad;
+					}
+					
 				}
+
+
 			}
 			model.addAttribute("resultValue", resultValue);
 		}
@@ -680,9 +692,11 @@ public class JandiController {
 	
 	
 	@PostMapping("jandiPay")
-	@ResponseBody
-	public String jandiPay(@RequestParam(name="selectedDate") String selectedDate, @RequestParam(name="adCode") String adCode, Model model) {
+	public String jandiPay(@RequestBody HashMap<String, String> map, Model model) {
 
+		String selectedDate = map.get("selectedDate");
+		String adCode= map.get("adCode");		
+		
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection serverAddress = (HttpURLConnection) address.openConnection();
