@@ -5,9 +5,7 @@
 <html>
 <head>
 <title>클래스룸</title>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <style>
 
 .title {
@@ -56,7 +54,7 @@ table th{
 				alert("현재 듣는 인원이 있어서 삭제 할 수 없습니다.");
 			}
 		}
-	};
+	}
 	
 /*  	$(document).on('click', '.menu', function(e){
 	    e.preventDefault();  

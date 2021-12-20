@@ -7,19 +7,15 @@
 <head>
 
 <title>클래스룸</title>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 
-<%-- <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script> --%>
-<script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 <script src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script type="text/javascript"  src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 
 </head>
 <style>
@@ -50,8 +46,8 @@
 	<jsp:include page="../../common/nav.jsp" />
 	<div class="common-sidebar">
 		<jsp:include page="../../common/findclasssidebar.jsp" />
-		<jsp:include page="./classRoomNav.jsp" />
 		<div class="sidebar-content">
+			<jsp:include page="./classRoomNav.jsp" />
 			<!-- 탭 메뉴 상단 끝 -->
 			<!-- 탭 메뉴 내용 시작 -->
 			<div>
@@ -91,53 +87,61 @@
 						${ mokcha.mokchaName }
 					</p>
 				</c:forEach>
+				<a href="${ pageContext.servletContext.contextPath }/findclass/class/classLecture">더 보기</a>
 				<hr>
 				<br>
-				<div class="after">
-					<h2>후기 ( ${ classStar } / 5 )</h2>
-					<p>총 ${ reviewCount }개 </p>
-					 <form id="searchform" action="${ pageContext.servletContext.contextPath }/findclass/class/classRoom" method="get" >
-					 	<input type="hidden" name="classCode" value=${ classDTO.classCode }>
-						<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:0px; float:right;">
-			  				<option value="recently" >최신순</option>
-			        		<option value="starDESC">별점 높은순</option>
-			        		<option value="starASC">별점 낮은순</option>
-		        		</select>
-					</form>
-				</div>
-				<c:forEach var="review" items="${ reviewList }">
-					<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
-						<div class="content">
-							<div class="left aligned header afterheader">
-								<c:forEach begin="1" end="${ review.star }">
-									<i class="star icon"></i>
-								</c:forEach>
-								<span>( ${ review.star } / 5)</span>
-							</div>
-							<div class="left aligned description">
-								<p>${ review.contents }</p>
-							</div>
-						</div>
-						<div class="extra content" id="name-date-content">
-							<div class="right aligned author">
-								${ review.nickName } ${ review.writeDate }
-							</div>
-						</div>
+				<c:if test="${ empty reviewList }">
+				<h3 align="center">아직 작성된 후기가 없습니다.</h3>
+				</c:if>
+				<c:if test="${ !empty reviewList }">
+					<div class="after">
+						<h2>후기 ( ${ classStar } / 5 )</h2>
+						<p>총 ${ reviewCount }개 </p>
+						 <form id="searchform" action="${ pageContext.servletContext.contextPath }/findclass/class/classRoom" method="get" >
+						 	<input type="hidden" name="classCode" value=${ classDTO.classCode }>
+							<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:0px; float:right;">
+				  				<option value="recently" >최신순</option>
+				        		<option value="starDESC">별점 높은순</option>
+				        		<option value="starASC">별점 낮은순</option>
+			        		</select>
+						</form>
 					</div>
-				</c:forEach>
+					
+					<c:forEach var="review" items="${ reviewList }">
+						<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
+							<div class="content">
+								<div class="left aligned header afterheader">
+									<c:forEach begin="1" end="${ review.star }">
+										<i class="star icon"></i>
+									</c:forEach>
+									<span>( ${ review.star } / 5)</span>
+								</div>
+								<div class="left aligned description">
+									<p>${ review.contents }</p>
+								</div>
+							</div>
+							<div class="extra content" id="name-date-content">
+								<div class="right aligned author">
+									${ review.nickName } ${ review.writeDate }
+								</div>
+							</div>
+						</div>
+					</c:forEach>
 			
-			<jsp:include page="../../common/Paging.jsp" />
-			<script>
-				$(function(){
-					if('${ selectCriteria.searchCondition }' != ''){
-						$("#searchCondition").val("${ selectCriteria.searchCondition }");
-					}
-				});
+					<jsp:include page="../../common/Paging.jsp" />
 				
-				$('#searchCondition').change(function(){
-					$('#searchform').submit();
-				});
-			</script>
+				</c:if>
+				<script>
+					$(function(){
+						if('${ selectCriteria.searchCondition }' != ''){
+							$("#searchCondition").val("${ selectCriteria.searchCondition }");
+						}
+					});
+					
+					$('#searchCondition').change(function(){
+						$('#searchform').submit();
+					});
+				</script>
 			</div>
 		</div>
 	</div>

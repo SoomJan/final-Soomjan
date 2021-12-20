@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -44,6 +43,7 @@ public class AuthenticationFilter implements Filter{
 		List<String> memberPermitList = new ArrayList<String>();
 		memberPermitList.add("mypage");
 		memberPermitList.add("matching");
+		memberPermitList.add("findClassMember");
 		
 		List<String> jandiPermitList = new ArrayList<String>();
 		jandiPermitList.add("jandi");
@@ -69,7 +69,7 @@ public class AuthenticationFilter implements Filter{
 		
 		String intent = uri.replace(httpRequest.getContextPath(), "");
 		
-		if("/".equals(intent) || "/soomjan/manager/login".equals(uri)) {	// 메인은 제외
+		if("/".equals(intent) || "/soomjan/manager/login".equals(uri) || "/soomjan/sendMail".equals(uri)) {	// 메인은 제외
 			chain.doFilter(request, response);
 			System.out.println("intent : " + intent);
 			
@@ -90,16 +90,9 @@ public class AuthenticationFilter implements Filter{
 			
 			if(member != null) {	// 로그인한 사용자가 있는 경우
 				
-				boolean result = false;
-				
 				if(member.getIsJandi() == 'Y') {	// 새싹이면서 잔디인 경우
 					
 					if(isAllPermit || isMemberPermit || isJandiPermit ) {
-//						if( (intent.contains("jandi/class/") && !isJandiPagePermit(member, requestSession))
-//								|| ("mypage/class/".contains(intent) && !isMyPagePermit(member, requestSession)) ) {
-//							((HttpServletResponse) response).sendError(403);
-//						}else {
-//						}
 						chain.doFilter(request, response);
 					}else {
 						((HttpServletResponse) response).sendError(403);
@@ -107,10 +100,6 @@ public class AuthenticationFilter implements Filter{
 						
 				}else {	// 잔디가 아닌 새싹인 경우
 					if(isAllPermit || isMemberPermit) {
-//						if(("mypage/class/".contains(intent) && !isMyPagePermit(member, requestSession))) {
-//							((HttpServletResponse) response).sendError(403);
-//						}else {
-//						}
 						chain.doFilter(request, response);
 					}else if(isJandiPermit) {
 						System.out.println("잔디 필수");
@@ -143,23 +132,5 @@ public class AuthenticationFilter implements Filter{
 
 	@Override
 	public void destroy() {}
-	
-	public boolean isJandiPagePermit(MemberDTO member, HttpSession session) {
-		
-		ClassDTO classDTO = (ClassDTO) session.getAttribute("classDTO");
-		
-		return member.getEmail().equals(classDTO.getEmail());
-	}
-	
-	public boolean isMyPagePermit(MemberDTO member, HttpSession session) {
-		
-		List<Map<String, String>> currentMemberList = (List<Map<String, String>>) session.getAttribute("currentMemberList");
-		for(Map<String, String> memberMap : currentMemberList) {
-			if(memberMap.get("email").equals(member.getEmail())) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 }

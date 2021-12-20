@@ -109,6 +109,7 @@ img {
     border: 2px solid #91c788;
     top: 20px;
 }
+
 </style>
 
 <script>
@@ -176,27 +177,29 @@ img {
 				<br><br>
 				<hr style="background-color:black; border: 0; height: 1px;">
 				<br>
-				<c:forEach var="mokcha" items="${ requestScope.lectureList }">
+				<c:forEach var="mokcha" items="${ requestScope.mokchaList }">
 					<div class="mokcha">
 						<form action="${pageContext.servletContext.contextPath }/jandi/class/deleteMokcha" method="post">
 							<button type="button" class="btnStyle btn btn-primary" onclick="deleteMokcha(this);">삭제</button>
-							<input type="hidden" name="mokchaCode" value="${ mokcha.MOKCHA_CODE }">
+							<input type="hidden" name="mokchaCode" value="${ mokcha.mokchaCode }">
 						</form>
-						<c:set var="writeDate" value="${ mokcha.WRITE_DATE }"/>
-						 <span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
-						<h3 onclick="mokchaToggle(this);">${ mokcha.MOKCHA_NAME } ▼</h3>
+						<c:set var="writeDate" value="${ mokcha.writeDate }"/>
+						<span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
+						<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼ </h3>
 						<div class="mokchaDiv" style="display:none;">
-						<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.CONTENTS }">
+							<input type="text" width="80%" name="contents" readonly value="${ mokcha.contents }">
+							
 							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
-								<c:if test="${ mokcha.MOKCHA_CODE eq mokchaFile.mokchaCode }">
+								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
 									<video class="mokcha" controls
 										src="${ pageContext.servletContext.contextPath }/resources/${ mokchaFile.filePath }"></video>
 								</c:if>
 							</c:forEach>
+							
 							<form action="${pageContext.servletContext.contextPath }/jandi/class/uploadMokchaFile" method="post" enctype="multipart/form-data" id="mokchaFileForm">
 								<div>
-								<input type="hidden" value="${ mokcha.mokchaCode }" name="mokchaCode">
-								<br><b>영상 업로드 (100MB 까지 가능합니다.)</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
+								<input type="hidden" name="mokchaCode" value="${ mokcha.mokchaCode }">
+								<br><b>영상 업로드</b> <br> <input type="file" name="file" style="border: none;" accept="video/*">
 								<button type="button" class="btnStyle sendBtn btn btn-primary" onclick="checkValue(this);">영상 추가하기</button>
 								</div>
 							</form>

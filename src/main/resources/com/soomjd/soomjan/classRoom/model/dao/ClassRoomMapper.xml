@@ -94,35 +94,58 @@
     	   AND CLASS_CODE = #{ classCode }
     </select>
     
-    <select id="selectMokchaList" resultMap="mokchaResultMap">
+    <select id="selectMokchaList" resultMap="mokchaResultMap" parameterType="hashMap">
     	SELECT
-    		   M.MOKCHA_CODE
-		 	 , M.MOKCHA_NAME
-			 , M.WRITE_DATE
-			 , M.CONTENTS
-			 , M.CLASS_CODE
-		 FROM LECTURE_MOKCHA_TBL M
-		WHERE M.CLASS_CODE = #{ classCode }
-		  AND M.IS_DELETED = 'N'
-		ORDER BY M.MOKCHA_CODE
+    	      B.RNUM
+   	     	, B.*
+    	 FROM (SELECT ROWNUM RNUM
+    	 	        , A.*
+    	 	     FROM (SELECT
+			    		   M.MOKCHA_CODE
+					 	 , M.MOKCHA_NAME
+						 , M.WRITE_DATE
+						 , M.CONTENTS
+						 , M.CLASS_CODE
+					 FROM LECTURE_MOKCHA_TBL M
+					WHERE M.CLASS_CODE = #{ classCode }
+					  AND M.IS_DELETED = 'N'
+					ORDER BY M.WRITE_DATE DESC
+					)A
+			<![CDATA[
+		        WHERE ROWNUM <= #{ selectCriteria.endRow } 
+		        ]]>	
+			  	) B
+			  	WHERE B.RNUM >= #{ selectCriteria.startRow }
     </select>
     
-    <select id="selectLearningPostList" resultMap="learningPostResultMap">
+    <select id="selectLearningPostList" resultMap="learningPostResultMap" parameterType="hashMap" >
     	SELECT
-    		   L.POST_CODE
-			 , L.WRITE_DATE
-			 , L.RE_DATE
-			 , L.IS_DELETED
-			 , L.CONTENTS
-			 , L.EMAIL
-			 , L.CLASS_CODE
-			 , L.TITLE
-			 , J.NICKNAME
-		  FROM LEARNING_TBL L
-		  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
-		 WHERE L.CLASS_CODE = #{ classCode }
-		   AND L.IS_DELETED = 'N'
-		  ORDER BY L.WRITE_DATE DESC
+    	      B.RNUM
+   	     	, B.*
+    	 FROM (SELECT ROWNUM RNUM
+    	 	        , A.*
+    	 	     FROM (SELECT
+			    		   L.POST_CODE
+						 , L.WRITE_DATE
+						 , L.RE_DATE
+						 , L.IS_DELETED
+						 , L.CONTENTS
+						 , L.EMAIL
+						 , L.CLASS_CODE
+						 , L.TITLE
+						 , J.NICKNAME
+					  FROM LEARNING_TBL L
+					  JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
+					 WHERE L.CLASS_CODE = #{ classCode }
+					   AND L.IS_DELETED = 'N'
+					  ORDER BY L.WRITE_DATE DESC
+					)A
+			<![CDATA[
+		        WHERE ROWNUM <= #{ selectCriteria.endRow } 
+		        ]]>	
+			  	) B
+			  	WHERE B.RNUM >= #{ selectCriteria.startRow }
+    	
     </select>
     
     <select id="selectChatRoomList" resultType="hashMap" parameterType="hashMap">
@@ -333,7 +356,7 @@
     
     <select id="selectMokchaFileListByMokchaCode" resultMap="fileResultMap">
     	SELECT FILE_PATH
-    	  FROM LEARNING_TBL
+    	  FROM LECTURE_FILE_TBL
     	 WHERE MOKCHA_CODE = #{ mokchaCode }
     </select>
     
@@ -435,51 +458,7 @@
     	       COUNT(*)
     	  FROM LEARNING_TBL
     	 WHERE CLASS_CODE = #{ classCode }
-    </select>
-    
-    <select id="selectLearningBoardList" resultType="hashmap">
-    	SELECT
-    	       F.RNUM
-    	     , F.POST_CODE
-    	     , F.WRITE_DATE
-    	     , F.RE_DATE
-    	     , F.IS_DELETED
-    	     , F.CONTENTS
-    	     , F.EMAIL
-    	     , F.CLASS_CODE
-    	     , F.TITLE
-    	     , F.NICKNAME
-    	 FROM (SELECT ROWNUM RNUM
-    	 	        , D.POST_CODE
-    	 	        , D.WRITE_DATE
-    	 	        , D.RE_DATE
-    	 	        , D.IS_DELETED
-    	 	        , D.CONTENTS
-    	 	        , D.EMAIL
-    	 	        , D.CLASS_CODE
-    	 	        , D.TITLE
-    	 	        , D.NICKNAME
-    	 	     FROM (SELECT
-    	 	     			  L.POST_CODE
-    	 	     			, L.WRITE_DATE
-    	 	     			, L.RE_DATE
-    	 	     			, L.IS_DELETED
-    	 	     			, L.CONTENTS
-    	 	     			, L.EMAIL
-    	 	     			, L.CLASS_CODE
-    	 	     			, L.TITLE
-    	 	     			, J.NICKNAME
-    	 	     	     FROM LEARNING_TBL L
-    	 	     	     JOIN JANDI_TBL J ON (J.EMAIL = L.EMAIL)
-    	 	     	    WHERE L.CLASS_CODE = #{ classCode }
-    	 	     	      AND L.IS_DELETED = 'N'
-    	 	     	    ORDER BY L.WRITE_DATE DESC
-    	 	     ) D
-    	    <![CDATA[
-	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
-	        ]]>	
-		  	) F
-		  	WHERE F.RNUM >= #{ selectCriteria.startRow }  
+    	   AND IS_DELETED = 'N'
     </select>
     
     <select id="selectReviewListByClassCodeTotalCount" resultType="_int">
@@ -541,41 +520,7 @@
     	       COUNT(*)
     	  FROM LECTURE_MOKCHA_TBL
     	 WHERE CLASS_CODE = #{ classCode }
-    </select>
-    
-    <select id="selectLectureList" resultType="hashmap">
-    	SELECT
-    	       F.RNUM
-    	     , F.MOKCHA_CODE
-    	     , F.MOKCHA_NAME
-    	     , F.WRITE_DATE
-    	     , F.CONTENTS
-    	     , F.CLASS_CODE
-    	     , F.IS_DELETED
-    	  FROM (SELECT ROWNUM RNUM
-    	             , D.MOKCHA_CODE
-    	             , D.MOKCHA_NAME
-    	             , D.WRITE_DATE
-    	             , D.CONTENTS
-    	             , D.CLASS_CODE
-    	             , D.IS_DELETED
-    	          FROM (SELECT
-    	                       L.MOKCHA_CODE
-    	                     , L.MOKCHA_NAME
-    	                     , L.WRITE_DATE
-    	                     , L.CONTENTS
-    	                     , L.CLASS_CODE
-    	                     , L.IS_DELETED
-    	                  FROM LECTURE_MOKCHA_TBL L
-    	                 WHERE L.CLASS_CODE = #{ classCode }
-    	                   AND L.IS_DELETED = 'N'
-    	                 ORDER BY L.MOKCHA_CODE
-    	                ) D
-    	    <![CDATA[
-	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
-	        ]]>	
-		  	) F
-		  	WHERE F.RNUM >= #{ selectCriteria.startRow }
+    	   AND IS_DELETED = 'N'
     </select>
     
     <update id="viewsUp" parameterType="HashMap">
@@ -591,4 +536,53 @@
 		   
     </update>
     
+    <select id="selectMokchaTitleList" resultMap="mokchaResultMap">
+    	 SELECT M.MOKCHA_CODE
+    	      , M.MOKCHA_NAME
+           	  , ROWNUM
+    	 FROM  LECTURE_MOKCHA_TBL M
+    	WHERE  M.IS_DELETED = 'N'
+    	  AND  M.CLASS_CODE = #{ classCode }
+        AND ROWNUM BETWEEN 1 AND 5
+    	ORDER BY M.WRITE_DATE DESC
+    </select>
+    
+    <insert id="registReportClass" parameterType="hashmap">
+    	INSERT INTO REPORT_CLASS_TBL(
+			   REP_CODE
+			   , EMAIL
+			   , REP_CONTENTS
+			   , CLASS_CODE
+			   , REP_DATE
+			   , REP_TYPE_CODE
+			   , REP_YN
+			)VALUES(
+			   SEQ_REPORT_CLASS.NEXTVAL
+			   , #{ email }
+			   , #{ repContents }
+			   , #{ repClass }
+			   , SYSDATE
+			   , #{ repTypeCode }
+			   , 'W'
+			)
+    </insert>
+    
+    <select id="selectJJimClassMemberList" resultType="hashmap">
+    	SELECT * FROM LIKED_CLASS_TBL
+    	 WHERE CLASS_CODE = #{ classCode }
+    </select>
+    
+    <insert id="registLikedClass">
+    	INSERT INTO
+    		   LIKED_CLASS_TBL VALUES(
+    		   #{ email }
+    		 , #{ classCode }	
+    	)
+    </insert>
+    
+    <delete id="removeLikedClass">
+    	DELETE FROM LIKED_CLASS_TBL
+    	 WHERE EMAIL = #{ email }
+    	   AND CLASS_CODE = #{ classCode }
+    </delete>
 </mapper>

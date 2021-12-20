@@ -2,64 +2,20 @@
 pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
     <title>숨은잔디</title>
 
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.css"
-      rel="stylesheet"
-    />
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/main.css"
-      rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
     <!-- 캐러셀 css -->
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/swiper.css"
-      rel="stylesheet"
-    />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script
-      type="text/javascript"
-      src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="${ pageContext.servletContext.contextPath }/resources/js/main.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="${ pageContext.servletContext.contextPath }/resources/js/maincarousel.js"
-    ></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/swiper.css" rel="stylesheet" />
+   
   </head>
 
-  <script>
-  	$(function(){
-  		if('${requestScope.authMessage}' != ''){
-  			if(confirm('${requestScope.authMessage}')){
-  				alert("잔디 신청페이지로 이동! (아직 구현 X)");
-  			}
-  		}
-  	});
-  </script>
-
   <body>
-    <jsp:include page="../common/nav.jsp" />
+	  <jsp:include page="../common/nav.jsp" />
 
     <!-- 부트스트랩 캐러셀 -->
     <div class="main-logo">
@@ -328,8 +284,15 @@ pageEncoding="UTF-8"%>
     </div>
     <jsp:include page="../common/footer.jsp" />
 
-    <script src="css/ie10-viewport-bug-workaround.js"></script>
     <script>
+	    $(function(){
+	  		if('${requestScope.authMessage}' != ''){
+	  			if(confirm('${requestScope.authMessage}')){
+	  				alert("잔디 신청페이지로 이동! (아직 구현 X)");
+	  			}
+	  		}
+	  	});
+    
       new Swiper(".swiper-container", {
         slidesPerView: 4, // 동시에 보여줄 슬라이드 갯수
         spaceBetween: 1, // 슬라이드간 간격

@@ -49,7 +49,7 @@ import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 
 @Controller
 @RequestMapping("/*/class/*")
-@SessionAttributes({ "currentCount", "classCode", "classDTO", "jandi", "selectCriteria", "currentMemberList"})
+@SessionAttributes({ "currentCount", "classCode", "classDTO", "jandi", "selectCriteria", "currentMemberList", "jjimClassMemberList"})
 public class ClassRoomController{
 
 	private final ClassRoomService classRoomService;
@@ -96,9 +96,10 @@ public class ClassRoomController{
 		model.addAttribute("reviewCount", totalCount);
 		model.addAttribute("classStar", classStar);
 		model.addAttribute("currentCount", currentMemberList.size());
-		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
+		model.addAttribute("mokchaList", classRoomService.selectMokchaTitleList(classCode));
 		model.addAttribute("selectCriteria", selectCriteria);
-
+		model.addAttribute("reportStateList", classRoomService.selectAllReportStatement());
+		model.addAttribute("jjimClassMemberList", classRoomService.selectJJimClassMemberList(classCode));
 	}
 
 	@GetMapping("classLecture")
@@ -118,23 +119,13 @@ public class ClassRoomController{
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		searchMap.put("selectCriteria", selectCriteria);
 		
-		Map<String, Object> lectureMap = new HashMap<>();
-		lectureMap.put("selectCriteria", selectCriteria);
-		lectureMap.put("classCode", classCode);
-		System.out.println("learningMap : " + lectureMap);
-		
-		List<Map<String, Object>> lectureList = classRoomService.selectLectureList(lectureMap);
-		System.out.println("lectureList : " + lectureList);
-
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("lectureList", lectureList);
 		model.addAttribute("selectCriteria", selectCriteria);
-		/*
-		 * model.addAttribute("mokchaList",
-		 * classRoomService.selectMokchaList(classCode));
-		 */
+		model.addAttribute("mokchaList", classRoomService.selectMokchaList(searchMap));
 		model.addAttribute("mokchaFileList", classRoomService.selectMokchaFileList(classCode));
+		model.addAttribute("reportStateList", classRoomService.selectAllReportStatement());
 
 	}
 
@@ -154,20 +145,10 @@ public class ClassRoomController{
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		searchMap.put("selectCriteria", selectCriteria);
 		
-		Map<String, Object> learningMap = new HashMap<>();
-		learningMap.put("selectCriteria", selectCriteria);
-		learningMap.put("classCode", classCode);
-		System.out.println("learningMap : " + learningMap);
-		
-		List<Map<String, Object>> learningList = classRoomService.selectLearningBoardList(learningMap);
-		System.out.println("learningList : " + learningList);
-		
-		model.addAttribute("learningList", learningList);
 		model.addAttribute("selectCriteria", selectCriteria);
-		model.addAttribute("learningPostList", classRoomService.selectLearningPostList(classCode));
-		 
-
+		model.addAttribute("learningPostList", classRoomService.selectLearningPostList(searchMap));
 	}
 
 	@GetMapping("classLearningPost")
@@ -776,6 +757,59 @@ public class ClassRoomController{
 			return "redirect:/findclass/class/classRoom?classCode=" + classCode;
 		}
 		
+	}
+	
+	@PostMapping(value="reportClass",  produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String reportClass(@RequestParam String repContents, @RequestParam int repTypeCode, HttpSession session) {
+
+		Map<String, Object> reportClassMap = new HashMap<String, Object>();
+		reportClassMap.put("repContents", repContents);
+		reportClassMap.put("repTypeCode", repTypeCode);
+		reportClassMap.put("repClass", ((ClassDTO)session.getAttribute("classDTO")).getClassCode());
+		reportClassMap.put("email", ((MemberDTO)session.getAttribute("loginMember")).getEmail());
+		
+		String result = "";
+		
+		if(classRoomService.registReportClass(reportClassMap)) {
+			result = "신고 접수가 완료되었습니다. 감사합니다.";
+		}else {
+			result = "신고 접수에 실패했습니다.";
+		}
+		
+		return result;
+	}
+	
+	@GetMapping(value="jjimClass",  produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String jjimClass(HttpSession session, @RequestParam String status, Model model) {
+		int classCode = (int) session.getAttribute("classCode");
+		String email = ((MemberDTO) session.getAttribute("loginMember")).getEmail();
+		
+		Map<String, Object> jjimMap = new HashMap<String, Object>();
+		jjimMap.put("classCode", classCode);
+		jjimMap.put("email", email);
+		
+		String result = "";
+		
+		switch(status) {
+		case "Y" : 
+			if(classRoomService.removeLikedClass(jjimMap)) {
+				result = "N";
+			}else {
+				result= "Y";
+			}
+			break;
+		case "N" : 
+			if(classRoomService.registLikedClass(jjimMap)) {
+				result = "Y";
+			}else {
+				result= "N";
+			}
+			break;
+		}
+		model.addAttribute("jjimClassMemberList", classRoomService.selectJJimClassMemberList(classCode));
+		return result;
 	}
 	
 }

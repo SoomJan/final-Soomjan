@@ -12,6 +12,7 @@ pageEncoding="UTF-8"%>
 
     <title>Signin Template for Bootstrap</title>
 
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.css"
       rel="stylesheet"
@@ -26,7 +27,7 @@ pageEncoding="UTF-8"%>
       rel="stylesheet"
     />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <script
       type="text/javascript"
       src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.js"
@@ -40,11 +41,11 @@ pageEncoding="UTF-8"%>
       src="${ pageContext.servletContext.contextPath }/resources/js/maincarousel.js"
     ></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
     <script
       type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
+      src="https://pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
   </head>
 

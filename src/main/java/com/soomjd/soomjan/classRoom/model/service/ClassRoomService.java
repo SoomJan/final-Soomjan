@@ -19,9 +19,9 @@ public interface ClassRoomService {
 
 	List<Map<String, String>> selectCurrentMemberList(int classCode);
 
-	List<MokchaDTO> selectMokchaList(int classCode); 
+	List<MokchaDTO> selectMokchaList(Map<String, Object> searchMap); 
 
-	List<LearningPostDTO> selectLearningPostList(int classCode); 
+	List<LearningPostDTO> selectLearningPostList(Map<String, Object> searchMap); 
 	
 	List<Map<String, Object>> selectChatRoomList(HashMap<String, Object> chatRoomMap);
 
@@ -38,8 +38,6 @@ public interface ClassRoomService {
 	int registLecture(MokchaDTO mokcha);
 
 	int registLectureFile(ClassFileDTO classFile);
-
-	int deleteLecture();
 
 	LearningPostDTO selectPostByPostCode(int postCode);
 
@@ -81,11 +79,7 @@ public interface ClassRoomService {
 	
 	int selectLearningBoardTotalCount(Map<String, Object> searchMap);
 
-	List<Map<String, Object>> selectLearningBoardList(Map<String, Object> learningMap);
-
 	int selectClassLectureTotalCount(Map<String, Object> searchMap);
-
-	List<Map<String, Object>> selectLectureList(Map<String, Object> lectureMap);
 
 	int selectReviewListByClassCodeTotalCount(Map<String, Object> searchMap);
 
@@ -93,8 +87,17 @@ public interface ClassRoomService {
 
 	double selectAvgReviewStar(int classCode);
 
-
 	boolean viewsUp(Map<String, Object> map);
+
+	List<MokchaDTO> selectMokchaTitleList(int classCode);
+
+	boolean registReportClass(Map<String, Object> reportClassMap);
+
+	List<Map<String, Object>> selectJJimClassMemberList(int classCode);
+
+	boolean removeLikedClass(Map<String, Object> jjimMap);
+
+	boolean registLikedClass(Map<String, Object> jjimMap);
 
 
 

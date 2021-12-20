@@ -37,14 +37,14 @@ private final ClassRoomMapper classRoomMapper;
 	}
 	
 	@Override 
-	public List<MokchaDTO> selectMokchaList(int classCode) { 	 
-		return classRoomMapper.selectMokchaList(classCode); 
+	public List<MokchaDTO> selectMokchaList(Map<String, Object> searchMap) { 	 
+		return classRoomMapper.selectMokchaList(searchMap); 
 	}
 	 
 	
 	@Override 
-	public List<LearningPostDTO> selectLearningPostList(int classCode) { 
-		 return classRoomMapper.selectLearningPostList(classCode); 
+	public List<LearningPostDTO> selectLearningPostList(Map<String, Object> searchMap) { 
+		 return classRoomMapper.selectLearningPostList(searchMap); 
 	}
 	 
 	@Override
@@ -85,12 +85,6 @@ private final ClassRoomMapper classRoomMapper;
 	@Override
 	public int registLectureFile(ClassFileDTO classFile) {
 		return classRoomMapper.registLectureFile(classFile);
-	}
-
-	@Override
-	public int deleteLecture() {
-		return classRoomMapper.deleteLecture();
-
 	}
 
 	@Override
@@ -210,19 +204,36 @@ private final ClassRoomMapper classRoomMapper;
 		return classRoomMapper.selectLearningBoardTotalCount(searchMap);
 	}
 
-	@Override
-	public List<Map<String, Object>> selectLearningBoardList(Map<String, Object> learningMap) {
-		return classRoomMapper.selectLearningBoardList(learningMap);
-	}
 
 	@Override
 	public int selectClassLectureTotalCount(Map<String, Object> searchMap) {
 		return classRoomMapper.selectClassLectureTotalCount(searchMap);
 	}
 
+
 	@Override
-	public List<Map<String, Object>> selectLectureList(Map<String, Object> lectureMap) {
-		return classRoomMapper.selectLectureList(lectureMap);
+	public List<MokchaDTO> selectMokchaTitleList(int classCode) {
+		return classRoomMapper.selectMokchaTitleList(classCode);
+	}
+
+	@Override
+	public boolean registReportClass(Map<String, Object> reportClassMap) {
+		return classRoomMapper.registReportClass(reportClassMap);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectJJimClassMemberList(int classCode) {
+		return classRoomMapper.selectJJimClassMemberList(classCode);
+	}
+
+	@Override
+	public boolean removeLikedClass(Map<String, Object> jjimMap) {
+		return classRoomMapper.removeLikedClass(jjimMap);
+	}
+
+	@Override
+	public boolean registLikedClass(Map<String, Object> jjimMap) {
+		return classRoomMapper.registLikedClass(jjimMap);
 	}
 
 }
