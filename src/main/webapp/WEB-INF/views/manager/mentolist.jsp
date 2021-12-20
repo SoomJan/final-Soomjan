@@ -101,6 +101,7 @@ pageEncoding="UTF-8"%>
             <thead>
               <tr>
                 <th>이메일</th>
+                <th>이름</th>
                 <th>닉네임</th>
                 <th>잔디 등록 일자</th>
               </tr>
@@ -109,6 +110,7 @@ pageEncoding="UTF-8"%>
             <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
               <tr class="move">
                 <td>${ jandiMember.email }</td>
+                <td>${ jandiMember.acc_name }</td>
                 <td>${ jandiMember.nickName }</td>
                 <td>${ jandiMember.enroll_date }</td>
               </tr>
@@ -118,13 +120,13 @@ pageEncoding="UTF-8"%>
 
           <script>
          
-          $(function(){
+ /*          $(function(){
             $(".move").hover(function(){
               $(this).css('background', 'gray');
             }, function(){
               $(this).css('background', 'white');
             });
-          });
+          }); */
 
           $(function(){
             $(".move").click(function(){
@@ -141,9 +143,10 @@ pageEncoding="UTF-8"%>
 		  	id="searchCondition"
             name="searchCondition"
 			class="ui dropdown menu">
+			<option value="" selected>선택</option>
   			<option value="1">이메일</option>
   			<option value="2">닉네임</option>
-  			<option value="3">등록일자</option>
+  			<option value="3">이름</option>
 		</select>   
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">

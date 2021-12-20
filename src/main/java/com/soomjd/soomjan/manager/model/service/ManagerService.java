@@ -82,4 +82,6 @@ public interface ManagerService {
 
 	int selectReportClassTotalCount(Map<String, String> searchMap);
 
+	ReportMemberDTO selectRepMember(int repCode);
+
 }

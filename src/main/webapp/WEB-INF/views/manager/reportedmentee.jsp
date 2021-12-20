@@ -10,7 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>신고된 새싹 조회</title>
+    <title>신고된 회원 조회</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
@@ -27,7 +27,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       type="text/css"
       href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
     />
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
     <script src="css/ie-emulation-modes-warning.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="css/bootstrap.js"></script>
@@ -76,6 +75,45 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       .dropsearch {
       	margin-left: 10%;
       }
+      
+      h1 { color: #91c788;}
+      
+      .inputSyle{
+		border-radius: 0.5rem;
+		border: 1.5px solid green;
+		height: 30px;
+		padding:2%;
+	  }
+	  
+	 .contents{
+		resize: none;
+		border-radius: 0.5rem;
+		border: 1.5px solid green;
+		height: 100px;
+		padding:2%;
+	
+	}
+	
+	*:focus {
+    	outline: 0;
+	}
+
+	.btnStyle {
+		padding: 5px;
+		background-color: #91c788;
+		border-radius: 0.5rem;
+		font-size: 12px;
+		border-color: #91c788;
+		float: right;
+	}
+	
+	/* 모달 */
+	#repMembermodal { height: 800px; left: 40%; width: 550px; top: 10%; }
+    .modal-header{text-align: center;}
+    .end-content{height: 533px;}
+    .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
+    .context-modal-btn { position: relative; left: 35%; top: 125px;}
+      
     </style>
   </head>
   <body>
@@ -98,14 +136,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </thead>
           <tbody>
           <c:forEach var="reportedMember" items="${ sessionScope.reportMemberList }">
-            <tr>
-              <td><a href="#">${ reportedMember.repEmail }</a></td>
-              <td><a href="#">${ reportedMember.contents }</a></td>
+            <tr class="repbtn">
+              <td>${ reportedMember.repEmail }</td>
+              <td>${ reportedMember.contents }</td>
               <td>${ reportedMember.reportStatementDTO.repType }</td>
               <td>${ reportedMember.repDate }</td>
               <td>${ reportedMember.repYn }</td>
+              <input type="hidden" value="${ reportedMember.repCode }">
             </tr>
-          </c:forEach>
+          </c:forEach> 
           </tbody>
         </table>
          <div class="manager-search">
@@ -137,6 +176,62 @@ uri="http://java.sun.com/jsp/jstl/core" %>
  			<jsp:include page="../common/Paging.jsp" />
     </div>
     </div>
+    
+    <!-- 신고 자세히보기 모달창 -->
+   <div class="ui small modal" id="repMembermodal">
+       <div class="header modal-header"><h2>신고 내용 자세히 보기</h2></div>
+       <div class="content end-content">
+          <br>
+          <div class="modal-body" align="left"> 
+          	신고카테고리 <input type="text" class="inputSyle repCategory" id="repCategory" name="repCategory" style="width: 300px;" readonly> 
+			<br><br>
+			이메일 <input type="text" class="inputSyle repEmail" id="repEmail" name="repEmail" style="width: 300px;" readonly> 
+			<br><br>
+			이미지 첨부<br>
+			<br>
+			<img src="${ pageContext.servletContext.contextPath }/resources/images/close.png" style="width: 300px;"/>
+			<br><br> 
+			신고사유<br>
+			<br>
+			<textarea name="repContents" id="repContents" class="contents repContents" readonly style="width: 480px;" ></textarea>
+			</div>
+          <hr>
+        </div>
+        <div class="context-modal-btn">
+            <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">확인</button>
+            <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">취소</button>
+        </div>
+      </div>
+       </div>
+	<script>
+	$(function(){
+  		$(".repbtn").click(function(e){
+  			console.log($(e.target).parent().children("input[type=hidden]").val());
+  			const repCode = $(e.target).parent().children("input[type=hidden]").val();
+  			$.ajax({
+  				url: "${ pageContext.servletContext.contextPath }/manager/repDetail",
+  				data: {repCode : repCode},
+  				type: "GET",
+  				async:false,
+  				success: function(data){
+  					console.log('들어감');
+  					console.log(data.repCategory);
+  					$('#repCategory').val(data.repCategory);
+  					$('#repEmail').val(data.repEmail);
+  					$('#repContents').val(data.repContents);
+  					
+  				},
+  				error: function(xhr, status, error){
+  					console.log(error);
+  					console.log(xhr);
+  				}
+  			});
+  			//$('#repMemberModal').show();
+  			
+  			$("#repMembermodal").show();
+  		});
+  	});
+	</script>
   </body>
 
   <jsp:include page="../common/footer.jsp" />

@@ -92,30 +92,32 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>가입 날짜</th>
               <th>이메일</th>
+              <th>이름</th>
               <th>닉네임</th>
               <th>잔디 여부</th>
               <th>경고 횟수</th>
               <th>블랙 리스트</th>
+              <th>가입 날짜</th>
             </tr>
           </thead>
           <tbody>
             <c:forEach var="ssackMember" items="${ sessionScope.ssackList }">
               <tr class="move">
-                <td>${ ssackMember.enrollDate }</td>
                 <td>${ ssackMember.email }</td>
+                <td>${ ssackMember.name }</td>
                 <td>${ ssackMember.nickName }</td>
                 <td>${ ssackMember.isJandi }</td>
                 <td>${ ssackMember.warning }</td>
                 <td>${ ssackMember.isBlack }</td>
+                <td>${ ssackMember.enrollDate }</td>
               </tr>
             </c:forEach>
           </tbody>
         </table>
 
         <script>
-          $(function () {
+/*           $(function () {
             $(".move").hover(
               function () {
                 $(this).css("background", "gray");
@@ -124,7 +126,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 $(this).css("background", "white");
               }
             );
-          });
+          }); */
 
           $(function () {
             $(".move").click(function () {
@@ -144,9 +146,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             id="searchCondition"
             name="searchCondition"
           >
+          	<option value="" selected>선택</option>
             <option value="1">닉네임</option>
             <option value="2">이메일</option>
-            <option value="3">블랙리스트</option>
+            <option value="3">이름</option>
           </select>
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">

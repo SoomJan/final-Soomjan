@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -263,6 +265,7 @@ public class ManagerController {
 	
 	/* =============================== 신고관리 =================================== */
 	
+	// 신고된 회원 조회
 	@GetMapping("/reportedmentee")
 	public String reportedmentee(Model model, @RequestParam(required = false) String searchCondition, 
 			@RequestParam(required = false) String searchValue,
@@ -301,6 +304,7 @@ public class ManagerController {
 		return "manager/reportedmentee";
 	}
 	
+	// 신고된 클래스 조회
 	@GetMapping("/reportedboard")
 	public String reportedboard(Model model, @RequestParam(required = false) String searchCondition, 
 			@RequestParam(required = false) String searchValue,
@@ -339,16 +343,37 @@ public class ManagerController {
 		return "manager/reportedboard";
 	}
 	
-	
-	@GetMapping("/reportedmentor")
-	public String reportedmentor(ManagerDTO manager, Model model) {
+	// 신고된 게시판 상세보기
+	@GetMapping(value = "repDetail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String repMemberDetail(@RequestParam("repCode") int repCode) {
+		System.out.println(repCode);
+		ReportMemberDTO repMember = managerService.selectRepMember(repCode);
+		System.out.println("repMemberList : " + repMember);
 		
-		List<ManagerDTO> managerList = managerService.allManager(manager);
-		System.out.println(managerList);
-		model.addAttribute("managerList", managerList);
+		JSONObject jsonObject = new JSONObject();
 		
-		return "manager/reportedmentor";
+		jsonObject.put("repEmail", repMember.getRepEmail());
+		jsonObject.put("repCategory", repMember.getReportStatementDTO().getRepType());
+		jsonObject.put("repContents", repMember.getContents());
+		jsonObject.put("orgImgPath", repMember.getOrgImgPath());
+		
+		System.out.println("확인용 : \n" +jsonObject);
+		
+		return jsonObject.toJSONString();
 	}
+	
+	
+	/*
+	 * @GetMapping("/reportedmentor") public String reportedmentor(ManagerDTO
+	 * manager, Model model) {
+	 * 
+	 * List<ManagerDTO> managerList = managerService.allManager(manager);
+	 * System.out.println(managerList); model.addAttribute("managerList",
+	 * managerList);
+	 * 
+	 * return "manager/reportedmentor"; }
+	 */
 	
 	// 클래스 카테고리 조회
 	@GetMapping("/modifycategory")

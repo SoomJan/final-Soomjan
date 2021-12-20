@@ -63,6 +63,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
      .dropsearch {
       	margin-left: 10%;
       }
+      
+      h1 { color: #91c788;}
     </style>
   </head>
   <body>
@@ -97,7 +99,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
          <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
           <div class="dropsearch">
-          <form action="${ pageContext.servletContext.contextPath }/manager/reportedmentee" method="get">
+          <form action="${ pageContext.servletContext.contextPath }/manager/reportedboard" method="get">
           <select class="ui dropdown menu" id="searchCondition" name="searchCondition">
             <option value="" selected>선택</option>
             <option value="1">이메일</option>

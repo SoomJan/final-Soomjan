@@ -90,8 +90,9 @@ pageEncoding="UTF-8"%>
         <thead>
           <tr>
             <th></th>
-            <th>닉네임</th>
+            <th>관리자이름</th>
             <th>아이디</th>
+            <th>닉네임</th>
             <th>계정 비활성화</th>
           </tr>
         </thead>
@@ -99,8 +100,9 @@ pageEncoding="UTF-8"%>
            <c:forEach var="managerMember" items="${ managerList }">
           <tr>
             <td><input class="check" value="${ managerMember.mngNo }" type="checkbox" name="check"></td>
-            <td>${ managerMember.mngNickName }</td>
+            <td>${ managerMember.mngName }</td>
             <td>${ managerMember.mngId }</td>
+            <td>${ managerMember.mngNickName }</td>
             <td>${ managerMember.isDeleted }</td>
           </tr>
             </c:forEach>

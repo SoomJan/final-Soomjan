@@ -201,4 +201,10 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.selectReportClassTotalCount(searchMap);
 	}
 
+
+	@Override
+	public ReportMemberDTO selectRepMember(int repCode) {
+		return mapper.selectRepMemberList(repCode);
+	}
+
 }

@@ -51,8 +51,8 @@ pageEncoding="UTF-8"%>
         </ul>
         <ul>
           <h3>신고 관리</h3>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentee">신고된 새싹</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentor">신고된 잔디</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentee">신고된 회원</a></li>
+          <%-- <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentor">신고된 잔디</a></li> --%>
           <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedboard">신고된 게시판</a></li>
         </ul>
         <ul>

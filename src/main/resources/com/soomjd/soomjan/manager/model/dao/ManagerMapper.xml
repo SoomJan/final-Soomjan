@@ -218,7 +218,7 @@
 		 	     		 		AND A.EMAIL LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "3"'>
-		 	     		 		AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.NAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
 		 	     	 ORDER BY A.ENROLL_DATE DESC
@@ -241,6 +241,7 @@
 		     , F.ACCOUNT
 		     , F.BANK
 		     , F.ACC_NAME
+		     , F.EMAIL
 		 FROM (SELECT ROWNUM RNUM
 		 	        , D.NICKNAME
 		 	        , D.CAREER
@@ -250,6 +251,7 @@
 		 	        , D.ACCOUNT
 		 	        , D.BANK
 		 	        , D.ACC_NAME
+		 	        , D.EMAIL
 		 	     FROM (SELECT
 		 	     		      A.NICKNAME
 		 	     		    , A.CAREER
@@ -259,6 +261,7 @@
 		 	     		    , A.ACCOUNT
 		 	     		    , A.BANK
 		 	     		    , A.ACC_NAME
+		 	     		    , A.EMAIL
 		 	     		 FROM JANDI_TBL A
 		 	     		 <where>
 		 	     		 	<if test='searchCondition == "1"'>
@@ -268,7 +271,7 @@
 		 	     		 		AND A.WARNING LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "3"'>
-		 	     		 		AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.ACC_NAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
 		 	     	 ORDER BY A.ENROLL_DATE DESC
@@ -568,13 +571,13 @@
 		       COUNT(*)
 		  FROM REPORT_MEMBER_TBL R
          <where>
-  		 	<if test='searchCondition == "1"'>
+  		 	<if test="searchCondition == 1">
   		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
   		 	</if>
-  		 	<if test='searchCondition == "2"'>
+  		 	<if test="searchCondition == 2">
   		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
   		 	</if>
-  		 	<if test='searchCondition == "3"'>
+  		 	<if test="searchCondition == 3">
   		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
   		 	</if>
   		 </where>
@@ -615,13 +618,13 @@
 		                  FROM REPORT_MEMBER_TBL R
 		                  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
 		                  <where>
-		 	     		 	<if test='searchCondition == "1"'>
+		 	     		 	<if test="searchCondition == 1">
 		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
-		 	     		 	<if test='searchCondition == "2"'>
+		 	     		 	<if test="searchCondition == 2">
 		 	     		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
-		 	     		 	<if test='searchCondition == "3"'>
+		 	     		 	<if test="searchCondition == 3">
 		 	     		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
@@ -640,13 +643,13 @@
 		  FROM REPORT_CLASS_TBL R
 		  
           <where>
-  		 	<if test='searchCondition == "1"'>
+  		 	<if test="searchCondition == 1">
   		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
   		 	</if>
-  		 	<if test='searchCondition == "2"'>
+  		 	<if test="searchCondition == 2">
   		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
   		 	</if>
-  		 	<if test='searchCondition == "3"'>
+  		 	<if test="searchCondition == 3">
   		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
   		 	</if>
   		 </where>
@@ -698,9 +701,25 @@
 		 	    	  ) D
 		 	    <![CDATA[
 	        	WHERE ROWNUM <= #{ endRow } 
-	        	) F
-     			WHERE F.RNUM >= #{ startRow }
 	        	]]>	
+	        	) F
+     			WHERE F.RNUM >= #{ startRow }	
+	</select>
+	
+	<select id="selectRepMemberList" resultMap="reportMemberResultSet">
+		SELECT
+		       R.EMAIL
+		     , R.REP_CODE
+		     , R.CONTENTS
+		     , R.REP_DATE
+		     , R.REP_EMAIL
+		     , R.REP_TYPE_CODE
+		     , R.ORG_IMG_PATH
+		     , R.REP_YN
+		     , S.REP_TYPE
+		  FROM REPORT_MEMBER_TBL R
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		 WHERE R.REP_CODE = #{ repCode }
 	</select>
 	
 </mapper>

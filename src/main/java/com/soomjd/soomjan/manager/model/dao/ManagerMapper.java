@@ -76,5 +76,8 @@ public interface ManagerMapper {
 	List<ReportClassDTO> selectReportClassList(SelectCriteria selectCriteria);
 
 	int selectReportClassTotalCount(Map<String, String> searchMap);
+
+	// 신고된 멤버 상세조회
+	ReportMemberDTO selectRepMemberList(int repCode);
 	
 }
