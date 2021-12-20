@@ -563,15 +563,15 @@ html {
   font-size: 14px;
 }
 
-body {
+/* body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
   min-width: 320px;
   background: #ffffff;
-  /* font-size: 14px; */
+ font-size: 14px; 
   color: rgba(0, 0, 0, 0.87);
-}
+} */
 
 /*******************************
              Headers

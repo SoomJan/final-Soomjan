@@ -4,7 +4,7 @@ nav {
   position: absolute;
   height: 100px;
   width: 100%;
-  margin-top: -80px !important;
+  top:0%;
   margin-bottom: 20px;
   background-color: #e3ffec;
   z-index: 100;
