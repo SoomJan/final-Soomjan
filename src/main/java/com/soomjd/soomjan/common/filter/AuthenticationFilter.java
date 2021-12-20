@@ -69,7 +69,7 @@ public class AuthenticationFilter implements Filter{
 		
 		String intent = uri.replace(httpRequest.getContextPath(), "");
 		
-		if("/".equals(intent) || "/soomjan/manager/login".equals(uri) || "/soomjan/sendMail".equals(uri)) {	// 메인은 제외
+		if("/".equals(intent) || "/soomjan/manager/login".equals(uri)) {	// 메인은 제외
 			chain.doFilter(request, response);
 			System.out.println("intent : " + intent);
 			
