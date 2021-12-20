@@ -2,18 +2,9 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.soomjd.soomjan.faq.model.dao.FaqMapper">
+<mapper namespace="com.soomjd.soomjan.main.model.dao.MainMapper">
     
-   <resultMap id="faqResult" type="FaqDTO">
-    	<id column="POST_CODE" property="postCode"/>
-    	<result column="TITLE" property="title"/>
-    	<result column="CONTENTS" property="contents"/>
-    	<result column="WRITE_DATE" property="writeDate"/>
-    	<result column="IS_DELETED" property="isDeleted"/>
-    	<result column="MNG_NO" property="mngNo"/>
-    </resultMap>
-    
-        <resultMap type="jandiDTO" id="jandiResultMap">
+   <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiResultMap">
     	<id column="EMAIL" property="email"/>
     	<result column="NICKNAME" property="nickName"/>
     	<result column="CAREER" property="career"/>
@@ -42,51 +33,33 @@
          <association property="jandiDTO" resultMap="jandiResultMap"></association>
     </resultMap>
     
-   <select id="selectFaqTotalCount" resultType="_int">
-	SELECT
-	       COUNT(*)
-	  FROM FAQ_TBL
-	WHERE IS_DELETED = 'N'	  
-	</select>
+     <select id="mainJandi" resultMap="jandiResultMap">
+    	SELECT JAN.EMAIL
+			 , JAN.NICKNAME
+			 , JAN.CAREER
+			 , JAN.INTRO
+			 , JAN.PROFILE_PATH
+			 , JAN.ENROLL_DATE
+			 , JAN.ACCOUNT
+			 , JAN.BANK
+			 , JAN.ACC_NAME
+		FROM JANDI_TBL JAN
+    </select>
     
-    	<select id="selectnotice" resultMap="faqResult">
-		SELECT
-       C.RNUM
-     , C.POST_CODE
-     , C.TITLE
-     , C.CONTENTS
-     , C.WRITE_DATE
-     , C.IS_DELETED
-     , C.MNG_NO
-  FROM (SELECT ROWNUM RNUM   
-             , B.POST_CODE
-             , B.TITLE
-             , B.CONTENTS
-             , B.WRITE_DATE
-             , B.IS_DELETED
-             , B.MNG_NO
-          FROM (SELECT  
-	               A.POST_CODE
-	             , A.TITLE
-	             , A.CONTENTS
-	             , A.WRITE_DATE
-	             , A.IS_DELETED
-	             , A.MNG_NO
-           	  FROM FAQ_TBL A
-              ORDER BY A.POST_CODE DESC
-              ) B
-               <![CDATA[
-	        	WHERE ROWNUM <= #{ endRow } 
-	        	]]>	
-              ) C
-              WHERE C.RNUM >= #{ startRow }	  
-	</select>
-    
-   <select id="mainClass" resultMap="classResultMap">
+      <select id="viewClass" resultMap="classResultMap">
    	SELECT * 
    	  FROM CLASS_TBL C 
    	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)                         
+   	  ORDER BY C.VIEWS DESC
    </select>
    
-    
+   <select id="latestClass" resultMap="classResultMap">
+   	SELECT * 
+   	  FROM CLASS_TBL C 
+   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)                         
+   	  ORDER BY C.CREATE_DATE DESC
+   </select>
+	
+	
+
 </mapper>

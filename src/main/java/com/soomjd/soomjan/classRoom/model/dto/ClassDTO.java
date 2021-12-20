@@ -1,6 +1,9 @@
 package com.soomjd.soomjan.classRoom.model.dto;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 
 public class ClassDTO {
 	
@@ -19,6 +22,7 @@ public class ClassDTO {
 	private String filePath;
 	private String orgFilePath;
 	private String isDeleted;
+	private JandiDTO jandiDTO;
 	
 	public ClassDTO() {	}
 	
@@ -29,10 +33,10 @@ public class ClassDTO {
 		this.maxCount = maxCount;
 		this.categoryCode = categoryCode;
 	}
-	
+
 	public ClassDTO(int classCode, Date createDate, String contents, String tag, int categoryCode, String email,
 			String boardType, int views, int maxCount, String nickName, String title, int price, String filePath,
-			String orgFilePath, String isDeleted) {
+			String orgFilePath, String isDeleted, JandiDTO jandiDTO) {
 		super();
 		this.classCode = classCode;
 		this.createDate = createDate;
@@ -49,6 +53,7 @@ public class ClassDTO {
 		this.filePath = filePath;
 		this.orgFilePath = orgFilePath;
 		this.isDeleted = isDeleted;
+		this.jandiDTO = jandiDTO;
 	}
 
 	public int getClassCode() {
@@ -171,12 +176,29 @@ public class ClassDTO {
 		this.isDeleted = isDeleted;
 	}
 
+	public JandiDTO getJandiDTO() {
+		return jandiDTO;
+	}
+
+	public void setJandiDTO(JandiDTO jandiDTO) {
+		this.jandiDTO = jandiDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "ClassDTO [classCode=" + classCode + ", createDate=" + createDate + ", contents=" + contents + ", tag="
 				+ tag + ", categoryCode=" + categoryCode + ", email=" + email + ", boardType=" + boardType + ", views="
 				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price=" + price
-				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath + ", isDeleted=" + isDeleted + "]";
+				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath + ", isDeleted=" + isDeleted + ", jandiDTO="
+				+ jandiDTO + "]";
 	}
+
+	
+	
+	
+	
+	
+	
+	
 
 }

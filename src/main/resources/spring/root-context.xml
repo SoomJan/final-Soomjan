@@ -78,5 +78,6 @@
    <mybatis-spring:scan base-package="com.soomjd.soomjan.mypage.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.faq.model.dao"/>
    <mybatis-spring:scan base-package="com.soomjd.soomjan.findclass.model.dao"/>
+   <mybatis-spring:scan base-package="com.soomjd.soomjan.main.model.dao"/>
 		
 </beans>
