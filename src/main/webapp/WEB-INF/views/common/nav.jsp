@@ -5,7 +5,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
   <head>
 
-
     <title>등록된 멘토 조회</title>
     
     <link href="${ pageContext.servletContext.contextPath }/resources/css/nav.css?after" rel="stylesheet"/>
@@ -13,7 +12,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
  	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-<!-- 	<script src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script> -->
 	    
     <script>
       $(function () {

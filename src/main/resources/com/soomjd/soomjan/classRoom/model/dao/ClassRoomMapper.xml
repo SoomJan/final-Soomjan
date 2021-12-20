@@ -415,7 +415,7 @@
 		    FROM DUAL
     </insert>
     
-    <select id="selectClassChatBySSACKEmail" parameterType="hashmap">
+    <select id="selectClassChatBySSACKEmail" parameterType="hashmap" resultType="hashmap">
     	SELECT C.CHAT_CODE
     	  FROM CLASS_CHAT_ROOM_TBL C
     	  JOIN SSACK_TBL S ON (C.EMAIL = S.EMAIL)

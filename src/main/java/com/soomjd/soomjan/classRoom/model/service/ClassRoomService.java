@@ -71,7 +71,7 @@ public interface ClassRoomService {
 
 	boolean registChatRoom(HashMap<String, Object> chatRoomMap);
 
-	int selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap);
+	HashMap<String, Object> selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap);
 
 	boolean registReportMember(ReportMemberDTO reportMember);
 

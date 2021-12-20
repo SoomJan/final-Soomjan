@@ -102,6 +102,7 @@ th{
 			
 			if('${ requestScope.purchaseMessage }' == 'Y'){
 				if(confirm("결제가 완료되었습니다.")){
+					payWindow.close();
 					opener.location.href= "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=" + ${classDTO.classCode};
 				}
 			}else if('${ requestScope.purchaseMessage }' == 'N'){

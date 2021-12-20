@@ -7,7 +7,7 @@
 
 <title>Signin Template for Bootstrap</title>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
 
 <style>
 ul {

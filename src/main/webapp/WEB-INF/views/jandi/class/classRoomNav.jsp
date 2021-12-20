@@ -5,7 +5,13 @@
 <html>
 <head>
 <title>클래스룸</title>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+
 <style>
 
 .title {
@@ -42,9 +48,28 @@ table th{
   text-align: center;
   border: none;
 }
+.btn-primary {
+	padding: 8px;
+	color: #fff;
+	background-color: #91C788;
+	border-color: #91C788;
+	border-style: none;
+}
+
+.btn-primary.active, .btn-primary.focus, .btn-primary:active,
+	.btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary
+	{
+	color: #fff;
+	background-color: #599A4E;
+	border-color: #599A4E;
+}
+
+.btn-primary:hover {
+	background-color: #599A4E;
+	border-color: #599A4E;
+}
 
 </style>
-
 <script>
 	function deleteClass(){
 		if(confirm(" 해당 클래스를 삭제 하시겠습니까? "+ "(클래스를 듣는 인원이 한명이라도 있으면 삭제할 수 없습니다.)")){
@@ -55,13 +80,6 @@ table th{
 			}
 		}
 	}
-	
-/*  	$(document).on('click', '.menu', function(e){
-	    e.preventDefault();  
-	  $(this).css('background-color', '#91c788');
-	   $('.menu').not($(this)).css('background-color', '#fff');
-	}) */
-	
 
 </script>
 </head>

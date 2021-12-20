@@ -12,31 +12,8 @@ pageEncoding="UTF-8"%>
 
     <title>Signin Template for Bootstrap</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/matching/findmentorsidebar.css"
-      rel="stylesheet"
-    />
-
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-
-    <script src="css/ie-emulation-modes-warning.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
-  </head>
-
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="semantic/dist/semantic.min.css"
-  />
-  <script src="semantic/dist/semantic.min.js"></script>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/findmentorsidebar.css" rel="stylesheet"/>
 
   <body>
     <div id="sidebar">
