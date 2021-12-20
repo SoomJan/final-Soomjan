@@ -10,7 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>신고된 새싹 조회</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
@@ -39,6 +39,44 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
+    <style>
+   	.input-search {
+		width: 400px;
+	   	position: relative;
+	   	left: 18%;
+	   	top: 10px;
+	}
+	
+	#searchCondition {
+		float: left;
+   		position: relative;
+    	left: 16%;
+    	top: 10px;
+	}
+	
+	.manager-paging ul li a {
+        color: white !important;
+      }
+
+    .manager-paging {
+        width: 40%;
+        margin: 0 auto;
+        height: 50px;
+        text-align: center;
+        position: relative;
+        top: 20px;
+        /* border: 1px solid blue; */
+      }
+      
+      .warningtable a {
+      	text-decoration: none;
+    	color: black !important;
+      }
+      
+      .dropsearch {
+      	margin-left: 10%;
+      }
+    </style>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -46,82 +84,58 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 새싹 조회</h1>
+        <h1>신고된 회원 조회</h1>
         <br />
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 새싹</th>
+              <th>신고된 회원</th>
               <th>내용</th>
               <th>신고 사유</th>
+              <th>신고 날짜</th>
               <th>신고 처리 여부</th>
             </tr>
           </thead>
           <tbody>
+          <c:forEach var="reportedMember" items="${ sessionScope.reportMemberList }">
             <tr>
-              <td><a href="#">gsp@gmail.com </a></td>
-              <td><a href="#">잔디가 아니라 잡초였네?</a></td>
-              <td>욕설</td>
-              <td>Y</td>
+              <td><a href="#">${ reportedMember.repEmail }</a></td>
+              <td><a href="#">${ reportedMember.contents }</a></td>
+              <td>${ reportedMember.reportStatementDTO.repType }</td>
+              <td>${ reportedMember.repDate }</td>
+              <td>${ reportedMember.repYn }</td>
             </tr>
-            <tr>
-              <td><a href="#">yhj@gmail.com </a></td>
-              <td><a href="#">이따구로 하실거면 환불해주세요</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">osb@gmail.com </a></td>
-              <td><a href="#">수업 해보신적은 있으세요?</a></td>
-              <td>욕설</td>
-              <td>L</td>
-            </tr>
-            <tr>
-              <td><a href="#">ysm@gmail.com </a></td>
-              <td><a href="#">숙제 내놓고 왜 검사안해주는데</a></td>
-              <td>욕설</td>
-              <td>N</td>
-            </tr>
-            <tr>
-              <td><a href="#">lsh@gmail.com </a></td>
-              <td><a href="#">진짜 열심히 듣고있습니다!! 감사해요 ㅎㅎ</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">ljh@gmail.com </a></td>
-              <td><a href="#">너 어디사냐?</a></td>
-              <td>욕설</td>
-              <td>Y</td>
-            </tr>
-            <tr>
-              <td><a href="#">iyr@gmail.com </a></td>
-              <td><a href="#">그냥 제가 수업할테니 저한테 돈주세요</a></td>
-              <td>욕설</td>
-              <td>N</td>
-            </tr>
+          </c:forEach>
           </tbody>
         </table>
-        <div class="manager-search">
-          <div class="ui search menti-search">
-            <div class="ui icon input input-search">
-              <input class="prompt" type="text" />
-              <i class="search icon"></i>
-            </div>
-            <div class="results"></div>
+         <div class="manager-search">
+          <input type="hidden" name="currentPage" value="1" />
+          <div class="dropsearch">
+          <form action="${ pageContext.servletContext.contextPath }/manager/reportedmentee" method="get">
+          <select
+            class="ui dropdown menu"
+            id="searchCondition"
+            name="searchCondition"
+          >
+            <option value="" selected>선택</option>
+            <option value="1">이메일</option>
+            <option value="2">내용</option>
+            <option value="3">신고처리여부</option>
+          </select>
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
+    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+    		<!-- 	<input type="button" id="searchbtn"> -->
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
+			</form>
           </div>
-        </div>
         <br />
-        <div class="manager-paging">
-          <ul>
-            <li><a href="#">Prev</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">next</a></li>
-          </ul>
-        </div>
       </div>
+ 			<jsp:include page="../common/Paging.jsp" />
+    </div>
     </div>
   </body>
 

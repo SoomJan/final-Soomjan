@@ -44,6 +44,8 @@ a {
 	background-color: #599A4E;
 	border-color: #599A4E
 }
+
+ a:hover { color: #91C788 !important; }
 </style>
 
 </head>
@@ -64,7 +66,7 @@ a {
 						<c:out value="${ classes.TITLE }" /></a>
 					</li>
 				</c:forEach>
-				<li><button type="button" style="border:none; background: none; padding:1px;"
+ 				<li><button type="button" style="border:none; background: none; padding:1px;"
 						data-toggle="modal" data-target="#addClassModal">클래스 생성하기</button></li>
 			</ul>
 			<ul>
@@ -76,6 +78,8 @@ a {
 				<li><a href="${ pageContext.servletContext.contextPath }/jandi/createAd">클래스 광고 신청</a></li>
 				<li><a href="${ pageContext.servletContext.contextPath }/jandi/myAd">광고 현황</a></li>
 			</ul>
+<!-- 		<ul><button type="button" class="btn" style="color: white !important; background-color: #91C788;"
+				data-toggle="modal" data-target="#addClassModal">클래스 생성하기</button>	</ul> -->
 		</div>
 
 		<!-- Modal -->

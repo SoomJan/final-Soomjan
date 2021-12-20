@@ -71,6 +71,8 @@ pageEncoding="UTF-8"%>
   .btn {
     background-color: white !important;
   }
+  
+  a:hover { color: #91C788 !important; }
     </style>
   </head>
 
@@ -100,6 +102,7 @@ pageEncoding="UTF-8"%>
         <ul>
           <h3>설정</h3>
           <!-- <hr class="border-1px-black" /> -->
+          <li><a href="${ pageContext.servletContext.contextPath }/mypage/main">내정보</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/mypage/modify">정보수정</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/mypage/modifyPwd">비밀번호 변경</a></li>
           <li><a href="#" id="endbtn">회원탈퇴</a></li>

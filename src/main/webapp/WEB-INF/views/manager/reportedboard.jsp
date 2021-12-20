@@ -10,7 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>신고된 클래스 조회</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"
@@ -40,6 +40,30 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       type="text/javascript"
       src="//pagead2.googlesyndication.com/pagead/show_ads.js"
     ></script>
+    <style>
+    .input-search {
+		width: 400px;
+	   	position: relative;
+	   	left: 18%;
+	   	top: 10px;
+	}
+	
+	#searchCondition {
+		float: left;
+   		position: relative;
+    	left: 16%;
+    	top: 10px;
+	}
+	
+	.warningtable a {
+      	text-decoration: none;
+    	color: black !important;
+      }
+      
+     .dropsearch {
+      	margin-left: 10%;
+      }
+    </style>
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />
@@ -52,42 +76,49 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 멘티</th>
+              <th>신고된 잔디</th>
               <th>내용</th>
               <th>신고 사유</th>
               <th>신고 처리 여부</th>
             </tr>
           </thead>
           <tbody>
-            <!-- <c:forEach var="manager" items="${ managerList }">
+            <c:forEach var="reportClass" items="${ sessionScope.reportClassList }">
               <tr>
-                <td>${manager.mngId}</td>
-                <td>${manager.mngName}</td>
+              	<td>${reportClass.email}</td>
+                <td>${reportClass.repContents}</td>
+                <td>${reportClass.reportStatementDTO.repType}</td>
+                <td>${reportClass.repYn}</td>
               </tr>
-            </c:forEach> -->
+            </c:forEach>
           </tbody>
         </table>
 
-        <div class="manager-search">
-          <div class="ui search menti-search">
-            <div class="ui icon input input-search">
-              <input class="prompt" type="text" />
-              <i class="search icon"></i>
-            </div>
-            <div class="results"></div>
+         <div class="manager-search">
+          <input type="hidden" name="currentPage" value="1" />
+          <div class="dropsearch">
+          <form action="${ pageContext.servletContext.contextPath }/manager/reportedmentee" method="get">
+          <select class="ui dropdown menu" id="searchCondition" name="searchCondition">
+            <option value="" selected>선택</option>
+            <option value="1">이메일</option>
+            <option value="2">내용</option>
+            <option value="3">신고처리여부</option>
+          </select>
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.searchValue }"/>">
+    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+    		<!-- 	<input type="button" id="searchbtn"> -->
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
+			</form>
           </div>
-        </div>
+        <br />
+      </div>
+      <br>
+        <jsp:include page="../common/Paging.jsp" />
         <div>
-          <div class="manager-paging">
-            <ul>
-              <li><a href="#">Prev</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">next</a></li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 
-<title>멘토 프로필</title>
+<title>잔디 프로필</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -95,7 +95,7 @@ p {
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
 			<div class="introduce">
-				<button class="btnStyle">닉네임 변경</button>
+				<button class="btnStyle btn">닉네임 변경</button>
 				<div class="introduce-detail">
 					<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ requestScope.jandi.profile_path}"
 						id="profile" onclick="modifyProfile();">
@@ -109,22 +109,24 @@ p {
 			
 				<form id="mentorForm" action="${ pageContext.servletContext.contextPath }/jandi/jandiIntro" method="post">
 
-					<P>멘토 경력</P>
+					<h2>잔디 경력</h2>
 					<hr class="border-1px-black" />
+					<br>
 					<textarea class="areaStyle" name="career" rows="10" cols="20" wrap="hard"
 						style="border: 1px solid black"  placeholder="경력을 작성해 주세요.">
 						${ requestScope.jandi.career }
 						</textarea>
 
-
-					<P>소개</P>
+					<br><br><br>
+					<h2>소개</h2>
 					<hr class="border-1px-black" />
+					<br>
 					<textarea class="areaStyle" name="introduce" id="introText" rows="20" cols="20" wrap="hard"
 						style="border: 1px solid black" placeholder="소개를 작성해 주세요.">
 						${ requestScope.jandi.intro }
 						</textarea>
-						
-					<button type="submit" class="btnStyle">수정</button>
+					<br><br>
+					<button type="submit" class="btnStyle btn">수정하기</button>
 				</form>
 			
 				<br>

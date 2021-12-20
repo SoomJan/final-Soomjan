@@ -38,8 +38,9 @@
         .finishtable thead tr th {background-color: #E3FFEC !important;}
         .finishtable {text-align: center !important; vertical-align: middle !important;}
         #finish2modal {height: 150px; top: 50%; left: 47%;}
-        .jandi-search{margin-right: 12%;}
         #searchbtn > img {position: relative; right: 70%;}
+        .dropsearch {margin-left: 14%;}
+        .finish-go {color: #52734D !important;}
     </style>
 </head>
 <body>
@@ -54,32 +55,37 @@
             method="get" id="searchform">
         <div class="dropsearch">
           <input type="hidden" name="currentPage" value="1" />
-          <select
-            class="ui dropdown menu"
-            id="searchCondition"
-            name="searchCondition"
-          >
+          <select class="ui dropdown menu" id="searchCondition" name="searchCondition">
+            <option value="" selected>선택</option>
             <option value="1">카테고리</option>
             <option value="2">클래스제목</option>
             <option value="3">강사닉네임</option>
           </select>
             <div class="ui search jandi-search">
   				<div class="ui icon input input-search">
-    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="${ sessionScope.selectCriteria.searchValue }">
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="${ selectCriteria.searchValue }">
     			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
     		<!-- 	<input type="button" id="searchbtn"> -->
   				</div>
  			 	<div class="results"></div>
 			</div>
-  </div>
-  </form>
+  		</div>
+ 	 </form>
+ 	 <script>
+ 	 	$(function(){
+ 	 		$('#searchCondition').val("${ selectCriteria.searchCondition }");
+ 	 		console.log("${ selectCriteria.searchCondition }");
+ 	 	});
+ 	 </script>
   <br><br><br>
  <c:if test="${ empty finishList[0].status }">
   <div class="unlist-text">
-  수강이 완료된 클래스가 없습니다.
+ 	 수강이 완료된 클래스가 없거나, 조회된 결과가 없습니다.
+  <br><br><br>
+  <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" class="finish-go"><u>클래스 신청하러가기</u></a>
 </div>
-</c:if>
-<br><br><br>
+</c:if>>
+<c:if test="${ !empty finishList[0].status }">
 <table class="ui single line table finishtable">
   <thead>
     <tr>
@@ -87,6 +93,7 @@
       <th>클래스제목</th>
       <th>강사닉네임</th>
       <th>수강완료</th>
+      <th></th>
       <th></th>
       <th></th>
       <th>수강후기</th>
@@ -101,11 +108,12 @@
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
       <td><input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }"></td>
+      <td><input type="hidden" value="${ finishClass.reviewDTO.isDelete }"></td>
       <td><input type="hidden" value="${ finishClass.classCode }"></td>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq 0  }">
+      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y'  }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 }">
+      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N'  }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>
@@ -119,7 +127,9 @@
     </tr> -->
   </tbody>
 </table>
+<br>
   <jsp:include page="../common/Paging.jsp" />
+</c:if>
       </div>
     </div>
     <!-- 수강후기 모달창 -->

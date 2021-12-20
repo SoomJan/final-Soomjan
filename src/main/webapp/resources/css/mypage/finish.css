@@ -50,6 +50,7 @@ iframe {
     height: 250px;
     border: 3px solid #91C788;
     border-radius: 15px;
+    padding: 2%;
   }
 
   .finishbtn{

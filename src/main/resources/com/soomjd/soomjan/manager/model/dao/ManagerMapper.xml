@@ -91,6 +91,36 @@
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
     
+    <resultMap id="reportMemberResultSet" type="ReportMemberDTO">
+        <id column="REP_CODE" property="repCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="CONTENTS" property="contents"/>
+        <result column="REP_DATE" property="repDate"/>
+        <result column="REP_EMAIL" property="repEmail"/>
+        <result column="REP_TYPE_CODE" property="repTypeCode"/>
+        <result column="ORG_IMG_PATH" property="orgImgPath"/>
+        <result column="REP_YN" property="repYn"/>
+        
+        <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
+    </resultMap>
+    
+    <resultMap id="reportStatementResultSet" type="ReportStatementDTO">
+    	<id column="REP_TYPE_CODE" property="repTypeCode"/>
+    	<result column="REP_TYPE" property="repType"/>
+    </resultMap>
+    
+    <resultMap id="reportClassResultSet" type="ReportClassDTO">
+        <id column="REP_CODE" property="repCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="REP_CONTENTS" property="repContents"/>
+        <result column="CLASS_CODE" property="classCode"/>
+        <result column="REP_DATE" property="repDate"/>
+        <result column="REP_TYPE_CODE" property="repTypeCode"/>
+        <result column="REP_YN" property="repYn"/>
+        
+        <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
+    </resultMap>
+    
   <!--  <select id="selectMember" resultMap="memberResultSet" parameterType="ssackDTO">
         SELECT
 		       A.EMAIL
@@ -185,10 +215,10 @@
 		 	     		 		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "2"'>
-		 	     		 		A.EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.EMAIL LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "3"'>
-		 	     		 		A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
 		 	     	 ORDER BY A.ENROLL_DATE DESC
@@ -235,10 +265,10 @@
 		 	     		 		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "2"'>
-		 	     		 		A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.WARNING LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test='searchCondition == "3"'>
-		 	     		 		A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
 		 	     	 ORDER BY A.ENROLL_DATE DESC
@@ -273,10 +303,10 @@
 		 	   A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	 </if>
 		 	 <if test='searchCondition == "2"'>
-		 	   A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	   AND A.WARNING LIKE '%' || #{ searchValue } || '%'
 		 	 </if>
 		 	 <if test='searchCondition == "3"'>
-		 	   A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	   AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
 		 	 </if>
 		  </where>
 	</select>
@@ -397,10 +427,10 @@
 		 	   A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	 </if>
 		 	 <if test='searchCondition == "2"'>
-		 	   A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	   AND A.WARNING LIKE '%' || #{ searchValue } || '%'
 		 	 </if>
 		 	 <if test='searchCondition == "3"'>
-		 	   A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	   AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
 		 	 </if>
 		  </where>
 	</select>
@@ -533,5 +563,144 @@
 	
 	</select>
 	
+	<select id="selectReportSsackTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT
+		       COUNT(*)
+		  FROM REPORT_MEMBER_TBL R
+         <where>
+  		 	<if test='searchCondition == "1"'>
+  		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+  		 	</if>
+  		 	<if test='searchCondition == "2"'>
+  		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+  		 	</if>
+  		 	<if test='searchCondition == "3"'>
+  		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+  		 	</if>
+  		 </where>
+	</select>
+	
+	<select id="selectReportMemberList" resultMap="reportMemberResultSet">
+		SELECT
+		       F.RNUM
+		     , F.REP_CODE
+		     , F.EMAIL
+		     , F.CONTENTS
+		     , F.REP_DATE
+		     , F.REP_EMAIL
+		     , F.REP_TYPE_CODE
+		     , F.ORG_IMG_PATH
+		     , F.REP_YN
+		     , F.REP_TYPE
+		  FROM (SELECT ROWNUM RNUM 
+		             , D.REP_CODE
+		             , D.EMAIL
+		             , D.CONTENTS
+		             , D.REP_DATE
+		             , D.REP_EMAIL
+		             , D.REP_TYPE_CODE
+		             , D.ORG_IMG_PATH
+		             , D.REP_YN
+		             , D.REP_TYPE
+		          FROM (SELECT
+		                       R.REP_CODE
+		                     , R.EMAIL
+		                     , R.CONTENTS
+		                     , R.REP_DATE
+		                     , R.REP_EMAIL
+		                     , R.REP_TYPE_CODE
+		                     , R.ORG_IMG_PATH
+		                     , R.REP_YN
+		                     , S.REP_TYPE
+		                  FROM REPORT_MEMBER_TBL R
+		                  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		                  <where>
+		 	     		 	<if test='searchCondition == "1"'>
+		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "2"'>
+		 	     		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test='searchCondition == "3"'>
+		 	     		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 </where>
+		 	     	 ORDER BY R.REP_DATE DESC
+		 	    	  ) D
+		 	    <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+	        	) F
+     			WHERE F.RNUM >= #{ startRow }
+	</select>
+	
+		<select id="selectReportClassTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT
+		       COUNT(*)
+		  FROM REPORT_CLASS_TBL R
+		  
+          <where>
+  		 	<if test='searchCondition == "1"'>
+  		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+  		 	</if>
+  		 	<if test='searchCondition == "2"'>
+  		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
+  		 	</if>
+  		 	<if test='searchCondition == "3"'>
+  		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+  		 	</if>
+  		 </where>
+	</select>
+	
+		<select id="selectReportClassList" resultMap="reportClassResultSet">
+		SELECT
+		       F.RNUM
+		     , F.REP_CODE
+		     , F.EMAIL
+		     , F.REP_CONTENTS
+		     , F.CLASS_CODE
+		     , F.REP_DATE
+		     , F.REP_TYPE_CODE
+		     , F.REP_YN
+		     , F.REP_TYPE
+		  FROM (SELECT ROWNUM RNUM 
+		             , D.REP_CODE
+		             , D.EMAIL
+		             , D.REP_CONTENTS
+		             , D.CLASS_CODE
+		             , D.REP_DATE
+		             , D.REP_TYPE_CODE
+		             , D.REP_YN
+		             , D.REP_TYPE
+		          FROM (SELECT
+		                       R.REP_CODE
+		                     , R.EMAIL
+		                     , R.REP_CONTENTS
+		                     , R.CLASS_CODE
+		                     , R.REP_DATE
+		                     , R.REP_TYPE_CODE
+		                     , R.REP_YN
+		                     , S.REP_TYPE
+		                  FROM REPORT_CLASS_TBL R
+		                  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		                  <where>
+		 	     		 	<if test="searchCondition == 1">
+		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 2">
+		 	     		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 3">
+		 	     		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 </where>
+		 	     	 ORDER BY R.REP_DATE DESC
+		 	    	  ) D
+		 	    <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	) F
+     			WHERE F.RNUM >= #{ startRow }
+	        	]]>	
+	</select>
 	
 </mapper>

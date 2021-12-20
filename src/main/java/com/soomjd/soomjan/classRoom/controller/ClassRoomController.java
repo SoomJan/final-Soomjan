@@ -88,14 +88,21 @@ public class ClassRoomController{
 		criteriaMap.put("classCode", classCode);
 		
 		List<ReviewDTO> reviewList = classRoomService.selectReviewListByClassCode(criteriaMap);
+		
+		double classStar = 0;
+
+        if(reviewList.size() > 0) {
+            classStar = classRoomService.selectAvgReviewStar(classCode);
+        }
+        
 		model.addAttribute("classDTO", classRoomService.selectClassByClassCode(classCode));
 		model.addAttribute("currentMemberList", currentMemberList);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewCount", totalCount);
+		model.addAttribute("classStar", classStar);
 		model.addAttribute("currentCount", currentMemberList.size());
 		model.addAttribute("mokchaList", classRoomService.selectMokchaList(classCode));
 		model.addAttribute("selectCriteria", selectCriteria);
-		model.addAttribute("classStar", classRoomService.selectAvgReviewStar(classCode));
 
 	}
 
