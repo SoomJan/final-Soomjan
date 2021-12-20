@@ -154,38 +154,22 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-         
-         <%--  <div class="swiper-slide photo" >
-            <div class="carousel-img" onclick="location.href='https://www.naver.com'">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/초록잔디.png"
-              />
-            </div>
-            <div>
-              <h4>초록 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div> --%>
-          
           <c:forEach var="class1" items="${ class2 }" end="3">
           <div class="swiper-slide photo">
           	<div class="carousel-img" onclick="location.href='https://www.naver.com'">
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${class1.filePath}"  />
           	</div>
           		 <div>
-            		 	 <h4>${class1.nickName }</h4>
+            		  <h4>${ class1.jandiDTO.nickName }</h4>
            		 </div>
            		 <div>
-           			   <h5>${class1.contents }</h5>
+           			   <h5>${ class1.contents }</h5>
            		 </div>	
            		 <div>
-           			   <h5>${class1.price }</h5>
+           			   <h5>${ class1.price }</h5>
            		 </div>	
           </div>
           </c:forEach>
-          
         </div>
         
         <div class="swiper-button-next">&gt;</div>

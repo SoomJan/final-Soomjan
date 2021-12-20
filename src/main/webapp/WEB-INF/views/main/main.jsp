@@ -138,250 +138,84 @@ pageEncoding="UTF-8"%>
         </form>
       </div>
       <div class="recommendclass">
-        <a href="#"><button class="btn-hover color-1">#JAVA</button></a>
-        <a href="#"><button class="btn-hover color-1">#MVC</button></a>
-        <a href="#"><button class="btn-hover color-1">#SPRING</button></a>
+        <a href="#"><button class="btn-hover color-1">JAVA</button></a>
+        <a href="#"><button class="btn-hover color-1">MVC</button></a>
+        <a href="#"><button class="btn-hover color-1">SPRING</button></a>
         <a href="#"><button class="btn-hover color-1">프론트앤드</button></a>
         <a href="#"><button class="btn-hover color-1">백앤드</button></a>
       </div>
       <br />
 
       <!-- swiper 캐러셀 -->
+     <div class="intro-board">
+       <h1>이런 강의는 어때요??</h1>
+       <h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4>
+        <br /><br />
+      </div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <c:forEach var="class1" items="${ class2 }" end="7">
+          <div class="swiper-slide photo">
+          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${class1.classCode }'">
+				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${class1.filePath}"  />
+          	</div>
+          		 <div><h3 class="classinstructor">${ class1.jandiDTO.nickName }</h3></div>
+           		 <div><h4 class="classtitle">${ class1.title }</h4></div>	
+           		 <div><span class="classprice">${ class1.price }</span> <span class="views">${ class1.views }</span></div>	
+          </div>
+          </c:forEach>
+        </div>
+        
+        <div class="swiper-button-next">&gt;</div>
+        <div class="swiper-button-prev">&lt;</div>
+      </div>
+      
       <div class="intro-board">
-        <h1>열혈 잔디🌿</h1>
+      	<h1>열혈 잔디🌿</h1>
         <h4>최근 일주일간 가장 많이 검색된 잔디를 소개합니다.</h4>
         <br /><br />
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div
-            class="swiper-slide photo"
-            onclick="location.href='https://www.naver.com'"
-          >
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/초록잔디.png"
-              />
-            </div>
-            <div>
-              <h4>초록 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
+          <c:forEach var="jandi" items="${ jandi }" end="7">
           <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/옐로우잔디.png"
-              />
-            </div>
-            <div>
-              <h4>옐로우 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
+          	<div class="carousel-img" onclick="location.href='https://www.naver.com'">
+				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${jandi.profile_path}"  />
+          	</div>
+          		 <div><h3 class="classinstructor">${ jandi.nickName }</h3></div>
+           		 <div><h4 class="classtitle">${ jandi.intro }</h4></div>	
           </div>
-          <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/레드잔디.png"
-              />
-            </div>
-            <div>
-              <h4>레드 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
-          <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/퍼플잔디.png"
-              />
-            </div>
-            <div>
-              <h4>보라 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
-          <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/퍼플잔디.png"
-              />
-            </div>
-            <div>
-              <h4>보라 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
-
-          <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/옐로우잔디.png"
-              />
-            </div>
-            <div>
-              <h4>옐로우 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
-          <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/퍼플잔디.png"
-              />
-            </div>
-            <div>
-              <h4>보라 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
-
-          <div class="swiper-slide photo">
-            <div
-              class="carousel-img"
-              onclick="location.href='https://www.naver.com'"
-            >
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/옐로우잔디.png"
-              />
-            </div>
-            <div>
-              <h4>옐로우 잔디</h4>
-            </div>
-            <div>
-              <h5>😘모두 다 알려주겠다~</h5>
-            </div>
-          </div>
+          </c:forEach>
         </div>
-        <!-- <div class="swiper-pagination"></div> -->
+        
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
       </div>
-
+      
       <div class="intro-board">
-        <span><h1>이런 강의는 어때요??</h1></span>
-        <span><h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4></span>
+      	<h1>모두가 좋아하는 수업</h1>
+        <h4>검색 순위가 제일 높은 수업들만 모아봤어요!</h4>
+        <br /><br />
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
+          <c:forEach var="viewClass" items="${ viewClass }" end="7">
           <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
+          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
+				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
+          	</div>
+          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
+           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
+           		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
           </div>
-          <div
-            class="swiper-slide photo"
-            onclick="location.href='https://www.naver.com'"
-          >
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass3.png"
-              />
-            </div>
-            <div class="classtitle">파이썬 코딩 마스터</div>
-            <div class="classinstructor">초록잔디</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩19,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass2.png"
-              />
-            </div>
-            <div class="classtitle">진짜 입문 올인원 개발 클래스</div>
-            <div class="classinstructor">그랩</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩28,600</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass3.png"
-              />
-            </div>
-            <div class="classtitle">파이썬 코딩 마스터</div>
-            <div class="classinstructor">초록잔디</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩19,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass2.png"
-              />
-            </div>
-            <div class="classtitle">진짜 입문 올인원 개발 클래스</div>
-            <div class="classinstructor">그랩</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩28,600</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
+          </c:forEach>
         </div>
-        <!-- <div class="swiper-pagination"></div> -->
+        
         <div class="swiper-button-next">&gt;</div>
         <div class="swiper-button-prev">&lt;</div>
       </div>
-
+      
+	<!-- 중간 광고 타임 -->
       <div class="mainadvertisement">
         <div></div>
         <div class="mainadvertisement-left">
@@ -395,174 +229,21 @@ pageEncoding="UTF-8"%>
       </div>
 
       <div class="intro-board">
-        <span><h1>11월 4주차 가장 있기있는 강의!!</h1></span>
-        <span><h4>수강생 참여도가 가장 좋아요</h4></span>
+        <span><h1>가장 최근에 나온 강의!!</h1></span>
+        <span><h4>따끈한 신작 강의 입니다~</h4></span>
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
+          <c:forEach var="viewClass" items="${ latestClass }" end="7">
           <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainfavclass1.png"
-              />
-            </div>
-            <div class="classtitle">스위프트 기초 문법</div>
-            <div class="classinstructor">개발하는 정대리</div>
-            <div class="classprice">무료강의</div>
+          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
+				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
+          	</div>
+          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
+           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
+           		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
           </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainfavclass2.png"
-              />
-            </div>
-            <div class="classtitle">무자본 1인 지식 창업</div>
-            <div class="classinstructor">작가 글리쌤</div>
-            <div class="classprice">₩49,500</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass2.png"
-              />
-            </div>
-            <div class="classtitle">진짜 입문 올인원 개발 클래스</div>
-            <div class="classinstructor">그랩</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩28,600</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass3.png"
-              />
-            </div>
-            <div class="classtitle">파이썬 코딩 마스터</div>
-            <div class="classinstructor">초록잔디</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩19,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass2.png"
-              />
-            </div>
-            <div class="classtitle">진짜 입문 올인원 개발 클래스</div>
-            <div class="classinstructor">그랩</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩28,600</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
-        </div>
-        <!-- <div class="swiper-pagination"></div> -->
-        <div class="swiper-button-next">&gt;</div>
-        <div class="swiper-button-prev">&lt;</div>
-      </div>
-
-      <div class="intro-board">
-        <span><h1>따끈따끈한 신규 강의를 만나볼 수 있는 기회!</h1></span>
-      </div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass3.png"
-              />
-            </div>
-            <div class="classtitle">파이썬 코딩 마스터</div>
-            <div class="classinstructor">초록잔디</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩19,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass2.png"
-              />
-            </div>
-            <div class="classtitle">진짜 입문 올인원 개발 클래스</div>
-            <div class="classinstructor">그랩</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩28,600</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass3.png"
-              />
-            </div>
-            <div class="classtitle">파이썬 코딩 마스터</div>
-            <div class="classinstructor">초록잔디</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩19,900</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass2.png"
-              />
-            </div>
-            <div class="classtitle">진짜 입문 올인원 개발 클래스</div>
-            <div class="classinstructor">그랩</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+100)</div>
-            <div class="classprice">₩28,600</div>
-          </div>
-          <div class="swiper-slide photo">
-            <div class="carousel-img">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/mainclass4.png"
-              />
-            </div>
-            <div class="classtitle">스프링 부트 + JPA</div>
-            <div class="classinstructor">김영한</div>
-            <div class="classrating">⭑⭑⭑⭑⭑(+300)</div>
-            <div class="classprice">₩79,900</div>
-          </div>
+          </c:forEach>
         </div>
         <!-- <div class="swiper-pagination"></div> -->
         <div class="swiper-button-next">&gt;</div>

@@ -3,6 +3,7 @@ package com.soomjd.soomjan.faq.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,19 +66,57 @@ public class FaqController {
 	@GetMapping("/test")
 	public String test(Model model) {
 		
-		ClassDTO class1 = new ClassDTO();
-		
 		List <ClassDTO> class2 = faqService.mainClass();
-		
-		System.out.print(class2);
 		
 		Collections.shuffle(class2);
 		
-		System.out.print(class2);
+		System.out.println(class2);
 		
 		model.addAttribute("class2", class2);
 		
 		return "test/main";
+	}
+	
+	@GetMapping("/gametest")
+	public String gametest(Model model) {
+		
+		Random random = new Random();
+		int a = 10;
+		int b = 10;
+		
+		int arr[][] = new int[a][b];
+		
+		int mine = 10;
+		int mineCount = 0;
+		
+		
+		for(int i = 0; i < a; i++ ) {
+			for(int j = 0; j < b; j++) {
+				arr[i][j] = 0;
+				}
+			}
+		
+		for(int k = 0; k<mine; k++) {
+			
+			int A = random.nextInt(a);
+			int B = random.nextInt(b);
+			arr[A][B] = -1;
+//			if(A>0 && B>0) {
+//				arr[A-1][B-1] = +1;
+//				arr[A-1][B] = +1;
+//				arr[A-1][B+1] = +1;
+//				arr[A][B-1] = +1;
+//				arr[A][B] = +1;
+//				arr[A][B+1] = +1;
+//				arr[A+1][B-1] = +1;
+//				arr[A+1][B] = +1;
+//				arr[A+1][B+1] = +1;
+//			}
+		}
+		
+		model.addAttribute("arr", arr);
+		
+		return "test/game";
 	}
 	
 	}
