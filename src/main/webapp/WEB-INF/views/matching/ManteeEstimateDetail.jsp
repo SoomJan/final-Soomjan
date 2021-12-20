@@ -65,7 +65,7 @@
 					</tr>
 					<tr>
 						<th width="10">카테고리</th>
-						<th width="60"align="left">${ estimateDetail[0].categoryCode }</th>
+						<th width="60"align="left">${ estimateDetail[0].categoryDTO.categoryName }</th>
 					</tr>
 					<tr>
 						<th width="10">진행상태</th>

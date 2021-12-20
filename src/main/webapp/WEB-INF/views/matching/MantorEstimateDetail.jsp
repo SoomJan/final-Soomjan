@@ -71,7 +71,7 @@
 					
 					<tr>
 						<th width="10">작성자</th>
-						<th width="60"align="left">${ estimateDetail[0].email }</th>
+						<th width="60"align="left">${ estimateDetail[0].memberDTO.nickName }</th>
 					</tr>
 					
 					<tr>
