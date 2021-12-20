@@ -39,7 +39,7 @@ main { width: 90% !important;}
 				<div class="request-list">
 					<p class="explain">견적서 현황</p>
 					<div id="allrequest">
-						<table style="width: 100%" class="estimateList">
+						<table style="width: 100%; text-align: center;" class="estimateList">
 						
 							<thead>
 								<tr class="table_title">
