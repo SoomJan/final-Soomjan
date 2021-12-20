@@ -1,40 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>비밀번호 찾기</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-     <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
    <link href="${ pageContext.servletContext.contextPath }/resources/css/findPwd.css?" rel="stylesheet" />
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
       href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
     />
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-
-    <script src="css/ie-emulation-modes-warning.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
   </head>
 
   <body>
-    <!-- <div class="background"></div> -->
     <jsp:include page="../common/nav.jsp" />
 
     <main class="fullJoin">
@@ -49,7 +29,6 @@ pageEncoding="UTF-8"%>
         <div class="content">
             <div class="title">인증번호</div>
             <input type="text" name="proof" id="num1">
-            <input type="text" id="num2" style="display: none;">
             <button type="button" id="proof" onclick="return sendMail()">인증번호 보내기</button>
             <input type="hidden" name="email" id="email" value="${ email }">
         </div>
@@ -71,15 +50,14 @@ pageEncoding="UTF-8"%>
             let email = "${ email }";
 
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/sendMail",
+              url: "${ pageContext.servletContext.contextPath }/member/sendMail/findPwd",
               type: "post",
               data: {email : email},
               success: function(data) {
-                if(!data) {
-                  showModal("이메일 전송 실패");
+                if(data == "true") {
+                  showModal("인증번호가 전송되었습니다.");
                 } else {
-                  showModal("이메일 전송 완료");
-                  $("#num2").val(data);
+                  showModal("인증번호 전송에 실패하였습니다.");
                 }
               },
               error: function(error) {
@@ -92,18 +70,28 @@ pageEncoding="UTF-8"%>
           /* 인증번호 확인 */
           function confirm() {
 
-            let num1 = $("#num1").val();
-            let num2 = $("#num2").val();
+            let email = "${ email }";
+            let number = $("#num1").val();
 
-            if(num1 == num2) {
-              $("#nextModal").fadeIn();
+            $.ajax({
+              url: "${ pageContext.servletContext.contextPath }/member/pwdCheck",
+              type: "post",
+              data: {number : number, email : email},
+              success: function(data) {
+                if(data == "true") {
+                    $("#nextModal").fadeIn();
                     $(".btn").click(function () {
                       $("#submitForm")
                       .attr("action", "${ pageContext.servletContext.contextPath }/member/findPwd3").submit();
                     });
-            } else {
-              showModal("인증번호가 일치하지 않습니다.");
-            }
+                } else {
+                  showModal("인증번호가 일치하지 않습니다.");
+                }
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
           }
 
            /* 모달창 띄워주는 함수 */
@@ -120,8 +108,6 @@ pageEncoding="UTF-8"%>
     </main>
 
     <jsp:include page="../common/footer.jsp" />
-
-    <script src="css/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
 

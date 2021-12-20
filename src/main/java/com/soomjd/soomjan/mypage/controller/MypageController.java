@@ -422,8 +422,8 @@ public class MypageController {
 		int classCode = Integer.parseInt(request.getParameter("classCode"));
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
 
-		System.out.println(request.getParameter("classCode"));
-		System.out.println(request.getParameter("reviewStar"));
+		System.out.println("후기를 작성할 클래스 코드 : " + request.getParameter("classCode"));
+		System.out.println("후기를 작성할 후기 별점 : " + request.getParameter("reviewStar"));
 
 		Map<String, Object> reviewMap = new HashMap<>();
 		reviewMap.put("email", member.getEmail());

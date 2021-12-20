@@ -14,25 +14,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <title>수강중인 클래스</title>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>
-    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/nav.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
        .takingtable thead tr th {border-bottom: none !important;} /* 수강중인 클래스 테이블 */
-       /* .dropdown { position: relative; left: 12%;} 정렬 */
-       /* .search {position: relative; right: 13%;} 검색 */
     </style>
 </head>
 <body>

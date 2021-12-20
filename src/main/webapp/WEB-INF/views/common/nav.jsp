@@ -6,7 +6,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   <head>
 
 
-    <title>등록된 멘토 조회</title>
+    <title>네비바</title>
     
     <link href="${ pageContext.servletContext.contextPath }/resources/css/nav.css?after" rel="stylesheet"/>
     

@@ -165,16 +165,32 @@
     </insert>
     
     <select id="numberCheck" resultType="_int">
-        SELECT V2.RNUM
-		     , V2.*
-		  FROM (SELECT ROWNUM RNUM
-		             , V.*
-		          FROM (SELECT CHECK_NUMBER
-		                  FROM EMAIL_CHECK_TBL 
-		                 ORDER BY CHECK_CODE DESC
-		               )V
-		       )V2
-		 WHERE V2.RNUM <![CDATA[ < ]]> 2
+        SELECT 
+		       A.CHECK_NUMBER
+		  FROM     
+			  (SELECT ROWNUM RNUM
+			        , CHECK_NUMBER 
+			     FROM EMAIL_CHECK_TBL 
+			    ORDER BY CHECK_CODE DESC) A
+	 	WHERE A.RNUM = 1
+    </select>
+    
+    <update id="checkUpdate" parameterType="HashMap">
+        UPDATE EMAIL_CHECK_TBL A 
+		   SET A.EMAIL = #{ email }
+		 WHERE A.CHECK_NUMBER = #{ number }
+    </update>
+    
+    <update id="mailCheckUpdate" parameterType="HashMap">
+        UPDATE EMAIL_CHECK_TBL A
+		   SET A.CHECK_NUMBER = #{ number }
+		 WHERE A.EMAIL = #{ email }
+    </update>
+    
+    <select id="pwdCheck" resultType="_int" parameterType="java.lang.String">
+        SELECT A.CHECK_NUMBER 
+		  FROM EMAIL_CHECK_TBL A
+		 WHERE A.EMAIL = #{ value }
     </select>
 
 </mapper>

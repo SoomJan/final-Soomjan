@@ -100,6 +100,26 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.numberCheck();
 	}
 
+	@Override
+	public boolean checkUpdate(Map<String, String> map) {
+		
+		return mapper.checkUpdate(map) > 0? true:false;
+	}
+
+	@Override
+	public boolean mailCheckUpdate(Map<String, String> map) {
+		
+		return mapper.mailCheckUpdate(map) > 0? true:false;
+	}
+
+	@Override
+	public int pwdCheck(String email) {
+		
+		return mapper.pwdCheck(email);
+	}
+
+
+
 	
 
 	

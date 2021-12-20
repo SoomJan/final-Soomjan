@@ -3,31 +3,11 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
     <title>회원정보수정</title>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/modify.css" rel="stylesheet"/>
 
-    <!--<link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />-->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"
-    />
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-    <!--<script src="css/ie-emulation-modes-warning.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script type="text/javascript" src="css/nav.js"></script>-->
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
     .warningtable tbody {text-align: center;} /* 누적 경고 테이블 */
 
@@ -203,34 +183,6 @@ pageEncoding="UTF-8"%>
 
 
         </script>
-
-
-
-
-
-        <!-- <div class="warn">
-        </div>
-        <div class="warining">
-        <p>누적 경고 횟수</p>
-        <table class="ui basic table warningtable">
-          <thead>
-            <tr>
-              <th>날짜</th>
-              <th>사유</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2021.11.15</td>
-              <td>멘토를 향한 욕설 및 협박</td>
-            </tr>
-            <tr>
-              <td>2021.11.18</td>
-              <td>멘토에게 심한 욕설</td>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
       </div>
     </div>
     <!-- 정보 수정 확인 모달창 -->

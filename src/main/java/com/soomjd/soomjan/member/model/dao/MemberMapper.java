@@ -33,4 +33,11 @@ public interface MemberMapper {
 
 	int numberCheck();
 
+	int checkUpdate(Map<String, String> map);
+
+	int mailCheckUpdate(Map<String, String> map);
+
+	int pwdCheck(String email);
+
+
 }

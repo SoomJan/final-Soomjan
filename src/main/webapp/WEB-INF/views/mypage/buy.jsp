@@ -13,27 +13,13 @@
 
     <title>멤버쉽 구매내역</title>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/buy.css" rel="stylesheet"/>
 
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/glyphicons-halflings-regular.svg" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-    <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.js"></script>
-    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/css/nav.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     <style>
       .buytable thead tr th {background-color: #E3FFEC !important;} /* 구매내역 테이블 */
       .buytable thead tr th {border-bottom: none !important;}
       .buytable tbody tr td {text-align: center; vertical-align : middle;}
-      /*.td2 {position: relative; top: 35px;}*/
       .dropsearch {margin-left: 12%;}
     </style>
 </head>

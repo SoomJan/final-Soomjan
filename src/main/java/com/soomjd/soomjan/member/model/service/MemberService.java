@@ -33,4 +33,12 @@ public interface MemberService {
 
 	int numberCheck();
 
+	boolean checkUpdate(Map<String, String> map);
+
+	boolean mailCheckUpdate(Map<String, String> map);
+
+	int pwdCheck(String email);
+
+
+
 }
