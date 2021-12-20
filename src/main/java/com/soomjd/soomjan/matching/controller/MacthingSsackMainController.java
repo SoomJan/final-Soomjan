@@ -106,11 +106,8 @@ public class MacthingSsackMainController {
 	}
 	
 	// 작성된 견적서 디테일 보여주기
-	@GetMapping("/detailEstimate/{memberEmail:.+}")
-	public String detailEstimate(Model model ,@PathVariable("memberEmail") String memberEmail ,String estimateCode) {
-		
-		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
-		System.out.println("loginMember : "+ loginMember);
+	@GetMapping("/detailEstimate")
+	public String detailEstimate(Model model ,String estimateCode) {
 		
 		// 견적서 받아오는 코드
 		List<EstimateDTO> estimateDetail = matchingService.estimateDetail(estimateCode); //estimateCode값 넘김
@@ -121,33 +118,62 @@ public class MacthingSsackMainController {
 		return "matching/ManteeEstimateDetail";
 	}
 	
-	// 잔디의 메인화면(현황 리스트 보기 클릭 시 나와야 함)
-	@GetMapping("/mantorMain/{memberEmail:.+}")
-	public String mantorMain(Model model,@PathVariable("memberEmail") String memberEmail, @RequestParam(defaultValue = "1") int currentPage) {
+	// 전체 견적서 리스트 메인화면
+	@GetMapping("/estimateMain")
+	public String estimateMain(Model model,CategoryDTO category, String memberEmail, @RequestParam(defaultValue = "1") int currentPage) {
 		
-		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
-		System.out.println("loginMember : "+ loginMember);
+//		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
+//		System.out.println("loginMember : "+ loginMember);
 		
-		int totalCount = matchingService.selecetMainTotal();
+		int totalCount = matchingService.selecetEstimateTotal();
 		
 		int limit = 10;
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = null;
 		
-		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, "email", loginMember.getEmail());
+		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		
 		
 		System.out.println(selectCriteria);
 		
-		List<EstimateDTO> ssackList = matchingService.ssackList(selectCriteria);
-		System.out.println(ssackList);
-		model.addAttribute("ssackList",ssackList);
+		// 전체 견적서 리스트로 서비스 다시 만들기 수정 예정
+		List<EstimateDTO> allEstimateList = matchingService.estimateMainJ(selectCriteria);
+		System.out.println(allEstimateList);
+		model.addAttribute("allEstimateList",allEstimateList);
 		model.addAttribute("selectCriteria",selectCriteria);
 		
 		
-		return "matching/mantorMain";
+		List<CategoryDTO> categoryList = matchingService.selectCategory(category);
+		model.addAttribute("categoryList",categoryList);
+		
+		return "matching/MantorEstimateMain";
 	}
-
 	
+	// 새싹 요청 디테일 보여주기(mantorestimatedetail)
+	@GetMapping("/detailEstimateJ")
+	public String detailEstimateJ(Model model ,String estimateCode) {
+		
+		// 견적서 받아오는 코드
+		List<EstimateDTO> estimateDetail = matchingService.estimateDetailJ(estimateCode); //estimateCode값 넘김
+		System.out.println(estimateDetail);
+		model.addAttribute("estimateDetail",estimateDetail);
+		
+		
+		return "matching/MantorEstimateDetail";
+	}
+	
+	
+	
+	// 채팅 리스트 메인화면
+	@GetMapping("/chatList")
+	public String chatList(CategoryDTO category, Model model) {
+		
+		List<CategoryDTO> categoryList = matchingService.selectCategory(category);
+		System.out.println(categoryList);
+		model.addAttribute("categoryList",categoryList);
+		
+		
+		return "matching/MantorChatMain";
+	}
 }

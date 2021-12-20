@@ -62,7 +62,7 @@ main { width: 90% !important;}
 
 			<div class="matching-content">
 				<div class="request-list">
-					<p class="explain">전체 견적 요청</p>
+					<p class="explain">견적서 현황</p>
 					<div id="allrequest">
 						<table style="width: 100%" class="estimateList">
 						
@@ -78,7 +78,7 @@ main { width: 90% !important;}
 								
 							<c:forEach var="estimate" items="${ estimateList }">
 								<tr>
-									<th width="10">${ estimate.estimateCode }</th>
+									<th width="10">${ estimate.rnum }</th>
 									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate?estimateCode=${estimate.estimateCode}">${ estimate.title }</a></th>
 									<th width="30">${ estimate.isMatched }</th> 
 								

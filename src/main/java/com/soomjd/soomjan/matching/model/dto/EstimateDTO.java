@@ -2,6 +2,8 @@ package com.soomjd.soomjan.matching.model.dto;
 
 import java.sql.Date;
 
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
+
 public class EstimateDTO {
 	
 	private int estimateCode;
@@ -12,12 +14,15 @@ public class EstimateDTO {
 	private String contents;
 	private String email;
 	private char isDeleted;
+	private CategoryDTO categoryDTO;
+	private MemberDTO memberDTO;
+	private int rnum;
 	
 	public EstimateDTO() {
 	}
 
 	public EstimateDTO(int estimateCode, int categoryCode, char isMatched, Date writeDate, String title,
-			String contents, String email, char isDeleted) {
+			String contents, String email, char isDeleted, CategoryDTO categoryDTO, MemberDTO memberDTO, int rnum) {
 		super();
 		this.estimateCode = estimateCode;
 		this.categoryCode = categoryCode;
@@ -27,6 +32,9 @@ public class EstimateDTO {
 		this.contents = contents;
 		this.email = email;
 		this.isDeleted = isDeleted;
+		this.categoryDTO = categoryDTO;
+		this.memberDTO = memberDTO;
+		this.rnum = rnum;
 	}
 
 	public int getEstimateCode() {
@@ -93,12 +101,40 @@ public class EstimateDTO {
 		this.isDeleted = isDeleted;
 	}
 
+	public CategoryDTO getCategoryDTO() {
+		return categoryDTO;
+	}
+
+	public void setCategoryDTO(CategoryDTO categoryDTO) {
+		this.categoryDTO = categoryDTO;
+	}
+
+	public MemberDTO getMemberDTO() {
+		return memberDTO;
+	}
+
+	public void setMemberDTO(MemberDTO memberDTO) {
+		this.memberDTO = memberDTO;
+	}
+
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
 	@Override
 	public String toString() {
 		return "EstimateDTO [estimateCode=" + estimateCode + ", categoryCode=" + categoryCode + ", isMatched="
 				+ isMatched + ", writeDate=" + writeDate + ", title=" + title + ", contents=" + contents + ", email="
-				+ email + ", isDeleted=" + isDeleted + "]";
+				+ email + ", isDeleted=" + isDeleted + ", categoryDTO=" + categoryDTO + ", memberDTO=" + memberDTO
+				+ ", rnum=" + rnum + "]";
 	}
+
+	
+
 	
 	
 

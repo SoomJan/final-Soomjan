@@ -12,6 +12,8 @@
 
 <title>Signin Template for Bootstrap</title>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" />
 
 <link
 	href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css"
@@ -27,7 +29,6 @@
 <script type="text/javascript" src="css/bootstrap.js"></script>
 <script type="text/javascript" src="css/nav.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript"
 	src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
@@ -57,7 +58,7 @@
 
 			<div class="matching-content">
 				<p class="estimate_title">견적서 작성하기</p>
-					<form action="${ pageContext.servletContext.contextPath }/matching/estimateSend/${ sessionScope.loginMember.email }" method="post">
+					<form action="${ pageContext.servletContext.contextPath }/matching/estimateSend/${ sessionScope.loginMember.email }" id="writeForm" method="post">
 						<table class="estimate_table" style="width: 100%">
 					<br><br>
 					
@@ -93,13 +94,30 @@
 
 				<div class="write" >
 					<input type="text" value="${ sessionScope.loginMember.email }" name="email" style="display:none">
-						<button type="submit" class="writeBtn">매칭 요청</button>
+						<button type="button" class="writeBtn"id="matchingbtn">매칭 요청</button>
 				</div>
+				
+				
+				
 				</form>
+			
 			</div>
 
 		</div>
 	</div>
+	
+	
+	
+	<script>
+	 /* 매칭요청 클릭하면 컨펌창 띄워주기 */
+	  $(function(){
+	    $('#matchingbtn').click(function(){
+			if(confirm("저장하시겠습니까?")){
+		     	 $('#writeForm').submit();
+			}	     
+	    }); 
+	  });
+	</script>
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>

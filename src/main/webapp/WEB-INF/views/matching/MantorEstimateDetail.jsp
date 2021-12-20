@@ -55,52 +55,64 @@
 		<div class="introduce">
 
 			<div class="matching-content">
-				<p class="estimate_title">견적서 작성하기</p>
+				<p class="estimate_title">견적서 현황</p>
 				<br>
 				<table class="estimate_table" style="width: 100%">
 
 					<tr>
 						<th width="10">No</th>
-						<th width="60" align="left">1</th>
+						<th width="60"align="left">${ estimateDetail[0].estimateCode }</th>
 					</tr>
+					
 					<tr>
 						<th width="10">카테고리</th>
-						<th width="60" align="left">개발,프로그래밍</th>
+						<th width="60"align="left">${ estimateDetail[0].categoryDTO.categoryName }</th>
+					</tr> 
+					
+					<tr>
+						<th width="10">작성자</th>
+						<th width="60"align="left">${ estimateDetail[0].memberDTO.nickName }</th>
 					</tr>
+					
 					<tr>
 						<th width="10">진행상태</th>
-						<th width="60" align="left">Y</th>
+						<th width="60"align="left">${ estimateDetail[0].isMatched }</th>
 					</tr>
 					<tr>
 						<th width="10">작성일</th>
-						<th width="60" align="left">2021.11.18</th>
+						<th width="60" align="left">${ estimateDetail[0].writeDate }</th>
 					</tr>
 					<tr>
 						<th width="10">제목</th>
-						<th width="60" align="left">절 성장시켜주실 고수분!</th>
+						<th width="60"align="left">${ estimateDetail[0].title }</th>
 					</tr>
 					<tr>
 						<th width="10">내용</th>
 						<th width="60" align="left">
-안녕하세요. 저는 자바를 배우고싶은 취준생입니다.<br>
-비전공자를 네카라쿠베에 취업할 수 있는 실력까지 성장시켜주실 고수분을 구합니다.<br>
-페이는 아쉽지 않게 챙겨드리겠습니다. <br>
-많은 연락 부탁드립니다. 감사합니다 :)<br>
-				</th>
+						<br>
+						 ${ estimateDetail[0].contents }
+						
+						</th>
 					</tr> 
 
 				</table>
 				<br><br>
+					
+					
+					
+				<div class="btns">
+				<form action="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email }">
+					<input type="submit" value="목록으로" class="backBtn">
+				</form>
+					<input type="submit" value="채팅하기" class="chatBtn" id="chatBtn">
+				</div>
 				
-					
-					
-				<div class="back">
-					<button class="backBtn">목록으로</button>
-				</div>
+				
+				
 
-				<div class="write">
-					<button class="writeBtn">채팅하기</button>
-				</div>
+				<!-- <div class="write">
+					<button class="writeBtn">멘토 요청보기</button>
+				</div> -->
 			</div>
 
 		</div>

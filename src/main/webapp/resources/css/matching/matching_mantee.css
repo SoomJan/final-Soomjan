@@ -112,11 +112,22 @@
 	border-radius: 35px;
 	padding-top: 3px;
 }
-/* 목록으로 버튼 div */
-.back {
-	width: 120px;
+
+/* 채팅하기 버튼 */
+.chatBtn {
+	width: 130px;
 	height: 50px;
-	float: left;
+	float: right;
+	font-size: 20px;
+	color: white;
+	background-color: #48a66b;
+	border: #48a66b;
+	border-radius: 35px;
+	padding-top: 3px;
+}
+/* 목록으로,채팅하기 버튼 div */
+.btns {
+	height: 100px;
 	margin-top: 170px;
 }
 
@@ -493,6 +504,14 @@
 	padding: 20px;
 	border-radius: 10px;
 }
+
+/* 모달창 */
+#matchingbtnmodal {
+  height: 150px;
+  top: 45%;
+  left: 50%;
+}
+
 
 iframe {
 	display: none;

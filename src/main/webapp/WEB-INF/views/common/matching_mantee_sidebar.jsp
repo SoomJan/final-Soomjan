@@ -46,11 +46,11 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="sidebar-inner-name1">
           <ul>
-		<li><a href="${ pageContext.servletContext.contextPath }/matching/mantorMain/${ sessionScope.loginMember.email}">견적서 현황</a></li>
+		<li><a href="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email}">견적서 현황</a></li>
 		<c:if
             test="${ sessionScope.loginMember.isJandi eq 'Y'.charAt(0) }" >
-		<li><a href="#">전체 견적서 리스트</a></li>
-		<li><a href="#">채팅 리스트</a></li>
+		<li><a href="${ pageContext.servletContext.contextPath }/matching/estimateMain">전체 견적서 리스트</a></li>
+		<li><a href="${ pageContext.servletContext.contextPath }/matching/chatList">채팅 리스트</a></li>
 		</c:if>
         </ul>
       </div>

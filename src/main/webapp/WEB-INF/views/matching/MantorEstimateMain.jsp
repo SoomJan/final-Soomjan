@@ -18,9 +18,13 @@
 	rel="stylesheet" />
 
 <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="resources/css/semantic/semantic.css">
+<script src="resources/css/semantic/semantic.js"></script>
 <script src="css/ie-emulation-modes-warning.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="css/bootstrap.js"></script>
 <script type="text/javascript" src="css/nav.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -58,8 +62,8 @@ main { width: 90% !important;}
 
 			<div class="matching-content">
 				<div class="request-list">
-					<p class="explain">전체 견적 요청</p>
-					<br><br>
+					<p class="explain">전체 견적서 리스트</p>
+					
 					<div class="search">
 						<select id="search_category_cb" name="search_category">
 							<option value="">선택하세요.</option>
@@ -72,7 +76,7 @@ main { width: 90% !important;}
 						
 						<button class="search_btn">검색</button>
 					</div> <!-- search div  -->	
-						
+					<br><br><br><br>
 					<div id="allrequest">
 						<table style="width: 100%" class="estimateList">
 						
@@ -86,11 +90,11 @@ main { width: 90% !important;}
 							<tbody>
 								<tr></tr>
 								
-							<c:forEach var="ssack" items="${ ssackList }">
+							<c:forEach var="estimate" items="${ allEstimateList }">
 								<tr>
-									<th width="10">${ ssack.estimateCode }</th>
-									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate/${ sessionScope.loginMember.email}">${ ssack.title }</a></th>
-									<th width="30">${ ssack.isMatched }</th> 
+									<th width="10">${ estimate.estimateCode }</th>
+									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimateJ?estimateCode=${estimate.estimateCode}">${ estimate.title }</a></th>
+									<th width="30">${ estimate.isMatched }</th> 
 								
 								</tr>
 								</c:forEach>
@@ -104,13 +108,12 @@ main { width: 90% !important;}
 						</table>
 					</div>
 					<br>
-							<div class="write">
+<%-- 							<div class="write">
 								<a href="${ pageContext.servletContext.contextPath }/matching/manteeWrite">
 								<button class="writeBtn">견적서 작성</button>
 								</a>
 							</div>
-					
-			 <jsp:include page="../common/Paging.jsp" />
+ --%>			 <jsp:include page="../common/Paging.jsp" />
 						</div>
 					</div>
 				</div>

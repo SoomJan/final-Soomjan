@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soomjd.soomjan.matching.model.dao.MatchingMapper">
 
-
+	<!-- 새싹이 보는 견적서 디테일 or 그냥 견적서 디테일 기본 -->
     <resultMap id="estimateList" type="EstimateDTO">
         <id column="ESTIMATE_CODE" property="estimateCode"/>
         <result column="CATEGORY_CODE" property="categoryCode"/>
@@ -14,12 +14,39 @@
         <result column="CONTENTS" property="contents"/>
         <result column="EMAIL" property="email"/>
         <result column="IS_DELETED" property="isDeleted"/>
+        <result column="RNUM" property="rnum"/>
+        
+         <association property="categoryDTO" resultMap="categoryList"/>
+       <!--  <collection property="categoryName" javaType="java.util.ArrayList" resultMap="categoryList" /> -->
     </resultMap>
+   
     
     <resultMap id="categoryList" type="CategoryDTO">
     	<id column="CATEGORY_CODE" property="categoryCode"/>
     	<result column="CATEGORY_NAME" property="categoryName"/>
     </resultMap>
+    
+    <!-- 잔디가 보는 견적서 디테일 -->
+     <resultMap id="estimateDetailList" type="EstimateDTO">
+        <id column="ESTIMATE_CODE" property="estimateCode"/>
+        <result column="CATEGORY_CODE" property="categoryCode"/>
+        <result column="IS_MATCHED" property="isMatched"/>
+        <result column="WRITE_DATE" property="writeDate"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENTS" property="contents"/>
+        <result column="EMAIL" property="email"/>
+        <result column="IS_DELETED" property="isDeleted"/>
+        
+       <association property="categoryDTO" resultMap="categoryList"/>
+       <association property="memberDTO" resultMap="memberDTO"/>
+   
+    </resultMap>
+    
+    <resultMap id="memberDTO" type="MemberDTO">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>	
+    </resultMap>
+    
     
     <insert id="registEstimate" parameterType="EstimateDTO">
         INSERT
@@ -75,6 +102,7 @@
                    <![CDATA[
 	        	WHERE ROWNUM <= #{ endRow } 
 	        	]]>	
+	        	<!-- ORDER BY B.ESTIMATE_CODE DESC  -->
               ) C
               WHERE C.RNUM >= #{ startRow }
                 
@@ -83,19 +111,64 @@
     </select>
     
     
+    <select id="estimateMainJ" resultMap="estimateList">
+        SELECT
+    		   C.RNUM
+    		 , C.ESTIMATE_CODE
+		     , C.TITLE
+		     , C.IS_MATCHED
+		  FROM (SELECT ROWNUM RNUM
+		   		, B.ESTIMATE_CODE
+		   		, B.TITLE
+		    	, B.IS_MATCHED
+		    	FROM(SELECT 
+		    	     A.ESTIMATE_CODE
+		    	   , A.TITLE
+		    	   , A.IS_MATCHED
+		    	   FROM ESTIMATE_TBL A
+                   ORDER BY A.ESTIMATE_CODE DESC
+                   )B 
+                   <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+              ) C
+              WHERE C.RNUM >= #{ startRow }
+                
+    </select>
     
+    
+     <!-- 새싹이 보는 견적서 디테일 -->
     <select id="estimateDetail" resultMap="estimateList" >
     	SELECT
-		       ESTIMATE_CODE
-		     , CATEGORY_CODE
-		     , IS_MATCHED
-		     , WRITE_DATE
-		     , TITLE
-		     , CONTENTS
-		  FROM ESTIMATE_TBL
-		 WHERE EMAIL = #{ email } 
-		   AND ESTIMATE_CODE = #{ estimateCode }
+		       E.ESTIMATE_CODE
+		     , C.CATEGORY_NAME
+		     , E.IS_MATCHED
+		     , E.WRITE_DATE
+		     , E.TITLE
+		     , E.CONTENTS
+		     , E.EMAIL
+		  FROM ESTIMATE_TBL E
+		  JOIN CATEGORY_TBL C ON (E.CATEGORY_CODE = C.CATEGORY_CODE)
+		 WHERE ESTIMATE_CODE = #{ estimateCode }
     </select>
+    
+    <!-- 잔디가 보는 견적서 디테일 -->
+     <select id="estimateDetailJ" resultMap="estimateDetailList" >
+    	SELECT
+		       E.ESTIMATE_CODE
+		     , C.CATEGORY_NAME
+		     , E.IS_MATCHED
+		     , E.WRITE_DATE
+		     , E.TITLE
+		     , E.CONTENTS
+		     , S.NICKNAME
+		  FROM ESTIMATE_TBL E
+		  JOIN CATEGORY_TBL C ON (E.CATEGORY_CODE = C.CATEGORY_CODE)
+		  JOIN SSACK_TBL S ON (E.EMAIL = S.EMAIL)
+		 WHERE ESTIMATE_CODE = #{ estimateCode }
+    </select> 
+    
+    
     
     <select id="selecetMainTotal" resultType="_int">
     
@@ -104,6 +177,14 @@
     	  FROM ESTIMATE_TBL
     	 <!-- WHERE EMAIL = #{ email } -->
     </select>
+    
+    <select id="selecetEstimateTotal" resultType="_int">
+    
+    	SELECT
+    		   COUNT(*)
+    	  FROM ESTIMATE_TBL
+    </select>
+    
     
     <select id="ssackList" resultMap="estimateList">
         SELECT

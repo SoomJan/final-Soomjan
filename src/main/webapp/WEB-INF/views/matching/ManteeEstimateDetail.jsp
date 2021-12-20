@@ -61,29 +61,29 @@
 
 					<tr>
 						<th width="10">No</th>
-						<th width="60"align="left" name="estimateCode">${ estimate.estimateCode }</th>
+						<th width="60"align="left">${ estimateDetail[0].estimateCode }</th>
 					</tr>
 					<tr>
 						<th width="10">카테고리</th>
-						<th width="60"align="left">${ estimate.categoryCode }</th>
+						<th width="60"align="left">${ estimateDetail[0].categoryDTO.categoryName }</th>
 					</tr>
 					<tr>
 						<th width="10">진행상태</th>
-						<th width="60"align="left">${ estimate.isMatched }</th>
+						<th width="60"align="left">${ estimateDetail[0].isMatched }</th>
 					</tr>
 					<tr>
 						<th width="10">작성일</th>
-						<th width="60" align="left">${ estimate.writeDate }</th>
+						<th width="60" align="left">${ estimateDetail[0].writeDate }</th>
 					</tr>
 					<tr>
 						<th width="10">제목</th>
-						<th width="60"align="left">${ estimate.title }</th>
+						<th width="60"align="left">${ estimateDetail[0].title }</th>
 					</tr>
 					<tr>
 						<th width="10">내용</th>
 						<th width="60" align="left">
 						<br>
-						 ${ estimate.contents }
+						 ${ estimateDetail[0].contents }
 						
 						</th>
 					</tr> 
@@ -128,12 +128,15 @@
 					
 					
 				<div class="back">
-					<button class="backBtn">목록으로</button>
+				<form action="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email }">
+					<input type="submit" value="목록으로" class="backBtn">
+				</form>
 				</div>
+				
 
-				<div class="write">
+				<!-- <div class="write">
 					<button class="writeBtn">멘토 요청보기</button>
-				</div>
+				</div> -->
 			</div>
 
 		</div>
