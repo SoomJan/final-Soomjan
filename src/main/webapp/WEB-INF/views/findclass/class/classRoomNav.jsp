@@ -5,6 +5,13 @@
 <html>
 <head>
 <title>클래스룸</title>
+
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+
 <style>
 
 .title {
@@ -102,6 +109,7 @@ th{
 			
 			if('${ requestScope.purchaseMessage }' == 'Y'){
 				if(confirm("결제가 완료되었습니다.")){
+					payWindow.close();
 					opener.location.href= "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=" + ${classDTO.classCode};
 				}
 			}else if('${ requestScope.purchaseMessage }' == 'N'){

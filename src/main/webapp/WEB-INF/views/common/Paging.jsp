@@ -7,14 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<%-- 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css"> --%>
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" 
-                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
-    </script>
-	<%-- <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css" rel="stylesheet" /> --%>
-<%--     <script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
- --%>
 </head>
 <style>
 	.pagination > li > a{

@@ -418,6 +418,9 @@ public class MypageController {
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		String categoryName = request.getParameter("t-categoryName");
 		String contents = request.getParameter("contents");
+		
+		System.out.println(request.getParameter("classCode"));
+		System.out.println(request.getParameter("reviewStar"));
 
 		int classCode = Integer.parseInt(request.getParameter("classCode"));
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));

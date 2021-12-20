@@ -192,10 +192,10 @@ public class ClassRoomController{
 		chatRoomMap.put("classCode", classCode);
 		chatRoomMap.put("email", email);
 		
-		int chatCode = classRoomService.selectClassChatBySSACKEmail(chatRoomMap);
-		System.out.println("chatCode : " + chatCode);
+		HashMap<String, Object> chatCodeMap = classRoomService.selectClassChatBySSACKEmail(chatRoomMap);
+		System.out.println("chatCode : " + chatCodeMap.get("CHAT_CODE"));
 		
-		model.addAttribute("chatCode", chatCode);
+		model.addAttribute("chatCode", chatCodeMap.get("CHAT_CODE"));
 		model.addAttribute("reportStateList", classRoomService.selectAllReportStatement());
 		
 		return "mypage/class/classChat";
@@ -641,8 +641,10 @@ public class ClassRoomController{
 			chatRoomMap.put("jandiEmail", classDTO.getEmail());
 			chatRoomMap.put("classCode", classDTO.getClassCode());
 			System.out.println(chatRoomMap);
-
-			if(classRoomService.selectClassChatBySSACKEmail(chatRoomMap) > 0) {
+			
+			HashMap<String, Object> chatCodeMap = classRoomService.selectClassChatBySSACKEmail(chatRoomMap);
+			
+			if(chatCodeMap != null) {
 				purchaseMessage = "Y";
 			}else {
 				if(classRoomService.registChatRoom(chatRoomMap)) {

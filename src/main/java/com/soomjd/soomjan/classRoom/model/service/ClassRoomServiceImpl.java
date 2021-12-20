@@ -172,7 +172,7 @@ private final ClassRoomMapper classRoomMapper;
 		return classRoomMapper.selectReviewListByClassCodeTotalCount(searchMap);
 	}
 	@Override
-	public int selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap) {
+	public HashMap<String, Object> selectClassChatBySSACKEmail(HashMap<String, Object> chatRoomMap) {
 		return classRoomMapper.selectClassChatBySSACKEmail(chatRoomMap);
 	}
 	@Override

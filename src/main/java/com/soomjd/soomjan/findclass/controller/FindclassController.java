@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,11 +26,13 @@ public class FindclassController {
 	// POSTMapping 
 
 	@GetMapping("/findAllClassMain")
-	public void findAllClassMain() {
+	public void findAllClassMain(Model model) {
 		System.out.println("확인");
 	//  반환형                      변수명                	
 		List<ClassDTO> classDTOList = findClassService.selectfindclass();
 		System.out.println(classDTOList);
+		
+		model.addAttribute("classDTOList", classDTOList);
 		// DATABAE로 필요한 데이터를 조회 
 	}
 	

@@ -9,13 +9,6 @@ pageEncoding="UTF-8"%>
 
   </head>
 
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="semantic/dist/semantic.min.css"
-  />
-  <script src="semantic/dist/semantic.min.js"></script>
-
   <body>
     <div id="sidebar">
       <div class="sidebar-inner-name">
@@ -32,5 +25,4 @@ pageEncoding="UTF-8"%>
     </div>
   </body>
 
-  <script src="css/ie10-viewport-bug-workaround.js"></script>
 </html>

@@ -7,22 +7,8 @@
 
 <title>멘티 채팅</title>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css?" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-
-<script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-<script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-<script src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 
 .classImg{
