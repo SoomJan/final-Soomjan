@@ -146,6 +146,11 @@ public class MypageServiceImpl implements MypageService{
 		
 		return mapper.endClass(endClassList);
 	}
+
+	@Override
+	public int deleteReview(int rvCode) {
+		return mapper.deleteReview(rvCode);
+	}
 	
 	
 

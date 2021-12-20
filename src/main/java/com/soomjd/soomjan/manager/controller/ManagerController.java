@@ -34,14 +34,16 @@ import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.manager.model.service.ManagerService;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 @Controller
 @RequestMapping("/manager/*")
-@SessionAttributes({"loginManager", "ssackList", "jandiList", "managerList", "selectCriteria"})
+@SessionAttributes({"loginManager", "ssackList", "jandiList", "managerList", "selectCriteria", "reportMemberList", "reportClassList"})
 public class ManagerController {
 	
 	private final ManagerService managerService;
@@ -259,15 +261,81 @@ public class ManagerController {
 		}
 	}
 	
+	/* =============================== 신고관리 =================================== */
+	
 	@GetMapping("/reportedmentee")
-	public String reportedmentee() {
+	public String reportedmentee(Model model, @RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage) {
+		
+		 Map<String, String> searchMap = new HashMap<>();
+	     searchMap.put("searchCondition", searchCondition);
+	     searchMap.put("searchValue", searchValue);
+	     System.out.println("searchMap : " + searchMap);
+	      
+	     int totalCount = managerService.selectReportSsackTotalCount(searchMap);
+	     System.out.println("totalCount : " + totalCount);
+	      
+	     int limit = 10;
+	     int buttonAmount = 5;
+	      
+	     SelectCriteria selectCriteria = null;
+		
+	     if(searchCondition != null && !"".equals(searchCondition)) {
+		      selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		   } else {
+		      selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		   }
+		      
+	     System.out.println("selectCriteria : " + selectCriteria);
+      
+      
+	     List<ReportMemberDTO> reportMemberList = managerService.selectReportMember(selectCriteria);
+	     System.out.println("reportMemberList : " + reportMemberList);
+	        
+	     model.addAttribute("reportMemberList", reportMemberList);
+	     model.addAttribute("selectCriteria", selectCriteria);
+	        
+	     System.out.println("selectCriteria : " + selectCriteria); 
 		
 		return "manager/reportedmentee";
 	}
 	
 	@GetMapping("/reportedboard")
-	public String reportedboard() {
+	public String reportedboard(Model model, @RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage) {
 		
+		Map<String, String> searchMap = new HashMap<>();
+	     searchMap.put("searchCondition", searchCondition);
+	     searchMap.put("searchValue", searchValue);
+	     System.out.println("searchMap : " + searchMap);
+	      
+	     int totalCount = managerService.selectReportClassTotalCount(searchMap);
+	     System.out.println("totalCount : " + totalCount);
+	      
+	     int limit = 10;
+	     int buttonAmount = 5;
+	      
+	     SelectCriteria selectCriteria = null;
+		
+	     if(searchCondition != null && !"".equals(searchCondition)) {
+		      selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		   } else {
+		      selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		   }
+		      
+	     System.out.println("selectCriteria : " + selectCriteria);
+     
+     
+	     List<ReportClassDTO> reportClassList = managerService.selectReportClass(selectCriteria);
+	     System.out.println("reportClassList : " + reportClassList);
+	        
+	     model.addAttribute("reportClassList", reportClassList);
+	     model.addAttribute("selectCriteria", selectCriteria);
+	        
+	     System.out.println("selectCriteria : " + selectCriteria); 
+				
 		return "manager/reportedboard";
 	}
 	

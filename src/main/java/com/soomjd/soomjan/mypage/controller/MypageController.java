@@ -471,5 +471,19 @@ public class MypageController {
 
 		return "mypage/review";
 	}
+	
+	@PostMapping("deleteReview")
+	public String deleteReview(HttpServletRequest request, HttpSession session) {
+		
+		int rvCode = Integer.parseInt(request.getParameter("rvCode"));
+		
+		System.out.println("rvCode : " + rvCode);
+		
+		if(mypageService.deleteReview(rvCode) > 0) {
+			
+		}
+		
+		return "redirect:/mypage/review";
+	}
 
 }

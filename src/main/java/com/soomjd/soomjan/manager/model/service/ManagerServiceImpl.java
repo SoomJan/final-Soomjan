@@ -14,8 +14,10 @@ import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dao.ManagerMapper;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 @Service
@@ -173,6 +175,30 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public List<PurchaseClassDTO> allContent() {
 		return mapper.allContent();
+	}
+
+
+	@Override
+	public int selectReportSsackTotalCount(Map<String, String> searchMap) {
+		return mapper.selectReportSsackTotalCount(searchMap);
+	}
+
+
+	@Override
+	public List<ReportMemberDTO> selectReportMember(SelectCriteria selectCriteria) {
+		return mapper.selectReportMemberList(selectCriteria);
+	}
+
+
+	@Override
+	public List<ReportClassDTO> selectReportClass(SelectCriteria selectCriteria) {
+		return mapper.selectReportClassList(selectCriteria);
+	}
+
+
+	@Override
+	public int selectReportClassTotalCount(Map<String, String> searchMap) {
+		return mapper.selectReportClassTotalCount(searchMap);
 	}
 
 }

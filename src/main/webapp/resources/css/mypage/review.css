@@ -11,3 +11,18 @@ iframe {
     display: none;
   }
   
+#deleteModal {
+    height: 150px;
+    top: 45%;
+    left: 50%;
+    background-color: #91C788;
+}
+
+.titles {text-align: center; font-weight: 700;}
+
+.re-modal-btn {text-align: center;}
+#okbtn {    
+	float: left;
+    margin-left: 30%;
+}
+#xbtn{margin-right: 30%;}

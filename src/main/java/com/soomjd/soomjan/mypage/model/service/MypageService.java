@@ -54,6 +54,8 @@ public interface MypageService {
 
 	int endClass(List<PurchaseClassDTO> endClassList);
 
+	int deleteReview(int rvCode);
+
 
 
 }

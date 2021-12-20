@@ -2,6 +2,8 @@ package com.soomjd.soomjan.member.model.dto;
 
 import java.sql.Date;
 
+import com.soomjd.soomjan.manager.model.dto.ReportStatementDTO;
+
 public class ReportMemberDTO {
 	
 	private String email;
@@ -13,13 +15,14 @@ public class ReportMemberDTO {
 	private int repTypeCode;
 	private String orgImgPath;
 	private char repYn;
-	
 	private String repType;
+	
+	private ReportStatementDTO reportStatementDTO;
 	
 	public ReportMemberDTO() {}
 
 	public ReportMemberDTO(String email, int repCode, String contents, Date repDate, String imgPath, String repEmail,
-			int repTypeCode, String orgImgPath, char repYn, String repType) {
+			int repTypeCode, String orgImgPath, char repYn, String repType, ReportStatementDTO reportStatementDTO) {
 		super();
 		this.email = email;
 		this.repCode = repCode;
@@ -31,6 +34,7 @@ public class ReportMemberDTO {
 		this.orgImgPath = orgImgPath;
 		this.repYn = repYn;
 		this.repType = repType;
+		this.reportStatementDTO = reportStatementDTO;
 	}
 
 	public String getEmail() {
@@ -113,12 +117,23 @@ public class ReportMemberDTO {
 		this.repType = repType;
 	}
 
+	public ReportStatementDTO getReportStatementDTO() {
+		return reportStatementDTO;
+	}
+
+	public void setReportStatementDTO(ReportStatementDTO reportStatementDTO) {
+		this.reportStatementDTO = reportStatementDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "ReportMemberDTO [email=" + email + ", repCode=" + repCode + ", contents=" + contents + ", repDate="
 				+ repDate + ", imgPath=" + imgPath + ", repEmail=" + repEmail + ", repTypeCode=" + repTypeCode
-				+ ", orgImgPath=" + orgImgPath + ", repYn=" + repYn + ", repType=" + repType + "]";
+				+ ", orgImgPath=" + orgImgPath + ", repYn=" + repYn + ", repType=" + repType + ", reportStatementDTO="
+				+ reportStatementDTO + "]";
 	}
 
+	
+	
 	
 }

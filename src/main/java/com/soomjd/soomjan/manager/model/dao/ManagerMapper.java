@@ -8,8 +8,10 @@ import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 public interface ManagerMapper {
@@ -64,5 +66,15 @@ public interface ManagerMapper {
 
 	// 모든 결제 내역 조회(정산 처리용)
 	List<PurchaseClassDTO> allContent();
+
+	// 신고된 멤버 수
+	int selectReportSsackTotalCount(Map<String, String> searchMap);
+
+	// 신고된 멤버 조회
+	List<ReportMemberDTO> selectReportMemberList(SelectCriteria selectCriteria);
+
+	List<ReportClassDTO> selectReportClassList(SelectCriteria selectCriteria);
+
+	int selectReportClassTotalCount(Map<String, String> searchMap);
 	
 }

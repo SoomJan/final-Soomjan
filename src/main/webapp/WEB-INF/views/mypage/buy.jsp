@@ -34,6 +34,7 @@
       .buytable thead tr th {border-bottom: none !important;}
       .buytable tbody tr td {text-align: center; vertical-align : middle;}
       /*.td2 {position: relative; top: 35px;}*/
+      .dropsearch {margin-left: 12%;}
     </style>
 </head>
 <body>

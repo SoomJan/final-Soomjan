@@ -85,6 +85,7 @@
 				</script>
 				<hr>
 				<h2>강의 목차</h2>
+				<br>
 				<c:forEach var="mokcha" items="${ mokchaList }">
 					<p class="contents">
 						${ mokcha.mokchaName }

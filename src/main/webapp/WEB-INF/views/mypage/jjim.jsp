@@ -62,6 +62,8 @@
             top: 40%;
             left: 47%;
           }
+          
+          .dropsearch {margin-left: 12%;}
         </style>
       </head>
 
@@ -96,7 +98,7 @@
   찜한 클래스가 없습니다.<br>
   새로운 클래스를 추가해주세요.
 </div> -->
-            <br><br><br>
+            <br><br><br><br><br>
 
             <c:choose>
                 <c:when test="${ empty jjimList }">

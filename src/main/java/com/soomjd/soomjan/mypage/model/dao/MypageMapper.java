@@ -55,4 +55,6 @@ public interface MypageMapper {
 
 	int endClass(List<PurchaseClassDTO> endClassList);
 
+	int deleteReview(int rvCode);
+
 }

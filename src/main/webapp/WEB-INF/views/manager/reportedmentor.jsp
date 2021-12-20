@@ -10,7 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Signin Template for Bootstrap</title>
+    <title>신고된 잔디 조회</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css"

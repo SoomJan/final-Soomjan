@@ -54,6 +54,8 @@
 	    border: 1px solid #91c788;
 	    border-radius: 1.5rem;
 }
+
+.pagination > li > a { color: white !important;}
 </style>
 <body>
 

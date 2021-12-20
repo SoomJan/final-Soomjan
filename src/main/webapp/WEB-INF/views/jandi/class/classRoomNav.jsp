@@ -58,9 +58,9 @@ table th{
 		}
 	};
 	
-/* 	$(document).on('click', '.menu', function(e){
+/*  	$(document).on('click', '.menu', function(e){
 	    e.preventDefault();  
-	  $(this).css('background-color', 'green');
+	  $(this).css('background-color', '#91c788');
 	   $('.menu').not($(this)).css('background-color', '#fff');
 	}) */
 	
@@ -77,10 +77,10 @@ table th{
 		<!-- 탭 메뉴 상단 시작 -->
 		<table >
 			<tr class="menus">
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom?classCode=${ classCode }" class="room class menu">클래스</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture" class="room lecture menu">강의 영상</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLearningBoard" class="room learning menu">학습방</a></th>
-				<th width="25"><a href="${ pageContext.servletContext.contextPath }/jandi/class/jandiClassChat" class="room classChat menu">채팅</a></th>
+				<th width="25" class="menu"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classRoom?classCode=${ classCode }" class="room class">클래스</a></th>
+				<th width="25" class="menu"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLecture" class="room lecture">강의 영상</a></th>
+				<th width="25" class="menu"><a href="${ pageContext.servletContext.contextPath }/jandi/class/classLearningBoard" class="room learning">학습방</a></th>
+				<th width="25" class="menu"><a href="${ pageContext.servletContext.contextPath }/jandi/class/jandiClassChat" class="room classChat">채팅</a></th>
 			</tr>
 		</table>
 		<br>

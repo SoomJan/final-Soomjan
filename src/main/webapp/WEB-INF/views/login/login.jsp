@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
       rel="stylesheet"
     />
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/login.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/login.css?"
       rel="stylesheet"
     />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
@@ -68,17 +68,17 @@ pageEncoding="UTF-8"%>
                 <input type="password" id="password" name="password" placeholder="비밀번호" />
 				<br><br>
                 <div class="loginbtnGroup">
-                <input id="submit" value="로그인" style="background-color: #91C788;" />
-                <input type="button" value="회원가입" onclick="location.href='${ pageContext.servletContext.contextPath }/member/terms'" style="background-color: lightgray;" />
+                <input type="button" id="submit" value="로그인" style="background-color: #91C788; cursor:pointer;" />
+                <input type="button" value="회원가입" onclick="location.href='${ pageContext.servletContext.contextPath }/member/terms'" style="background-color: lightgray; cursor:pointer;" />
                 </div>
                 <!--  <button>로그인</button> -->
                 <br />
                 <div>
-                  <a href="${ pageContext.servletContext.contextPath }/member/findEmail">이메일찾기</a>
+                  <a href="${ pageContext.servletContext.contextPath }/member/findEmail" style="color: #005E23 !important;">이메일찾기</a>
                   &nbsp;&nbsp;&nbsp;
 <%--                   <a href="${ pageContext.servletContext.contextPath }/member/terms">회원가입</a>
                   &nbsp;&nbsp;&nbsp; --%>
-                  <a href="${ pageContext.servletContext.contextPath }/member/findPwd">비밀번호찾기</a>
+                  <a href="${ pageContext.servletContext.contextPath }/member/findPwd" style="color: #005E23 !important;">비밀번호찾기</a>
                 </div>
               </div>
             </form>
