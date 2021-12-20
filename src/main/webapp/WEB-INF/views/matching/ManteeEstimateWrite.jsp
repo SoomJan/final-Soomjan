@@ -12,6 +12,7 @@
 
 <title>Signin Template for Bootstrap</title>
 
+<link href="css/bootstrap.min.css" rel="stylesheet" />
 
 <link
 	href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css"
@@ -93,13 +94,23 @@
 
 				<div class="write" >
 					<input type="text" value="${ sessionScope.loginMember.email }" name="email" style="display:none">
-						<button type="submit" class="writeBtn">매칭 요청</button>
+						<button type="submit" class="writeBtn"id="matchingbtn">매칭 요청</button>
 				</div>
 				</form>
 			</div>
 
 		</div>
 	</div>
+	
+	<script>
+	 /* 매칭요청 클릭하면 모달 띄워주기 */
+	  $(function(){
+	    $('#matchingbtn').click(function(){
+	      $('#matchingbtnmodal').fadeIn();
+	    }); 
+	  });
+	
+	</script>
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>

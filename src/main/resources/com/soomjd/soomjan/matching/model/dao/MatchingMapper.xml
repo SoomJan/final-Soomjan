@@ -14,12 +14,32 @@
         <result column="CONTENTS" property="contents"/>
         <result column="EMAIL" property="email"/>
         <result column="IS_DELETED" property="isDeleted"/>
+        
+       <!--  <collection property="categoryName" javaType="java.util.ArrayList" resultMap="categoryList" /> -->
     </resultMap>
+   
     
     <resultMap id="categoryList" type="CategoryDTO">
     	<id column="CATEGORY_CODE" property="categoryCode"/>
     	<result column="CATEGORY_NAME" property="categoryName"/>
     </resultMap>
+    
+    
+     <resultMap id="estimateDetailList" type="EstimateDTO">
+        <id column="ESTIMATE_CODE" property="estimateCode"/>
+        <result column="CATEGORY_CODE" property="categoryCode"/>
+        <result column="IS_MATCHED" property="isMatched"/>
+        <result column="WRITE_DATE" property="writeDate"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENTS" property="contents"/>
+        <result column="EMAIL" property="email"/>
+        <result column="IS_DELETED" property="isDeleted"/>
+        
+       <association property="categoryDTO" resultMap="categoryList"/>
+   
+    </resultMap>
+    
+    
     
     <insert id="registEstimate" parameterType="EstimateDTO">
         INSERT
@@ -83,19 +103,60 @@
     </select>
     
     
+    <select id="estimateMainJ" resultMap="estimateList">
+        SELECT
+    		   C.RNUM
+    		 , C.ESTIMATE_CODE
+		     , C.TITLE
+		     , C.IS_MATCHED
+		  FROM (SELECT ROWNUM RNUM
+		   		, B.ESTIMATE_CODE
+		   		, B.TITLE
+		    	, B.IS_MATCHED
+		    	FROM(SELECT 
+		    	     A.ESTIMATE_CODE
+		    	   , A.TITLE
+		    	   , A.IS_MATCHED
+		    	   FROM ESTIMATE_TBL A
+                   ORDER BY A.ESTIMATE_CODE DESC
+                   )B 
+                   <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+              ) C
+              WHERE C.RNUM >= #{ startRow }
+                
+    </select>
+    
+    
     
     <select id="estimateDetail" resultMap="estimateList" >
     	SELECT
-		       ESTIMATE_CODE
-		     , CATEGORY_CODE
-		     , IS_MATCHED
-		     , WRITE_DATE
-		     , TITLE
-		     , CONTENTS
-		  FROM ESTIMATE_TBL
-		 WHERE EMAIL = #{ email } 
-		   AND ESTIMATE_CODE = #{ estimateCode }
+		       E.ESTIMATE_CODE
+		     , E.IS_MATCHED
+		     , E.WRITE_DATE
+		     , E.TITLE
+		     , E.CONTENTS
+		     , E.EMAIL
+		  FROM ESTIMATE_TBL E
+		 WHERE ESTIMATE_CODE = #{ estimateCode }
     </select>
+    
+     <select id="estimateDetailJ" resultMap="estimateDetailList" >
+    	SELECT
+		       E.ESTIMATE_CODE
+		     , C.CATEGORY_NAME
+		     , E.IS_MATCHED
+		     , E.WRITE_DATE
+		     , E.TITLE
+		     , E.CONTENTS
+		     , E.EMAIL
+		  FROM ESTIMATE_TBL E
+		  JOIN CATEGORY_TBL C ON (E.CATEGORY_CODE = C.CATEGORY_CODE)
+		 WHERE ESTIMATE_CODE = #{ estimateCode }
+    </select> 
+    
+    
     
     <select id="selecetMainTotal" resultType="_int">
     
@@ -104,6 +165,14 @@
     	  FROM ESTIMATE_TBL
     	 <!-- WHERE EMAIL = #{ email } -->
     </select>
+    
+    <select id="selecetEstimateTotal" resultType="_int">
+    
+    	SELECT
+    		   COUNT(*)
+    	  FROM ESTIMATE_TBL
+    </select>
+    
     
     <select id="ssackList" resultMap="estimateList">
         SELECT

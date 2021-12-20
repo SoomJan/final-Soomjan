@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,26 +57,13 @@
 
 			<div class="matching-content">
 				
-				<p class="estimate_title">전체 견적서 리스트</p>
+				<p class="estimate_title">채팅 리스트</p>
 					<div class="search">
 						<select id="search_category_cb" name="search_category">
 							<option value="">선택하세요.</option>
-								<option value="개발 · 프로그래밍">개발 · 프로그래밍</option>
-								<option value="웹 개발">웹 개발</option>
-								<option value="프론트엔드">프론트엔드</option>
-								<option value="백엔드">백엔드</option>
-								<option value="풀스택">풀스택</option>
-								<option value="모바일">모바일</option>
-								<option value="앱개발">앱개발</option>
-								<option value="언어 알고리즘">언어 알고리즘</option>
-								<option value="자료구조">자료구조</option>
-								<option value="데이터 사이언스">데이터 사이언스</option>
-								<option value="데이터베이스">데이터베이스</option>
-								<option value="개발 도구 데브옵스">개발 도구 데브옵스</option>
-								<option value="인프라 게임">인프라 게임</option>
-								<option value="개발 임베디드">개발 임베디드</option>
-								<option value="IoT 데스크톱">IoT 데스크톱</option>
-								<option value="앱 개발 교양 · 기타">앱 개발 교양 · 기타</option>
+								<c:forEach var="category" items="${categoryList}" >
+									<option value="${category.categoryCode}">${category.categoryName}</option>
+								</c:forEach>
 						</select>
 						
 						<input id="search_area" type="text" value="">
@@ -140,9 +128,9 @@
 				</div>
 				
 				
-				<div class="back">
+				<!-- <div class="back">
 					<button class="backBtn">목록으로</button>
-				</div>
+				</div> -->
 
 				<div class="write">
 					<button class="writeBtn">매칭 요청</button>

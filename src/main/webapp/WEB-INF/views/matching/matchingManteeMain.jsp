@@ -62,7 +62,7 @@ main { width: 90% !important;}
 
 			<div class="matching-content">
 				<div class="request-list">
-					<p class="explain">전체 견적 요청</p>
+					<p class="explain">견적서 현황</p>
 					<div id="allrequest">
 						<table style="width: 100%" class="estimateList">
 						

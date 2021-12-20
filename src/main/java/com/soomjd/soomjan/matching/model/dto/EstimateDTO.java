@@ -12,12 +12,13 @@ public class EstimateDTO {
 	private String contents;
 	private String email;
 	private char isDeleted;
+	private CategoryDTO categoryDTO;
 	
 	public EstimateDTO() {
 	}
 
 	public EstimateDTO(int estimateCode, int categoryCode, char isMatched, Date writeDate, String title,
-			String contents, String email, char isDeleted) {
+			String contents, String email, char isDeleted, CategoryDTO categoryDTO) {
 		super();
 		this.estimateCode = estimateCode;
 		this.categoryCode = categoryCode;
@@ -27,6 +28,7 @@ public class EstimateDTO {
 		this.contents = contents;
 		this.email = email;
 		this.isDeleted = isDeleted;
+		this.categoryDTO = categoryDTO;
 	}
 
 	public int getEstimateCode() {
@@ -93,12 +95,21 @@ public class EstimateDTO {
 		this.isDeleted = isDeleted;
 	}
 
+	public CategoryDTO getCategoryDTO() {
+		return categoryDTO;
+	}
+
+	public void setCategoryDTO(CategoryDTO categoryDTO) {
+		this.categoryDTO = categoryDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "EstimateDTO [estimateCode=" + estimateCode + ", categoryCode=" + categoryCode + ", isMatched="
 				+ isMatched + ", writeDate=" + writeDate + ", title=" + title + ", contents=" + contents + ", email="
-				+ email + ", isDeleted=" + isDeleted + "]";
+				+ email + ", isDeleted=" + isDeleted + ", categoryDTO=" + categoryDTO + "]";
 	}
+
 	
 	
 
