@@ -88,9 +88,16 @@ public class MatchingServiceImpl implements MatchingService{
 
 
 	@Override
-	public MatchedChattingDTO selectChattingRoom(String estimateCode) {
+	public MatchedChattingDTO selectChattingRoom(MatchedChattingDTO matchedChatting) {
 		
-		return mapper.matchedChatting(estimateCode);
+		return mapper.matchedChatting(matchedChatting);
+	}
+
+
+	@Override
+	public boolean registChattingRoom(Map<String, Object> matchedChatMap) {
+		
+		return mapper.registChattingRoom(matchedChatMap);
 	}
 
 //

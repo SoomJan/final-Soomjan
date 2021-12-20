@@ -35,7 +35,10 @@ public interface MatchingService {
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
 
 	// 잔디가 매칭하기 누르면 매칭된 이력 있는지 확인하기
-	MatchedChattingDTO selectChattingRoom(String estimateCode);
+	MatchedChattingDTO selectChattingRoom(MatchedChattingDTO matchedChatting);
+
+	// 채팅룸이 안만들어지면 
+	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 
 
 }

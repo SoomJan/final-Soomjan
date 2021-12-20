@@ -1,6 +1,10 @@
 package com.soomjd.soomjan.matching.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -178,11 +182,35 @@ public class MacthingSsackMainController {
 	
 	// 채팅하기 누르면 나오는 페이지
 	@GetMapping("/chatting")
-	public String chatting(@RequestParam("estimateCode") String estimateCode) {
+	public String chatting(Model model, @RequestParam("estimateCode") int estimateCode, @RequestParam("email")String email , HttpSession session) {
 		
-		MatchedChattingDTO chatting = matchingService.selectChattingRoom(estimateCode);
+		MatchedChattingDTO matchedChatting = new MatchedChattingDTO();
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		matchedChatting.setEstimateCode(estimateCode);
+		matchedChatting.setEmail(member.getEmail());
+		
+		MatchedChattingDTO chatting = matchingService.selectChattingRoom(matchedChatting);
 		
 		System.out.println(chatting);
+		
+		if(chatting == null) {
+			
+			Map<String,Object> matchedChatMap = new HashMap<String, Object>();
+			matchedChatMap.put("matchedChatting", matchedChatting);
+			matchedChatMap.put("writeEmail",email);
+			
+			if(matchingService.registChattingRoom(matchedChatMap)) {
+				
+				chatting = matchingService.selectChattingRoom(matchedChatting);
+				
+			} else {
+				System.out.println("실패");
+			}
+			
+			
+		}
+		
+		model.addAttribute("chatting",chatting);
 		
 		return "matching/ManteeChatting";
 	}

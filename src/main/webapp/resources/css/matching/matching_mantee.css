@@ -376,27 +376,6 @@
 	height: 40px;
 }
 
-.manager-paging {
-	width: 50%;
-	margin: 0 auto;
-	height: 50px;
-	/*   border: 1px solid blue; */
-}
-
-.manager-paging ul {
-	display: inline-block;
-	list-style-type: none;
-	text-align: center;
-}
-
-.manager-paging li {
-	float: left;
-	padding: 5px 10px;
-	margin: 0 10px;
-	background-color: #91c788;
-	border-radius: 400px;
-	text-decoration: none;
-}
 
 .name {
 	font-size: 23px;

@@ -1,5 +1,7 @@
 package com.soomjd.soomjan.matching.model.dto;
 
+import java.util.Map;
+
 public class MatchedChattingDTO {
 	
 	private int matchedCode;
@@ -45,6 +47,8 @@ public class MatchedChattingDTO {
 		return "MatchedChattingDTO [matchedCode=" + matchedCode + ", estimateCode=" + estimateCode + ", email=" + email
 				+ "]";
 	}
+
+	
 	
 	
 	

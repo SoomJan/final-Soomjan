@@ -31,5 +31,7 @@ public interface MatchingMapper {
 
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
 
-	MatchedChattingDTO matchedChatting(String estimateCode);
+	MatchedChattingDTO matchedChatting(MatchedChattingDTO matchedChatting);
+
+	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 }

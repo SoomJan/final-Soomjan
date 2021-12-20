@@ -91,6 +91,216 @@ img {
 
 </style>
 </head>
+<script src="http://125.132.252.115:3000/socket.io/socket.io.js"></script>
+<script>
+
+	function getFormatDate(chat_date){
+		let year = chat_date.getFullYear() 
+		let month = chat_date.getMonth() + 1;
+		month = month < 10 ? '0' + month :  month;
+		
+		let date = chat_date.getDate();
+		date = date < 10 ? '0' + date :  date;
+		
+		let hour = chat_date.getHours();
+		hour = hour < 10 ? '0' + hour :  hour;
+		
+		let minutes = chat_date.getMinutes();
+		minutes = minutes < 10 ? '0' + minutes :  minutes;
+		
+		return year + "-" + month + "-" + date + " " + hour + ":" + minutes;
+	}
+
+	function addSenderBox(chat){
+		let $senderBox = 
+			"<div class='senderBox' align='right'><b class='chatName'>"
+			+ "나"
+			+"</b><br><div class='messageBox sender'>" 
+			+ chat.chat_contents 
+			+ "</div><div class='chatDate' >"
+			+ chat.chat_date
+			+ "</div></div><br>";
+			
+			$('.chatRight').append($senderBox);
+	};
+	
+	function addReceiveBox(chat){
+		let $receiverBox = 
+			"<div class='receiverBox'><b class='chatName'>"
+			+ chat.nickName 
+			+ "</b><br><div class='messageBox'>"
+			+ chat.chat_contents
+			+ "</div><div class='chatDate'>"
+			+ chat.chat_date
+			+ "</div></div><br>";
+			
+			$('.chatRight').append($receiverBox);
+	};
+	
+	$(function(){
+		
+		const email = "${ sessionScope.loginMember.email }";
+		const matched_code = ${ chatting.matchedCode };
+		// 테스트 채팅방 정보 
+		let chatInfo = {
+			email: email,
+			matched_code: matched_code
+		};
+		
+		let socket = io("http://125.132.252.115:3000/matchedChat");
+		
+		socket.emit("chat_info", chatInfo);
+		
+		console.log(chatInfo);
+		
+		// 채팅 이력 불러오기
+		socket.on("receive_msg", function(chat_log){
+			console.log(chat_log);
+			for(const chat of chat_log){
+				if(chat.email === chatInfo.email){
+					addSenderBox(chat);
+				}else {
+					addReceiveBox(chat);
+				}
+				
+				$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
+			}
+		});
+		
+		socket.on("connect_user", function(chatInfo){
+			console.log(chatInfo.email);
+		});
+		
+		//키보드를  뗐을 떄
+		$('#msg').keyup(function(key){
+			if(key.keyCode==13 && !key.shiftKey){
+				// 시프트 엔터가 아닌 경우
+				$('#sendBtn').click();
+			}
+		});
+		
+		// 포커스  인
+		$('#msg').focusin(function(key){
+			socket.emit("typing", chatInfo);
+		});
+		
+		// 포커스  아웃
+		$('#msg').focusout(function(key){
+			socket.emit("non-typing", chatInfo);
+		});
+		
+		$('#sendBtn').click(function(){
+			
+			if($('#msg').val() != ''){
+				// CLASS_CHAT에 저장
+		        let chat = {
+		            nickName: '${ sessionScope.loginMember.nickName }',
+		            email: email,
+		            chat_contents: $('#msg').val().replace(/\n/g, "<br>"),
+		            matched_code: matched_code,
+		            chat_date: getFormatDate(new Date())
+		        };
+				
+				console.log(chat);
+				
+				socket.emit("send_msg", chat);
+				
+				$('#msg').val('');
+				
+			}
+		});
+		
+		socket.on('send_msg', function(chat){
+			
+			if(chat.email === chatInfo.email){
+				addSenderBox(chat);
+			}else {
+				addReceiveBox(chat);
+			}
+			//스크롤 맨 아래 감지
+			$('.chatRight').scrollTop($('.chatRight').prop('scrollHeight'));
+		});
+		
+		// 타이핑 중인지 띄우기
+		socket.on('typing', function(typingEmail){
+			if(typingEmail != email){
+				$('#typingDiv').css('display', 'block');
+			}
+		});
+		
+		// 타이핑 중인지 띄우기
+		socket.on('non-typing', function(typingEmail){
+			if(typingEmail != email){
+				$('#typingDiv').css('display', 'none');
+			}
+		});
+		
+		// 사진 전송
+		$('#sendImgBtn').click(function(){
+			if($("#sendFile").val() == ""){
+				alert("이미지를 선택해 주세요.");
+			}else{
+				
+				let formData = new FormData($('#chatFileForm')[0]);
+				formData.append("sendFile", $("#sendFile").val());
+	
+				$.ajax({
+					type: 'post',
+					enctype: 'multipart/form-data',
+					processData: false,
+					contentType: false,
+					cache: false,
+					url: "${pageContext.servletContext.contextPath }/mypage/class/chatFileUpload",
+					data: formData,
+					dataType : "json",
+					success: function(chatFileMap){
+						console.log(chatFileMap.savedName);
+						console.log(chatFileMap.ext);
+						console.log(chatFileMap.originFileName);
+						
+						let img_contents = "<img class='classImg'" 
+							+ "src='${ pageContext.servletContext.contextPath }/resources/uploadFiles/chatFile/"
+							+ chatFileMap.savedName + "'> <br>"
+							+ "<a href='${pageContext.servletContext.contextPath }/mypage/member/classChat/download?filePath=/uploadFiles/chatFile/"
+							+ chatFileMap.savedName + "&fileName=" + chatFileMap.originFileName + "'>이미지 저장</a>";
+						
+						let chat = {
+					            nickName: '${ sessionScope.jandi.nickName }',
+					            email: chatInfo.email,
+					            chat_contents: img_contents,
+					            matched_code: chatInfo.matched_code,
+					            chat_date: getFormatDate(new Date()),
+					           	is_file: 'Y'
+					        };
+							
+						console.log(chat);
+						
+						socket.emit("send_msg", chat);
+						$("#sendFile").val() == "";
+					},
+					error: function(err){
+						console.log(err);
+					}
+					
+				});	//ajax 끝
+				$('#closeBtn').click();
+			}	//if-else 끝
+			
+		});	//사진 전송 버튼 클릭 이벤트 끝
+		
+		
+		// 신고 전송
+		$('#reportModalBtn').click(function(){
+			$('#reportModalForm').submit();
+		});	
+		
+		if('${ requestScope.reportSuccessMessage }' != ''){
+			alert('${ requestScope.reportSuccessMessage }');
+		}
+		
+	});
+		
+</script>
 <body>
 	<jsp:include page="../common/nav.jsp" />
 

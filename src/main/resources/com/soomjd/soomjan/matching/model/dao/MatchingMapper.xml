@@ -170,6 +170,7 @@
 		     , E.TITLE
 		     , E.CONTENTS
 		     , S.NICKNAME
+		     , E.EMAIL
 		  FROM ESTIMATE_TBL E
 		  JOIN CATEGORY_TBL C ON (E.CATEGORY_CODE = C.CATEGORY_CODE)
 		  JOIN SSACK_TBL S ON (E.EMAIL = S.EMAIL)
@@ -220,14 +221,30 @@
                 
     </select>
     
-    <select id="matchedChatting" resultMap="matchedChatting">
+    <select id="matchedChatting" resultMap="matchedChatting" parameterType="MatchedChattingDTO">
     	SELECT
     		   MATCHED_CODE
     	  FROM MATCHED_TBL
-     	 WHERE ESTIMATE_CODE = #{estimateCode}
+     	 WHERE ESTIMATE_CODE = #{ estimateCode }
      	   AND EMAIL = #{email}
     
     </select>
+    
+    <insert id="registChattingRoom" parameterType="hashmap">
+    	INSERT ALL 
+         INTO MATCHED_TBL VALUES(
+         SEQ_MATCHED_TBL.NEXTVAL,
+         #{ matchedChatting.estimateCode },
+         #{ matchedChatting.email }
+         )
+         INTO MATCHED_TBL VALUES(
+         SEQ_MATCHED_TBL.CURRVAL,
+         #{ matchedChatting.estimateCode },
+         #{ writeEmail }
+         )SELECT * 
+          FROM DUAL
+    	
+    </insert>
     
     
 
