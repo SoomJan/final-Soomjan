@@ -183,6 +183,7 @@
 		  FROM (SELECT ROWNUM RNUM
 		                    , V.*
 		          FROM (SELECT A.END_DATE
+		                     , A.PAY_CODE
 				             , B.TITLE
 				             , B.CLASS_CODE
 		                     , C.CATEGORY_NAME
@@ -559,6 +560,15 @@
 		UPDATE CLASS_REVIEW_TBL
 		   SET IS_DELETED = 'Y'
 		 WHERE REVIEW_CODE = #{ rvCode }
+	</update>
+	
+    <update id="endClass" parameterType="PurchaseClassDTO">
+	    UPDATE PURCHASE_CLASS_TBL A 
+	       SET A.STATUS = 'N'
+		 WHERE A.PAY_CODE IN 
+		   <foreach collection="list" item="endClassList" open="(" separator=", " close=")">
+         	 #{ endClassList.payCode }
+          </foreach>
 	</update>
 
 </mapper>

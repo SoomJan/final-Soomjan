@@ -11,20 +11,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.soomjd.soomjan.member.model.service.MemberService;
+
 @Controller
-@RequestMapping("/sendMail")
+@RequestMapping("/member/sendMail/*")
 public class SendMailController {
 
 	private final JavaMailSender mailSender;
+	private final MemberService memberService;
 
 	@Autowired
-	public SendMailController(JavaMailSender mailSender) {
+	public SendMailController(JavaMailSender mailSender, MemberService memberService) {
 		this.mailSender = mailSender;
+		this.memberService = memberService;
 	}
 
-	@PostMapping
+	@PostMapping("join")
 	public void sendMail(@RequestParam("email") String email, HttpServletResponse response) {
-
+		
+		System.out.println("메소드 넘어옴");
+		
 		String authNum = SendMailController.authNum();
 		String subject = "숨은 잔디 인증 번호입니다.";
 		String content = "인증 번호 ["+ authNum +"]";
@@ -54,14 +60,20 @@ public class SendMailController {
 			 * 단순한 텍스트만 사용하신다면 다음의 코드를 사용하셔도 됩니다. mailHelper.setText(content);
 			 */
 
-			mailSender.send(mail);
-			
-			response.getWriter().write(authNum);
+			boolean mailCheckInsert = memberService.mailCheckInsert(authNum);
+			if(mailCheckInsert) {
+				/* 이메일 전송 */
+				mailSender.send(mail);
+				
+				response.getWriter().write("true");
+			} else {
+				response.getWriter().write("false");
+			}
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
+		
 
 	}
 

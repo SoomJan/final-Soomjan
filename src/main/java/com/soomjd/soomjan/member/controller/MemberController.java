@@ -89,6 +89,24 @@ public class MemberController {
 		}
 	}
 	
+	@PostMapping("mailCheck")
+	public void mailCheck(HttpServletResponse response, @RequestParam("number") String number) throws IOException {
+		
+		System.out.println("사용자가 입력한 인증 번호 : " + number);
+		
+		int trueNumber = memberService.numberCheck();
+		System.out.println("trueNumber : " + trueNumber);
+		
+		int number2 = Integer.parseInt(number);
+		
+		if(number2 == trueNumber) {
+			response.getWriter().write("true");
+		} else {
+			response.getWriter().write("false");
+		}
+		
+	}
+	
 	@PostMapping("nickDupCheck")
 	public void nickDupCheck(HttpServletResponse response, @RequestParam("nickName") String nickName) throws IOException {
 		

@@ -147,5 +147,34 @@
     	   SET SS.IS_JANDI = 'Y'
     	 WHERE SS.EMAIL = #{ email }
     </update>
+    
+    <insert id="mailCheckInsert" parameterType="java.lang.String">
+        INSERT
+		  INTO EMAIL_CHECK_TBL 
+		(
+		  CHECK_CODE
+		, EMAIL
+		, CHECK_NUMBER
+		)
+		VALUES
+		(
+		  SEQ_MAIL_CHECK_TBL.NEXTVAL
+		, NULL
+		, #{ value }
+		)
+    </insert>
+    
+    <select id="numberCheck" resultType="_int">
+        SELECT V2.RNUM
+		     , V2.*
+		  FROM (SELECT ROWNUM RNUM
+		             , V.*
+		          FROM (SELECT CHECK_NUMBER
+		                  FROM EMAIL_CHECK_TBL 
+		                 ORDER BY CHECK_CODE DESC
+		               )V
+		       )V2
+		 WHERE V2.RNUM <![CDATA[ < ]]> 2
+    </select>
 
 </mapper>

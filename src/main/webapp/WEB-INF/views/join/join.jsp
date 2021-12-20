@@ -92,7 +92,6 @@ pageEncoding="UTF-8"%>
         <div class="content">
           <div class="title">인증번호</div>
           <input type="text" name="proof" id="proof">
-          <input type="text" id="proof2" style="display: none;">
           <div class="proofCheck"></div>
           <input type="checkbox" id="proofBoolean" style="display: none" />
         </div>
@@ -206,17 +205,16 @@ pageEncoding="UTF-8"%>
             let email = $("#email").val();
 
             $.ajax({
-              url: "${ pageContext.servletContext.contextPath }/sendMail",
+              url: "${ pageContext.servletContext.contextPath }/member/sendMail/join",
               type: "post",
               data: {email : email},
               success: function(data) {
-                if(!data) {
-                  showModal("이메일 전송 실패");
-                  $("#emailBoolean3").prop("checked", false);
-                } else {
-                  showModal("이메일 전송 완료");
-                  $("#proof2").val(data);
+                if(data == "true") {
+                  showModal("이메일이 전송되었습니다.");
                   $("#emailBoolean3").prop("checked", true);
+                } else {
+                  showModal("이메일 전송에 실패하였습니다.");
+                  $("#emailBoolean3").prop("checked", false);
                 }
               },
               error: function(error) {
@@ -230,21 +228,43 @@ pageEncoding="UTF-8"%>
           $(function(){
             $("#proof").keyup(function(){
 
-              let num1 = $(this).val();
-              let num2 = $("#proof2").val();
+              let number = $(this).val();
 
-              if(num1 == num2) {
-                $(".proofCheck").html("인증 번호가 일치합니다.")
-                .css("color", "blue");
-                $(this).focus().css("background", "palegreen");
-              $("#proofBoolean").prop("checked", true);
-              } else {
-                $(".proofCheck")
-                .html("인증 번호가 일치하지 않습니다.")
-                .css("color", "red");
-              $(this).focus().css("background", "lightpink");
-              $("#proofBoolean").prop("checked", false);
-              }
+              $.ajax({
+                url: "${ pageContext.servletContext.contextPath }/member/mailCheck",
+                type: "post",
+                data: { number : number },
+                success: function(data) {
+                  if(data == "true") {
+                    $(".proofCheck").html("인증 번호가 일치합니다.")
+                    .css("color", "blue");
+                    $(this).focus().css("background", "palegreen");
+                    $("#proofBoolean").prop("checked", true);
+                  } else {
+                    $(".proofCheck")
+                    .html("인증 번호가 일치하지 않습니다.")
+                    .css("color", "red");
+                    $(this).focus().css("background", "lightpink");
+                    $("#proofBoolean").prop("checked", false);
+                  }
+                },
+                error: function(error) {
+                  console.log(error);
+                }
+              });
+
+              // if(num1 == num2) {
+              //   $(".proofCheck").html("인증 번호가 일치합니다.")
+              //   .css("color", "blue");
+              //   $(this).focus().css("background", "palegreen");
+              // $("#proofBoolean").prop("checked", true);
+              // } else {
+              //   $(".proofCheck")
+              //   .html("인증 번호가 일치하지 않습니다.")
+              //   .css("color", "red");
+              // $(this).focus().css("background", "lightpink");
+              // $("#proofBoolean").prop("checked", false);
+              // }
             });
           });
           
