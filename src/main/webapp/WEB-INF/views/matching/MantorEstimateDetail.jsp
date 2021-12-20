@@ -104,7 +104,9 @@
 				<form action="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email }">
 					<input type="submit" value="목록으로" class="backBtn">
 				</form>
+					<a href="${ pageContext.servletContext.contextPath }/matching/chatting?estimateCode=${estimateDetail[0].estimateCode}">
 					<input type="submit" value="채팅하기" class="chatBtn" id="chatBtn">
+					</a>
 				</div>
 				
 				

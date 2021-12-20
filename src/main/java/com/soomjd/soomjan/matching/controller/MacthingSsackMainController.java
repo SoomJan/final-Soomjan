@@ -2,8 +2,6 @@ package com.soomjd.soomjan.matching.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +19,7 @@ import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.matching.model.dto.MatchedChattingDTO;
 import com.soomjd.soomjan.matching.model.service.MatchingService;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
@@ -176,4 +175,16 @@ public class MacthingSsackMainController {
 		
 		return "matching/MantorChatMain";
 	}
+	
+	// 채팅하기 누르면 나오는 페이지
+	@GetMapping("/chatting")
+	public String chatting(@RequestParam("estimateCode") String estimateCode) {
+		
+		MatchedChattingDTO chatting = matchingService.selectChattingRoom(estimateCode);
+		
+		System.out.println(chatting);
+		
+		return "matching/ManteeChatting";
+	}
+	
 }

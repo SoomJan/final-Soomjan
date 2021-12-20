@@ -47,6 +47,14 @@
     	<result column="NICKNAME" property="nickName"/>	
     </resultMap>
     
+    <!-- 매칭 채팅방 정보 -->
+    <resultMap id="matchedChatting" type="MatchedChattingDTO">
+    	<id column="MATCHED_CODE" property="matchedCode"/>
+    	<result column="ESTIMATE_CODE" property="estimateCode"/>
+    	<result column="EMAIL" property="email"/>
+    	
+    </resultMap>
+    
     
     <insert id="registEstimate" parameterType="EstimateDTO">
         INSERT
@@ -210,10 +218,16 @@
               ) C
               WHERE C.RNUM >= #{ startRow }
                 
-                   
-    
     </select>
     
+    <select id="matchedChatting" resultMap="matchedChatting">
+    	SELECT
+    		   MATCHED_CODE
+    	  FROM MATCHED_TBL
+     	 WHERE ESTIMATE_CODE = #{estimateCode}
+     	   AND EMAIL = #{email}
+    
+    </select>
     
     
 

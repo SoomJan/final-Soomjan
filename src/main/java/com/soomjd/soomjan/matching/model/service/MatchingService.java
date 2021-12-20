@@ -6,6 +6,7 @@ import java.util.Map;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.matching.model.dto.MatchedChattingDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MatchingService {
@@ -32,6 +33,9 @@ public interface MatchingService {
 
 	// 전체 견적서 리스트(잔디) 가져오기
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
+
+	// 잔디가 매칭하기 누르면 매칭된 이력 있는지 확인하기
+	MatchedChattingDTO selectChattingRoom(String estimateCode);
 
 
 }
