@@ -220,11 +220,11 @@
 	
 	</select>
 	
-	<update id="insertAdDate">
+	<update id="updateAdDate">
 		UPDATE
 			   AD_TBL
 		   SET START_DATE=#{ selectedDate }
-		 WHERE AD_CODE=#{adCode}  	   
+		 WHERE AD_CODE=#{ adCode }  	   
 	
 	</update>
 	

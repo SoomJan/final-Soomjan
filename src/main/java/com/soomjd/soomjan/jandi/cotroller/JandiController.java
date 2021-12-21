@@ -670,6 +670,8 @@ public class JandiController {
 		
 		model.addAttribute("myAd", myAd);
 		
+		System.out.println("/////////////////////////////////////////////myAd : "+myAd);
+		
 		
 		ClassDTO myClasses= null;
 		for(int i=0; i<classes.size();i++) {
@@ -692,10 +694,14 @@ public class JandiController {
 	
 	
 	@PostMapping("jandiPay")
+	@ResponseBody
 	public String jandiPay(@RequestBody HashMap<String, String> map, Model model) {
 
 		String selectedDate = map.get("selectedDate");
-		String adCode= map.get("adCode");		
+		String adCode= map.get("adCode");	
+		
+		System.out.println("selectedDate : "+selectedDate);
+		System.out.println("adCode : "+adCode);
 		
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -707,13 +713,13 @@ public class JandiController {
 			String parameter="cid=TC0ONETIME"
 							+"&partner_order_id=partner_order_id"
 							+"&partner_user_id=partner_user_id"
-							+"&item_name=광"
+							+"&item_name=광고"
 							+"&quantity=1"
 							+"&total_amount=10"
 							+"&tax_free_amount=0"
-							+"&approval_url=http://localhost:8888/soomjan/jandi/myAd"
-							+"&cancel_url=http://localhost:8888/soomjan/jandi/failedPage"
-							+"&fail_url=http://localhost:8888/soomjan/jandi/failedPage";
+							+"&approval_url=http://localhost:8585/soomjan/jandi/myAd"
+							+"&cancel_url=http://localhost:8585/soomjan/jandi/failedPage"
+							+"&fail_url=http://localhost:8585/soomjan/jandi/failedPage";
 			OutputStream out = serverAddress.getOutputStream();
 			DataOutputStream dataOut= new DataOutputStream(out);
 			
@@ -755,7 +761,7 @@ public class JandiController {
 					return bReader.readLine();
 				}else {
 					model.addAttribute("message", "결제에 실패하였습니");
-					return "/jandi/failedPage";
+					return "jandi/failedPage";
 				}
 				
 			}

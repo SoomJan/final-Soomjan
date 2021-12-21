@@ -75,7 +75,7 @@ table {
 					</tr>
 					<tr>
 						<td style="width:30%">원하는 광고 시작날짜</td>
-						<td style="width:70%"><input type="week" name="selectedDate"></td>
+						<td style="width:70%"><input type="week" id="selectedDate"></td>
 					</tr>
 					<tr>
 						<td style="width:30%">광고료</td>
@@ -89,23 +89,24 @@ table {
 		</div>
 		<script type="text/javascript">
 		
-			let selectedDate = $('#dateForm').startDate.val();
-			let contents=${ myClasses.contents};
+			let selectedDate = $('#selectedDate').val();
 			let adCode=$('#adCode').val();
 			
-			let insertData={"selectedDate" : selectedDate, "adCode" : adCode}
+			let insertData={selectedDate:selectedDate,adCode:adCode}
 			
 			$(function(){
 				$('#kakao-pay').click(function(){
 					$.ajax({
-						url:"jandiPay",
-						dataType:"JSON",
+						type:"POST",
+						async: async,
+						url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
+						dataType:"json",
 						data:JSON.stringify(insertDate),
-						contentType: "application/json",
+						contentType: 'application/json',
 						success:function(data){
-							alert("결제가 완료되었습니다.",tid);
+							alert("결제가 완료되었습니다.");
 							
-							var box=resp.next_redirect_pc_url;
+							var box=data.next_redirect_pc_url;
 							window.open(box);
 							
 						},
