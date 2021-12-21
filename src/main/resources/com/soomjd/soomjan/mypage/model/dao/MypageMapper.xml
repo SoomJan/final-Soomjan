@@ -357,6 +357,7 @@
 		  , IS_DELETED
 		  , CLASS_CODE
 		  , EMAIL
+		  , CLASS_PURC_CODE
 		)
 		VALUES
 		(
@@ -367,6 +368,7 @@
 		  , 'N'
 		  , #{ classCode }
 		  , #{ email }
+		  , #{ classPurcCode }
 		)
 	</insert>
 	
@@ -500,6 +502,7 @@
 		       COUNT(*)
 		  FROM CLASS_REVIEW_TBL
 		 WHERE EMAIL = #{ email }
+		   AND IS_DELETED = 'N'
 	</select>
 	
 	<select id="selectReviewList" resultType="hashmap">
@@ -562,7 +565,8 @@
 	
 	<update id="deleteReview">
 		UPDATE CLASS_REVIEW_TBL
-		   SET IS_DELETED = 'Y'
+		   SET IS_DELETED = NULL
+		     , REVIEW_CODE = NULL
 		 WHERE REVIEW_CODE = #{ rvCode }
 	</update>
 	

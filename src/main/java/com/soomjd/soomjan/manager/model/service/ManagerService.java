@@ -84,4 +84,8 @@ public interface ManagerService {
 
 	ReportMemberDTO selectRepMember(int repCode);
 
+	int modifyConfirmMember(ReportMemberDTO repMember);
+
+	int modifySendbackMember(ReportMemberDTO repMember);
+
 }

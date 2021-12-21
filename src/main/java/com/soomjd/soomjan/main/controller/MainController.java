@@ -50,13 +50,20 @@ public class MainController {
 		//뷰가 가장 많은 강의
 		List <ClassDTO> viewClass = mainService.viewClass();
 		
+		System.out.print(viewClass);
+		
 		// 가장 최근에 나온 강의
 		List <ClassDTO> latestClass= mainService.latestClass();
+		
+		// 곧 마감될 강의
+		List <ClassDTO> almostfinish = mainService.almostfinish();
 		
 		model.addAttribute("class2", class2);	
 		model.addAttribute("jandi", jandi);	
 		model.addAttribute("viewClass", viewClass);	
 		model.addAttribute("latestClass", latestClass);	
+		model.addAttribute("almostfinish", almostfinish);	
+		
 		
 		return "main/main";
 	}

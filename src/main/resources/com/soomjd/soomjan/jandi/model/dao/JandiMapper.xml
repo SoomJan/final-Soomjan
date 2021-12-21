@@ -220,14 +220,25 @@
 	
 	</select>
 	
-	<update id="insertAdDate">
+	<update id="updateAdDate">
 		UPDATE
 			   AD_TBL
-		   SET START_DATE=#{ selectedDate }
-		 WHERE AD_CODE=#{adCode}  	   
+		   SET START_DATE=SYSDATE+1
+		 WHERE AD_CODE=#{ adCode }  	   
 	
 	</update>
 	
+	<update id="modifyNickName">
+		UPDATE JANDI_TBL
+		   SET NICKNAME = #{ nickName }
+		 WHERE EMAIL = #{ email }
+	</update>
+	
+	<select id="selectNickDupCheck" resultType="_int">
+		SELECT COUNT(EMAIL)
+		FROM JANDI_TBL
+		WHERE NICKNAME = #{ nickName }
+	</select>
 	
 
 </mapper>

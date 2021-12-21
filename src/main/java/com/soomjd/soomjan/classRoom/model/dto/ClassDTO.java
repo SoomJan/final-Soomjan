@@ -22,7 +22,9 @@ public class ClassDTO {
 	private String filePath;
 	private String orgFilePath;
 	private String isDeleted;
+	private Double avgReview;
 	private JandiDTO jandiDTO;
+	private ClassPurchaseDTO classPurchaseDTO;
 	
 	public ClassDTO() {	}
 	
@@ -34,9 +36,19 @@ public class ClassDTO {
 		this.categoryCode = categoryCode;
 	}
 
+	
+
+	public Double getAvgReview() {
+		return avgReview;
+	}
+
+	public void setAvgReview(Double avgReview) {
+		this.avgReview = avgReview;
+	}
+
 	public ClassDTO(int classCode, Date createDate, String contents, String tag, int categoryCode, String email,
 			String boardType, int views, int maxCount, String nickName, String title, int price, String filePath,
-			String orgFilePath, String isDeleted, JandiDTO jandiDTO) {
+			String orgFilePath, String isDeleted, Double avgReview, JandiDTO jandiDTO, ClassPurchaseDTO classPurchaseDTO) {
 		super();
 		this.classCode = classCode;
 		this.createDate = createDate;
@@ -53,7 +65,9 @@ public class ClassDTO {
 		this.filePath = filePath;
 		this.orgFilePath = orgFilePath;
 		this.isDeleted = isDeleted;
+		this.avgReview = avgReview;
 		this.jandiDTO = jandiDTO;
+		this.classPurchaseDTO = classPurchaseDTO;
 	}
 
 	public int getClassCode() {
@@ -184,21 +198,25 @@ public class ClassDTO {
 		this.jandiDTO = jandiDTO;
 	}
 
+	public ClassPurchaseDTO getClassPurchaseDTO() {
+		return classPurchaseDTO;
+	}
+
+	public void setClassPurchaseDTO(ClassPurchaseDTO classPurchaseDTO) {
+		this.classPurchaseDTO = classPurchaseDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "ClassDTO [classCode=" + classCode + ", createDate=" + createDate + ", contents=" + contents + ", tag="
 				+ tag + ", categoryCode=" + categoryCode + ", email=" + email + ", boardType=" + boardType + ", views="
 				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price=" + price
-				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath + ", isDeleted=" + isDeleted + ", jandiDTO="
-				+ jandiDTO + "]";
+				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath + ", isDeleted=" + isDeleted
+				+ ", avgReview=" + avgReview + ", jandiDTO=" + jandiDTO + ", classPurchaseDTO=" + classPurchaseDTO
+				+ "]";
 	}
 
-	
-	
-	
-	
-	
-	
+
 	
 
 }

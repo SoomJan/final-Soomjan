@@ -99,5 +99,15 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.updateAdDate(key);
 	}
 
+	@Override
+	public boolean modifyNickName(JandiDTO jandi) {
+		return jandiMapper.modifyNickName(jandi);
+	}
+
+	@Override
+	public int selectNickDupCheck(String nickName) {
+		return jandiMapper.selectNickDupCheck(nickName);
+	}
+
 
 }

@@ -80,14 +80,14 @@ body {
   padding-left: 0;
 }
 
-.manager-paging li {
+/* .manager-paging li {
   float: left;
   padding: 5px 10px;
   margin: 0 10px;
   background-color: #91c788;
   border-radius: 400px;
   text-decoration: none;
-}
+} */
 
 .manager-paging ul li a {
   color: white !important;

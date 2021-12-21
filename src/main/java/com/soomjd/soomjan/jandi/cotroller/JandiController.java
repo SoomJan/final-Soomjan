@@ -23,6 +23,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
@@ -45,6 +48,7 @@ import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiIntroDTO;
 import com.soomjd.soomjan.jandi.model.service.JandiService;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
+
 
 @Controller
 @RequestMapping("/jandi/*")
@@ -670,6 +674,8 @@ public class JandiController {
 		
 		model.addAttribute("myAd", myAd);
 		
+		System.out.println("/////////////////////////////////////////////myAd : "+myAd);
+		
 		
 		ClassDTO myClasses= null;
 		for(int i=0; i<classes.size();i++) {
@@ -684,18 +690,31 @@ public class JandiController {
 		
 		model.addAttribute("myClasses", myClasses);
 		
+		Date date=new Date();
+		Calendar cal=Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
+		Calendar cal2=Calendar.getInstance();
+		
+		cal.setTime(date);
+		cal2.setTime(date);
+		cal.add(Calendar.DATE, 1);
+		cal2.add(Calendar.DATE, 8);
+		
+		String startDate=sdf.format(cal.getTime());
+		String endDate=sdf.format(cal2.getTime());
+		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);		
 		
 		return "jandi/jandiBuy";
 	}
 	
 	
 	
-	@PostMapping("jandiPay")
-	public String jandiPay(@RequestBody HashMap<String, String> map, Model model) {
-
-		String selectedDate = map.get("selectedDate");
-		String adCode= map.get("adCode");		
+	@RequestMapping(value="jandiPay")
+	@ResponseBody
+	public String jandiPay() {
 		
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -707,13 +726,13 @@ public class JandiController {
 			String parameter="cid=TC0ONETIME"
 							+"&partner_order_id=partner_order_id"
 							+"&partner_user_id=partner_user_id"
-							+"&item_name=광"
+							+"&item_name=광고"
 							+"&quantity=1"
 							+"&total_amount=10"
 							+"&tax_free_amount=0"
-							+"&approval_url=http://localhost:8888/soomjan/jandi/myAd"
-							+"&cancel_url=http://localhost:8888/soomjan/jandi/failedPage"
-							+"&fail_url=http://localhost:8888/soomjan/jandi/failedPage";
+							+"&approval_url=http://localhost:8585/soomjan/jandi/myAd"
+							+"&cancel_url=http://localhost:8585/soomjan/jandi/failedPage"
+							+"&fail_url=http://localhost:8585/soomjan/jandi/failedPage";
 			OutputStream out = serverAddress.getOutputStream();
 			DataOutputStream dataOut= new DataOutputStream(out);
 			
@@ -725,6 +744,7 @@ public class JandiController {
 			
 			InputStream input; 
 			if(result==200) {
+				
 				input = serverAddress.getInputStream();
 				
 				
@@ -737,28 +757,12 @@ public class JandiController {
 			
 			BufferedReader bReader = new BufferedReader(reader);
 			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(bReader);
+			String next_redirect_pc_url = (String) jsonObject.get("next_redirect_pc_url");
 			
-			if(bReader.readLine() != null) {
-				
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				
-				Date startDate=sdf.parse(selectedDate);
-				
-				Map<String, Object> key = new HashMap<>();
-				
-				key.put("startDate", startDate);
-				key.put("adCode", Integer.parseInt(adCode));
-				
-				int up = jandiService.updateAdDate(key);
-				
-				if(up>0) {
-					return bReader.readLine();
-				}else {
-					model.addAttribute("message", "결제에 실패하였습니");
-					return "/jandi/failedPage";
-				}
-				
-			}
+			System.out.println("next_redirect_pc_url : " + next_redirect_pc_url);
+			return next_redirect_pc_url;
 			
 			
 			
@@ -768,13 +772,42 @@ public class JandiController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (org.json.simple.parser.ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		
 	    return "jandi/failedPage";
 	}
 	
+	
+	@PostMapping("modifyNickName")
+	public String modifyNickName(@RequestParam String nickName, RedirectAttributes rttr, Model model) {
+		
+		String email = ((JandiDTO) model.getAttribute("jandi")).getEmail();
+		System.out.println(email);
+		
+		JandiDTO modifyJandi = new JandiDTO();
+		modifyJandi.setEmail(email);
+		modifyJandi.setNickName(nickName);
+		
+		if(jandiService.modifyNickName(modifyJandi)) {
+			rttr.addFlashAttribute("nickMessage", "닉네임 변경에 성공했습니다.");
+		}else {
+			rttr.addFlashAttribute("nickMessage", "닉네임 변경에 실패했습니다.");
+		}
+		
+		return "redirect:/jandi/jandiProfile";
+	}
 
+	@PostMapping("nickDupCheck")
+	public @ResponseBody String nickDupCheck(@RequestParam String nickName) {
+		
+		String result = "false";
+		if(jandiService.selectNickDupCheck(nickName) > 0) {
+			result = "true";
+		}
+		
+		return result; 
+	}
 }

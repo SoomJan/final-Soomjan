@@ -19,10 +19,17 @@
 	text-align: center;
 }
 
-.introduce-detail img {
+.imgBox{
 	width: 250px;
-	text-align: center;
+	heigth: 250px;
+	border-radius: 50%;
+}
+
+.imgStyle{
 	border-radius: 70%;
+	width: 200px;
+	height:200px;
+	overflow:hidden;
 }
 
 p {
@@ -51,15 +58,18 @@ p {
 	resize: none;
 }
 
-.imgBox {
-	width: 100%;
-	height: 200px;
+.inputStyle{
+	border:none;
+	width:100px;
+	text-align: center;
 }
 
-.img {
-	width: 80%;
-	height: 100%;
+.inputStyle{
+	border:none;
+	width:100px;
+	text-align: center;
 }
+
 </style>
 
 <script>
@@ -67,6 +77,39 @@ p {
 		console.log("클릭");
 		$('#openModalBtn').click();
 	}
+	
+	$(function(){
+		
+		$('#modifyNickBtn').click(function(){
+			let nickName = $('#nickNameInput').val();
+			console.log(nickName);
+			if(nickName != ""){
+				 $.ajax({
+		              url: "${ pageContext.servletContext.contextPath }/jandi/nickDupCheck",
+		              type: "post",
+		              data: { nickName: nickName },
+		              success: function (data) {
+		                if (data == "true") {
+		                  alert("중복된 닉네임입니다.");
+		                } else {
+		                  $('#modifyNickForm').submit();
+		                }
+		              },
+		              error: function (error) {
+		                console.log(error);
+		              }
+		         });
+				
+			}else{
+				alert("변경할 닉네임을 입력해 주세요.");
+			}
+			
+		});
+		
+		if('${ requestScope.nickMessage }' != ''){
+			alert("${ requestScope.nickMessage }");
+		}
+	});
 </script>
 
 </head>
@@ -77,11 +120,16 @@ p {
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
 			<div class="introduce">
-				<button class="btnStyle btn">닉네임 변경</button>
-				<div class="introduce-detail">
-					<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ requestScope.jandi.profile_path}"
-						id="profile" onclick="modifyProfile();">
-					<h3>${ requestScope.jandi.nickName }</h3>
+				<button class="btnStyle btn" id="modifyNickBtn" type="button">닉네임 변경</button>
+				<div align="center">
+					<div class="imgBox">
+						<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ requestScope.jandi.profile_path}"
+							class="imgStyle" id="profile" onclick="modifyProfile();">
+					</div>
+					<br>
+					<form id="modifyNickForm" action="${ pageContext.servletContext.contextPath }/jandi/modifyNickName" method="post">
+					<h3><input id="nickNameInput" type="text" name="nickName" class="inputStyle" value="${ requestScope.jandi.nickName }"></h3>
+					</form>
 				</div>
 			</div>
 			<br>
@@ -104,9 +152,7 @@ p {
 					<hr class="border-1px-black" />
 					<br>
 					<textarea class="areaStyle" name="introduce" id="introText" rows="20" cols="20" wrap="hard"
-						style="border: 1px solid black" placeholder="소개를 작성해 주세요.">
-						${ requestScope.jandi.intro }
-						</textarea>
+						style="border: 1px solid black" placeholder="소개를 작성해 주세요.">${ requestScope.jandi.intro }</textarea>
 					<br><br>
 					<button type="submit" class="btnStyle btn">수정하기</button>
 				</form>
@@ -160,7 +206,7 @@ p {
 							<br>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default btnBD"
+							<button type="button" class="btn btn-default btnBD" id="closeBtn"
 								data-dismiss="modal">취소</button>
 							<button type="button" class="btn btn-primary" id="okBtn" onclick="modifyProfileImage();">변경</button>
 						</div>
@@ -174,22 +220,16 @@ p {
 								formData.append("profileImage",$('#profileImage')[0].files[0]);
 								console.log("중");
 								
-								
-								
-								
 								$.ajax({
-								
 									type: "POST",
 									url: "${ pageContext.servletContext.contextPath }/jandi/jandiProfile1",
 									processData: false,
 									contentType: false,
 									data: formData,
 									success: function(data){
-										
-								
 										$('#profile').attr("src","${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/"+data);
-									
-										$('.modal fade').attr("hidden",true);
+										$('#profileImage').val('');
+										$('#closeBtn').click();
 									},
 									error:function(err){
 										console.log(err);

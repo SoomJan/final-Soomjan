@@ -100,11 +100,11 @@ pageEncoding="UTF-8"%>
             });
           }); */
 
-          $(function(){
+/*           $(function(){
             $(".move").click(function(){
               location.href="${ pageContext.servletContext.contextPath }/test.jsp";
             });
-          });
+          }); */
 
           </script>
           <div class="manager-search">

@@ -50,8 +50,8 @@ table {
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
 			<c:set var="days" value="${ requestScope.calDateDays }"/>
-			<c:set var="resultValue" value="${ requestScope.resultValue}"></c:set>
-			
+			<c:set var="resultValue" value="${ requestScope.resultValue}"/>
+			<c:set var="adCode" value="${myAd.adCode }"/>
 			<c:choose>
 				<c:when test="${ resultValue eq N }">
 					
@@ -65,7 +65,7 @@ table {
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<button type="button" style="float:right" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy'">결제하기</button>
+					<button type="button" style="float:right" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy?adCode=2'">결제하기</button>
 				</c:otherwise> 
 			</c:choose>
 			

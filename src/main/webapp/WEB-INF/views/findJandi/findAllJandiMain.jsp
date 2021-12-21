@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,80 +30,19 @@ pageEncoding="UTF-8"%>
     <small>전체 멘토</small>
   </h1>
 
-  <div class="row">
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer1.png" alt="user"  
-                	onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/detailJandi'"></div>
-                <p>우아한형제 IOS | 김민영</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer2.png" alt="user"></div>
-                <p>넥슨 & 위메프 | 허민</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer3.png" alt="user"></div>
-                <p>블리자드 | 모하임</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer4.png" alt="user"></div>
-                <p>페북의 변화 | 주커버그</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer5.png" alt="user"></div>
-                <p>암호화폐 이더리움 | 부테린</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer6.png" alt="user"></div>
-                <p>MS 개발의 | 빌</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer7.png" alt="user"></div>
-                <p>라인 CTO | 박의빈</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer8.png" alt="user"></div>
-                <p>진격의 카카오 | Jace</p>
-            </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card">
-            <div class="card-body little-profi text-center">
-                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/images/developer9.png" alt="user"></div>
-                <p>배달의 민족 | 이동욱</p>
-            </div>
-      </div>
-    </div>
+  	<div class="row">
+    <c:forEach var="jandi" items="${ jandiList }"> 
+	    <div class="col-lg-4 col-sm-6 mb-4">
+	      <div class="card">
+	            <div class="card-body little-profi text-center">
+	                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ jandi.profile_path }" alt="user"  
+	                	onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/detailJandi'"></div>
+	                <p>${ jandi.nickname }</p>
+	            </div>
+	      </div>
+	    </div> 
+    </c:forEach>
+
   </div>
   <!-- /.row -->
 

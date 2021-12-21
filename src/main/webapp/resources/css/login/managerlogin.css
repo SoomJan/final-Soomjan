@@ -23,11 +23,11 @@
   position: relative;
   left: 50%;
   transform: translate(-50%);
-  width: 90%;
+  width: 80%;
   height : 40px;
   margin: 30px auto 0px;
   padding-left: 10px;
-  border: 1px solid green;
+  border: 3px solid #91c788;
 }
 
 .login-box > button {

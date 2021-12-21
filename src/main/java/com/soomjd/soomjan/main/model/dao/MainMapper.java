@@ -13,4 +13,6 @@ public interface MainMapper {
 
 	List<ClassDTO> latestClass();
 
+	List<ClassDTO> almostfinish();
+	
 }

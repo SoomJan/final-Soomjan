@@ -424,6 +424,7 @@ public class MypageController {
 
 		int classCode = Integer.parseInt(request.getParameter("classCode"));
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
+		int classPurcCode = Integer.parseInt(request.getParameter("classPurcCode"));
 
 		System.out.println("후기를 작성할 클래스 코드 : " + request.getParameter("classCode"));
 		System.out.println("후기를 작성할 후기 별점 : " + request.getParameter("reviewStar"));
@@ -433,6 +434,7 @@ public class MypageController {
 
 		reviewMap.put("classCode", classCode);
 		reviewMap.put("reviewStar", reviewStar);
+		reviewMap.put("classPurcCode", classPurcCode);
 
 		reviewMap.put("categoryName", categoryName);
 		reviewMap.put("contents", contents);

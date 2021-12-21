@@ -207,4 +207,16 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.selectRepMemberList(repCode);
 	}
 
+
+	@Override
+	public int modifyConfirmMember(ReportMemberDTO repMember) {
+		return mapper.modifyConfirmMember(repMember);
+	}
+
+
+	@Override
+	public int modifySendbackMember(ReportMemberDTO repMember) {
+		return mapper.modifySendbackMember(repMember);
+	}
+
 }
