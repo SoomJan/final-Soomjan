@@ -16,6 +16,15 @@
     	<result column="ACC_NAME" property="acc_name"/>
     </resultMap>
     
+    <resultMap type="ClassPurchaseDTO" id="classPurchaseResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="STATUS" property="status"/>
+    	<result column="PAY_CODE" property="payCode"/>
+    	<result column="CLASS_PURC_CODE" property="classPurcCode"/>
+    	<result column="END_DATE" property="endDate"/>
+    </resultMap>
+    
      <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classResultMap">
     	<id column="CLASS_CODE" property="classCode"/>
     	<result column="CREATE_DATE" property="createDate"/>
@@ -30,8 +39,11 @@
     	<result column="PRICE" property="price"/>
     	<result column="FILE_PATH" property="filePath"/>
     	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="AVG(CR.star)" property="avgReview"/>
          <association property="jandiDTO" resultMap="jandiResultMap"></association>
+         <association property="classPurchaseDTO" resultMap="classPurchaseResultMap"></association>
     </resultMap>
+    
     
      <select id="mainJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
@@ -47,19 +59,63 @@
     </select>
     
       <select id="viewClass" resultMap="classResultMap">
-   	SELECT * 
+   	SELECT 
+        C.CLASS_CODE
+      , C.FILE_PATH
+      , C.TITLE
+      , C.PRICE
+      , C.VIEWS
+      , J.NICKNAME
+      , AVG(CR.star)
    	  FROM CLASS_TBL C 
-   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)                         
+   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+      LEFT JOIN (SELECT STAR
+                  , CLASS_CODE
+               FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	  WHERE C.IS_DELETED = 'N'  
+      GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME
    	  ORDER BY C.VIEWS DESC
    </select>
    
    <select id="latestClass" resultMap="classResultMap">
-   	SELECT * 
+   	SELECT 
+        C.CLASS_CODE
+      , C.FILE_PATH
+      , C.TITLE
+      , C.PRICE
+      , C.VIEWS
+      , C.CREATE_DATE
+      , J.NICKNAME
+      , AVG(CR.star)
    	  FROM CLASS_TBL C 
-   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)                         
+   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+      LEFT JOIN (SELECT STAR
+                  , CLASS_CODE
+               FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	  WHERE C.IS_DELETED = 'N'  
+      GROUP BY C.CLASS_CODE, C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME, C.CREATE_DATE
    	  ORDER BY C.CREATE_DATE DESC
    </select>
 	
+	<!-- 곧 마감될 강의() -->	
+   <select id="almostfinish" resultMap="classResultMap">
+	SELECT 
+       C.MAX_COUNT
+     , C.FILE_PATH
+     , C.TITLE
+     , C.PRICE
+     , C.VIEWS
+     , J.NICKNAME
+     , COUNT(PT.CLASS_CODE)
+     , pt.CLASS_CODE 
+FROM CLASS_TBL C
+JOIN PURCHASE_CLASS_TBL PT ON (PT.CLASS_CODE = C.CLASS_CODE)
+JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+WHERE PT.STATUS = 'Y'
+GROUP BY PT.CLASS_CODE, C.MAX_COUNT, C.FILE_PATH, C.TITLE, C.PRICE, J.NICKNAME, C.VIEWS
+ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
+   
+   </select>
 	
 
 </mapper>
