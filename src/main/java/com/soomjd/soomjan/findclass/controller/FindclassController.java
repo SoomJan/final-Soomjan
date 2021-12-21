@@ -1,14 +1,19 @@
 package com.soomjd.soomjan.findclass.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.common.paging.Pagenation;
+import com.soomjd.soomjan.common.paging.SelectCriteria;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.findclass.service.FindclassService;
 
 @Controller
@@ -26,14 +31,44 @@ public class FindclassController {
 	// POSTMapping 
 
 	@GetMapping("/findAllClassMain")
-	public void findAllClassMain(Model model) {
-		System.out.println("확인");
-	//  반환형                      변수명                	
-		List<ClassDTO> classDTOList = findClassService.selectfindclass();
-		System.out.println(classDTOList);
+	public ModelAndView findAllClassMain(ModelAndView mv, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage) {
 		
-		model.addAttribute("classDTOList", classDTOList);
-		// DATABAE로 필요한 데이터를 조회 
+		System.out.println("파인드 클래스 메인입니다 ㅋㅋ");
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue", searchValue);
+		System.out.println("searchMap : " + searchMap);
+		
+		int totalCount = findClassService.selectFindClassTotalCount(searchMap);
+		System.out.println("totlaCount : " + totalCount);
+		
+		int limit = 5;
+		int buttonAmount = 5;
+		
+		SelectCriteria selectCriteria = null;
+
+		if (searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
+					searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
+
+		System.out.println("selectCriteria : " + selectCriteria);
+
+		searchMap.put("selectCriteria", selectCriteria);
+		
+		List<FindClassDTO> findClassList = findClassService.selectfindclass(searchMap);
+		System.out.println(findClassList);
+		
+		mv.addObject("findClassList", findClassList);
+		mv.addObject("selectCriteria", selectCriteria);
+		mv.setViewName("findclass/findAllClassMain");
+
+		return mv;
+		
 	}
 	
 	@GetMapping("/findTopClassMain")

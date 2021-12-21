@@ -151,7 +151,7 @@ pageEncoding="UTF-8"%>
           let email = $("#email").val();
 
           if (!email) {
-            showModal("닉네임을 입력해주세요.");
+            showModal("이메일을 입력해주세요.");
           } else {
             $.ajax({
               url: "${ pageContext.servletContext.contextPath }/member/idDupCheck",

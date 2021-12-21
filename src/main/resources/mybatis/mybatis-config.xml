@@ -25,6 +25,7 @@
   		<typeAlias type="com.soomjd.soomjan.mypage.model.dto.BuyDTO" alias="BuyDTO"/>
   		<typeAlias type="com.soomjd.soomjan.manager.model.dto.ReportClassDTO" alias="ReportClassDTO"/>
   		<typeAlias type="com.soomjd.soomjan.manager.model.dto.ReportStatementDTO" alias="ReportStatementDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.findclass.model.dto.FindClassDTO" alias="FindClassDTO"/>
     </typeAliases>
     
   </configuration>

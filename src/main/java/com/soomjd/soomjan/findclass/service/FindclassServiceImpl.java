@@ -1,12 +1,14 @@
 package com.soomjd.soomjan.findclass.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.model.dao.FindclassMapper;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 
 @Service
 public class FindclassServiceImpl implements FindclassService{
@@ -23,17 +25,15 @@ public class FindclassServiceImpl implements FindclassService{
 	}
 	
 	@Override
-	public List<ClassDTO> selectfindclass() {
-	
-		List<ClassDTO> classDTOList = findclassMapper.selectfindclass();
+	public List<FindClassDTO> selectfindclass(Map<String, Object> searchMap) {
 		
-		return classDTOList;
+		return findclassMapper.selectfindclass(searchMap);
 	}
 
 	@Override
-	public List<ClassDTO> mainClass() {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectFindClassTotalCount(Map<String, Object> searchMap) {
+		
+		return findclassMapper.selectFindClassTotalCount(searchMap);
 	}
 
 	

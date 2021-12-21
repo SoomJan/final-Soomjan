@@ -94,9 +94,18 @@
 
         /* 클릭시 클래스 정보로 이동 */
           $(".classInfo${ size + 1 }").click(function () {
-            location.href = "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ buyList[size].classCode }";
-          });
 
+            let isDeleted = "${ buyList[size].isDeleted }";
+
+            if(isDeleted == "N") {
+              location.href = "${ pageContext.servletContext.contextPath }/findclass/class/classRoom?classCode=${ buyList[size].classCode }";
+            } else {
+            $("#notmodal").fadeIn();
+            $(".btn").click(function() {
+              $("#notmodal").fadeOut();
+            });
+            }
+          });
       });
 
     </script>
@@ -171,3 +180,13 @@
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>
+
+ <!-- 클래스 종료 안내 모달창 -->
+ <div class="ui mini modal" id="notmodal">
+  <div class="content deletecontent">
+    <p class="delete-content-title">삭제된 클래스입니다.</p>
+    <div class="re-modal-btn">
+      <button class="ui button btn">확인</button>
+    </div>
+  </div>
+</div>
