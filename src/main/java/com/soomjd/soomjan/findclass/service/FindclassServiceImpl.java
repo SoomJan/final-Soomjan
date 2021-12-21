@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.model.dao.FindclassMapper;
 import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 
 @Service
 public class FindclassServiceImpl implements FindclassService{
@@ -34,6 +35,18 @@ public class FindclassServiceImpl implements FindclassService{
 	public int selectFindClassTotalCount(Map<String, Object> searchMap) {
 		
 		return findclassMapper.selectFindClassTotalCount(searchMap);
+	}
+
+	@Override
+	public List<CategoryDTO> selectCategory() {
+		
+		return findclassMapper.selectCategory();
+	}
+
+	@Override
+	public List<FindClassDTO> selectTopClass(Map<String, Object> map) {
+		
+		return findclassMapper.selectTopClass(map);
 	}
 
 	

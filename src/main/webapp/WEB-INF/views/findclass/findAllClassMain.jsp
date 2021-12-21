@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="utf-8" />
 
-    <title>find class</title>
+    <title>전체 클래스 조회</title>
     
     <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet"/>
    	<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
@@ -47,24 +47,16 @@ pageEncoding="UTF-8"%>
 			<!-- Page Heading -->
 			<h1 class="my-4">
 				전체 클래스 | <small>
-					<c:if test="${ selectCriteria.searchCondition == '1'}">
-						최신순
-					</c:if> 
-					<c:if test="${ selectCriteria.searchCondition == '2'}">
-						인기순
-					</c:if> 
-					<c:if test="${ selectCriteria.searchCondition == '3'}">
-						별점 높은순
-					</c:if> 
-					<c:if test="${ selectCriteria.searchCondition == '4'}">
-						별점 낮은순
-					</c:if> 
+					<c:if test="${ not empty categoryName }">
+						${ categoryName } 
+					</c:if>
 				</small>
 			</h1>
 			<br>
 			<div class="row">
 				<div class="row" style="margin-bottom:10px;">
 					<form id="searchform" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get" >
+						<input type="hidden" name="categoryCode" value="${ categoryCode }">
 						<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
 							<option value="1" >최신순</option>
 							<option value="2" >인기순</option>
@@ -78,19 +70,10 @@ pageEncoding="UTF-8"%>
 				         	</button>
 			        	</div>
 					</form>
-				      <!-- <div class="recommendclass" style="margin-top:10px;">
-				        <a href="#"><button class="tagBtn color-1 ">JAVA</button></a>
-				        <a href="#"><button class="tagBtn color-1 ">MVC</button></a>
-				        <a href="#"><button class="tagBtn color-1 ">SPRING</button></a>
-				        <a href="#"><button class="tagBtn color-1 ">프론트앤드</button></a>
-				        <a href="#"><button class="tagBtn color-1 ">백앤드</button></a>
-				        <a href="#"><button class="tagBtn color-1 ">ORACLE</button></a>
-				      </div> -->
 					  <br><br><br><br><br>
 				</div>
+				
 				<c:forEach var="findClassList" items="${ findClassList }">
-				
-				
 				<div class="col-lg-4 col-sm-6 mb-4">
 					<div class="card">
 						<img class="card-img-top"

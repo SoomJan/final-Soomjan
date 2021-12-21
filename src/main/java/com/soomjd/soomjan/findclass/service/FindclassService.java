@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 
 
 public interface FindclassService {
@@ -13,4 +14,8 @@ public interface FindclassService {
 	List<FindClassDTO> selectfindclass(Map<String, Object> searchMap);
 
 	int selectFindClassTotalCount(Map<String, Object> searchMap);
+
+	List<CategoryDTO> selectCategory();
+
+	List<FindClassDTO> selectTopClass(Map<String, Object> map);
 }

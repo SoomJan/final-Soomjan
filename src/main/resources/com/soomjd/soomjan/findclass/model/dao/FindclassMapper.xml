@@ -18,6 +18,11 @@
     	<result column="RVCOUNT" property="rvCount"/>
     </resultMap>
     
+    <resultMap type="categoryDTO" id="categoryResultMap">
+        <result column="CATEGORY_CODE" property="categoryCode"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    
     <select id="selectFindClassTotalCount" resultType="_int" parameterType="HashMap">
         SELECT
 		       COUNT(*)
@@ -26,6 +31,9 @@
           JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
 		 <where>
 		 A.IS_DELETED = 'N'
+		 <if test='categoryCode != null'>
+		   AND C.CATEGORY_CODE = #{ categoryCode }
+		 </if>
 		 <if test='searchValue != null'>
 		   AND ((A.TITLE LIKE '%' || #{ searchValue } || '%')
 	       OR (A.TAG LIKE '%' || #{ searchValue } || '%')
@@ -60,6 +68,9 @@
 						  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
 						  <where>
 						  A.IS_DELETED = 'N'
+						  <if test='categoryCode != null'>
+						  AND C.CATEGORY_CODE = #{ categoryCode }
+						  </if>
 						  <if test='searchValue != null'>
 						  AND ((A.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%')
 					      OR (A.TAG LIKE '%' || #{ selectCriteria.searchValue } || '%')
@@ -86,7 +97,47 @@
 		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
     </select>
     
+    <select id="selectCategory" resultMap="categoryResultMap">
+        SELECT
+		       CATEGORY_NAME
+		     , CATEGORY_CODE
+		  FROM CATEGORY_TBL
+    </select>
    
+    <select id="selectTopClass" resultMap="findClassResultMap" parameterType="Hashmap">
+        SELECT V2.RNUM
+             , V2.*
+		  FROM (SELECT ROWNUM RNUM
+		             , V.*
+				  FROM (SELECT A.CLASS_CODE
+						     , A.CREATE_DATE 
+						     , A.TAG 
+						     , A.TITLE 
+						     , A.PRICE 
+						     , A.FILE_PATH
+						     , A.VIEWS 
+						     , B.PROFILE_PATH
+						     , B.NICKNAME 
+						     , C.CATEGORY_NAME
+						     , NVL(AVG(D.STAR), 0) AVGSTAR
+						     , COUNT(D.REVIEW_CODE) RVCOUNT
+						  FROM CLASS_TBL A
+						  JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
+						  JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
+						  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
+						  <where> 
+						  A.IS_DELETED = 'N'
+						  <if test='categoryCode != null'>
+						  AND C.CATEGORY_CODE = #{ categoryCode }
+						  </if>
+						  </where>
+						 GROUP BY A.CLASS_CODE , A.CREATE_DATE , A.TAG , A.TITLE , A.PRICE , A.VIEWS 
+						        , A.FILE_PATH , B.PROFILE_PATH , B.NICKNAME , C.CATEGORY_NAME
+						 ORDER BY A.VIEWS DESC
+                       )V
+                )V2
+         WHERE V2.RNUM BETWEEN 1 AND 9
+    </select>
 	
 
 </mapper>
