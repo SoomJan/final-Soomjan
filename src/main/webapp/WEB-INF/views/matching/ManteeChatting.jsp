@@ -124,6 +124,7 @@ img {
 			$('.chatRight').append($senderBox);
 	};
 	
+	
 	function addReceiveBox(chat){
 		let $receiverBox = 
 			"<div class='receiverBox'><b class='chatName'>"
