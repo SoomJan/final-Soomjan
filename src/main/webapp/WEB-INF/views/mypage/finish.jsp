@@ -84,7 +84,7 @@
   <br><br><br>
   <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" class="finish-go"><u>클래스 신청하러가기</u></a>
 </div>
-</c:if>>
+</c:if>
 <c:if test="${ !empty finishList[0].status }">
 <table class="ui single line table finishtable">
   <thead>
@@ -93,6 +93,7 @@
       <th>클래스제목</th>
       <th>강사닉네임</th>
       <th>수강완료</th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -110,10 +111,11 @@
       <td><input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }"></td>
       <td><input type="hidden" value="${ finishClass.reviewDTO.isDelete }"></td>
       <td><input type="hidden" value="${ finishClass.classCode }"></td>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y'  }">
+            <td><input type="hidden" value="${ finishClass.classPurcCode }"></td>
+      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq NULL }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N'  }">
+      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 || finishClass.reviewDTO.isDelete eq 'N' }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>
@@ -144,7 +146,7 @@
               	<th>카테고리</th>
                 <th>강사</th>
                 <th>수강기간</th>
-                <th></th>
+                
               </tr>
             </thead>
             <tbody>
@@ -152,7 +154,8 @@
               	<td><input type="text" class="t-categoryName" name="t-categoryName" style="border:none; text-align:center;"></td>
                 <td><input type="text" class="t-nickName" name="t-nickName" style="border:none; text-align:center;"></td>
                 <td><input type="text" class="t-date" name="t-date" style="border:none; text-align:center;"></td>
-                <td><input type="hidden" name="classCode" id="classCode" value="${ finishClass.classCode }"></td>
+                <input type="hidden" name="classCode" id="classCode" value="${ finishClass.classCode }">
+                <input type="hidden" name="classPurcCode" id="classPurcCode" value="${ finishClass.classPurcCode }">
               </tr>
             </tbody>
           </table>
@@ -210,7 +213,8 @@
    			$('.t-categoryName').val($($tr).children().eq(0).html()); 
     		$('.t-title').val($($tr).children().eq(1).html());
   			$('.t-nickName').val($($tr).children().eq(2).html());
-  			$('#classCode').val($($tr).children().eq(5).children().eq(0).val());
+  			$('#classCode').val($($tr).children().eq(6).children().eq(0).val());
+  			$('#classPurcCode').val($($tr).children().eq(7).children().eq(0).val());
   			$('.t-date').val($($tr).children().eq(4).children().eq(0).val() + "-" + $($tr).children().eq(3).html());  
   			$('#reviewmodal').fadeIn();
   			e.preventDefault();
@@ -239,12 +243,13 @@
         	$("#reviewmodal").fadeOut();
         	$("#finishmodal").fadeOut();
         	$("#finish2modal").fadeIn();
-        	$("#reviewform").submit();
+        	/* $("#reviewform").submit(); */
         	e.preventDefault();
         });
           
           $("#o2btn").click(function(e){
               $("#finish2modal").fadeOut();
+              $("#reviewform").submit();
               e.preventDefault();
           });
           

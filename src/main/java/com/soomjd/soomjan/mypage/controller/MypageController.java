@@ -421,6 +421,7 @@ public class MypageController {
 
 		int classCode = Integer.parseInt(request.getParameter("classCode"));
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
+		int classPurcCode = Integer.parseInt(request.getParameter("classPurcCode"));
 
 		System.out.println(request.getParameter("classCode"));
 		System.out.println(request.getParameter("reviewStar"));
@@ -430,6 +431,7 @@ public class MypageController {
 
 		reviewMap.put("classCode", classCode);
 		reviewMap.put("reviewStar", reviewStar);
+		reviewMap.put("classPurcCode", classPurcCode);
 
 		reviewMap.put("categoryName", categoryName);
 		reviewMap.put("contents", contents);

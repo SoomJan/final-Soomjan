@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
     />
     --%>
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/login/managerlogin.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/login/managerlogin.css?"
       rel="stylesheet"
     />
     <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />

@@ -77,7 +77,16 @@ public interface ManagerMapper {
 
 	int selectReportClassTotalCount(Map<String, String> searchMap);
 
-	// 신고된 멤버 상세조회
+	
+	/**
+	 * 신고된 멤버 상세 조회
+	 */
 	ReportMemberDTO selectRepMemberList(int repCode);
+	
+	// 신고된 멤버 신고 처리
+	int modifyConfirmMember(ReportMemberDTO repMember);
+
+	// 신고된 멤버 반려 처리
+	int modifySendbackMember(ReportMemberDTO repMember);
 	
 }

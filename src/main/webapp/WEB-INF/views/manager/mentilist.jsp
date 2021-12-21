@@ -128,12 +128,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             );
           }); */
 
-          $(function () {
+ /*          $(function () {
             $(".move").click(function () {
               location.href =
                 "${ pageContext.servletContext.contextPath }/test.jsp";
             });
-          });
+          }); */
         </script>
 
           <form

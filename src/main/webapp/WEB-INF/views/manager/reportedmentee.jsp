@@ -108,11 +108,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	}
 	
 	/* 모달 */
-	#repMembermodal { height: 800px; left: 40%; width: 550px; top: 10%; }
+	#repMembermodal { height: auto; left: 40%; width: 550px; top: 10%; }
     .modal-header{text-align: center;}
-    .end-content{height: 533px;}
     .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
-    .context-modal-btn { position: relative; left: 35%; top: 125px;}
+    .context-modal-btn { margin-left: 70%;}
+    #repEmail {margin-left: 12%;}
+    #repCategory { position: relative; left: 10px;}
+    .modal-body {margin-left: 8%;}
+    #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
       
     </style>
   </head>
@@ -150,7 +153,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
          <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
           <div class="dropsearch">
-          <form action="${ pageContext.servletContext.contextPath }/manager/reportedmentee" method="get">
+          <form id="frm">
           <select
             class="ui dropdown menu"
             id="searchCondition"
@@ -176,12 +179,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
  			<jsp:include page="../common/Paging.jsp" />
     </div>
     </div>
+ 
     
     <!-- 신고 자세히보기 모달창 -->
+    <form id="repForm" method="POST">
    <div class="ui small modal" id="repMembermodal">
-       <div class="header modal-header"><h2>신고 내용 자세히 보기</h2></div>
+       <div class="header modal-header"><h2>신고 내용 자세히 보기</h2><img id="xbtn" src="${ pageContext.servletContext.contextPath }/resources/images/xbtn.png" onclick="modalEndBtn(this)"></div>
        <div class="content end-content">
-          <br>
+        <br>
           <div class="modal-body" align="left"> 
           	신고카테고리 <input type="text" class="inputSyle repCategory" id="repCategory" name="repCategory" style="width: 300px;" readonly> 
 			<br><br>
@@ -189,25 +194,27 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<br><br>
 			이미지 첨부<br>
 			<br>
-			<img src="${ pageContext.servletContext.contextPath }/resources/images/close.png" style="width: 300px;"/>
+			<img id=imgPath name="imgPath" style="width: 300px;"/>
 			<br><br> 
 			신고사유<br>
 			<br>
-			<textarea name="repContents" id="repContents" class="contents repContents" readonly style="width: 480px;" ></textarea>
+			<textarea name="repContents" id="repContents" class="contents repContents" readonly style="width: 400px;" ></textarea>
 			</div>
-          <hr>
-        </div>
-        <div class="context-modal-btn">
-            <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">확인</button>
-            <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">취소</button>
+			<hr>
+			<div class="context-modal-btn">
+			   <input type="hidden" id="repCodeInput" name="repCode">
+	           <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">신고</button>
+	           <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">반려</button>
+            </div>
         </div>
       </div>
-       </div>
+      </form>
 	<script>
 	$(function(){
   		$(".repbtn").click(function(e){
   			console.log($(e.target).parent().children("input[type=hidden]").val());
   			const repCode = $(e.target).parent().children("input[type=hidden]").val();
+  			$('#repCodeInput').val(repCode);
   			$.ajax({
   				url: "${ pageContext.servletContext.contextPath }/manager/repDetail",
   				data: {repCode : repCode},
@@ -219,7 +226,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   					$('#repCategory').val(data.repCategory);
   					$('#repEmail').val(data.repEmail);
   					$('#repContents').val(data.repContents);
-  					
+  					$('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
   				},
   				error: function(xhr, status, error){
   					console.log(error);
@@ -229,8 +236,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   			//$('#repMemberModal').show();
   			
   			$("#repMembermodal").show();
+  			
+/*   		  	$("#xbtn").click(function(){
+         	 	$("#repMembermodal").hide();
+          	} */
   		});
+  		
+  		$('#con-btn').click(function(){
+  			//console.log(repCode);
+  			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit();
+  		});
+  		
+  		$('#end-btn').click(function(){
+  			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/sendBack").submit();
+  		});
+  		
+  		$('#searchbtn').click(function(){
+  			$("#frm").prop("action","${ pageContext.servletContext.contextPath }/manager/reportedmentee").submit();
+  		});
+  		
   	});
+  		
+  	function modalEndBtn(item){
+  		$("#repMembermodal").hide();
+  	}
+	
 	</script>
   </body>
 
