@@ -111,6 +111,7 @@
         <result column="FILE_PATH" property="filePath"/>
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="NICKNAME" property="nickName"/>
+        <result column="IS_DELETED" property="isDeleted"/>
     </resultMap>
     
     <resultMap id="buyResultSet" type="BuyDTO">
@@ -120,6 +121,7 @@
         <result column="NICKNAME" property="nickName"/>
         <result column="PAY_DATE" property="payDate"/>
         <result column="PAY" property="pay"/>
+        <result column="IS_DELETED" property="isDeleted"/>
     </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
@@ -401,6 +403,7 @@
 						     , B.TITLE
 						     , B.FILE_PATH
 						     , C.CATEGORY_NAME
+						     , B.IS_DELETED
 						     , D.NICKNAME
 						  FROM LIKED_CLASS_TBL A
 						  JOIN CLASS_TBL B ON (A.CLASS_CODE = B.CLASS_CODE)
@@ -460,6 +463,7 @@
 		           FROM ( SELECT A.CLASS_CODE
 		                       , B.TITLE
 						       , B.FILE_PATH
+						       , B.IS_DELETED
 						       , C.NICKNAME
 						       , D.PAY_DATE 
 						       , D.PAY 

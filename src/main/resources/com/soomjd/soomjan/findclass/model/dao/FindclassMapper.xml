@@ -4,42 +4,86 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soomjd.soomjan.findclass.model.dao.FindclassMapper">
     
-    <resultMap type="com.soomjd.soomjan.classRoom.model.dto.ClassDTO" id="classesResultMap">
-    	<id column="CLASS_CODE" property="classCode"/>
+    <resultMap type="FindClassDTO" id="findClassResultMap">
+    	<result column="CLASS_CODE" property="classCode"/>
     	<result column="CREATE_DATE" property="createDate"/>
-    	<result column="CONTENTS" property="contents"/>
     	<result column="TAG" property="tag"/>
-    	<result column="CATEGORY_CODE" property="categoryCode"/>
-    	<result column="EMAIL" property="email"/>
-    	<result column="BOARD_TYPE" property="boardType"/>
-    	<result column="VIEWS" property="views"/>
-    	<result column="MAX_COUNT" property="maxCount"/>
     	<result column="TITLE" property="title"/>
     	<result column="PRICE" property="price"/>
     	<result column="FILE_PATH" property="filePath"/>
-    	<result column="ORG_FILE_PATH" property="orgFilePath"/>
-    	<result column="IS_DELETED" property="isDeleted"/>
-    	<result column="NICKNAME" property="nickName" />
+    	<result column="PROFILE_PATH" property="profilePath"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    	<result column="AVGSTAR" property="avgStar"/>
+    	<result column="RVCOUNT" property="rvCount"/>
     </resultMap>
     
+    <select id="selectFindClassTotalCount" resultType="_int" parameterType="HashMap">
+        SELECT
+		       COUNT(*)
+		  FROM CLASS_TBL A
+	      JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
+          JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
+		 <where>
+		 A.IS_DELETED = 'N'
+		 <if test='searchValue != null'>
+		   AND ((A.TITLE LIKE '%' || #{ searchValue } || '%')
+	       OR (A.TAG LIKE '%' || #{ searchValue } || '%')
+	       OR (B.NICKNAME LIKE '%' || #{ searchValue } || '%')
+	       OR (C.CATEGORY_NAME LIKE '%' || #{ searchValue } || '%'))
+		  </if>
+		 </where>
     
-    <select id="selectfindclass" resultMap="classesResultMap">
-    	SELECT 
-    		   CLASS_CODE
-			 , CREATE_DATE
-			 , CONTENTS
-			 , TAG
-			 , CATEGORY_CODE
-			 , EMAIL
-			 , BOARD_TYPE
-			 , VIEWS
-			 , MAX_COUNT
-			 , TITLE
-			 , PRICE
-			 , IS_DELETED
-			 , FILE_PATH
-			 , ORG_FILE_PATH
-		  FROM CLASS_TBL
+    </select>
+    
+    
+    <select id="selectfindclass" resultMap="findClassResultMap" parameterType="HashMap">
+    	SELECT V2.RNUM
+		     , V2.*
+		  FROM (SELECT ROWNUM RNUM
+				     , V.*
+				  FROM (SELECT A.CLASS_CODE
+						     , A.CREATE_DATE 
+						     , A.TAG 
+						     , A.TITLE 
+						     , A.PRICE 
+						     , A.FILE_PATH
+						     , A.VIEWS
+						     , B.PROFILE_PATH
+						     , B.NICKNAME 
+						     , C.CATEGORY_NAME
+						     , NVL(AVG(D.STAR), 0) AVGSTAR
+						     , COUNT(D.REVIEW_CODE) RVCOUNT
+						  FROM CLASS_TBL A
+						  JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
+						  JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
+						  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
+						  <where>
+						  A.IS_DELETED = 'N'
+						  <if test='searchValue != null'>
+						  AND ((A.TITLE LIKE '%' || #{ selectCriteria.searchValue } || '%')
+					      OR (A.TAG LIKE '%' || #{ selectCriteria.searchValue } || '%')
+					      OR (B.NICKNAME LIKE '%' || #{ selectCriteria.searchValue } || '%')
+					      OR (C.CATEGORY_NAME LIKE '%' || #{ selectCriteria.searchValue } || '%'))
+						  </if>
+						  </where>
+						 GROUP BY A.CLASS_CODE , A.CREATE_DATE , A.TAG , A.TITLE , A.PRICE , A.VIEWS
+						        , A.FILE_PATH , B.PROFILE_PATH , B.NICKNAME , C.CATEGORY_NAME
+						 <if test='searchCondition == "1"'>
+						 ORDER BY A.CREATE_DATE DESC
+						 </if>
+						 <if test='searchCondition == "2"'>
+						 ORDER BY A.VIEWS DESC
+						 </if>
+						 <if test='searchCondition == "3"'>
+						 ORDER BY AVGSTAR DESC
+						 </if>
+						 <if test='searchCondition == "4"'>
+						 ORDER BY AVGSTAR ASC
+						 </if>
+				      ) V
+			  ) V2
+		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
     </select>
     
    

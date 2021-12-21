@@ -10,4 +10,37 @@ th {background-color: #91C788;}
 iframe {
     display: none;
   }
-  
+
+/* 삭제 모달창 */
+
+.deletecontent{
+  height: 150px;
+  text-align: center;
+  background-color: #91C788 !important;
+}
+
+.delete-content-title {
+  position: relative;
+  top: 8%;
+}
+
+.re-modal-btn {
+  position: relative;
+  top: 10%;
+}
+
+.btn {
+  background-color: white !important;
+}
+
+#deletemodal {
+  height: 150px;
+  top: 40%;
+  left: 47%;
+}
+
+#notmodal {
+  height: 150px;
+  top: 40%;
+  left: 47%;
+}

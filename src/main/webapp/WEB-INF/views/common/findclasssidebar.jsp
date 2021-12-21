@@ -19,7 +19,18 @@ pageEncoding="UTF-8"%>
           <li><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">전체 클래스</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/findclass/findTopClassMain">인기 클래스</a></li>
         </ul>
+        <ul>
+          <li><a href="#">JAVA</a></li>
+
+
+        </ul>
       </div>
+        <!-- <a href="#"><button class="tagBtn color-1 ">JAVA</button></a>
+        <a href="#"><button class="tagBtn color-1 ">MVC</button></a>
+        <a href="#"><button class="tagBtn color-1 ">SPRING</button></a>
+        <a href="#"><button class="tagBtn color-1 ">프론트앤드</button></a>
+        <a href="#"><button class="tagBtn color-1 ">백앤드</button></a>
+        <a href="#"><button class="tagBtn color-1 ">ORACLE</button></a> -->
     </div>
   </body>
 

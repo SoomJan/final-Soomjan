@@ -7,16 +7,19 @@ public class JjimDTO {
 	private String filePath;
 	private String categoryName;
 	private String nickName;
+	private String isDeleted;
 	
 	public JjimDTO() {}
 
-	public JjimDTO(int classCode, String title, String filePath, String categoryName, String nickName) {
+	public JjimDTO(int classCode, String title, String filePath, String categoryName, String nickName,
+			String isDeleted) {
 		super();
 		this.classCode = classCode;
 		this.title = title;
 		this.filePath = filePath;
 		this.categoryName = categoryName;
 		this.nickName = nickName;
+		this.isDeleted = isDeleted;
 	}
 
 	public int getClassCode() {
@@ -59,11 +62,20 @@ public class JjimDTO {
 		this.nickName = nickName;
 	}
 
+	public String getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(String isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public String toString() {
 		return "JjimDTO [classCode=" + classCode + ", title=" + title + ", filePath=" + filePath + ", categoryName="
-				+ categoryName + ", nickName=" + nickName + "]";
+				+ categoryName + ", nickName=" + nickName + ", isDeleted=" + isDeleted + "]";
 	}
+
 	
 
 }

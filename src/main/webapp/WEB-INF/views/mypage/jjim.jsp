@@ -48,6 +48,12 @@
             top: 40%;
             left: 47%;
           }
+
+          #notmodal {
+            height: 150px;
+            top: 40%;
+            left: 47%;
+          }
           
           .dropsearch {margin-left: 12%;}
         </style>
@@ -133,8 +139,19 @@
 
                     /* 클릭시 클래스 정보로 이동 */
                     $(function() {
+                      
                       $(".classInfo${ size + 1 }").click(function () {
-                        location.href = "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ jjimList[size].classCode }";
+                        
+                        let isDeleted = "${ jjimList[size].isDeleted }";
+
+                        if(isDeleted == "N") {
+                          location.href = "${ pageContext.servletContext.contextPath }/findclass/class/classRoom?classCode=${ jjimList[size].classCode }";
+                      } else {
+                        $("#notmodal").fadeIn();
+                        $(".btn").click(function() {
+                          $("#notmodal").fadeOut();
+                        });
+                      }
                       });
                     });
 
@@ -174,7 +191,17 @@
 
                       /* 기존에 있던 마우스 클릭 이벤트 재생 */
                       $(".classInfo${ size + 1 }").click(function () {
-                        location.href = "${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ jjimList[size].classCode }";
+
+                        let isDeleted = "${ jjimList[size].isDeleted }";
+
+                        if(isDeleted == "N") {
+                          location.href = "${ pageContext.servletContext.contextPath }/findclass/class/classRoom?classCode=${ jjimList[size].classCode }";
+                        } else {
+                        $("#notmodal").fadeIn();
+                        $(".btn").click(function() {
+                          $("#notmodal").fadeOut();
+                        });
+                        }
                       });
 
                         /* 되돌리기 버튼 -> 삭제하기 버튼으로 */
@@ -252,6 +279,15 @@
           </c:when>
         </c:choose>
 
+          </div>
+        </div>
+        <!-- 클래스 종료 안내 모달창 -->
+        <div class="ui mini modal" id="notmodal">
+          <div class="content deletecontent">
+            <p class="delete-content-title">삭제된 클래스입니다.</p>
+            <div class="re-modal-btn">
+              <button class="ui button btn">확인</button>
+            </div>
           </div>
         </div>
         <!-- 삭제 실패 모달창 -->
