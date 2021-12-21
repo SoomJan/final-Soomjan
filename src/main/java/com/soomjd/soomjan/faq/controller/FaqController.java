@@ -63,60 +63,65 @@ public class FaqController {
 	  return "faq/notice";
 	}
 	
-	@GetMapping("/test")
-	public String test(Model model) {
-		
-		List <ClassDTO> class2 = faqService.mainClass();
-		
-		Collections.shuffle(class2);
-		
-		System.out.println(class2);
-		
-		model.addAttribute("class2", class2);
-		
-		return "test/main";
-	}
+//	@GetMapping("/gametest")
+//	public String test(Model model) {
+//		
+//		List <ClassDTO> class2 = faqService.mainClass();
+//		
+//		Collections.shuffle(class2);
+//		
+//		System.out.println(class2);
+//		
+//		model.addAttribute("class2", class2);
+//		
+//		return "findclass/findAllClassMain copy";
+//	}
 	
-	@GetMapping("/gametest")
-	public String gametest(Model model) {
-		
-		Random random = new Random();
-		int a = 10;
-		int b = 10;
-		
-		int arr[][] = new int[a][b];
-		
-		int mine = 10;
-		int mineCount = 0;
-		
-		
-		for(int i = 0; i < a; i++ ) {
-			for(int j = 0; j < b; j++) {
-				arr[i][j] = 0;
-				}
-			}
-		
-		for(int k = 0; k<mine; k++) {
-			
-			int A = random.nextInt(a);
-			int B = random.nextInt(b);
-			arr[A][B] = -1;
-//			if(A>0 && B>0) {
-//				arr[A-1][B-1] = +1;
-//				arr[A-1][B] = +1;
-//				arr[A-1][B+1] = +1;
-//				arr[A][B-1] = +1;
-//				arr[A][B] = +1;
-//				arr[A][B+1] = +1;
-//				arr[A+1][B-1] = +1;
-//				arr[A+1][B] = +1;
-//				arr[A+1][B+1] = +1;
+//	@GetMapping("/gametest")
+//	public String gametest(Model model) {
+//		
+//		Random random = new Random();
+//		int a = 10;
+//		int b = 10;
+//		int MINE_CNT   = 10;
+//		
+//		String arr[][] = null;
+//		
+//		arr = new String[a][b];
+//		int mine = 10;
+//		
+//		
+//		for(int i = 0; i < a; i++ ) {
+//			for(int j = 0; j < b; j++) {
+//				arr[i][j] = "x";
+//				}
 //			}
-		}
-		
-		model.addAttribute("arr", arr);
-		
-		return "test/game";
-	}
+//		
+//		for(int k = 0; k<mine; k++) {
+//			
+//			int A = random.nextInt(a);
+//			int B = random.nextInt(b);
+//			arr[A][B] = "*";
+//			
+//			while (MINE_CNT-- > 0){
+//	            int row = random.nextInt(a);
+//	            int col = random.nextInt(b);
+//
+//	            if(arr[row][col].equals("*")){
+//	            	MINE_CNT++;
+//	            }
+//	            if(arr[row][col].equals("x")){
+//	            	arr[row][col] = "*";
+//	            }
+//	        }
+//
+//
+//			
+//		}
+//		
+//		model.addAttribute("arr", arr);
+//		
+//		return "test/game";
+//	}
 	
 	}

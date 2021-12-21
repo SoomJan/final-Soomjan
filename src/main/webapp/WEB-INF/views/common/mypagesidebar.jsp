@@ -211,7 +211,6 @@ pageEncoding="UTF-8"%>
   </script>
   </body>
 
-  <script src="css/ie10-viewport-bug-workaround.js"></script>
 </html>
 
 <!-- 모달창 -->

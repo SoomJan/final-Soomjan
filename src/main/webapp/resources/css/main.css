@@ -261,17 +261,18 @@ body {
 .swiper-container {
   height: 400px;
   border-radius: 7px;
+  
 }
 .swiper-slide {
-  padding: 0 20px;
+  padding: 0 0;
   text-align: center;
-  /* display: column; 내용을 중앙정렬 하기위해 flex 사용 */
+  display: column; 
   align-items: center; /* 위아래 기준 중앙정렬 */
   justify-content: center; /* 좌우 기준 중앙정렬 */
-  /* border: 10px solid black; */
   height: 40%;
   bottom: 0;
   cursor: pointer;
+  /* width: ; */
   /* overflow: auto; */
 }
 .swiper-slide img {
@@ -279,8 +280,9 @@ body {
 }
 
 .carousel-img {
-  width: 100%;
+  width: 90%;
   height: 100%;
+  margin : 0 auto;
 }
 
 .carousel-img1 {

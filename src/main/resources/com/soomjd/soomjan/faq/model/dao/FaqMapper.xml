@@ -39,6 +39,7 @@
     	<result column="PRICE" property="price"/>
     	<result column="FILE_PATH" property="filePath"/>
     	<result column="ORG_FILE_PATH" property="orgFilePath"/>
+    	<result column="AVG(CR.star)" property="avgReview"/>
          <association property="jandiDTO" resultMap="jandiResultMap"></association>
     </resultMap>
     
@@ -83,9 +84,21 @@
 	</select>
     
    <select id="mainClass" resultMap="classResultMap">
-   	SELECT * 
+   	SELECT 
+        C.CLASS_CODE
+      , C.FILE_PATH
+      , C.TITLE
+      , C.PRICE
+      , C.VIEWS
+      , J.NICKNAME
+      , AVG(CR.star)
    	  FROM CLASS_TBL C 
-   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)                         
+   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+      LEFT JOIN (SELECT STAR
+                  , CLASS_CODE
+               FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	  WHERE C.IS_DELETED = 'N'  
+      GROUP BY C.CLASS_CODE,C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME                      
    </select>
    
     

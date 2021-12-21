@@ -27,7 +27,6 @@ pageEncoding="UTF-8"%>
       rel="stylesheet"
     />
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" />
-    <link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script
@@ -57,7 +56,6 @@ pageEncoding="UTF-8"%>
 
     </style>
     
-   
     
   </head>
   <body>

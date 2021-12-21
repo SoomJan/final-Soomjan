@@ -19,19 +19,28 @@ public class MainServiceImpl implements MainService {
 		this.mapper = mapper;
 	}
 	
+	// 랜덤 잔디 조회
 	@Override
 	public List<JandiDTO> mainJandi() {
 		return mapper.mainJandi();
 	}
 
+	// 뷰가 가장 많은 강의
 	@Override
 	public List<ClassDTO> viewClass() {
 		return mapper.viewClass();
 	}
 
+	// 최근 등록된 강의
 	@Override
 	public List<ClassDTO> latestClass() {
 		return mapper.latestClass();
+	}
+
+	// 곧 끝날 강의
+	@Override
+	public List<ClassDTO> almostfinish() {
+		return mapper.almostfinish();
 	}
 
 }

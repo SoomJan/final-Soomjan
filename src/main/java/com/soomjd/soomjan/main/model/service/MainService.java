@@ -13,4 +13,6 @@ public interface MainService {
 
 	List<ClassDTO> latestClass();
 
+	List<ClassDTO> almostfinish();
+
 }
