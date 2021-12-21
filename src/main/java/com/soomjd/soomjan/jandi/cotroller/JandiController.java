@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
@@ -776,5 +777,34 @@ public class JandiController {
 	    return "jandi/failedPage";
 	}
 	
+	
+	@PostMapping("modifyNickName")
+	public String modifyNickName(@RequestParam String nickName, RedirectAttributes rttr, Model model) {
+		
+		String email = ((JandiDTO) model.getAttribute("jandi")).getEmail();
+		System.out.println(email);
+		
+		JandiDTO modifyJandi = new JandiDTO();
+		modifyJandi.setEmail(email);
+		modifyJandi.setNickName(nickName);
+		
+		if(jandiService.modifyNickName(modifyJandi)) {
+			rttr.addFlashAttribute("nickMessage", "닉네임 변경에 성공했습니다.");
+		}else {
+			rttr.addFlashAttribute("nickMessage", "닉네임 변경에 실패했습니다.");
+		}
+		
+		return "redirect:/jandi/jandiProfile";
+	}
 
+	@PostMapping("nickDupCheck")
+	public @ResponseBody String nickDupCheck(@RequestParam String nickName) {
+		
+		String result = "false";
+		if(jandiService.selectNickDupCheck(nickName) > 0) {
+			result = "true";
+		}
+		
+		return result; 
+	}
 }

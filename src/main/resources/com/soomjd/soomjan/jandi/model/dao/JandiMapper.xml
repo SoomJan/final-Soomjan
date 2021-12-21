@@ -228,6 +228,17 @@
 	
 	</update>
 	
+	<update id="modifyNickName">
+		UPDATE JANDI_TBL
+		   SET NICKNAME = #{ nickName }
+		 WHERE EMAIL = #{ email }
+	</update>
+	
+	<select id="selectNickDupCheck" resultType="_int">
+		SELECT COUNT(EMAIL)
+		FROM JANDI_TBL
+		WHERE NICKNAME = #{ nickName }
+	</select>
 	
 
 </mapper>

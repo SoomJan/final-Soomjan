@@ -37,4 +37,8 @@ public interface JandiMapper {
 
 	int updateAdDate(Map<String, Object> key);
 
+	boolean modifyNickName(JandiDTO jandi);
+
+	int selectNickDupCheck(String nickName);
+
 }
