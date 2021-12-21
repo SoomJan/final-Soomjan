@@ -45,12 +45,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="sidebar-content">
-        <h1>신고된 게시판 조회</h1>
+        <h1>신고된 클래스 조회</h1>
         <br />
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 잔디</th>
+              <th>신고한 회원</th>
+              <th>신고된 클래스</th>
               <th>내용</th>
               <th>신고 사유</th>
               <th>신고 처리 여부</th>
@@ -60,6 +61,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <c:forEach var="reportClass" items="${ sessionScope.reportClassList }">
               <tr>
               	<td>${reportClass.email}</td>
+                <td>${reportClass.classDTO.title}</td>
                 <td>${reportClass.repContents}</td>
                 <td>${reportClass.reportStatementDTO.repType}</td>
                 <td>${reportClass.repYn}</td>

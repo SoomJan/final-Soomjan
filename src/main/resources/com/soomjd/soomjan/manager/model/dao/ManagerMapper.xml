@@ -98,7 +98,7 @@
         <result column="REP_DATE" property="repDate"/>
         <result column="REP_EMAIL" property="repEmail"/>
         <result column="REP_TYPE_CODE" property="repTypeCode"/>
-        <result column="ORG_IMG_PATH" property="orgImgPath"/>
+        <result column="IMG_PATH" property="imgPath"/>
         <result column="REP_YN" property="repYn"/>
         
         <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
@@ -118,6 +118,7 @@
         <result column="REP_TYPE_CODE" property="repTypeCode"/>
         <result column="REP_YN" property="repYn"/>
         
+        <association property="classDTO" resultMap="classResultMap"></association>
         <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
     </resultMap>
     
@@ -592,7 +593,7 @@
 		     , F.REP_DATE
 		     , F.REP_EMAIL
 		     , F.REP_TYPE_CODE
-		     , F.ORG_IMG_PATH
+		     , F.IMG_PATH
 		     , F.REP_YN
 		     , F.REP_TYPE
 		  FROM (SELECT ROWNUM RNUM 
@@ -602,7 +603,7 @@
 		             , D.REP_DATE
 		             , D.REP_EMAIL
 		             , D.REP_TYPE_CODE
-		             , D.ORG_IMG_PATH
+		             , D.IMG_PATH
 		             , D.REP_YN
 		             , D.REP_TYPE
 		          FROM (SELECT
@@ -612,7 +613,7 @@
 		                     , R.REP_DATE
 		                     , R.REP_EMAIL
 		                     , R.REP_TYPE_CODE
-		                     , R.ORG_IMG_PATH
+		                     , R.IMG_PATH
 		                     , R.REP_YN
 		                     , S.REP_TYPE
 		                  FROM REPORT_MEMBER_TBL R
@@ -666,6 +667,7 @@
 		     , F.REP_TYPE_CODE
 		     , F.REP_YN
 		     , F.REP_TYPE
+		     , F.TITLE
 		  FROM (SELECT ROWNUM RNUM 
 		             , D.REP_CODE
 		             , D.EMAIL
@@ -675,6 +677,7 @@
 		             , D.REP_TYPE_CODE
 		             , D.REP_YN
 		             , D.REP_TYPE
+		             , D.TITLE
 		          FROM (SELECT
 		                       R.REP_CODE
 		                     , R.EMAIL
@@ -684,8 +687,10 @@
 		                     , R.REP_TYPE_CODE
 		                     , R.REP_YN
 		                     , S.REP_TYPE
+		                     , C.TITLE
 		                  FROM REPORT_CLASS_TBL R
 		                  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		                  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
 		                  <where>
 		 	     		 	<if test="searchCondition == 1">
 		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
@@ -714,7 +719,7 @@
 		     , R.REP_DATE
 		     , R.REP_EMAIL
 		     , R.REP_TYPE_CODE
-		     , R.ORG_IMG_PATH
+		     , R.IMG_PATH
 		     , R.REP_YN
 		     , S.REP_TYPE
 		  FROM REPORT_MEMBER_TBL R
@@ -722,4 +727,16 @@
 		 WHERE R.REP_CODE = #{ repCode }
 	</select>
 	
+	<update id="modifyConfirmMember" parameterType="ReportMemberDTO">
+		UPDATE REPORT_MEMBER_TBL
+		   SET REP_YN = 'Y'
+		 WHERE REP_CODE = #{ repCode }
+	</update>
+	
+	<update id="modifySendbackMember" parameterType="ReportMemberDTO">
+		UPDATE REPORT_MEMBER_TBL
+		   SET REP_YN = 'N'
+		 WHERE REP_CODE = #{ repCode }
+	</update>
+
 </mapper>

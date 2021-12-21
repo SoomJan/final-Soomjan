@@ -58,15 +58,19 @@ public class ManagerController {
 	}
 	
 
-	
-	// 매니저 로그인 페이지 이동
+	/**
+	 * 매니저 로그인 페이지 이동
+	 */
 	@GetMapping("login")
 	public String loginFrom() {
 		
 		return "manager/login";
 	}
 	
-	// 매니저 로그인 실행
+
+	/**
+	 * 매니저 로그인 실행
+	 */
 	@PostMapping("login")
 	public String login(@ModelAttribute ManagerDTO manager, Model model, HttpServletRequest request) throws LoginFailedException {
 		
@@ -99,7 +103,10 @@ public class ManagerController {
 		return "manager/managermain";
 	}
 	
-	// 새싹멤버 조회
+	/**
+	 *  새싹멤버 조회
+	 * @author 효진
+	 */
 	@GetMapping("mentilist")
 	   public String mentilist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 	      
@@ -143,7 +150,10 @@ public class ManagerController {
 	      return "manager/mentilist";
 	   }
 	
-	// 잔디멤버 조회
+	/**
+	 * 잔디멤버 조회
+	 * @author 효진
+	 */
 	@GetMapping("/mentolist")
 	public String mentolist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 		
@@ -183,7 +193,10 @@ public class ManagerController {
 		return "manager/mentolist";
 	}
 	
-	// 관리자 조회
+	/**
+	 * 관리자 멤버 조회
+	 * @author 효진
+	 */
 	@GetMapping("/manproduce")
 	public String manproduce(ManagerDTO manager, Model model) {
 		
@@ -194,9 +207,12 @@ public class ManagerController {
 		return "manager/manproduce";
 	}
 	
-	/* 관리자 계정 생성 */
+	/**
+	 * 관리자 계정 생성
+	 * @author 효진
+	 */
 	@PostMapping("msregist")
-	public String msRegistMember(@ModelAttribute ManagerDTO manager, HttpServletRequest request) throws MemberRegistException {
+	public String msRegistMember(@ModelAttribute ManagerDTO manager) throws MemberRegistException {
 		
 		System.out.println("manager : " + manager);
 		
@@ -211,10 +227,15 @@ public class ManagerController {
 		}
 	}
 	
-	/* 관리자 계정 비활성화 */
+	/**
+	 * 관리자 계정 비활성화
+	 * @author 효진
+	 */
 	@PostMapping("inactiveManager")
-	public void inactiveManager(@ModelAttribute ManagerDTO manager, HttpServletRequest request, @RequestParam("checkbox[]") ArrayList<Integer> checkbox ) throws MemberRegistException {
-		
+	public void inactiveManager(@ModelAttribute ManagerDTO manager, @RequestParam("checkbox[]") ArrayList<Integer> checkbox ) throws MemberRegistException {
+		// 1. jsp -> 1 값을 전 달 -> "1" -> Integer.parser
+		// 1. @RequestParam -> request.getParameter()
+		// 1. @ModelAttribute -> 여러값을 가져다 사용수 있따.
 		System.out.println("manager : " + manager);
 		System.out.println("checkbox : " + checkbox);
 		
@@ -224,8 +245,10 @@ public class ManagerController {
 			
 	}
 	
-	
-	/* 이메일 중복 체크 */
+	/**
+	 * 관리자 계정 생성(이메일 중복 체크)
+	 * @author 효진
+	 */
 	@PostMapping("/emailCheck")
 	public void emailCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
 		
@@ -244,7 +267,10 @@ public class ManagerController {
 		}
 	}
 	
-	/* 닉네임 중복 체크 */
+	/**
+	 * 관리자 계정 생성(닉네임 중복 체크)
+	 * @author 효진
+	 */
 	@PostMapping("/nickNameCheck")
 	public void nickNameCheck(HttpServletResponse response, @RequestParam("nickName") String nickName) throws IOException {
 		
@@ -265,7 +291,10 @@ public class ManagerController {
 	
 	/* =============================== 신고관리 =================================== */
 	
-	// 신고된 회원 조회
+	/**
+	 * 신고된 회원 조회
+	 * @author 효진
+	 */
 	@GetMapping("/reportedmentee")
 	public String reportedmentee(Model model, @RequestParam(required = false) String searchCondition, 
 			@RequestParam(required = false) String searchValue,
@@ -304,7 +333,10 @@ public class ManagerController {
 		return "manager/reportedmentee";
 	}
 	
-	// 신고된 클래스 조회
+	/**
+	 * 신고된 클래스 조회
+	 * @author 효진
+	 */
 	@GetMapping("/reportedboard")
 	public String reportedboard(Model model, @RequestParam(required = false) String searchCondition, 
 			@RequestParam(required = false) String searchValue,
@@ -343,7 +375,10 @@ public class ManagerController {
 		return "manager/reportedboard";
 	}
 	
-	// 신고된 게시판 상세보기
+	/**
+	 * 신고된 회원 상세보기
+	 * @author 효진
+	 */
 	@GetMapping(value = "repDetail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String repMemberDetail(@RequestParam("repCode") int repCode) {
@@ -356,11 +391,46 @@ public class ManagerController {
 		jsonObject.put("repEmail", repMember.getRepEmail());
 		jsonObject.put("repCategory", repMember.getReportStatementDTO().getRepType());
 		jsonObject.put("repContents", repMember.getContents());
-		jsonObject.put("orgImgPath", repMember.getOrgImgPath());
+		jsonObject.put("imgPath", repMember.getImgPath());
 		
 		System.out.println("확인용 : \n" +jsonObject);
 		
 		return jsonObject.toJSONString();
+	}
+	
+	
+	/**
+	 * 신고상세내용(신고처리)
+	 * @author 효진
+	 */
+	@PostMapping("confirm")
+	public String reportConFirmMember(@ModelAttribute ReportMemberDTO repMember) {
+		
+		System.out.println("repMember : " + repMember);
+	
+		int result = managerService.modifyConfirmMember(repMember);
+		
+		if(result > 0 ) {
+			System.out.println("성공");
+		} else {
+			System.out.println("실패");
+		}
+		
+		return "redirect:/manager/reportedmentee";
+	}
+	
+	/**
+	 * 신고상세내용(반려처리)
+	 * @author 효진
+	 */
+	@PostMapping("sendBack")
+	public String reportSendbackMember(@ModelAttribute ReportMemberDTO repMember) {
+		
+		System.out.println("repMember : " + repMember);
+		
+		int result = managerService.modifySendbackMember(repMember);
+		
+		return "redirect:/manager/reportedmentee";
 	}
 	
 	

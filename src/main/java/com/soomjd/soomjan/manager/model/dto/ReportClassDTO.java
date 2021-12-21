@@ -2,6 +2,8 @@ package com.soomjd.soomjan.manager.model.dto;
 
 import java.sql.Date;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+
 public class ReportClassDTO {
 
 	private int repCode;
@@ -13,12 +15,13 @@ public class ReportClassDTO {
 	private String repYn;
 	
 	private ReportStatementDTO reportStatementDTO;
+	private ClassDTO classDTO;
 	
 	public ReportClassDTO() {
 	}
 
 	public ReportClassDTO(int repCode, String email, String repContents, int classCode, Date repDate, int repTypeCode,
-			String repYn, ReportStatementDTO reportStatementDTO) {
+			String repYn, ReportStatementDTO reportStatementDTO, ClassDTO classDTO) {
 		super();
 		this.repCode = repCode;
 		this.email = email;
@@ -28,6 +31,7 @@ public class ReportClassDTO {
 		this.repTypeCode = repTypeCode;
 		this.repYn = repYn;
 		this.reportStatementDTO = reportStatementDTO;
+		this.classDTO = classDTO;
 	}
 
 	public int getRepCode() {
@@ -94,12 +98,22 @@ public class ReportClassDTO {
 		this.reportStatementDTO = reportStatementDTO;
 	}
 
+	public ClassDTO getClassDTO() {
+		return classDTO;
+	}
+
+	public void setClassDTO(ClassDTO classDTO) {
+		this.classDTO = classDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "ReportClassDTO [repCode=" + repCode + ", email=" + email + ", repContents=" + repContents
 				+ ", classCode=" + classCode + ", repDate=" + repDate + ", repTypeCode=" + repTypeCode + ", repYn="
-				+ repYn + ", reportStatementDTO=" + reportStatementDTO + "]";
+				+ repYn + ", reportStatementDTO=" + reportStatementDTO + ", classDTO=" + classDTO + "]";
 	}
+
+	
 
 	
 	

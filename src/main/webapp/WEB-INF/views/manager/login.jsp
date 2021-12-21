@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
     <title>관리자 로그인</title>
 
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/login/managerlogin.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/login/managerlogin.css?"
       rel="stylesheet"
     />
 
