@@ -20,6 +20,7 @@
        <!--  <collection property="categoryName" javaType="java.util.ArrayList" resultMap="categoryList" /> -->
     </resultMap>
    
+   
     
     <resultMap id="categoryList" type="CategoryDTO">
     	<id column="CATEGORY_CODE" property="categoryCode"/>
