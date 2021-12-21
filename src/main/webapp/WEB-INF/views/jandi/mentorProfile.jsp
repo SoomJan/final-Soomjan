@@ -122,9 +122,7 @@ p {
 					<hr class="border-1px-black" />
 					<br>
 					<textarea class="areaStyle" name="introduce" id="introText" rows="20" cols="20" wrap="hard"
-						style="border: 1px solid black" placeholder="소개를 작성해 주세요.">
-						${ requestScope.jandi.intro }
-						</textarea>
+						style="border: 1px solid black" placeholder="소개를 작성해 주세요.">${ requestScope.jandi.intro }</textarea>
 					<br><br>
 					<button type="submit" class="btnStyle btn">수정하기</button>
 				</form>

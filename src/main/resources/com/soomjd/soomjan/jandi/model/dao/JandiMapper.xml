@@ -223,7 +223,7 @@
 	<update id="updateAdDate">
 		UPDATE
 			   AD_TBL
-		   SET START_DATE=#{ selectedDate }
+		   SET START_DATE=SYSDATE+1
 		 WHERE AD_CODE=#{ adCode }  	   
 	
 	</update>

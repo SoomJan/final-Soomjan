@@ -18,7 +18,7 @@
 <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 
-<script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
+
 <script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
@@ -67,15 +67,15 @@ table {
 
 			<form action="${ pageContext.servletContext.contextPath }/jandi/jandiPay" method="POST" id="dateForm">
 				<input type="hidden" value="${ myAd.adCode }" id="adCode">
-				<button type="submit" id="kakao-pay" style="float: right">결제하기</button>
+				<button type=submit id="kakao-pay" style="float: right">결제하기</button>
 				<table style="width: 100%">
 					<tr>
 						<td style="width:30%">수업제목</td>
 						<td style="width:70%">${ myClasses.contents }</td>
 					</tr>
 					<tr>
-						<td style="width:30%">원하는 광고 시작날짜</td>
-						<td style="width:70%"><input type="week" id="selectedDate"></td>
+						<td style="width:30%">광고 시작날짜</td>
+						<td style="width:70%">${ startDate } - ${ endDate }</td>
 					</tr>
 					<tr>
 						<td style="width:30%">광고료</td>
@@ -87,35 +87,32 @@ table {
 			</form>
 
 		</div>
-		<script type="text/javascript">
+		<script>
+
+		let adCode=$('#adCode').val();
+		let adCodeJson={"adCode":adCode};
 		
-			let selectedDate = $('#selectedDate').val();
-			let adCode=$('#adCode').val();
-			
-			let insertData={selectedDate:selectedDate,adCode:adCode}
-			
 			$(function(){
 				$('#kakao-pay').click(function(){
-					$.ajax({
-						type:"POST",
-						async: async,
+					
+						$.ajax({
 						url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
-						dataType:"json",
-						data:JSON.stringify(insertDate),
-						contentType: 'application/json',
 						success:function(data){
-							alert("결제가 완료되었습니다.");
-							
-							var box=data.next_redirect_pc_url;
-							window.open(box);
+							alert("나는 천재입니다. ");
+						
+							console.log(data);
+							window.open(data,"","");
 							
 						},
-						error:function(error){
-							alert(error);
+						error:function(error,status,xhr){
+							alert("나는 바보입니다. ");
+							console.log(error);
+							console.log(stauts);
+							console.log(xhr);
 						}
 						
 					});
-					
+
 					
 				});
 			});
