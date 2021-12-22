@@ -32,4 +32,10 @@ public class FindJandiServiceImpl implements FindJandiService{
 		return null;
 	}
 
+	@Override
+	public List<JandiDTO> selectTopFindJandiList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
