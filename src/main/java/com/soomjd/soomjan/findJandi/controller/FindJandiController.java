@@ -47,7 +47,12 @@ public class FindJandiController {
 	}
 	
 	@GetMapping("/findTopJandiMain")
-	public void findTopJandiMain() {}
+	public void findTopJandiMain(Model model) {
+		
+		List<JandiDTO> jandiTopList = findJandiService.selectTopFindJandiList();
+		
+ 		
+	}
 	
 	@GetMapping("/detailJandi")
 	public void detailJandi() {}
