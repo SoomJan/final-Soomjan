@@ -392,6 +392,7 @@ public class ManagerController {
 		jsonObject.put("repCategory", repMember.getReportStatementDTO().getRepType());
 		jsonObject.put("repContents", repMember.getContents());
 		jsonObject.put("imgPath", repMember.getImgPath());
+		jsonObject.put("repNickName", repMember.getNickName());
 		
 		System.out.println("확인용 : \n" +jsonObject);
 		
@@ -400,7 +401,7 @@ public class ManagerController {
 	
 	
 	/**
-	 * 신고상세내용(신고처리)
+	 * 신고회원상세내용(신고처리)
 	 * @author 효진
 	 */
 	@PostMapping("confirm")
@@ -409,6 +410,26 @@ public class ManagerController {
 		System.out.println("repMember : " + repMember);
 	
 		int result = managerService.modifyConfirmMember(repMember);
+		
+		if(result > 0 ) {
+			System.out.println("신고처리성공");
+		} else {
+			System.out.println("신고처리실패");
+		}
+		
+		return "redirect:/manager/reportedmentee";
+	}
+	
+	/**
+	 * 신고회원상세내용(반려처리)
+	 * @author 효진
+	 */
+	@PostMapping("sendBack")
+	public String reportSendbackMember(@ModelAttribute ReportMemberDTO repMember) {
+		
+		System.out.println("repMember : " + repMember);
+		
+		int result = managerService.modifySendbackMember(repMember);
 		
 		if(result > 0 ) {
 			System.out.println("성공");
@@ -420,30 +441,58 @@ public class ManagerController {
 	}
 	
 	/**
-	 * 신고상세내용(반려처리)
+	 * 신고된 클래스 상세보기
 	 * @author 효진
 	 */
-	@PostMapping("sendBack")
-	public String reportSendbackMember(@ModelAttribute ReportMemberDTO repMember) {
+	@GetMapping(value = "repClassDetail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public ReportClassDTO repClassDetail(@RequestParam("repCode") int repCode) {
+		System.out.println(repCode);
+		ReportClassDTO repClass = managerService.selectRepClass(repCode);
+		System.out.println("repClass : " + repClass);
 		
-		System.out.println("repMember : " + repMember);
-		
-		int result = managerService.modifySendbackMember(repMember);
-		
-		return "redirect:/manager/reportedmentee";
+		return repClass;
 	}
 	
-	
-	/*
-	 * @GetMapping("/reportedmentor") public String reportedmentor(ManagerDTO
-	 * manager, Model model) {
-	 * 
-	 * List<ManagerDTO> managerList = managerService.allManager(manager);
-	 * System.out.println(managerList); model.addAttribute("managerList",
-	 * managerList);
-	 * 
-	 * return "manager/reportedmentor"; }
+	/**
+	 * 신고클래스 상세내용(신고처리)
 	 */
+	@PostMapping("classConfirm")
+	public String reportConfirmClass(@ModelAttribute ReportClassDTO repClass) {
+		
+		System.out.println("repClass : " + repClass);
+		
+		int result = managerService.modifyConfirmClass(repClass);
+		
+		if(result > 0 ) {
+			System.out.println("신고처리성공");
+			int result2 = managerService.modifyWarningCount(repClass);
+		} else {
+			System.out.println("신고처리실패");
+		}
+		
+		
+		return "redirect:/manager/reportedboard";
+	}
+	
+	/**
+	 * 신고클래스 상세내용(반려처리)
+	 */
+	@PostMapping("classSendBack")
+	public String reportSendBackClass(@ModelAttribute ReportClassDTO repClass) {
+		
+		System.out.println("repCLass : " + repClass);
+		
+		int result = managerService.modifySendbackClass(repClass);
+		
+		if(result > 0 ) {
+			System.out.println("성공");
+		} else {
+			System.out.println("실패");
+		}
+		
+		return "redirect:/manager/reportedboard";
+	}
 	
 	// 클래스 카테고리 조회
 	@GetMapping("/modifycategory")

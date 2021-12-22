@@ -13,6 +13,8 @@ public class ReportClassDTO {
 	private java.sql.Date repDate;
 	private int repTypeCode;
 	private String repYn;
+	private String categoryName;
+	private String nickName;
 	
 	private ReportStatementDTO reportStatementDTO;
 	private ClassDTO classDTO;
@@ -21,7 +23,8 @@ public class ReportClassDTO {
 	}
 
 	public ReportClassDTO(int repCode, String email, String repContents, int classCode, Date repDate, int repTypeCode,
-			String repYn, ReportStatementDTO reportStatementDTO, ClassDTO classDTO) {
+			String repYn, String categoryName, String nickName, ReportStatementDTO reportStatementDTO,
+			ClassDTO classDTO) {
 		super();
 		this.repCode = repCode;
 		this.email = email;
@@ -30,6 +33,8 @@ public class ReportClassDTO {
 		this.repDate = repDate;
 		this.repTypeCode = repTypeCode;
 		this.repYn = repYn;
+		this.categoryName = categoryName;
+		this.nickName = nickName;
 		this.reportStatementDTO = reportStatementDTO;
 		this.classDTO = classDTO;
 	}
@@ -90,6 +95,22 @@ public class ReportClassDTO {
 		this.repYn = repYn;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	public ReportStatementDTO getReportStatementDTO() {
 		return reportStatementDTO;
 	}
@@ -110,11 +131,9 @@ public class ReportClassDTO {
 	public String toString() {
 		return "ReportClassDTO [repCode=" + repCode + ", email=" + email + ", repContents=" + repContents
 				+ ", classCode=" + classCode + ", repDate=" + repDate + ", repTypeCode=" + repTypeCode + ", repYn="
-				+ repYn + ", reportStatementDTO=" + reportStatementDTO + ", classDTO=" + classDTO + "]";
+				+ repYn + ", categoryName=" + categoryName + ", nickName=" + nickName + ", reportStatementDTO="
+				+ reportStatementDTO + ", classDTO=" + classDTO + "]";
 	}
 
-	
-
-	
 	
 }

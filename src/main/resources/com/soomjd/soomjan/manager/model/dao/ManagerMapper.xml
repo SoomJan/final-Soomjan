@@ -100,6 +100,7 @@
         <result column="REP_TYPE_CODE" property="repTypeCode"/>
         <result column="IMG_PATH" property="imgPath"/>
         <result column="REP_YN" property="repYn"/>
+        <result column="NICKNAME" property="nickName"/>
         
         <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
     </resultMap>
@@ -117,6 +118,8 @@
         <result column="REP_DATE" property="repDate"/>
         <result column="REP_TYPE_CODE" property="repTypeCode"/>
         <result column="REP_YN" property="repYn"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="NICKNAME" property="nickName" />
         
         <association property="classDTO" resultMap="classResultMap"></association>
         <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
@@ -596,6 +599,7 @@
 		     , F.IMG_PATH
 		     , F.REP_YN
 		     , F.REP_TYPE
+		     , F.NICKNAME
 		  FROM (SELECT ROWNUM RNUM 
 		             , D.REP_CODE
 		             , D.EMAIL
@@ -606,6 +610,7 @@
 		             , D.IMG_PATH
 		             , D.REP_YN
 		             , D.REP_TYPE
+		             , D.NICKNAME
 		          FROM (SELECT
 		                       R.REP_CODE
 		                     , R.EMAIL
@@ -616,8 +621,10 @@
 		                     , R.IMG_PATH
 		                     , R.REP_YN
 		                     , S.REP_TYPE
+		                     , A.NICKNAME
 		                  FROM REPORT_MEMBER_TBL R
 		                  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		                  JOIN SSACK_TBL A ON(A.EMAIL = R.REP_EMAIL)
 		                  <where>
 		 	     		 	<if test="searchCondition == 1">
 		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
@@ -668,6 +675,7 @@
 		     , F.REP_YN
 		     , F.REP_TYPE
 		     , F.TITLE
+		     , F.NICKNAME
 		  FROM (SELECT ROWNUM RNUM 
 		             , D.REP_CODE
 		             , D.EMAIL
@@ -678,6 +686,7 @@
 		             , D.REP_YN
 		             , D.REP_TYPE
 		             , D.TITLE
+		             , D.NICKNAME
 		          FROM (SELECT
 		                       R.REP_CODE
 		                     , R.EMAIL
@@ -688,9 +697,11 @@
 		                     , R.REP_YN
 		                     , S.REP_TYPE
 		                     , C.TITLE
+		                     , A.NICKNAME
 		                  FROM REPORT_CLASS_TBL R
 		                  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
 		                  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
+		                  JOIN JANDI_TBL A ON(A.EMAIL = C.EMAIL)
 		                  <where>
 		 	     		 	<if test="searchCondition == 1">
 		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
@@ -722,8 +733,10 @@
 		     , R.IMG_PATH
 		     , R.REP_YN
 		     , S.REP_TYPE
+		     , A.NICKNAME
 		  FROM REPORT_MEMBER_TBL R
 		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN SSACK_TBL A ON(A.EMAIL = R.REP_EMAIL)
 		 WHERE R.REP_CODE = #{ repCode }
 	</select>
 	
@@ -738,5 +751,39 @@
 		   SET REP_YN = 'N'
 		 WHERE REP_CODE = #{ repCode }
 	</update>
+	
+	<update id="modifyConfirmClass" parameterType="ReportClassDTO">
+		UPDATE REPORT_CLASS_TBL
+		   SET REP_YN = 'Y'
+		 WHERE REP_CODE = #{ repCode }
+	</update>
 
+	<update id="modifySendbackClass" parameterType="ReportClassDTO">
+		UPDATE REPORT_CLASS_TBL
+		   SET REP_YN = 'N'
+		 WHERE REP_CODE = #{ repCode }
+	</update>
+	
+	<select id="selectRepClass" resultMap="reportClassResultSet">
+		SELECT
+		       R.REP_CODE
+		     , R.EMAIL
+		     , R.REP_CONTENTS
+		     , R.CLASS_CODE
+		     , R.REP_DATE
+		     , R.REP_TYPE_CODE
+		     , R.REP_YN
+		     , S.REP_TYPE
+		     , C.CATEGORY_NAME
+		     , CL.TITLE
+		     , J.NICKNAME
+		 FROM REPORT_CLASS_TBL R
+		 JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		 JOIN CLASS_TBL CL ON (CL.CLASS_CODE = R.CLASS_CODE)
+		 JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = CL.CATEGORY_CODE)
+		 JOIN JANDI_TBL J ON(J.EMAIL = CL.EMAIL)
+		WHERE R.REP_CODE = #{ repCode }
+	</select>
+
+	
 </mapper>

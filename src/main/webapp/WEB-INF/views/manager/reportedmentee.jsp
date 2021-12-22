@@ -8,7 +8,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <title>신고된 회원 조회</title>
 
     <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
+      href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css?"
       rel="stylesheet"
     />
 
@@ -54,7 +54,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       
       .inputSyle{
 		border-radius: 0.5rem;
-		border: 1.5px solid green;
+		border: 1.5px solid #91C788;
+		background-color: #91C788;
 		height: 30px;
 		padding:2%;
 	  }
@@ -62,7 +63,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	 .contents{
 		resize: none;
 		border-radius: 0.5rem;
-		border: 1.5px solid green;
+		border: 1.5px solid #91C788;
+		background-color: #91C788;
 		height: 100px;
 		padding:2%;
 	
@@ -86,7 +88,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     .modal-header{text-align: center;}
     .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
     .context-modal-btn { margin-left: 70%;}
-    #repEmail {margin-left: 12%;}
+    #repEmail {margin-left: 11%;}
+    #repNickName {margin-left: 11%;}
     #repCategory { position: relative; left: 10px;}
     .modal-body {margin-left: 8%;}
     #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
@@ -104,7 +107,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
-              <th>신고된 회원</th>
+              <th>이메일</th>
+              <th>닉네임</th>
               <th>내용</th>
               <th>신고 사유</th>
               <th>신고 날짜</th>
@@ -115,6 +119,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <c:forEach var="reportedMember" items="${ sessionScope.reportMemberList }">
             <tr class="repbtn">
               <td>${ reportedMember.repEmail }</td>
+              <td>${ reportedMember.nickName }</td>
               <td>${ reportedMember.contents }</td>
               <td>${ reportedMember.reportStatementDTO.repType }</td>
               <td>${ reportedMember.repDate }</td>
@@ -158,13 +163,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <!-- 신고 자세히보기 모달창 -->
     <form id="repForm" method="POST">
    <div class="ui small modal" id="repMembermodal">
-       <div class="header modal-header"><h2>신고 내용 자세히 보기</h2><img id="xbtn" src="${ pageContext.servletContext.contextPath }/resources/images/xbtn.png" onclick="modalEndBtn(this)"></div>
+       <div class="header modal-header"><h3>신고 회원 상세내용</h3><img id="xbtn" src="${ pageContext.servletContext.contextPath }/resources/images/xbtn.png" onclick="modalEndBtn(this)"></div>
        <div class="content end-content">
         <br>
           <div class="modal-body" align="left"> 
           	신고카테고리 <input type="text" class="inputSyle repCategory" id="repCategory" name="repCategory" style="width: 300px;" readonly> 
 			<br><br>
 			이메일 <input type="text" class="inputSyle repEmail" id="repEmail" name="repEmail" style="width: 300px;" readonly> 
+			<br><br>
+			닉네임 <input type="text" class="inputSyle repNickName" id="repNickName" name="repNickName" style="width: 300px;" readonly> 
 			<br><br>
 			이미지 첨부<br>
 			<br>
@@ -199,6 +206,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   					console.log(data.repCategory);
   					$('#repCategory').val(data.repCategory);
   					$('#repEmail').val(data.repEmail);
+  					$('#repNickName').val(data.repNickName);
   					$('#repContents').val(data.repContents);
   					$('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
   				},
