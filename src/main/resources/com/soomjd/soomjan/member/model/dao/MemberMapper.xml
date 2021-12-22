@@ -16,6 +16,7 @@
         <result column="ENROLL_DATE" property="enrollDate"/>
         <result column="IS_EXIT" property="isExit"/>
         <result column="NAME" property="name"/>
+        <result column="BLACK_END_DATE" property="blackEndDate"/>
     </resultMap>
     
     <insert id="insertMember" parameterType="MemberDTO">
@@ -75,6 +76,7 @@
 			 , A.ENROLL_DATE
 			 , A.IS_EXIT
 			 , A.NAME
+			 , A.BLACK_END_DATE
 		  FROM SSACK_TBL A
 		 WHERE A.EMAIL = #{ email }
 		   AND A.IS_EXIT = 'N'
@@ -161,5 +163,23 @@
 		  FROM EMAIL_CHECK_TBL A
 		 WHERE A.EMAIL = #{ value }
     </select>
+    
+   	<select id="selectJandiNickDupCheck" resultType="_int">
+		SELECT COUNT(EMAIL)
+		FROM JANDI_TBL
+		WHERE NICKNAME = #{ nickName }
+	</select>
+	
+	<select id="selectBlackDDay" resultType="_double">
+		SELECT BLACK_END_DATE - SYSDATE
+   		  FROM SSACK_TBL
+  		 WHERE EMAIL = #{ email }
+	</select>
+	
+	<update id="modifyBlackStatus">
+		UPDATE SSACK_TBL
+		   SET IS_BLACK = 'N'
+		 WHERE EMAIL = #{ email }
+	</update>
 
 </mapper>

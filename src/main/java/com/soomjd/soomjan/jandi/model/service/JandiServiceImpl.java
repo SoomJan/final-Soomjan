@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.jandi.model.dao.JandiMapper;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
@@ -105,8 +106,8 @@ public class JandiServiceImpl implements JandiService{
 	}
 
 	@Override
-	public int selectNickDupCheck(String nickName) {
-		return jandiMapper.selectNickDupCheck(nickName);
+	public List<FindClassDTO> selectThumbnailClass(String email) {
+		return jandiMapper.selectThumbnailClass(email);
 	}
 
 

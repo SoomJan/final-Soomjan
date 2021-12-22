@@ -108,12 +108,21 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.pwdCheck(email);
 	}
 
+	@Override
+	public int selectJandiNickDupCheck(String nickName) {
+		return mapper.selectJandiNickDupCheck(nickName);
+	}
+
+	@Override
+	public double selectBlackDDay(String email) {
+		return mapper.selectBlackDDay(email);
+	}
+
+	@Override
+	public boolean modifyBlackStatus(String email) {
+		return mapper.modifyBlackStatus(email);
+	}
 
 
-	
-
-	
-
-	
 
 }

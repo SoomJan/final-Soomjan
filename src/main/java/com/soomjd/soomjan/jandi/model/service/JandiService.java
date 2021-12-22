@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
@@ -39,7 +40,6 @@ public interface JandiService {
 
 	boolean modifyNickName(JandiDTO jandi);
 
-	int selectNickDupCheck(String nickName);
-
+	List<FindClassDTO> selectThumbnailClass(String email);
 
 }

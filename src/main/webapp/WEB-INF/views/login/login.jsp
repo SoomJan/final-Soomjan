@@ -85,8 +85,10 @@ pageEncoding="UTF-8"%>
                   showModal("비밀번호를 잘못 입력하셨습니다.");
                 } else if(data == "emailFalse") {
                   showModal("존재하지 않는 이메일입니다.");
-                } else {
+                } else if (data == "true"){
                   location.href="${ pageContext.servletContext.contextPath }/";
+                }else {
+                  showModal(data);
                 }
               },
               error: function(error) {
@@ -115,7 +117,7 @@ pageEncoding="UTF-8"%>
 
 <!-- 모달창 모아두는 곳 -->
 
-<div class="ui mini modal" id="Modal">
+<div class="ui mini modal" id="Modal" >
   <div class="contents">
     <p class="titles" id="modalTitle"></p>
     <div class="re-modal-btn">
