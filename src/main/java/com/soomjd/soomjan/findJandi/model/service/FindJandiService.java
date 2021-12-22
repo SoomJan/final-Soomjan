@@ -9,4 +9,6 @@ public interface FindJandiService {
 	List<JandiDTO> selectfindJandi();
 	
 	List<JandiDTO> mainJandi();
+
+	List<JandiDTO> selectTopFindJandiList();
 }
