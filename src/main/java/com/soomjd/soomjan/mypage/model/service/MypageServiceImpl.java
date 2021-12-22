@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.common.paging.SelectCriteria;
+import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
@@ -150,6 +151,16 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int deleteReview(int rvCode) {
 		return mapper.deleteReview(rvCode);
+	}
+
+	@Override
+	public boolean registJandi(JandiDTO jandi) {
+		return mapper.registJandi(jandi);
+	}
+
+	@Override
+	public boolean modifyIsJandi(String email) {
+		return mapper.modifyIsJandi(email);
 	}
 	
 	

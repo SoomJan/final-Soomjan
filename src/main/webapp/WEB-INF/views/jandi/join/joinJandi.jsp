@@ -8,6 +8,11 @@
 <title>멘토 프로필</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 <style>
 .warningtable tbody {
 	text-align: center;
@@ -194,12 +199,12 @@ input:focus{
 		</div>
 		<div class="sidebar-inner-name1">
 			<ul>
-				<li><a href="${ pageContext.servletContext.contextPath }/member/joinJandi">정보 입력</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/mypage/joinJandi">정보 입력</a></li>
 			</ul>
 		</div>
 		</div>
 			<div class="sidebar-content">
-				<form id="registJandiForm" action="${ pageContext.servletContext.contextPath }/member/registJandi" method="post">
+				<form id="registJandiForm" action="${ pageContext.servletContext.contextPath }/mypage/registJandi" method="post">
 				<div class="introduce" style="padding: 3%" >
 					<div class="introduce-detail">
 						<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/sprout.png"

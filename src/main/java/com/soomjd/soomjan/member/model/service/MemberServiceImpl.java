@@ -79,16 +79,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean registJandi(JandiDTO jandi) {
-		return mapper.registJandi(jandi);
-	}
-
-	@Override
-	public boolean modifyIsJandi(String email) {
-		return mapper.modifyIsJandi(email);
-	}
-
-	@Override
 	public boolean mailCheckInsert(String authNum) {
 		
 		return mapper.mailCheckInsert(authNum);
