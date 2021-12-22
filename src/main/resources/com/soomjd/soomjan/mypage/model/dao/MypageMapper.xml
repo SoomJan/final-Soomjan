@@ -571,4 +571,35 @@
           </foreach>
 	</update>
 
+
+	    <insert id="registJandi" parameterType="com.soomjd.soomjan.jandi.model.dto.JandiDTO">
+    	INSERT INTO 
+    		   JANDI_TBL J
+   		   (
+   		   		  J.EMAIL
+   		   		, J.NICKNAME
+   		   		, J.CAREER
+   		   		, J.INTRO
+   		   		, J.ENROLL_DATE
+   		   		, J.ACCOUNT
+   		   		, J.BANK
+   		   		, J.ACC_NAME
+		  	)
+		  	VALUES(
+		  		  #{ email }
+		  		, #{ nickName }
+		  		, #{ career }
+		  		, #{ intro }
+		  		, SYSDATE
+		  		, #{ account }
+		  		, #{ bank }
+		  		, #{ acc_name }
+		  	)
+    </insert>
+    
+    <update id="modifyIsJandi">
+    	UPDATE SSACK_TBL SS
+    	   SET SS.IS_JANDI = 'Y'
+    	 WHERE SS.EMAIL = #{ email }
+    </update>
 </mapper>

@@ -19,10 +19,6 @@ public interface MemberService {
 
 	boolean updatePwd(Map<String, String> map);
 
-	boolean registJandi(JandiDTO jandi);
-
-	boolean modifyIsJandi(String email);
-
 	String selectEncPassword(Map<String, String> map);
 
 	boolean selectEmail(Map<String, String> map);

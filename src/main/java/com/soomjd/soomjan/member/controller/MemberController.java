@@ -299,35 +299,6 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("joinJandi")
-	public String joinJandi() {
-		
-		return "jandi/join/joinJandi";
-	}
 	
-	@PostMapping("registJandi")
-	public String registJandi(@ModelAttribute JandiDTO jandi, Model model, RedirectAttributes rttr)
-			throws MemberRegistException {
-		
-		MemberDTO member = (MemberDTO)model.getAttribute("loginMember");
-		String email = member.getEmail();
-		jandi.setEmail(email);
-
-		System.out.println(jandi);
-		
-		if(memberService.registJandi(jandi) && memberService.modifyIsJandi(jandi.getEmail())) {
-			member.setIsJandi('Y');
-			
-			model.addAttribute("isjandi", "Y");
-			model.addAttribute("loginMember", member);
-			
-			rttr.addFlashAttribute("jandiRegistMessage", "잔디 가입을 축하합니다.");
-		}else {
-			rttr.addFlashAttribute("jandiRegistMessage", "잔디 가입에 실패했습니다. ");
-		}
-
-		return "redirect:/";
-	}
-
 	
 }
