@@ -20,30 +20,30 @@ pageEncoding="UTF-8"%>
     <main class="fullJoin">
        
         <div class="head">
-            <div class="thumbnail" id="timage"><img src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png" style="width: 60px; height: 60px; "></div>
+            <div id="timage"><img src="${ pageContext.servletContext.contextPath }/resources/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">비밀번호 찾기 </div>
         </div>
  
         <br><br><br><br>
         <form method="post" id="submitForm"> 
         <div class="content">
-            <div class="title">이름</div>
+            <div class="title" style="text-align: center;">이름</div>
             <input type="text" placeholder="이름을 입력하세요" name="name" id="name">
         </div>
 
         <br><br>
         
         <div class="content">
-            <div class="title">이메일</div>
-            <input type="text" placeholder="이메일을 입력하세요" name="email" id="email" style="margin-left: 47px;">
+            <div class="title" style="text-align: center;">이메일</div>
+            <input type="text" placeholder="이메일을 입력하세요" name="email" id="email">
         </div>
 
        
         <br><br><br><br><br><br><br><br>
-        <div style="position: relative; left: 35%; bottom: 90px;" class="pwdbtn">
-            <button type="button" onclick="return finishbtn()">확인</button>
+        <div style="position: relative; left: 40%; bottom: 90px;" class="emailbtn">
+            <button type="button" id="goFind" onclick="return finishbtn()">확인</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="reset">취소</button>
+            <button id="reset" type="reset">취소</button>
         </div>
       </form>
 
@@ -91,6 +91,18 @@ pageEncoding="UTF-8"%>
                 $("#Modal").fadeOut();
               });
           };
+
+         /* 마우스 커서 이벤트 */
+          $(function() {
+            $(".emailbtn > button").hover(
+              function () {
+                $(this).css("color", "black").css("cursor", "pointer");
+              },
+              function () {
+                $(this).css("color", "white").css("cursor", "default");
+              }
+            );
+          }); 
         </script>
 
     </main>

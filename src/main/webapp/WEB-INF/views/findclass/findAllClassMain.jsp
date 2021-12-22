@@ -75,8 +75,8 @@ pageEncoding="UTF-8"%>
 				
 				<c:forEach var="findClassList" items="${ findClassList }">
 				<div class="col-lg-4 col-sm-6 mb-4">
-					<div class="card">
-						<img class="card-img-top"
+					<div class="card" style="border: 1px solid green;">
+						<img class="card-img-top" style=" height: 200px;"
 							src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ findClassList.filePath}"
 							alt="Card image cap">
 						<div class="card-body little-profile text-center">
@@ -89,7 +89,7 @@ pageEncoding="UTF-8"%>
 							<p>${ findClassList.title}</p>
 							<a href="javascript:void(0)"
 								class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded"
-								style="margin-bottom: 16px;" data-abc="true"
+								style="margin-bottom: 16px; background-color: #91c788; border: 1px solid green;" data-abc="true"
 								onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ findClassList.classCode }'">자세히보기</a>
 							<div class="row text-center m-t-20">
 								<div class="col-lg-1 col-md-4 m-t-20">

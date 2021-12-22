@@ -12,6 +12,16 @@
 .class-title {font-weight: 700;}
 .date{font-size: 12px;}
 
+#deleteClass {
+  border-radius: 0.5rem;
+  font-size: 12px;
+  border-color: #91c788;
+  width: 80px;
+  height: 30px;
+  background-color: #91c788;
+  color: white;
+}
+
 
 
 /* 삭제 모달창 */

@@ -20,7 +20,7 @@ pageEncoding="UTF-8"%>
     <main class="fullJoin">
        
         <div class="head">
-            <div class="thumbnail" id="timage"><img src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png" style="width: 60px; height: 60px; "></div>
+            <div id="timage"><img src="${ pageContext.servletContext.contextPath }/resources/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">비밀번호 찾기 </div>
         </div>
  
@@ -28,10 +28,8 @@ pageEncoding="UTF-8"%>
         <form>
         <div class="content">
             <div class="title">새로운 비밀번호</div>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" placeholder="최소 8 자, 대문자 하나 이상, 소문자 하나, 숫자 하나 및 특수 문자 하나 이상">
             <div class="pwdCheck">
-              최소 8 자, 대문자 하나 이상, 소문자 하나, 숫자 하나 및 특수 문자
-              하나 이상
             </div>
             <input type="checkbox" id="pwdBoolean" style="display: none" />
         </div>
@@ -49,7 +47,7 @@ pageEncoding="UTF-8"%>
 
        
         <br><br><br><br><br><br><br><br>
-        <div style="align-items: center; width: fit-content; margin: auto;">
+        <div style="position: relative; left: 38%; bottom: 100px;" class="emailbtn">
             <button onclick="return goLogin()">확인</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="reset">취소</button>
@@ -141,6 +139,16 @@ pageEncoding="UTF-8"%>
                 $("#Modal").fadeOut();
               });
           };
+
+          /* 마우스 커서 이벤트 */
+          $(".emailbtn > button").hover(
+              function () {
+                $(this).css("color", "black").css("cursor", "pointer");
+              },
+              function () {
+                $(this).css("color", "white").css("cursor", "default");
+              }
+            );  
 
         </script>
     </main>

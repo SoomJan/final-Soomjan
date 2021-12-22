@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%>
     <main class="fullJoin">
        
         <div class="head">
-            <div class="thumbnail" id="timage"><img src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png" style="width: 60px; height: 60px; "></div>
+            <div id="timage"><img src="${ pageContext.servletContext.contextPath }/resources/images/join.png" style="width: 70px; height: 70px; "></div>
             <div class="thumbnail" id="ttext">이메일 찾기 </div>
         </div>
  
@@ -42,7 +42,7 @@ pageEncoding="UTF-8"%>
         <div style="position: relative; left: 38%; bottom: 90px;" class="emailbtn">
             <button id="goFind" type="submit">확인</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="reset">취소</button>
+            <button id="reset" type="reset">취소</button>
         </div>
       </form>
 
@@ -68,7 +68,7 @@ pageEncoding="UTF-8"%>
                   if(!data) {
                     showModal("찾으시는 이메일이 존재하지 않습니다.");
                   } else {
-                    showModal("찾으시는 이메일은 " + data + "입니다.");
+                    showModal("찾으시는 이메일은 <br>" + data + "입니다.");
                   }
                 },
                 error: function(error) {
@@ -88,6 +88,19 @@ pageEncoding="UTF-8"%>
                 $("#Modal").fadeOut();
               });
           };
+
+      /* 마우스 커서 이벤트 */
+      $(function() {
+        $(".emailbtn > button").hover(
+          function () {
+            $(this).css("color", "black").css("cursor", "pointer");
+          },
+          function () {
+            $(this).css("color", "white").css("cursor", "default");
+          }
+        );
+      });
+
       </script>
     </main>
     <jsp:include page="../common/footer.jsp" />

@@ -29,7 +29,7 @@
           }
 
           .jjimtable thead tr th a {
-            color: gray !important;
+            color: #00811e !important;
           }
 
           .jjimcheck {
@@ -101,8 +101,8 @@
               <thead>
                 <tr>
                   <th colspan="3">클래스정보</th>
-                  <th id="th1"><a id="deletebtn">삭제하기</a></th>
-                  <th id="th2" style="display: none;"><a id="returnbtn">되돌리기</a></th>
+                  <th id="th1"><a class="onButton" id="deletebtn">삭제하기</a></th>
+                  <th id="th2" style="display: none;"><a class="onButton" id="returnbtn">되돌리기</a></th>
                 </tr>
               </thead>
               <tbody>
@@ -272,9 +272,21 @@
                 });
               });
 
+              /* 마우스 커서 이벤트 */
+              $(function(){
+                $(".onButton").hover(
+                  function () {
+                    $(this).css("color", "black").css("cursor", "pointer");
+                  },
+                  function () {
+                    $(this).css("color", "white").css("cursor", "default");
+                  }
+                );      
+              });
+
 
             </script>
-            <input id="deleteClass" type="button" value="클래스 삭제" style="float: right; display: none;">
+            <input id="deleteClass" class="onButton" type="button" value="클래스 삭제" style="float: right; display: none;">
             <jsp:include page="../common/Paging.jsp" />
           </c:when>
         </c:choose>

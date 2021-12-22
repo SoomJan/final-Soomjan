@@ -26,10 +26,10 @@ pageEncoding="UTF-8"%>
 
     <main class="fullJoin">
       <div class="head">
-        <div class="thumbnail" id="timage">
+        <div id="timage">
           <img
-            src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"
-            style="width: 60px; height: 60px"
+            src="${ pageContext.servletContext.contextPath }/resources/images/join.png"
+            style="width: 70px; height: 70px;" 
           />
         </div>
         <div class="thumbnail" id="ttext">회원가입</div>
@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
             name="name"
             id="name"
           />
-          <div class="nameCheck"></div>
+          <div class="nameCheck" style="margin-top: 1%;"></div>
           <input type="checkbox" id="nameBoolean" style="display: none" />
         </div>
 
@@ -55,9 +55,9 @@ pageEncoding="UTF-8"%>
         <div class="content">
             <div class="title">이메일</div>
             <input type="text" placeholder="이메일을 입력하세요" name="email" id="email">
-            <button type="button" onclick="return duplicationCheck()">중복확인</button>
-            <button type="button" id="proofButton" onclick="return sendMail()" style="display: none;">이메일 인증하기</button>
-            <div class="emailCheck"></div>
+            <button type="button" class="onButton" onclick="return duplicationCheck()">중복확인</button>
+            <button type="button" class="onButton" id="proofButton" onclick="return sendMail()" style="display: none;">이메일 인증</button>
+            <div class="emailCheck" style="margin-top: 1%;"></div>
             <input type="checkbox" id="emailBoolean" style="display: none;">
             <input type="checkbox" id="emailBoolean2" style="display: none;">
             <input type="checkbox" id="emailBoolean3" style="display: none;">
@@ -67,8 +67,8 @@ pageEncoding="UTF-8"%>
 
         <div class="content">
           <div class="title">인증번호</div>
-          <input type="text" name="proof" id="proof">
-          <div class="proofCheck"></div>
+          <input type="text" name="proof" id="proof" placeholder="인증 번호를 입력하세요">
+          <div class="proofCheck" style="margin-top: 1%;"></div>
           <input type="checkbox" id="proofBoolean" style="display: none" />
         </div>
 
@@ -76,10 +76,8 @@ pageEncoding="UTF-8"%>
 
         <div class="content">
           <div class="title">비밀번호</div>
-          <input type="password" name="password" id="password" />
-          <div class="pwdCheck">
-            최소 8 자, 대문자 하나 이상, 소문자 하나, 숫자 하나 및 특수 문자
-            하나 이상
+          <input type="password" name="password" id="password" placeholder="최소 8 자, 대문자 하나 이상, 소문자 하나, 숫자 하나 및 특수 문자 하나 이상" />
+          <div class="pwdCheck" style="margin-top: 1%;">
           </div>
           <input type="checkbox" id="pwdBoolean" style="display: none" />
         </div>
@@ -88,7 +86,7 @@ pageEncoding="UTF-8"%>
         <div class="content">
           <div class="title">비밀번호 확인</div>
           <input type="password" name="password2" id="password2" />
-          <div class="pwdCheck2"></div>
+          <div class="pwdCheck2" style="margin-top: 1%;"></div>
           <input type="checkbox" id="pwdBoolean2" style="display: none" />
         </div>
 
@@ -97,7 +95,7 @@ pageEncoding="UTF-8"%>
         <div class="content">
           <div class="title">닉네임</div>
           <input type="text" name="nickName" id="nickName"/>
-          <button type="button" onclick="return duplicationCheck2()">중복확인</button>
+          <button type="button" class="onButton" onclick="return duplicationCheck2()">중복확인</button>
           <input type="checkbox" id="nickBoolean" style="display: none" />
         </div>
 
@@ -111,15 +109,15 @@ pageEncoding="UTF-8"%>
             name="phone"
             id="phone"
           />
-          <div class="phoneCheck"></div>
+          <div class="phoneCheck" style="margin-top: 1%;"></div>
           <input type="checkbox" id="phoneBoolean" style="display: none" />
         </div>
 
         <br /><br /><br />
         <div style="align-items: center; width: fit-content; margin: auto">
-          <button id="confirm">확인</button>
+          <button class="onButton" id="confirm">확인</button>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type="reset">취소</button>
+          <button class="onButton" type="reset">취소</button>
         </div>
       </form>
 
@@ -399,6 +397,18 @@ pageEncoding="UTF-8"%>
                 $("#Modal").fadeOut();
               });
           };
+
+          /* 마우스 커서 이벤트 */
+          $(function() {
+              $(".onButton").hover(
+                function () {
+                  $(this).css("color", "black").css("cursor", "pointer");
+                },
+                function () {
+                  $(this).css("color", "white").css("cursor", "default");
+                }
+              );
+            });
 
 
       </script>

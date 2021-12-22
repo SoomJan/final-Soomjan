@@ -14,8 +14,8 @@ pageEncoding="UTF-8"%>
     <style>
       input[type="checkbox"]{
           display: inline-block;
-          width: 30px;
-          height: 30px;
+          width: 25px;
+          height: 25px;
           border: 3px solid black;
           position: relative;
       }
@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
       <div id="title">
         숨은잔디 이용약관
       </div>
-
+      
       <br><br>
     
     <div class="checkUnit">
@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
           <input type="checkbox" id="checkAll">
           <label for="checkAll"></label>
       </div>
-      <div class="comment" style="font-weight: 800;"> 
+      <div class="comment" style="font-weight: 800; color: green;"> 
       	숨은잔디 이용약관, 개인정보 수집 및 이용, 위치정보 이용약관(선택),프로모션 정보 수신(선택)에 모두 동의합니다.
       
       </div>
