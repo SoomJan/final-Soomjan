@@ -219,4 +219,29 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.modifySendbackMember(repMember);
 	}
 
+
+	@Override
+	public int modifyConfirmClass(ReportClassDTO repClass) {
+		return mapper.modifyConfirmClass(repClass);
+	}
+
+
+	@Override
+	public int modifySendbackClass(ReportClassDTO repClass) {
+		return mapper.modifySendbackClass(repClass);
+	}
+
+
+	@Override
+	public ReportClassDTO selectRepClass(int repCode) {
+		return mapper.selectRepClass(repCode);
+	}
+
+
+	@Override
+	public int modifyWarningCount(ReportClassDTO repClass) {
+		return mapper.modifyWarningCount(repClass);
+	}
+
+
 }

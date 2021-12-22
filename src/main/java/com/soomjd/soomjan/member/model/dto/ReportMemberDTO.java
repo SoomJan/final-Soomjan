@@ -16,13 +16,15 @@ public class ReportMemberDTO {
 	private String orgImgPath;
 	private char repYn;
 	private String repType;
+	private String nickName;
 	
 	private ReportStatementDTO reportStatementDTO;
 	
 	public ReportMemberDTO() {}
 
 	public ReportMemberDTO(String email, int repCode, String contents, Date repDate, String imgPath, String repEmail,
-			int repTypeCode, String orgImgPath, char repYn, String repType, ReportStatementDTO reportStatementDTO) {
+			int repTypeCode, String orgImgPath, char repYn, String repType, String nickName,
+			ReportStatementDTO reportStatementDTO) {
 		super();
 		this.email = email;
 		this.repCode = repCode;
@@ -34,6 +36,7 @@ public class ReportMemberDTO {
 		this.orgImgPath = orgImgPath;
 		this.repYn = repYn;
 		this.repType = repType;
+		this.nickName = nickName;
 		this.reportStatementDTO = reportStatementDTO;
 	}
 
@@ -117,6 +120,14 @@ public class ReportMemberDTO {
 		this.repType = repType;
 	}
 
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	public ReportStatementDTO getReportStatementDTO() {
 		return reportStatementDTO;
 	}
@@ -129,11 +140,10 @@ public class ReportMemberDTO {
 	public String toString() {
 		return "ReportMemberDTO [email=" + email + ", repCode=" + repCode + ", contents=" + contents + ", repDate="
 				+ repDate + ", imgPath=" + imgPath + ", repEmail=" + repEmail + ", repTypeCode=" + repTypeCode
-				+ ", orgImgPath=" + orgImgPath + ", repYn=" + repYn + ", repType=" + repType + ", reportStatementDTO="
-				+ reportStatementDTO + "]";
+				+ ", orgImgPath=" + orgImgPath + ", repYn=" + repYn + ", repType=" + repType + ", nickName=" + nickName
+				+ ", reportStatementDTO=" + reportStatementDTO + "]";
 	}
 
-	
 	
 	
 }

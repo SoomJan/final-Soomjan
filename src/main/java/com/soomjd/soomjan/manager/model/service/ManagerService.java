@@ -78,14 +78,33 @@ public interface ManagerService {
 	// 신고된 멤버 조회
 	List<ReportMemberDTO> selectReportMember(SelectCriteria selectCriteria);
 
+	// 신고된 멤버 조회
 	List<ReportClassDTO> selectReportClass(SelectCriteria selectCriteria);
 
+	// 신고된 클래스 목록 갯수
 	int selectReportClassTotalCount(Map<String, String> searchMap);
 
+	// 신고된 회원 상세조회
 	ReportMemberDTO selectRepMember(int repCode);
 
+	// 신고된 회원 신고처리
 	int modifyConfirmMember(ReportMemberDTO repMember);
 
+	// 신고된 회원 반려처리
 	int modifySendbackMember(ReportMemberDTO repMember);
+
+	// 신고된 클래스 신고처리
+	int modifyConfirmClass(ReportClassDTO repClass);
+
+	// 신고된 클래스 반려처리
+	int modifySendbackClass(ReportClassDTO repClass);
+
+	// 신고된 클래스 상세조회
+	ReportClassDTO selectRepClass(int repCode);
+
+	// 신고된 클래스를 가진 회원 경고 처리
+	int modifyWarningCount(ReportClassDTO repClass);
+
+
 
 }

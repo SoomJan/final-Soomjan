@@ -88,5 +88,18 @@ public interface ManagerMapper {
 
 	// 신고된 멤버 반려 처리
 	int modifySendbackMember(ReportMemberDTO repMember);
+
+	// 신고된 클래스 신고처리
+	int modifyConfirmClass(ReportClassDTO repClass);
+
+	// 신고된 클래스 반려처리
+	int modifySendbackClass(ReportClassDTO repClass);
+
+	// 신고된 클래스 상세조회
+	ReportClassDTO selectRepClass(int repCode);
+
+	// 신고된 클래스를 가진 회원 경고 처리
+	int modifyWarningCount(ReportClassDTO repClass);
+
 	
 }
