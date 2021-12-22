@@ -40,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.CreateAdDTO;
@@ -69,10 +70,9 @@ public class JandiController {
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		List<ClassDTO> classDTO = jandiService.selectClasses(jandi.getEmail());
 		
-		
-			
 		model.addAttribute("jandi", jandi);
 		
+		model.addAttribute("thumbNailClass", jandiService.selectThumbnailClass(jandi.getEmail()));
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
 		model.addAttribute("classes", classDTO);
@@ -812,14 +812,5 @@ public class JandiController {
 		return "redirect:/jandi/jandiProfile";
 	}
 
-	@PostMapping("nickDupCheck")
-	public @ResponseBody String nickDupCheck(@RequestParam String nickName) {
-		
-		String result = "false";
-		if(jandiService.selectNickDupCheck(nickName) > 0) {
-			result = "true";
-		}
-		
-		return result; 
-	}
+
 }

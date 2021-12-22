@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -146,6 +148,8 @@ public class MemberController {
 	@PostMapping("login")
 	public void login(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
 		
+		response.setContentType("application/text; charset=UTF8");
+		
 		System.out.println("로그인할 이메일 : " + email);
 	    System.out.println("로그인할 패스워드 : " + password);
 	    
@@ -163,12 +167,27 @@ public class MemberController {
 	    	model.addAttribute("loginMember", loginMember);
 	    	
 	    	if(loginMember.getIsJandi() == 'Y') {
-				model.addAttribute("isjandi", "Y");
-			}else {
-				model.addAttribute("isjandi", "N");
-			}
+	    		model.addAttribute("isjandi", "Y");
+	    	}else {
+	    		model.addAttribute("isjandi", "N");
+	    	}
 	    	
-	    	response.getWriter().write("true");
+	    	if(loginMember.getIsBlack() == 'Y') {
+	    		double blackD_day = memberService.selectBlackDDay(loginMember.getEmail());
+	    		if(blackD_day > 0) {
+	    			System.out.println((int)blackD_day + "일 남음");
+	    			response.getWriter().write("누적 경고로 인해 블랙리스트 조치되었습니다. 로그인 가능까지 " + (int)blackD_day + "일 남았습니다." );
+	    		}else {
+	    			if(memberService.modifyBlackStatus(loginMember.getEmail())) {
+	    				System.out.println("블랙리스트 해제 성공");
+	    			}else {
+	    				System.out.println("블랙리스트 해제 실패");
+	    			}
+	    			response.getWriter().write("true");
+	    		}
+	    	}else {
+	    		response.getWriter().write("true");
+	    	}
 	    }
 	}
 	
@@ -299,6 +318,15 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	
+	@PostMapping("jandiNickDupCheck")
+	public @ResponseBody String jandiNickDupCheck(@RequestParam String nickName) {
+		
+		String result = "false";
+		if(memberService.selectJandiNickDupCheck(nickName) > 0) {
+			result = "true";
+		}
+		
+		return result; 
+	}
 	
 }

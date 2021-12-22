@@ -14,12 +14,13 @@ public class MemberDTO {
 	private java.sql.Date enrollDate;
 	private char isExit;
 	private String name;
+	private java.sql.Date blackEndDate;
 	
 	public MemberDTO() {
 	}
 
 	public MemberDTO(String email, String nickName, String password, String phone, char isJandi, int warning,
-			char isBlack, Date enrollDate, char isExit, String name) {
+			char isBlack, Date enrollDate, char isExit, String name, Date blackEndDate) {
 		super();
 		this.email = email;
 		this.nickName = nickName;
@@ -31,6 +32,7 @@ public class MemberDTO {
 		this.enrollDate = enrollDate;
 		this.isExit = isExit;
 		this.name = name;
+		this.blackEndDate = blackEndDate;
 	}
 
 	public String getEmail() {
@@ -112,12 +114,20 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public java.sql.Date getBlackEndDate() {
+		return blackEndDate;
+	}
+	
+	public void setBlackEndDate(java.sql.Date blackEndDate) {
+		this.blackEndDate = blackEndDate;
+	}
 
 	@Override
 	public String toString() {
 		return "MemberDTO [email=" + email + ", nickName=" + nickName + ", password=" + password + ", phone=" + phone
 				+ ", isJandi=" + isJandi + ", warning=" + warning + ", isBlack=" + isBlack + ", enrollDate="
-				+ enrollDate + ", isExit=" + isExit + ", name=" + name + "]";
+				+ enrollDate + ", isExit=" + isExit + ", name=" + name + ", blackEndDate=" + blackEndDate + "]";
 	}
 
 	

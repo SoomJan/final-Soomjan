@@ -85,7 +85,7 @@ p {
 			console.log(nickName);
 			if(nickName != ""){
 				 $.ajax({
-		              url: "${ pageContext.servletContext.contextPath }/jandi/nickDupCheck",
+		              url: "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
 		              type: "post",
 		              data: { nickName: nickName },
 		              success: function (data) {
@@ -156,26 +156,61 @@ p {
 					<br><br>
 					<button type="submit" class="btnStyle btn">수정하기</button>
 				</form>
-			
 				<br>
 				<br>
 				<hr>
 				<div class="warining">
 					<p>"${ requestScope.jandi.nickName }" 멘토님의 진행중인 클래스</p>
 					<hr class="border-1px-black" />
-					<table style="width: 100%; overflow-x:scroll">
-						<tr>
-
-<%-- 							<c:forEach var="classes" items="${ requestScope.classes }">
-								<td>
-									<div class="imgBox" align="center">
-										<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ requestScope.classes.filePath}" style="width:20px"> 
-										<h4>아직 작성된 클래스가 없습니다.</h4>
+					<div class="row">
+						<c:forEach var="findClassList" items="${ thumbNailClass }">
+							<div class="col-lg-4 col-sm-6 mb-4">
+								<div class="card">
+									<img class="card-img-top" style="width:180px; height:150px;"
+										src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ findClassList.filePath}"
+										alt="Card image cap">
+									<div class="card-body little-profile text-center">
+										<div class="pro-img">
+											<img
+												src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ findClassList.profilePath }"
+												alt="user">
+										</div>
+										<h5 class="m-b-0"></h5>
+										<p>${ findClassList.title}</p>
+										<a href="javascript:void(0)"
+											class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded"
+											style="margin-bottom: 16px;" data-abc="true"
+											onclick="location.href='${ pageContext.servletContext.contextPath}/jandi/class/classRoom?classCode=${ findClassList.classCode }'">자세히보기</a>
+										<div class="row text-center m-t-20">
+											<div class="col-lg-1 col-md-4 m-t-20">
+												<h3 class="m-b-0 font-light"></h3>
+												<small> </small>
+											</div>
+											<div class="col-lg-10 col-md-4 m-t-20">
+												<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>등록일 : ${ findClassList.createDate }</h3>
+												<small> 
+													<c:if test="${ findClassList.avgStar == '0'}">
+														☆
+													</c:if>
+													<c:if test="${ findClassList.avgStar != '0'}">
+													<c:forEach begin="1" end="${ findClassList.avgStar }">
+												    ★
+													</c:forEach>  
+												    </c:if>
+													(${ findClassList.rvCount })
+													/ ${ findClassList.categoryName }
+												</small>
+											</div>
+											<div class="col-lg-1 col-md-4 m-t-20">
+												<h3 class="m-b-0 font-light"></h3>
+												<small> </small>
+											</div>
+										</div>
 									</div>
-								</td>
-							</c:forEach> --%>
-						</tr>
-					</table>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
 					<br>
 				</div>
 			</div>

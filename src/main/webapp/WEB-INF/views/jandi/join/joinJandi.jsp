@@ -161,7 +161,7 @@ input:focus{
 	          alert("닉네임을 입력해 주세요.");
 	        } else {
 	          $.ajax({
-	            url: "${ pageContext.servletContext.contextPath }/member/nickDupCheck",
+	            url: "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
 	            type: "post",
 	            data: { nickName: nickName },
 	            success: function (data) {

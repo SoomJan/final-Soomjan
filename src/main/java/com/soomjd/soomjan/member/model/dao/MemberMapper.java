@@ -39,5 +39,11 @@ public interface MemberMapper {
 
 	int pwdCheck(String email);
 
+	int selectJandiNickDupCheck(String nickName);
+
+	double selectBlackDDay(String email);
+
+	boolean modifyBlackStatus(String email);
+
 
 }
