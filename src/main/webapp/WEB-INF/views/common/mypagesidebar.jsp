@@ -30,10 +30,7 @@ pageEncoding="UTF-8"%>
         }
     
     #endbtnhmodal {height: 150px; top: 40%; left: 47%;}
-    /* .end-content-title {font-size: 15px; text-align: center; position: relative; top: 7px;}
-    .re-modal-btn {position: relative; left: 27%; top: 7px; background-color: white;}
-    .endcontent {height: 150px;}
-    #comp-btn{background-color: #91c788;} */
+  
     .endcontent{
     height: 150px;
     text-align: center;
@@ -46,14 +43,7 @@ pageEncoding="UTF-8"%>
     font-weight: 800;
   }
 
-  .re-modal-btn {
-    position: relative;
-    top: 25%;
-  }
-
-  .btn {
-    background-color: white !important;
-  }
+ 
   
   a:hover { color: #91C788 !important; }
     </style>
@@ -98,7 +88,7 @@ pageEncoding="UTF-8"%>
           <br>
           1. 회원이 작성한 콘텐츠(동영상, 게시물, 댓글 등)는 자동적으로 삭제되지 않으며, <br>
           &nbsp&nbsp 만일 삭제를 원하시면 탈퇴 이전에 삭제가 필요합니다.<br>
-          2. 탈퇴 후 동일한 메일로 재가입이 가능하지만, 탈퇴 한 계정과 연동되지 않습니다.<br>
+          2. 탈퇴 후 동일한 메일로 다시 가입할 수 없습니다.<br>
           3. 현재 비밀번호를 입력하고 탈퇴하기를 누르시면 위 내용에 동의하는 것으로 간주됩니다.<br>
           <hr>
           <input type="password" class="inputpwd2" id="pwd" placeholder="현재 비밀번호">

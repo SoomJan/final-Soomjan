@@ -9,7 +9,7 @@
     margin-top: 150px;
 	width: 855px;
 	height: 1070px;
-	border: 1px solid black;
+	border: 1px solid green;
 	margin-bottom: 300px;
 	
 }
@@ -33,6 +33,7 @@
 }
 
 .comment{
+    color: green;
     display: inline-block;
     font-size: 15px;
     width: 788px;
@@ -65,7 +66,7 @@
 
 .modal {
     height: 150px;
-    top: 180%;
+    top: 80%;
     left: 40%;
   }
   
@@ -92,5 +93,5 @@
     text-align: center;
     background-color: #91c788 !important;
   }
-  
+
   #event {height: 70px !important;}

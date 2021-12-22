@@ -37,7 +37,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="introduce">
           <div class="introduce-detail">
             <img
-              src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png"
+              src="${ pageContext.servletContext.contextPath }/resources/images/join2.png"
             />
           </div>
           <div class="introduce-detail1">

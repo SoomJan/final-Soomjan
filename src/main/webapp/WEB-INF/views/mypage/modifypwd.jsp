@@ -10,18 +10,18 @@
     <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/modify.css" rel="stylesheet"/>
 
     <style>
-      .inputpwd {width: 300px; height: 50px; border: 3px solid #91c788; border-radius: 10px; padding-left: 2%;} /* 비밀번호 input */
+      .inputpwd {width: 300px; height: 50px; border: 3px solid #91c788; border-radius: 10px; padding-left: 2%; margin-top: 5%;} /* 비밀번호 input */
       
-      .input-pwd { position: relative; width: 70%; margin: 0 auto; top: 30px; left: 15%;} /* 비밀번호 그룹 */
+      .input-pwd { position: relative; width: 65%; margin: 0 auto; top: 30px; left: 16%;} /* 비밀번호 그룹 */
 
-      .pwd-btn { position: relative; top: 50px; width: 50%; left: 38%; } /* 버튼 그룹 */
-      #pwd-sure {background-color: #91c788; width: 80px; height: 40px; border: none; border-radius: 15px;} /* 확인버튼 */
-      #pwd-x {background-color: #e2e2e2; width: 80px; height: 40px; border: none; border-radius: 15px;} /* 취소버튼 */
+      .pwd-btn { position: relative; top: 50px; width: 50%; left: 39%;} /* 버튼 그룹 */
+      #pwd-sure {background-color: #91c788; width: 80px; height: 40px; border: none; border-radius: 15px; color: white;} /* 확인버튼 */
+      #pwd-x {background-color: #e2e2e2; width: 80px; height: 40px; border: none; border-radius: 15px; color: white;} /* 취소버튼 */
 
       .modal {
         height: 150px;
-        top: 50%;
-        left: 40%;
+        top: 40%;
+        left: 45%;
       }
     </style>
 </head>
@@ -35,20 +35,20 @@
             <input type="password" class="inputpwd" id="originPwd" placeholder="현재 비밀번호">
             <br><br>
             <input type="password" class="inputpwd" id="newPwd" placeholder="새로운 비밀번호">
-            <div class="pwdCheck">
+            <div class="pwdCheck" style="margin-top: 1%; color:darkgray">
               최소 8 자, 대문자 하나 이상, 소문자 하나, 숫자 하나 및 특수 문자
               하나 이상
             </div>
             <input type="checkbox" id="pwdBoolean" style="display: none" />
             <input type="password" class="inputpwd" id="newPwd2" placeholder="새로운 비밀번호 확인">
-            <div class="pwdCheck2"></div>
+            <div class="pwdCheck2" style="margin-top: 1%;"></div>
             <input type="checkbox" id="pwdBoolean2" style="display: none" />
             <br><br>
         </div>
         <div class="pwd-btn">
-            <input type="button" id="pwd-sure" value="확인">
+            <input type="button" class="onButton" id="pwd-sure" value="확인">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" id="pwd-x" value="취소">
+            <input type="button" class="onButton" id="pwd-x" value="취소">
         </div>
       </div>
     </div>
@@ -156,6 +156,16 @@
                 $("#Modal").fadeOut();
               });
           };
+     
+      /* 마우스 커서 이벤트 */
+      $(".onButton").hover(
+        function () {
+          $(this).css("color", "black").css("cursor", "pointer");
+        },
+        function () {
+          $(this).css("color", "white").css("cursor", "default");
+        }
+      );      
     </script>
 </body>
 <jsp:include page="../common/footer.jsp" />

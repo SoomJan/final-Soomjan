@@ -63,38 +63,10 @@ iframe {
 }
 
 /* 모달창 */
-
-/* #modifymodal {
-    height: 150px;
-    top: 45%;
-    left: 50%;
-}
-
-.modifycontent {
-    height: 150px;
-    text-align: center;
-    background-color: #91C788 !important;
-}
-
-.re-modal-btn {
-    position: relative;
-    top: 20%;
-  }
-
-.modifybtn {
-    background-color: white !important;
-}
-
-.modify-content-title {
-    position: relative;
-    top: 15%;
-    font-size: 15px !important;
-} */
-
 .modal {
   height: 150px;
-  top: 80%;
-  left: 40%;
+  top: 40%;
+  left: 50%;
 }
 
 .titles {
@@ -121,3 +93,11 @@ iframe {
   background-color: #91c788 !important;
 }
 
+#dupCheck {
+  width: 80px;
+  height: 30px;
+  background-color: #91C788;
+  border: none;
+  border-radius: 10px;
+  color: white;
+}

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.findclass.model.dao.FindclassMapper;
 import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;

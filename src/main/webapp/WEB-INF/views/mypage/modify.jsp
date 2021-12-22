@@ -18,11 +18,11 @@ pageEncoding="UTF-8"%>
     p {font-weight: bold; font-size: 20px;}
 
     .myinfo{border-radius:10px; height:40px; width: 250px; font-size: 18px; padding-left: 15px; background-color: #e2e2e2 !important;} /* 내 정보 input */
-    .modify_myinfo {width: 90px; height: 40px; background-color: #91C788; border: none; border-radius: 10px; position: relative; left: 45%;} /* 수정 버튼 */
+    #modify_myinfo {width: 90px; height: 40px; background-color: #91C788; color: white; border: none; border-radius: 10px; position: relative; left: 45%;} /* 수정 버튼 */
     #name {position: relative; left: 30%; text-align: left; margin-left: 2%;} /* 내 정보 input */
     #email {position: relative; left: 21%; text-align: left;}
     #nickName { position: relative; left: 27%; text-align: left; margin-left: 2%;}
-    #dupCheck { position: relative; left: 125%; bottom:35px;}
+    #dupCheck { position: relative; left: 27%; bottom:3px;}
     #phone, .phone { position: relative; left: 21%; text-align: left;}
     .phoneCheck { position: relative; left: 45%;}
     .introduce-detail1 > div > label {position: relative; left: 15%;} /* 내 정보 그룹 */
@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
         <div class="introduce">
           <div class="introduce-detail">
             <img
-              src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png"
+              src="${ pageContext.servletContext.contextPath }/resources/images/join2.png"
             />
           </div>
           <div class="introduce-detail1">
@@ -55,7 +55,7 @@ pageEncoding="UTF-8"%>
           <div>
               <label for="nickname" class="nickname"><span>닉네임</span></label>
               <input type="text" class="myinfo" name="member_info" id="nickName" value="${ sessionScope.loginMember.nickName }" >
-              <button id="dupCheck" type="button" onclick="return duplicationCheck2()">중복확인</button>
+              <button id="dupCheck" type="button" class="onButton" onclick="return duplicationCheck2()">중복확인</button>
               <input type="checkbox" id="nickBoolean" style="display: none" />
           </div>
 
@@ -67,7 +67,7 @@ pageEncoding="UTF-8"%>
           </div>
           <br><br>
           <div>
-            <button type="submit" class="modify_myinfo" onclick="return modifymyinfo();">수정 완료</button>
+            <button type="submit" id="modify_myinfo" class="onButton" onclick="return modifymyinfo();">수정 완료</button>
         </div>
           </div>
         </div>
@@ -180,6 +180,16 @@ pageEncoding="UTF-8"%>
                 $("#Modal").fadeOut();
               });
           };
+
+          /* 마우스 커서 이벤트 */
+          $(".onButton").hover(
+              function () {
+                $(this).css("color", "black").css("cursor", "pointer");
+              },
+              function () {
+                $(this).css("color", "white").css("cursor", "default");
+              }
+            );  
 
 
         </script>
