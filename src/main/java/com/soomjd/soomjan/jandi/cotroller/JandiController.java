@@ -674,6 +674,8 @@ public class JandiController {
 		
 		model.addAttribute("myAd", myAd);
 		
+		model.addAttribute("adCode", myAd.getAdCode());
+		
 		System.out.println("/////////////////////////////////////////////myAd : "+myAd);
 		
 		
@@ -730,7 +732,7 @@ public class JandiController {
 							+"&quantity=1"
 							+"&total_amount=10"
 							+"&tax_free_amount=0"
-							+"&approval_url=http://localhost:8585/soomjan/jandi/myAd"
+							+"&approval_url=http://localhost:8585/soomjan/jandi/successPage"
 							+"&cancel_url=http://localhost:8585/soomjan/jandi/failedPage"
 							+"&fail_url=http://localhost:8585/soomjan/jandi/failedPage";
 			OutputStream out = serverAddress.getOutputStream();
@@ -764,6 +766,7 @@ public class JandiController {
 			System.out.println("next_redirect_pc_url : " + next_redirect_pc_url);
 			return next_redirect_pc_url;
 			
+
 			
 			
 		} catch (MalformedURLException e) {
@@ -778,6 +781,15 @@ public class JandiController {
 		} 
 		
 	    return "jandi/failedPage";
+	}
+	
+	
+	@GetMapping("successPage")
+	public String successPage(Model model) {
+		
+		model.addAttribute("message", "결제에 성공하였습니다.");
+		
+		return "jandi/successPage";
 	}
 	
 	

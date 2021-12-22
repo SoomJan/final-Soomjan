@@ -65,7 +65,7 @@ table {
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<button type="button" style="float:right" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy?adCode=2'">결제하기</button>
+					<button type="button" style="float:right" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy?adCode=${ adCode }'">결제하기</button>
 				</c:otherwise> 
 			</c:choose>
 			

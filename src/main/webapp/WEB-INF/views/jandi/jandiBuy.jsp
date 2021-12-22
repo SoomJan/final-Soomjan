@@ -85,11 +85,11 @@ table {
 					
 						$.ajax({
 						url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
+						dataType:'text',
 						success:function(data){
-							alert("나는 천재입니다. ");
-						
-							console.log(data);
-							window.open(data,"","");
+							alert(data);
+							
+							location.href=data;
 							
 						},
 						error:function(error,status,xhr){
