@@ -65,6 +65,7 @@ main { width: 90% !important;}
 								<tr class="table_title">
 									<th>No</th>
 									<th>제목</th>
+									<th>작성자</th>
 									<th>진행상태</th>
 								</tr>
 							</thead>
@@ -74,7 +75,8 @@ main { width: 90% !important;}
 							<c:forEach var="ssack" items="${ ssackList }">
 								<tr>
 									<th width="10">${ ssack.estimateCode }</th>
-									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate/${ sessionScope.loginMember.email}">${ ssack.title }</a></th>
+									<th width="50"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate/${ sessionScope.loginMember.email}">${ ssack.title }</a></th>
+									<th width="10">${ ssack.isMatched }</th> 
 									<th width="30">${ ssack.isMatched }</th> 
 								
 								</tr>
