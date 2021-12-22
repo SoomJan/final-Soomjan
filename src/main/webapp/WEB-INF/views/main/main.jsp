@@ -14,20 +14,7 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-   <script>
-   $(document).ready(function(){
-	   $("#checkModal").fadeIn();
-       $(".btn").click(function(){
-         $("#checkModal").fadeOut();
-       });
-
-       $("#ray").fadeIn();
-       $(".btn1").click(function(){
-         $("#ray").fadeOut();
-       });
-	    console.log('document.ready');
-	});
-   </script>
+   
    
   </head>
 
@@ -134,7 +121,12 @@ pageEncoding="UTF-8"%>
           	</div>
           		 <div><h3 class="classinstructor">${ class1.jandiDTO.nickName }</h3></div>
            		 <div><h4 class="classtitle">${ class1.title }</h4></div>	
-           		 <div><h4 class="classtitle">${ class1.avgReview }</h4></div>	
+           		 <c:if test="${ class1.avgReview eq null}">
+           		  <div><h4 class="classtitle">0</h4></div>	
+           		 </c:if>
+           		 <c:if test="${ class1.avgReview ne null}">
+           		 <div><h4 class="classtitle">${ class1.avgReview }</h4></div>
+           		 </c:if>	
            		 <div><span class="classprice">${ class1.price }</span> <span class="views">${ class1.views }</span></div>	
           </div>
           </c:forEach>
@@ -179,8 +171,13 @@ pageEncoding="UTF-8"%>
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
           	</div>
           		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
-           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
-           		 <div> <h4 class="classtitle">${ viewClass.avgReview }</h4> </div>	
+           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
+           		  <c:if test="${ viewClass.avgReview eq null}">
+           		  <div><h4 class="classtitle">0</h4></div>	
+           		 </c:if>
+           		 <c:if test="${ viewClass.avgReview ne null}">
+           		 <div> <h4 class="classtitle">${ viewClass.avgReview }</h4> </div>
+           		 </c:if>
            		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
           </div>
           </c:forEach>
@@ -216,7 +213,12 @@ pageEncoding="UTF-8"%>
           	</div>
           		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
            		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
+           		 <c:if test="${ viewClass.avgReview eq null}">
+           		  <div><h4 class="classtitle">0</h4></div>	
+           		 </c:if>
+           		 <c:if test="${ viewClass.avgReview ne null}">
            		 <div> <h4 class="classtitle">${ viewClass.avgReview }</h4> </div>	
+           		 </c:if>
            		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
           </div>
           </c:forEach>
@@ -324,6 +326,7 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
     <jsp:include page="../common/footer.jsp" />
+    <jsp:include page="../main/modal.jsp" />
 
     <script>
 	    $(function(){
@@ -378,36 +381,5 @@ pageEncoding="UTF-8"%>
 
 
 <!-- 모달창 모아두는 곳 -->
-<div class="modal" id="checkModal">
-  <div class="content">
-      <div class="modal-content">
-        <img src="${ pageContext.servletContext.contextPath }/resources/images/sprout.png">
-      </div>
-      <div class="text">
-        <h4>멘토가 될 수 있는 절호의 기회</h4>
-        <h4>야! 너두 잔디 될 수 있어!</h4>
-    </div>
-    <div class="modal-button">
-        <c:if test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}">
-    <button class="btn" onclick="location.href='${ pageContext.servletContext.contextPath }/member/terms'">회원가입</button>
-       </c:if>
-       <c:if test="${ !empty sessionScope.loginMember.email}">
-        <button class="btn" onclick="location.href='${ pageContext.servletContext.contextPath }/member/joinJandi'">잔디하기</button>
-      </c:if>
-      <button class="btn">아니 난 못해..</button>
-  </div>
-  </div>
-</div>
 
-<div class="modal" id="ray">
-  <div class="content">
-      <div class="modal-content">
-        <img src="${ pageContext.servletContext.contextPath }/resources/images/ray2.jpeg">
-      </div>
-      <div class="text">
-    </div>
-    <div class="modal-button">
-    <button class="btn1">ㅎㅎ</button>
-  </div>
-  </div>
-</div>
+
