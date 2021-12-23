@@ -180,7 +180,7 @@ public class MacthingSsackMainController {
 		return "matching/MantorChatMain";
 	}
 	
-	// 채팅하기 누르면 나오는 페이지
+	// 채팅하기 누르면 나오는 페이지(1223)
 	@GetMapping("/chatting")
 	public String chatting(Model model, @RequestParam("estimateCode") int estimateCode, @RequestParam("email")String email , HttpSession session) {
 		
