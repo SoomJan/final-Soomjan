@@ -72,7 +72,7 @@ public class JandiController {
 		
 		model.addAttribute("jandi", jandi);
 		
-		model.addAttribute("thumbNailClass", jandiService.selectThumbnailClass(jandi.getEmail()));
+		model.addAttribute("thumbNailClassList", jandiService.selectThumbnailClassList(jandi.getEmail()));
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
 		model.addAttribute("classes", classDTO);
@@ -617,6 +617,11 @@ public class JandiController {
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		List<ClassDTO> classes = jandiService.selectClasses(jandi.getEmail());
 		
+
+		List<FullAdDTO> adList = jandiService.selectDoingAdList();
+		
+		model.addAttribute("adCount", adList.size());
+		
 		List<Integer> classesCodeList  =new ArrayList<Integer>();
 		
 		for(int i=0; i<classes.size(); i++) {
@@ -717,6 +722,10 @@ public class JandiController {
 	@RequestMapping(value="jandiPay")
 	@ResponseBody
 	public String jandiPay() {
+
+		
+		
+		
 		
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -785,9 +794,23 @@ public class JandiController {
 	
 	
 	@GetMapping("successPage")
-	public String successPage(Model model) {
+	public String successPage(HttpSession session, Model model) {
 		
-		model.addAttribute("message", "결제에 성공하였습니다.");
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		
+		List<FullAdDTO> adList = jandiService.selectDoingAdList();
+		
+		if(adList.size()>=5) {
+			
+		}else {
+
+
+			model.addAttribute("message", "결제에 성공하였습니다.");
+			
+		}
+		
 		
 		return "jandi/successPage";
 	}

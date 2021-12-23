@@ -40,6 +40,8 @@ public interface JandiService {
 
 	boolean modifyNickName(JandiDTO jandi);
 
-	List<FindClassDTO> selectThumbnailClass(String email);
+	List<FindClassDTO> selectThumbnailClassList(String email);
+
+	List<FullAdDTO> selectDoingAdList();
 
 }

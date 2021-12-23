@@ -11,7 +11,6 @@
 <meta name="author" content="" />
 
 <title>견적서 리스트</title>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
@@ -29,11 +28,13 @@
 	height: 60%;
 	text-align: center;
 }
+main { width: 90% !important;}
+.common-sidebar{ width: 80% !important;}
 </style>
 </head>
 <body>
 	<jsp:include page="../common/nav.jsp" />
-
+<main>
 	<div class="common-sidebar">
 		<jsp:include page="../common/matching_mantee_sidebar.jsp" />
 		<div class="introduce">
@@ -100,15 +101,7 @@
 				<br><br>
 				
 				
-				<div class="manager-paging">
-		            <ul>
-		              <li><a href="#">Prev</a></li>
-		              <li><a href="#">1</a></li>
-		              <li><a href="#">2</a></li>
-		              <li><a href="#">3</a></li>
-		              <li><a href="#">next</a></li>
-		            </ul>
-				</div>
+				 <jsp:include page="../common/Paging.jsp" />
 				
 				
 				<!-- <div class="back">
@@ -123,6 +116,7 @@
 
 		</div> <!-- introduce div 끝 -->
 	</div>
+</main>
 <jsp:include page="../common/footer.jsp" />
 </body>
 </html>

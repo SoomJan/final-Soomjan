@@ -40,7 +40,9 @@ public class ClassInterceptor implements HandlerInterceptor{
 			for(Map<String, String> memberMap : currentMemberList) {
 				result = memberMap.get("EMAIL").equals(member.getEmail());
 				
-				break;
+				if(result) {
+					break;
+				}
 			}
 		}
 		System.out.println("인터셉터 결과 : " + result);

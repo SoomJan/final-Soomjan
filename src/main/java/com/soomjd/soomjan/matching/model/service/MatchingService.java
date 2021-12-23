@@ -6,6 +6,7 @@ import java.util.Map;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.matching.model.dto.MatchedChattingDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MatchingService {
@@ -32,6 +33,10 @@ public interface MatchingService {
 
 	// 전체 견적서 리스트(잔디) 가져오기
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
+
+	MatchedChattingDTO selectChattingRoom(MatchedChattingDTO matchedChatting);
+
+	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 
 
 }

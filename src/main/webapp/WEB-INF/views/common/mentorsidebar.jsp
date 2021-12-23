@@ -8,10 +8,10 @@
 <title>Signin Template for Bootstrap</title>
 
 <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
 <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mentor/mentormain.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mentor/mentorsidebar.css" rel="stylesheet"/>
 
 <style>
 ul {
@@ -61,7 +61,7 @@ a {
 		</div>
 		<div class="sidebar-inner-name1">
 			<ul>
-				<li><a href="${ pageContext.servletContext.contextPath }/member/jandiProfile">내 정보</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/jandi/jandiProfile">내 정보</a></li>
 			</ul>
 			<ul>
 				<h3>내 클래스</h3>
@@ -87,8 +87,7 @@ a {
 		</div>
 
 		<!-- Modal -->
-		<div class="modal fade" id="addClassModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel">
+		<div class="modal fade" id="addClassModal" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
