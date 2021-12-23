@@ -721,12 +721,8 @@ public class JandiController {
 	
 	@RequestMapping(value="jandiPay")
 	@ResponseBody
-	public String jandiPay(HttpSession session) {
-//		
-//		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
-//		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
-//		
-//		List<FullAdDTO> adList = jandiService.selectDoingAdList();
+	public String jandiPay() {
+
 		
 		
 		
@@ -798,9 +794,23 @@ public class JandiController {
 	
 	
 	@GetMapping("successPage")
-	public String successPage(Model model) {
+	public String successPage(HttpSession session, Model model) {
 		
-		model.addAttribute("message", "결제에 성공하였습니다.");
+		
+		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+		
+		List<FullAdDTO> adList = jandiService.selectDoingAdList();
+		
+		if(adList.size()>=5) {
+			
+		}else {
+
+
+			model.addAttribute("message", "결제에 성공하였습니다.");
+			
+		}
+		
 		
 		return "jandi/successPage";
 	}
