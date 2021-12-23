@@ -65,6 +65,10 @@
   border-radius: 200px;
 }
 
+iframe {
+  display: none;
+}
+
 .btn-primary{color:#fff;background-color:#91C788;border-color:#91C788}
 .btn-primary.active,.btn-primary.focus,.btn-primary:active,.btn-primary:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary{color:#fff;background-color:#599A4E;border-color:#599A4E}
 .btn-primary:hover{background-color:#599A4E;border-color:#599A4E}

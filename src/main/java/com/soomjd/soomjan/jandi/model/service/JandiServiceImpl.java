@@ -106,8 +106,8 @@ public class JandiServiceImpl implements JandiService{
 	}
 
 	@Override
-	public List<FindClassDTO> selectThumbnailClass(String email) {
-		return jandiMapper.selectThumbnailClass(email);
+	public List<FindClassDTO> selectThumbnailClassList(String email) {
+		return jandiMapper.selectThumbnailClassList(email);
 	}
 
 

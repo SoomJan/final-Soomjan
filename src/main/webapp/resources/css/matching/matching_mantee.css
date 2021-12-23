@@ -376,11 +376,11 @@
 	height: 40px;
 }
 
-.manager-paging {
+/* .manager-paging {
 	width: 50%;
 	margin: 0 auto;
 	height: 50px;
-	/*   border: 1px solid blue; */
+	  border: 1px solid blue;
 }
 
 .manager-paging ul {
@@ -396,7 +396,7 @@
 	background-color: #91c788;
 	border-radius: 400px;
 	text-decoration: none;
-}
+} */
 
 .name {
 	font-size: 23px;

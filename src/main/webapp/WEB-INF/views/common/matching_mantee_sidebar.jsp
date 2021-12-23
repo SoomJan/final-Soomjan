@@ -9,10 +9,10 @@ pageEncoding="UTF-8"%>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/findmentorsidebar.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css" rel="stylesheet" />
     <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 	<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/findmentorsidebar.css" rel="stylesheet"/>
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css?after" rel="stylesheet" />
 
   <body>
     <div id="sidebar">

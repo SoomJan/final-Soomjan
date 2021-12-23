@@ -72,7 +72,7 @@ public class JandiController {
 		
 		model.addAttribute("jandi", jandi);
 		
-		model.addAttribute("thumbNailClass", jandiService.selectThumbnailClass(jandi.getEmail()));
+		model.addAttribute("thumbNailClassList", jandiService.selectThumbnailClassList(jandi.getEmail()));
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
 		model.addAttribute("classes", classDTO);

@@ -192,7 +192,9 @@ img {
 		
 		$('#sendBtn').click(function(){
 			
-			if($('#msg').val() != ''){
+			let msg = $('#msg').val().replace(/\n/g, "");
+			
+			if(msg != ""){
 				// CLASS_CHAT에 저장
 		        let chat = {
 		            nickName: '${ sessionScope.loginMember.nickName }',

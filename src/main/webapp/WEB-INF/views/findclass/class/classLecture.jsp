@@ -110,7 +110,7 @@ function mokchaToggle(item) {
 						<div class="mokcha">
 							<c:set var="writeDate" value="${ mokcha.writeDate }"/>
 							<span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
-							<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaCode } ▼</h3>
+							<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼</h3>
 							<div class="mokchaDiv" style="display:none;">
 							<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
 							

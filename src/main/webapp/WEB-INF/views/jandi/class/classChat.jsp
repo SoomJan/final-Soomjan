@@ -190,8 +190,10 @@ img {
 			});
 			
 			$('#sendBtn').click(function(){
+
+				let msg = $('#msg').val().replace(/\n/g, "");
 				
-				if($('#msg').val() !== ''){
+				if(msg != ""){
 					// CLASS_CHAT에 저장
 			        let chat = {
 			            nickName: '${ sessionScope.jandi.nickName }',
