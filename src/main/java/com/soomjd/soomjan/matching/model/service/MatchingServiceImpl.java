@@ -89,7 +89,7 @@ public class MatchingServiceImpl implements MatchingService{
 
 	@Override
 	public MatchedChattingDTO selectChattingRoom(MatchedChattingDTO matchedChatting) {
-		return mapper.selectChattingRoom(matchedChatting);
+		return mapper.matchedChatting(matchedChatting);
 	}
 
 
