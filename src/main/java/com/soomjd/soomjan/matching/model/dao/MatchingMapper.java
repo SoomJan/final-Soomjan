@@ -6,6 +6,7 @@ import java.util.Map;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.matching.model.dto.MatchedChattingDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface MatchingMapper {
@@ -29,4 +30,8 @@ public interface MatchingMapper {
 	int selecetEstimateTotal();
 
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
+
+	MatchedChattingDTO selectChattingRoom(MatchedChattingDTO matchedChatting);
+
+	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 }
