@@ -274,5 +274,19 @@
 	  ORDER BY A.VIEWS DESC
 	</select>
 	
+	<select id="selectDoingAdList" resultMap="adResultMap">
+		SELECT 
+		       AD_CODE
+			 , AD_CONTENTS
+			 , IMG_PATH
+			 , CLASS_CODE
+			 , START_DATE
+			 , ORG_IMG_PATH
+			 , IS_ADVERTISED
+		  FROM AD_TBL 
+		 WHERE IS_ADVERTISED='Y'	   
+	
+	</select>
+	
 
 </mapper>

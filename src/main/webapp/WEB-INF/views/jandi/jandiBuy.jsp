@@ -79,27 +79,34 @@ table {
 
 		let adCode=$('#adCode').val();
 		let adCodeJson={"adCode":adCode};
+		let adCount=${ adCount }
 		
 			$(function(){
 				$('#kakao-pay').click(function(){
-					
+					if(adCount>=5){
+						alert("광고 개수가 5개를 넘었습니다. 다른 날에 결제해주시기 바랍니다 ")
+					}else{
 						$.ajax({
-						url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
-						dataType:'text',
-						success:function(data){
-							alert(data);
+							url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
+							dataType:'text',
+							success:function(data){
+								alert(data);
+								
+								location.href=data;
+								
+							},
+							error:function(error,status,xhr){
+								alert("나는 바보입니다. ");
+								console.log(error);
+								console.log(stauts);
+								console.log(xhr);
+							}
 							
-							location.href=data;
-							
-						},
-						error:function(error,status,xhr){
-							alert("나는 바보입니다. ");
-							console.log(error);
-							console.log(stauts);
-							console.log(xhr);
-						}
+						});
 						
-					});
+						
+					}	
+
 
 					
 				});
