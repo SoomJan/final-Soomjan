@@ -617,6 +617,11 @@ public class JandiController {
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		List<ClassDTO> classes = jandiService.selectClasses(jandi.getEmail());
 		
+
+		List<FullAdDTO> adList = jandiService.selectDoingAdList();
+		
+		model.addAttribute("adCount", adList.size());
+		
 		List<Integer> classesCodeList  =new ArrayList<Integer>();
 		
 		for(int i=0; i<classes.size(); i++) {
@@ -716,7 +721,15 @@ public class JandiController {
 	
 	@RequestMapping(value="jandiPay")
 	@ResponseBody
-	public String jandiPay() {
+	public String jandiPay(HttpSession session) {
+//		
+//		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+//		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
+//		
+//		List<FullAdDTO> adList = jandiService.selectDoingAdList();
+		
+		
+		
 		
 	    try {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");

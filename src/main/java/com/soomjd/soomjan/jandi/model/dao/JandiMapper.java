@@ -42,4 +42,6 @@ public interface JandiMapper {
 
 	List<FindClassDTO> selectThumbnailClass(String email);
 
+	List<FullAdDTO> selectDoingAdList();
+
 }

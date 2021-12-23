@@ -110,5 +110,11 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.selectThumbnailClass(email);
 	}
 
+	@Override
+	public List<FullAdDTO> selectDoingAdList() {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectDoingAdList();
+	}
+
 
 }
