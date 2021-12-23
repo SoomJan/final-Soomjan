@@ -7,20 +7,9 @@
 
 <title>멘티 채팅</title>
 
+<link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css?" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css?" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
-
-<script src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.min.js"></script>
-<script src="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.js"></script>
-<script src="${ pageContext.servletContext.contextPath }/resources/css/ie-emulation-modes-warning.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript"  src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 <style>
 img {
 	width: 250px;
@@ -189,7 +178,9 @@ img {
 		
 		$('#sendBtn').click(function(){
 			
-			if($('#msg').val() !== ''){
+			let msg = $('#msg').val().replace(/\n/g, "");
+			
+			if(msg != ""){
 				// CLASS_CHAT에 저장
 		        let chat = {
 		            nickName: '${ sessionScope.loginMember.nickName }',
@@ -203,9 +194,8 @@ img {
 				
 				socket.emit("send_msg", chat);
 				
-				$('#msg').val('');
-				
 			}
+			$('#msg').val('');
 		});
 		
 		socket.on('send_msg', function(chat){

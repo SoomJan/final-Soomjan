@@ -37,7 +37,7 @@
 .pagination > li:last-child > a, .pagination > li:last-child > span {
    	 	position: relative;
 	    float: left;
-	    padding: 6px 12px;
+	    padding: 5px 11px;
 	    margin-left: 2px;
 	    line-height: 1.42857143;
 	    color: #fff;

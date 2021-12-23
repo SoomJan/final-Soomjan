@@ -248,30 +248,32 @@
 		 WHERE EMAIL = #{ email }
 	</update>
 	
-	<select id="selectThumbnailClass" resultMap="findClassResultMap">
-		SELECT A.CLASS_CODE
-		     , A.CREATE_DATE 
-		     , A.TAG 
-		     , A.TITLE 
-		     , A.PRICE 
-		     , A.FILE_PATH
-		     , A.VIEWS
-		     , B.PROFILE_PATH
-		     , B.NICKNAME 
-		     , C.CATEGORY_NAME
-		     , NVL(AVG(D.STAR), 0) AVGSTAR
-		     , COUNT(D.REVIEW_CODE) RVCOUNT
-		     , ROWNUM
-		  FROM CLASS_TBL A
-		  JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
-		  JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
-		  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
-		 WHERE A.IS_DELETED = 'N'
-		   AND A.EMAIL = #{ email }
-		   AND ROWNUM BETWEEN 1 AND 4
-	  GROUP BY A.CLASS_CODE , A.CREATE_DATE , A.TAG , A.TITLE , A.PRICE , A.VIEWS 
-	         , A.FILE_PATH , B.PROFILE_PATH , B.NICKNAME , C.CATEGORY_NAME, ROWNUM
-	  ORDER BY A.VIEWS DESC
+	<select id="selectThumbnailClassList" resultMap="findClassResultMap">
+		 SELECT V.*
+		       , ROWNUM
+		 FROM (SELECT A.CLASS_CODE
+				     , A.CREATE_DATE 
+				     , A.TAG 
+				     , A.TITLE 
+				     , A.PRICE 
+				     , A.FILE_PATH
+				     , A.VIEWS
+				     , B.PROFILE_PATH
+				     , B.NICKNAME 
+				     , C.CATEGORY_NAME
+				     , NVL(AVG(D.STAR), 0) AVGSTAR
+				     , COUNT(D.REVIEW_CODE) RVCOUNT
+				  FROM CLASS_TBL A
+				  JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
+				  JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
+				  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
+				 WHERE A.IS_DELETED = 'N'
+				   AND A.EMAIL = #{ email }
+			  GROUP BY A.CLASS_CODE , A.CREATE_DATE , A.TAG , A.TITLE , A.PRICE , A.VIEWS 
+			         , A.FILE_PATH , B.PROFILE_PATH , B.NICKNAME , C.CATEGORY_NAME
+			  ORDER BY A.VIEWS DESC
+		     )V
+		 WHERE ROWNUM BETWEEN 1 AND 3
 	</select>
 	
 	<select id="selectDoingAdList" resultMap="adResultMap">
