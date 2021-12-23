@@ -10,6 +10,7 @@ import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.matching.model.dao.MatchingMapper;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.matching.model.dto.EstimateDTO;
+import com.soomjd.soomjan.matching.model.dto.MatchedChattingDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
@@ -83,6 +84,18 @@ public class MatchingServiceImpl implements MatchingService{
 	@Override
 	public List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria) {
 		return mapper.estimateMainJ(selectCriteria);
+	}
+
+
+	@Override
+	public MatchedChattingDTO selectChattingRoom(MatchedChattingDTO matchedChatting) {
+		return mapper.matchedChatting(matchedChatting);
+	}
+
+
+	@Override
+	public boolean registChattingRoom(Map<String, Object> matchedChatMap) {
+		return mapper.registChattingRoom(matchedChatMap);
 	}
 
 //
