@@ -17,12 +17,12 @@ public class FileWrapper {
 		if(!mkdir.exists()) { mkdir.mkdirs(); }
 		
 		try {
-			file.transferTo(new File(filePath + "\\" + savedName));
+			file.transferTo(new File(filePath + "/" + savedName));
 			System.out.println("파일 업로드 성공");
 			result = true;
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
-			new File(filePath + "\\" + savedName).delete();
+			new File(filePath + "/" + savedName).delete();
 			System.out.println("파일 업로드 실패");
 		}
 		

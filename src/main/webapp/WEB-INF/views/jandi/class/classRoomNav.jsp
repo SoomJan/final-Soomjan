@@ -85,7 +85,10 @@ table th{
 	<div class="sidebar-content">
 		<button class="btn btn-primary" style="float:right" onclick="deleteClass();">클래스 삭제</button>
 		<br><br><br>
-		<p class="title"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
+		<div align="center">
+			<p class="title" style="width: 70%;"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
+		</div>
+		<br>
 		<p align="right"><b>(인원 ${ sessionScope.currentCount } / ${ sessionScope.classDTO.maxCount } 명)</b></p>
 		<br>
 		<!-- 탭 메뉴 상단 시작 -->

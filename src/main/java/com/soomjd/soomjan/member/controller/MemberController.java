@@ -146,7 +146,7 @@ public class MemberController {
 	}
 
 	@PostMapping("login")
-	public void login(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
+	public void login(SessionStatus status, HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
 		
 		response.setContentType("application/text; charset=UTF8");
 		
@@ -177,6 +177,7 @@ public class MemberController {
 	    		if(blackD_day > 0) {
 	    			System.out.println((int)blackD_day + "일 남음");
 	    			response.getWriter().write("누적 경고로 인해 블랙리스트 조치되었습니다. 로그인 가능까지 " + (int)blackD_day + "일 남았습니다." );
+	    			status.setComplete();
 	    		}else {
 	    			if(memberService.modifyBlackStatus(loginMember.getEmail())) {
 	    				System.out.println("블랙리스트 해제 성공");

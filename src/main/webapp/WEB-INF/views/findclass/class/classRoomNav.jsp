@@ -195,7 +195,11 @@ th{
 				<span style="color:red;"><i class="bullhorn icon"></i></span>클래스 신고</button>
 			<button id="jjimBtn" style="float:right; color:black; background:none; border:none;"></button>
 		</div>
-		<p class="title"><b>${ classDTO.title }</b></p>
+		<br>
+		<div align="center">
+			<p class="title" style="width: 70%;"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
+		</div>
+		<br>
 		<p align="right"><b>${ classDTO.nickName } 잔디</b></p>
 		<c:if test="${ classDTO.email != sessionScope.loginMember.email and classDTO.maxCount > sessionScope.currentCount}">
 		<p align="right" style="color:darkgreen; font-size:medium;">클래스 신청(30일): ${ classDTO.price }원  

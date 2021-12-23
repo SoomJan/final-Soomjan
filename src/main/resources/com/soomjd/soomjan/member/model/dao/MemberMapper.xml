@@ -179,6 +179,7 @@
 	<update id="modifyBlackStatus">
 		UPDATE SSACK_TBL
 		   SET IS_BLACK = 'N'
+		     , WARNING = 0
 		 WHERE EMAIL = #{ email }
 	</update>
 
