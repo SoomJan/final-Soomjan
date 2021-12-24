@@ -16,7 +16,6 @@ pageEncoding="UTF-8"%>
     .warningtable tbody {
       text-align: center;
     }
-
     .warningtable thead {
       background-color: #E3FFEC;
       text-align: center;
@@ -27,12 +26,10 @@ pageEncoding="UTF-8"%>
       height: 60%;
       text-align: center;
     }
-
     p {
     font-weight: bold;
     font-size: 20px;
     }
-
     </style>
   </head>
   <body>
@@ -102,21 +99,16 @@ pageEncoding="UTF-8"%>
           <script>
               /* 결제 금액 합계 구하기 */
             let payment = $(".payment")
-
             let sum = 0;
             for(let i = 0; i < payment.length; i++) {
               let value = payment[i].getInnerHTML().replace(",","");
-
               let parseValue = parseInt(value);
               sum += parseValue;
             }
-
             console.log(sum);
             paymentSum = sum.toLocaleString();
             console.log(paymentSum);
-
             $(".paymentSum").html(paymentSum);
-
           </script>
 
           <div class="manager-search">

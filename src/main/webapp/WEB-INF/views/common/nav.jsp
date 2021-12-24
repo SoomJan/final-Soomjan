@@ -145,7 +145,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <a href="#">
             <li>
               <span>👩‍🏫</span>
-              <span>멘토 가입하기</span>
+              <span>잔디 가입하기</span>
             </li>
           </a>
         </ul>
@@ -224,7 +224,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <div>
             <a
               href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain"
-              >멘토보기</a
+              >잔디보기</a
             >
           </div>
           <div>

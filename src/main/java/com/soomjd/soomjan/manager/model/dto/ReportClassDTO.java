@@ -15,6 +15,7 @@ public class ReportClassDTO {
 	private String repYn;
 	private String categoryName;
 	private String nickName;
+	private int warning;
 	
 	private ReportStatementDTO reportStatementDTO;
 	private ClassDTO classDTO;
@@ -24,7 +25,7 @@ public class ReportClassDTO {
 
 	public ReportClassDTO(int repCode, String email, String repContents, int classCode, Date repDate, int repTypeCode,
 			String repYn, String categoryName, String nickName, ReportStatementDTO reportStatementDTO,
-			ClassDTO classDTO) {
+			ClassDTO classDTO, int warning) {
 		super();
 		this.repCode = repCode;
 		this.email = email;
@@ -37,6 +38,7 @@ public class ReportClassDTO {
 		this.nickName = nickName;
 		this.reportStatementDTO = reportStatementDTO;
 		this.classDTO = classDTO;
+		this.warning = warning;
 	}
 
 	public int getRepCode() {
@@ -132,7 +134,15 @@ public class ReportClassDTO {
 		return "ReportClassDTO [repCode=" + repCode + ", email=" + email + ", repContents=" + repContents
 				+ ", classCode=" + classCode + ", repDate=" + repDate + ", repTypeCode=" + repTypeCode + ", repYn="
 				+ repYn + ", categoryName=" + categoryName + ", nickName=" + nickName + ", reportStatementDTO="
-				+ reportStatementDTO + ", classDTO=" + classDTO + "]";
+				+ reportStatementDTO + ", classDTO=" + classDTO + ", warning=" + warning + "]";
+	}
+
+	public int getWarning() {
+		return warning;
+	}
+
+	public void setWarning(int warning) {
+		this.warning = warning;
 	}
 
 	

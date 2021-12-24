@@ -123,6 +123,27 @@
         <result column="PAY" property="pay"/>
         <result column="IS_DELETED" property="isDeleted"/>
     </resultMap>
+    
+    <resultMap id="reportClassResultSet" type="ReportClassDTO">
+        <id column="REP_CODE" property="repCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="REP_CONTENTS" property="repContents"/>
+        <result column="CLASS_CODE" property="classCode"/>
+        <result column="REP_DATE" property="repDate"/>
+        <result column="REP_TYPE_CODE" property="repTypeCode"/>
+        <result column="REP_YN" property="repYn"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="NICKNAME" property="nickName" />
+        <result column="WARNING" property="warning"/>
+        
+        <association property="classDTO" resultMap="classResultMap"></association>
+        <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
+    </resultMap>
+    
+    <resultMap id="reportStatementResultSet" type="ReportStatementDTO">
+    	<id column="REP_TYPE_CODE" property="repTypeCode"/>
+    	<result column="REP_TYPE" property="repType"/>
+    </resultMap>
 	
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
 	    SELECT
@@ -172,6 +193,44 @@
 	<select id="selectReportMember" resultMap="ReportMemberSet" parameterType="HashMap">
 	    SELECT 
 		       *
+		  FROM REPORT_MEMBER_TBL A
+		  JOIN REPORT_STATEMENT_TBL B ON(A.REP_TYPE_CODE = B.REP_TYPE_CODE)
+		 WHERE A.REP_EMAIL = #{ email }
+		   AND A.REP_YN = 'Y'
+	</select>
+	
+	<select id="selectReportClass" resultMap="reportClassResultSet" parameterType="HashMap">
+		SELECT
+		       R.REP_CODE
+		     , R.REP_DATE
+		     , R.CLASS_CODE
+		     , R.REP_YN
+		     , C.EMAIL
+		     , C.TITLE
+		     , S.REP_TYPE
+		     , M.WARNING
+		  FROM REPORT_CLASS_TBL R
+		  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN SSACK_TBL M ON(M.EMAIL = C.EMAIL)
+		 WHERE C.EMAIL = #{ email }
+		   AND R.REP_YN = 'Y'
+	</select>
+	
+	<select id="selectClassTotalCount" resultType="_int" parameterType="HashMap">
+		SELECT
+			   COUNT(*)
+		  FROM REPORT_CLASS_TBL R
+		  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN SSACK_TBL M ON(M.EMAIL = C.EMAIL)
+		 WHERE C.EMAIL = #{ email }
+		   AND R.REP_YN = 'Y'
+	</select>
+	
+	<select id="selectMemberTotalCount" resultType="_int" parameterType="HashMap">
+		SELECT 
+		       COUNT(*)
 		  FROM REPORT_MEMBER_TBL A
 		  JOIN REPORT_STATEMENT_TBL B ON(A.REP_TYPE_CODE = B.REP_TYPE_CODE)
 		 WHERE A.REP_EMAIL = #{ email }

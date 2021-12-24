@@ -3,6 +3,7 @@ package com.soomjd.soomjan.manager.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
@@ -104,6 +105,21 @@ public interface ManagerService {
 
 	// 신고된 클래스를 가진 회원 경고 처리
 	int modifyWarningCount(ReportClassDTO repClass);
+
+	// 신고된 멤버의 경고 및 블랙리스트 여부 조회
+	MemberDTO selectRepMember(ReportMemberDTO repMember);
+
+	int updateMemberWarning(MemberDTO member);
+
+	int updateMemberBlack(MemberDTO member);
+
+	Map<String, Object> selectReportClass(ReportClassDTO repClass);
+
+	int updateClassWarning(Map<String, Object> claMap);
+
+	int updateClassBlack(Map<String, Object> claMap);
+
+	JandiDTO selectJandiMember(String email);
 
 
 

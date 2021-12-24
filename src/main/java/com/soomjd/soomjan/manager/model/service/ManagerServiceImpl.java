@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
@@ -241,6 +242,48 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public int modifyWarningCount(ReportClassDTO repClass) {
 		return mapper.modifyWarningCount(repClass);
+	}
+
+
+	@Override
+	public MemberDTO selectRepMember(ReportMemberDTO repMember) {
+		return mapper.selectRepMember(repMember);
+	}
+
+
+	@Override
+	public int updateMemberWarning(MemberDTO member) {
+		return mapper.updateMemberWarning(member);
+	}
+
+
+	@Override
+	public int updateMemberBlack(MemberDTO member) {
+		return mapper.updateMemberBlack(member);
+	}
+
+
+	@Override
+	public Map<String, Object> selectReportClass(ReportClassDTO repClass) {
+		return mapper.selectReportClass(repClass);
+	}
+
+
+	@Override
+	public int updateClassWarning(Map<String, Object> claMap) {
+		return mapper.updateClassWarning(claMap);
+	}
+
+
+	@Override
+	public int updateClassBlack(Map<String, Object> claMap) {
+		return mapper.updateClassBlack(claMap);
+	}
+
+
+	@Override
+	public JandiDTO selectJandiMember(String email) {
+		return mapper.selectJandiMember(email);
 	}
 
 

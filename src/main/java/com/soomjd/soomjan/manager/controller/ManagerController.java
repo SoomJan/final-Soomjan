@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
@@ -191,6 +192,28 @@ public class ManagerController {
 		
 		
 		return "manager/mentolist";
+	}
+	
+	@GetMapping(value = "jandiDetail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String jandiDetail(@RequestParam("email") String email) {
+	
+		System.out.println(email);
+		JandiDTO jandiMember = managerService.selectJandiMember(email);
+		System.out.println("jandiMember : " + jandiMember);
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("email", jandiMember.getEmail());
+		jsonObject.put("repCategory", jandiMember.getTitle());
+		jsonObject.put("repContents", jandiMember.getNickName());
+		jsonObject.put("imgPath", jandiMember.getEnroll_date());
+		jsonObject.put("repNickName", jandiMember.getprofile_path()); 
+		
+		System.out.println("확인용 : \n" +jsonObject);
+		
+		
+		return jsonObject.toJSONString();
 	}
 	
 	/**
@@ -413,12 +436,30 @@ public class ManagerController {
 		
 		if(result > 0 ) {
 			System.out.println("신고처리성공");
+			MemberDTO member = managerService.selectRepMember(repMember);
+			System.out.println("member : " + member);
+			
+			if(member.getIsBlack() != 'Y') {
+				// 1번 바 -> 1, 2번 -> 2, 3-> 3
+				if(member.getWarning() < 3) {
+					
+					int result2 = managerService.updateMemberWarning(member);
+					
+				}
+				if(member.getWarning() == 2) {
+					
+					int result3 = managerService.updateMemberBlack(member);
+				}
+			}
+			
 		} else {
 			System.out.println("신고처리실패");
 		}
 		
 		return "redirect:/manager/reportedmentee";
 	}
+	
+	
 	
 	/**
 	 * 신고회원상세내용(반려처리)
@@ -466,7 +507,21 @@ public class ManagerController {
 		
 		if(result > 0 ) {
 			System.out.println("신고처리성공");
-			int result2 = managerService.modifyWarningCount(repClass);
+			Map<String, Object> claMap = managerService.selectReportClass(repClass);
+			System.out.println("claMap : " + claMap);
+			
+			if((String)claMap.get("IS_BLACK") != "Y") {
+				// 1번 바 -> 1, 2번 -> 2, 3-> 3
+				if(Integer.parseInt(claMap.get("WARNING").toString()) < 3) {
+					
+					 int result2 = managerService.updateClassWarning(claMap);
+					
+				}
+				if(Integer.parseInt(claMap.get("WARNING").toString()) == 2) {
+					
+					int result3 = managerService.updateClassBlack(claMap);
+				}
+			}
 		} else {
 			System.out.println("신고처리실패");
 		}

@@ -28,10 +28,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
@@ -66,14 +68,32 @@ public class MypageController {
 		System.out.println("업데이트된 회원 정보 : " + newMember);
 		model.addAttribute("loginMember", newMember);
 
+		/* 회원의 경고 횟수 조회 */
+		int memberTotalCount = mypageService.selectMemberTotalCount(map);
+		System.out.println("memberTotalCount : " + memberTotalCount);
+		
 		/* 회원의 경고 내역 가져오기 */
 		List<ReportMemberDTO> reportMember = new ArrayList<>();
 		reportMember = mypageService.selectReportMember(map);
 		for (ReportMemberDTO rm : reportMember) {
 			System.out.println(rm);
 		}
-
+		
+		/* 잔디회원의 클래스 경고 횟수 조회 */
+		int classTotalCount = mypageService.selectClassTotalCount(map);
+		System.out.println("classTotalCount : " + classTotalCount);
+		
+		/* 잔디회원의 클래스 경고 내역 가져오기 */
+		 List<ReportClassDTO> reportClass = new ArrayList<>(); 
+		 reportClass = mypageService.selectReportClass(map);
+		 for (ReportClassDTO rc : reportClass) {
+			 System.out.println(rc);
+		 }
+		 
 		mv.addObject("reportMember", reportMember);
+		mv.addObject("memberTotalCount", memberTotalCount);
+		mv.addObject("reportClass", reportClass);
+		mv.addObject("classTotalCount", classTotalCount);
 		mv.setViewName("mypage/mypagemain");
 
 		return mv;
