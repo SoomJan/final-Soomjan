@@ -1,9 +1,7 @@
 package com.soomjd.soomjan.manager.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +32,7 @@ import com.soomjd.soomjan.common.paging.Pagenationwithdate;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
@@ -691,10 +690,9 @@ public class ManagerController {
 	      searchMap.put("searchValue", searchValue);
 	      searchMap.put("startDate", startDate);
 	      searchMap.put("endDate", endDate);
-	      System.out.println("searchMap : " + searchMap);
-	      
 	      
 	    int totalCount = managerService.PurchaseClassTotalCount(searchMap);
+	    
 	    System.out.println("totalCount : " + totalCount);
 	      
 	    int limit = 10;
@@ -753,13 +751,73 @@ public class ManagerController {
 
 	}
 	
-	// 인풋박스 버튼 누르면 정산하기
+	// 모달창에서 calculate_tbl 데이터 넣기 (= 정산)
 	@PostMapping("/classcal")
-	public String classcal() {
+	public String classcal(Model model, @ModelAttribute CalculateDTO calculate) throws MemberRegistException {
+		
+		System.out.print("classCode : " + calculate);
 		
 		
+		
+		if(managerService.classcal(calculate)) {
+			
+			System.out.print("인서트 성공~~");
+		}else {
+			throw new MemberRegistException("수정에 실패하였습니다.");
+		}
 		
 		return "redirect:/manager/classcal";
 	}
+	
+	// 정산된 결제 내역 보기
+	@GetMapping("/finishcal")
+	public String finishcal(Model model,
+			@RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String startDate,
+			@RequestParam(required = false) String endDate) {
+		
+		Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      searchMap.put("startDate", startDate);
+	      searchMap.put("endDate", endDate);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	      
+	    int totalCount = managerService.finishClassTotalCount(searchMap);
+	    System.out.println("totalCount : " + totalCount);
+	      
+	    int limit = 10;
+	    int buttonAmount = 5;
+	      
+	    SelectCriteriawithdate selectCriteriawithdate = null;
+		
+	    if((startDate != null && !"".equals(startDate)) && (searchCondition != null && !"".equals(searchCondition))) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, startDate, endDate);
+	    } else if(startDate != null && !"".equals(startDate)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, null, null, startDate, endDate);
+	    } else if(searchCondition != null && !"".equals(searchCondition)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, null, null);
+	    } else {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		  }
+	    
+	    System.out.println("selectCriteria : " + selectCriteriawithdate);
+		
+		List<PurchaseClassDTO> reviewContent = managerService.selectfinishClass(selectCriteriawithdate);
+
+		model.addAttribute("reviewContent", reviewContent);
+		model.addAttribute("selectCriteria", selectCriteriawithdate);
+		model.addAttribute("searchCondition", searchCondition);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
+		return "manager/finishcal";
+	}
+	
+	
 	
 }

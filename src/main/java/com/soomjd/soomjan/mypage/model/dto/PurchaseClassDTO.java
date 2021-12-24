@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.dto.PaymentDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 
@@ -22,12 +23,15 @@ public class PurchaseClassDTO {
     private JandiDTO jandiDTO;
     private PaymentDTO paymentDTO;
     private ReviewDTO reviewDTO;
+    private CalculateDTO calculateDTO;
 	
 	public PurchaseClassDTO() {}
 
+	
+	
 	public PurchaseClassDTO(String email, int classCode, char status, int payCode, int classPurcCode, Date endDate,
 			String teacher, ClassDTO classDTO, CategoryDTO categoryDTO, JandiDTO jandiDTO, PaymentDTO paymentDTO,
-			ReviewDTO reviewDTO) {
+			ReviewDTO reviewDTO, CalculateDTO calculateDTO) {
 		super();
 		this.email = email;
 		this.classCode = classCode;
@@ -41,7 +45,10 @@ public class PurchaseClassDTO {
 		this.jandiDTO = jandiDTO;
 		this.paymentDTO = paymentDTO;
 		this.reviewDTO = reviewDTO;
+		this.calculateDTO = calculateDTO;
 	}
+
+
 
 	public String getEmail() {
 		return email;
@@ -139,12 +146,24 @@ public class PurchaseClassDTO {
 		this.reviewDTO = reviewDTO;
 	}
 
+	public CalculateDTO getCalculateDTO() {
+		return calculateDTO;
+	}
+
+
+
+	public void setCalculateDTO(CalculateDTO calculateDTO) {
+		this.calculateDTO = calculateDTO;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "PurchaseClassDTO [email=" + email + ", classCode=" + classCode + ", status=" + status + ", payCode="
 				+ payCode + ", classPurcCode=" + classPurcCode + ", endDate=" + endDate + ", teacher=" + teacher
 				+ ", classDTO=" + classDTO + ", categoryDTO=" + categoryDTO + ", jandiDTO=" + jandiDTO + ", paymentDTO="
-				+ paymentDTO + ", reviewDTO=" + reviewDTO + "]";
+				+ paymentDTO + ", reviewDTO=" + reviewDTO + ", calculateDTO=" + calculateDTO + "]";
 	}
 
 

@@ -11,6 +11,7 @@ import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dao.ManagerMapper;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
@@ -242,6 +243,29 @@ public class ManagerServiceImpl implements ManagerService {
 	public int modifyWarningCount(ReportClassDTO repClass) {
 		return mapper.modifyWarningCount(repClass);
 	}
+
+
+	// 정산이 되었는지 아닌지 확인 (Y, N)
+	@Override
+	public boolean classcal(CalculateDTO calculate) {
+		return mapper.classcal(calculate)> 0? true:false;
+	}
+
+
+	//정산된 내역페이지 처리
+	@Override
+	public int finishClassTotalCount(Map<String, String> searchMap) {
+		return mapper.finishClassTotalCount(searchMap);
+	}
+
+
+	// 정산된 내역 List 불러오기
+	@Override
+	public List<PurchaseClassDTO> selectfinishClass(SelectCriteriawithdate selectCriteriawithdate) {
+		return mapper.selectfinishClass(selectCriteriawithdate);
+	}
+
+
 
 
 }

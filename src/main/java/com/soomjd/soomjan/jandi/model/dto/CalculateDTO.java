@@ -9,9 +9,9 @@ public class CalculateDTO {
 	private int classPurchaseCode;
 	private int managerCode;
 	private java.util.Date calDate;
+	
 	public CalculateDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public CalculateDTO(int calCode, int fees, String email, int classPurchaseCode, int managerCode, Date calDate) {
 		super();

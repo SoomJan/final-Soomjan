@@ -237,7 +237,7 @@ body {
   height: 20px;
   font-size: 15px;
   /* font-weight: bold; */
-   white-space: nowrap;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   
@@ -383,14 +383,14 @@ body {
 .mainadvertisement {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  height: 180px;
+  height: 200px;
   background-color: #e3ffec;
   /* border: 1px solid black; */
 }
 .mainadvertisement > div {
-  float: left;
-  width: 25%;
+  width: 50%;
   height: 100%;
+  margin : 0 auto;
   padding: 15px 20px;
   /* border: 1px solid brown; */
 }
