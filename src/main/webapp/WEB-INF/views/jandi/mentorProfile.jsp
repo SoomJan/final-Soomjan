@@ -204,6 +204,7 @@ p {
 				<hr>
 				<div>
 					<br>
+					<a style="float:right;" href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=&searchValue=${ jandi.nickName }">더 보기</a>
 					<p>"${ requestScope.jandi.nickName }" 멘토님의 진행중인 클래스</p>
 					<hr class="border-1px-black" />
 					<div class="row">
@@ -257,7 +258,6 @@ p {
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 	<!-- Modal -->

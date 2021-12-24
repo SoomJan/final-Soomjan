@@ -114,7 +114,7 @@ function mokchaToggle(item) {
 							<span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
 							<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼</h3>
 							<div class="mokchaDiv" style="display:none;">
-							<input type="text" width="80%" name="contents" readonly="readonly" value="${ mokcha.contents }">
+							<textarea class="contents" name="contents" style="width:80%; border:none;" readonly>${ mokcha.contents }</textarea>
 							
 							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
 								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">

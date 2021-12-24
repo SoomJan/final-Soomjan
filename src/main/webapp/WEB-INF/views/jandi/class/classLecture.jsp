@@ -18,11 +18,6 @@
 }
 
 .btnStyle {
-	padding: 5px;
-	background-color: #91c788;
-	border-radius: 0.5rem;
-	font-size: 12px;
-	border-color: #91c788;
 	float: right;
 }
 
@@ -161,7 +156,7 @@ img {
 			<div>
 			<br>
 				<h2 style="float: left;">${ requestScope.totalCount }개의 목차</h2>
-				<button class="btn-mokcha btn" data-toggle="modal" data-target="#addMokchaModal">목차 추가하기</button>
+				<button class="btn-mokcha btn btn-primary" data-toggle="modal" data-target="#addMokchaModal">목차 추가하기</button>
 				<br><br>
 				<hr style="background-color:black; border: 0; height: 1px;">
 				<br>
@@ -173,9 +168,9 @@ img {
 						</form>
 						<c:set var="writeDate" value="${ mokcha.writeDate }"/>
 						<span class="write" style="float: right; position: relative; top: 5px;">${ fn:substring(writeDate, 2, 10) }</span>
-						<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } ▼ </h3>
+						<h3 onclick="mokchaToggle(this);">${ mokcha.mokchaName } <span style="color:#91C788">▼</span> </h3>
 						<div class="mokchaDiv" style="display:none;">
-							<input type="text" width="80%" name="contents" readonly value="${ mokcha.contents }">
+							<textarea class="contents" name="contents" style="width:80%; border:none;" readonly>${ mokcha.contents }</textarea>
 							
 							<c:forEach var="mokchaFile" items="${ mokchaFileList }">
 								<c:if test="${ mokcha.mokchaCode eq mokchaFile.mokchaCode }">
