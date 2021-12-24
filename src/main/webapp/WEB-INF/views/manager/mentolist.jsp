@@ -57,6 +57,38 @@ pageEncoding="UTF-8"%>
     	left: 15%;
     	top: 35%;
 	} */
+	
+	#jandiModal { height: auto; left: 40%; width: 550px; top: 10%; }
+    .modal-header{text-align: center;}
+    .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
+    .context-modal-btn { margin-left: 70%;}
+    #email {margin-left: 11%;}
+    #nickName {margin-left: 11%;}
+    .modal-body {margin-left: 8%;}
+    #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
+    
+    .inputSyle{
+		border-radius: 0.5rem;
+		border: 1.5px solid #91C788;
+		background-color: #91C788;
+		height: 30px;
+		padding:2%;
+	  }
+	  
+	 .contents{
+		resize: none;
+		border-radius: 0.5rem;
+		border: 1.5px solid #91C788;
+		background-color: #91C788;
+		height: 100px;
+		padding:2%;
+	
+	}
+	
+	.resultContent {
+	  height: 150px;
+	  text-align: center;
+	}
 
     .dropdown {float: left; left: 6%; top:10px;} /* 정렬 */
     </style>
@@ -80,7 +112,7 @@ pageEncoding="UTF-8"%>
             </thead>
             <tbody>
             <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
-              <tr class="move">
+              <tr class="move jandiBtn">
                 <td>${ jandiMember.email }</td>
                 <td>${ jandiMember.acc_name }</td>
                 <td>${ jandiMember.nickName }</td>
@@ -135,6 +167,65 @@ pageEncoding="UTF-8"%>
 			 <jsp:include page="../common/Paging.jsp" />
         </div>
         </div>
+        
+        <!-- 잔디회원 상세조회 -->
+        <form id="jandiForm" method="POST">
+        <div class="ui small modal" id="jandiModal">
+       <div class="header modal-header"><h3>잔디 상세내용</h3><img id="xbtn" src="${ pageContext.servletContext.contextPath }/resources/images/xbtn.png" onclick="modalEndBtn(this)"></div>
+       <div class="content resultContent">
+        <br>
+          <div class="modal-body" align="left"> 
+          	이미지 첨부<br>
+			<br>
+			<img id=imgPath name="imgPath" style="width: 300px;"/> 
+			<br><br>
+			이메일 <input type="text" class="inputSyle email" id="email" name="email" style="width: 300px;" readonly> 
+			<br><br>
+			닉네임 <input type="text" class="inputSyle nickName" id="nickName" name="nickName" style="width: 300px;" readonly> 
+			<br><br> 
+			클래스<br>
+			<br>
+			<textarea name="jandiClass" id="jandiClass" class="contents jandiClass" readonly style="width: 400px;" ></textarea>
+			</div>
+			<br><br>
+			잔디가입날짜 <input type="text" class="inputSyle enrollDate" id="enrollDate" name="enrollDate" style="width: 300px;" readonly> 
+			<hr>
+			<div class="context-modal-btn">
+	           <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">확인</button>
+            </div>
+        </div>
+      </div>
+      </form>
+      <script>
+      $(function(){
+    		$(".jandiBtn").click(function(e){
+    			console.log($(e.target).parent().children(0).val());
+    			const email = $(e.target).parent().children(0).val();
+    			$.ajax({
+    				url: "${ pageContext.servletContext.contextPath }/manager/jandiDetail",
+    				data: {email : email},
+    				type: "GET",
+    				async:false,
+    				success: function(data){
+    					console.log('들어감');
+    					console.log(data.repCategory);
+    					$('#email').val(data.email);
+    					$('#nickName').val(data.nickName);
+    					$('#jandiClass').val(data.title);
+    					$('#enrollDate').val(data.enrollDate);
+    					$('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/' + data.profile_path);
+    				},
+    				error: function(xhr, status, error){
+    					console.log(error);
+    					console.log(xhr);
+    				}
+    			});
+    			
+    			$("#jandiModal").show();
+    			
+    		});
+      });
+      </script>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

@@ -34,7 +34,9 @@ pageEncoding="UTF-8"%>
     border: none;
     background-size: 300% 50%;
     border-radius: 50px;
+
 }
+.dropsearch {margin-left: 14%; width: 90%;}
   </style>
   
   <body>
@@ -46,7 +48,7 @@ pageEncoding="UTF-8"%>
 
 			<!-- Page Heading -->
 			<h1 class="my-4">
-				전체 클래스 | <small>
+				전체 클래스 | <small style="color:#117800;">
 					<c:if test="${ not empty categoryName }">
 						${ categoryName } 
 					</c:if>
@@ -55,6 +57,7 @@ pageEncoding="UTF-8"%>
 			<br>
 			<div class="row">
 				<div class="row" style="margin-bottom:10px;">
+					<div class="dropsearch">
 					<form id="searchform" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get" >
 						<input type="hidden" name="categoryCode" value="${ categoryCode }">
 						<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
@@ -68,11 +71,12 @@ pageEncoding="UTF-8"%>
 				          	<button type="submit">
 				           		<img src="${ pageContext.servletContext.contextPath }/resources/images/research.png"/>
 				         	</button>
+						</div>
 			        	</div>
 					</form>
 					  <br><br><br><br><br>
 				</div>
-				
+
 				<c:forEach var="findClassList" items="${ findClassList }">
 				<div class="col-lg-4 col-sm-6 mb-4">
 					<div class="card" style="border: 1px solid green;">
@@ -97,7 +101,7 @@ pageEncoding="UTF-8"%>
 									<small> </small>
 								</div>
 								<div class="col-lg-10 col-md-4 m-t-20">
-									<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>등록일 : ${ findClassList.createDate }</h3>
+									<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>${ findClassList.nickName }</h3>
 									<small> 
 										<c:if test="${ findClassList.avgStar == '0'}">
 											☆
@@ -135,14 +139,34 @@ pageEncoding="UTF-8"%>
 
 					/* 페이지 리로드 시 검색값 유지하기 */
 					$("#searchValue").val("${ selectCriteria.searchValue }")
+				
+
+					/* 마우스 커서 이벤트 */
+					$(".btn-rounded").hover(
+					function () {
+						$(this).css("color", "black").css("cursor", "pointer");
+					},
+					function () {
+						$(this).css("color", "white").css("cursor", "default");
+					}
+					);
+
+					/* 페이지 로드 시 리스트가 없다면 알러창 띄워주기 */
+					let findClassList = "${ empty findClassList }";
+
+					if(findClassList == "true") {
+						alert("아직 생성된 클래스가 없는 카테고리입니다.");
+						history.back();
+					}
 				});
 			</script>
 
 			<br>
 			<jsp:include page="../common/Paging.jsp" />
 		</div>
+		</div>
 	</div>
-
-  </body>
+	
+</body>
   <jsp:include page="../common/footer.jsp" />
 </html>

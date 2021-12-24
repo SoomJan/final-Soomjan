@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,10 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soomjd.soomjan.common.exception.MemberRegistException;
-import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.service.MemberService;
 
@@ -146,7 +143,7 @@ public class MemberController {
 	}
 
 	@PostMapping("login")
-	public void login(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
+	public void login(SessionStatus status, HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
 		
 		response.setContentType("application/text; charset=UTF8");
 		
@@ -166,18 +163,26 @@ public class MemberController {
 	    	MemberDTO loginMember = memberService.loginMember(map);
 	    	model.addAttribute("loginMember", loginMember);
 	    	
+	    	/*
+	    	 * 로그인 한 회원 잔디 여부 및 블랙리스 관련 로직
+	    	 * 임예람
+	    	 * */
 	    	if(loginMember.getIsJandi() == 'Y') {
 	    		model.addAttribute("isjandi", "Y");
 	    	}else {
 	    		model.addAttribute("isjandi", "N");
 	    	}
 	    	
+	    	// 블랙리스트 여부가 Y이면
 	    	if(loginMember.getIsBlack() == 'Y') {
+	    		
+	    		// 해당 멤버의 현재 날짜 - 블랙리스트 해제 날짜를 조회하여 해제 까지 남은 일수를 구한다.
 	    		double blackD_day = memberService.selectBlackDDay(loginMember.getEmail());
-	    		if(blackD_day > 0) {
+	    		if(blackD_day > 0) { // 남은 일수가 0보다 크면 남은 일수를 반환하고 로그인된 세션 정보를 삭제한다.
 	    			System.out.println((int)blackD_day + "일 남음");
 	    			response.getWriter().write("누적 경고로 인해 블랙리스트 조치되었습니다. 로그인 가능까지 " + (int)blackD_day + "일 남았습니다." );
-	    		}else {
+	    			status.setComplete();
+	    		}else { // 남은 일 수가 0보다 작으면 블랙리스트를 해제하고 로그인을 성공 시킨다.
 	    			if(memberService.modifyBlackStatus(loginMember.getEmail())) {
 	    				System.out.println("블랙리스트 해제 성공");
 	    			}else {
@@ -318,6 +323,15 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	
+	/**
+	 * 잔디 닉네임 중복 체크
+	 * 
+	 * @param nickName
+	 * @return
+	 * 
+	 * @author 임예람
+	 */
 	@PostMapping("jandiNickDupCheck")
 	public @ResponseBody String jandiNickDupCheck(@RequestParam String nickName) {
 		

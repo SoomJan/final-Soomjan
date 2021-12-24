@@ -18,6 +18,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <style>
        .takingtable thead tr th {border-bottom: none !important;} /* 수강중인 클래스 테이블 */
+       .finish-go {color: #52734D !important;}
+       .dropsearch {margin-left: 14%;}
+       .dropdown { position: relative;}
     </style>
 </head>
 <body>
@@ -44,12 +47,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
   </div>
 </form>
-  <br><br><br><br>
+  <br><br><br><br><br>
 <c:choose>
   <c:when test="${ empty classList }">
     <div class="unlist-text">
-      수강중인 클래스가 없습니다.<br>
-      필터를 다시 적용하거나 새로운 클래스를 찾아보세요.
+      수강이 진행중인 클래스가 없거나, 조회된 결과가 없습니다.
+      <br><br><br>
+    <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" class="finish-go"><u>클래스 신청하러가기</u></a>
     </div>
   </c:when>
   <c:when test="${ not empty classList }">
@@ -90,6 +94,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         $(".classInfo${ size + 1 }").click(function(){
           location.href="${ pageContext.servletContext.contextPath }/mypage/class/classRoom?classCode=${ classList[size].classDTO.classCode }";
         });
+      });
+
+      /* 검색 조건 유지 */
+      $(function(){
+      $("#searchCondition").val("${ selectCriteria.searchCondition }");
       });
     </script>
     

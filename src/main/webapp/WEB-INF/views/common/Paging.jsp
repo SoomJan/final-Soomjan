@@ -48,6 +48,7 @@
 }
 
 .pagination > li > a { color: white !important;}
+.manager-paging > ul {list-style:none;}
 </style>
 <body>
 

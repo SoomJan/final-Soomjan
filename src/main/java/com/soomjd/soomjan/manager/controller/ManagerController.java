@@ -1,9 +1,7 @@
 package com.soomjd.soomjan.manager.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
@@ -34,6 +33,7 @@ import com.soomjd.soomjan.common.paging.Pagenationwithdate;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
@@ -191,6 +191,28 @@ public class ManagerController {
 		
 		
 		return "manager/mentolist";
+	}
+	
+	@GetMapping(value = "jandiDetail", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String jandiDetail(@RequestParam("email") String email) {
+	
+		System.out.println(email);
+		JandiDTO jandiMember = managerService.selectJandiMember(email);
+		System.out.println("jandiMember : " + jandiMember);
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("email", jandiMember.getEmail());
+		jsonObject.put("repCategory", jandiMember.getTitle());
+		jsonObject.put("repContents", jandiMember.getNickName());
+		jsonObject.put("imgPath", jandiMember.getEnroll_date());
+		jsonObject.put("repNickName", jandiMember.getprofile_path()); 
+		
+		System.out.println("확인용 : \n" +jsonObject);
+		
+		
+		return jsonObject.toJSONString();
 	}
 	
 	/**
@@ -413,12 +435,30 @@ public class ManagerController {
 		
 		if(result > 0 ) {
 			System.out.println("신고처리성공");
+			MemberDTO member = managerService.selectRepMember(repMember);
+			System.out.println("member : " + member);
+			
+			if(member.getIsBlack() != 'Y') {
+				// 1번 바 -> 1, 2번 -> 2, 3-> 3
+				if(member.getWarning() < 3) {
+					
+					int result2 = managerService.updateMemberWarning(member);
+					
+				}
+				if(member.getWarning() == 2) {
+					
+					int result3 = managerService.updateMemberBlack(member);
+				}
+			}
+			
 		} else {
 			System.out.println("신고처리실패");
 		}
 		
 		return "redirect:/manager/reportedmentee";
 	}
+	
+	
 	
 	/**
 	 * 신고회원상세내용(반려처리)
@@ -466,7 +506,21 @@ public class ManagerController {
 		
 		if(result > 0 ) {
 			System.out.println("신고처리성공");
-			int result2 = managerService.modifyWarningCount(repClass);
+			Map<String, Object> claMap = managerService.selectReportClass(repClass);
+			System.out.println("claMap : " + claMap);
+			
+			if((String)claMap.get("IS_BLACK") != "Y") {
+				// 1번 바 -> 1, 2번 -> 2, 3-> 3
+				if(Integer.parseInt(claMap.get("WARNING").toString()) < 3) {
+					
+					 int result2 = managerService.updateClassWarning(claMap);
+					
+				}
+				if(Integer.parseInt(claMap.get("WARNING").toString()) == 2) {
+					
+					int result3 = managerService.updateClassBlack(claMap);
+				}
+			}
 		} else {
 			System.out.println("신고처리실패");
 		}
@@ -691,10 +745,9 @@ public class ManagerController {
 	      searchMap.put("searchValue", searchValue);
 	      searchMap.put("startDate", startDate);
 	      searchMap.put("endDate", endDate);
-	      System.out.println("searchMap : " + searchMap);
-	      
 	      
 	    int totalCount = managerService.PurchaseClassTotalCount(searchMap);
+	    
 	    System.out.println("totalCount : " + totalCount);
 	      
 	    int limit = 10;
@@ -753,13 +806,73 @@ public class ManagerController {
 
 	}
 	
-	// 인풋박스 버튼 누르면 정산하기
+	// 모달창에서 calculate_tbl 데이터 넣기 (= 정산)
 	@PostMapping("/classcal")
-	public String classcal() {
+	public String classcal(Model model, @ModelAttribute CalculateDTO calculate) throws MemberRegistException {
+		
+		System.out.print("classCode : " + calculate);
 		
 		
+		
+		if(managerService.classcal(calculate)) {
+			
+			System.out.print("인서트 성공~~");
+		}else {
+			throw new MemberRegistException("수정에 실패하였습니다.");
+		}
 		
 		return "redirect:/manager/classcal";
 	}
+	
+	// 정산된 결제 내역 보기
+	@GetMapping("/finishcal")
+	public String finishcal(Model model,
+			@RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String startDate,
+			@RequestParam(required = false) String endDate) {
+		
+		Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      searchMap.put("startDate", startDate);
+	      searchMap.put("endDate", endDate);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	      
+	    int totalCount = managerService.finishClassTotalCount(searchMap);
+	    System.out.println("totalCount : " + totalCount);
+	      
+	    int limit = 10;
+	    int buttonAmount = 5;
+	      
+	    SelectCriteriawithdate selectCriteriawithdate = null;
+		
+	    if((startDate != null && !"".equals(startDate)) && (searchCondition != null && !"".equals(searchCondition))) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, startDate, endDate);
+	    } else if(startDate != null && !"".equals(startDate)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, null, null, startDate, endDate);
+	    } else if(searchCondition != null && !"".equals(searchCondition)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, null, null);
+	    } else {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		  }
+	    
+	    System.out.println("selectCriteria : " + selectCriteriawithdate);
+		
+		List<PurchaseClassDTO> reviewContent = managerService.selectfinishClass(selectCriteriawithdate);
+
+		model.addAttribute("reviewContent", reviewContent);
+		model.addAttribute("selectCriteria", selectCriteriawithdate);
+		model.addAttribute("searchCondition", searchCondition);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
+		return "manager/finishcal";
+	}
+	
+	
 	
 }

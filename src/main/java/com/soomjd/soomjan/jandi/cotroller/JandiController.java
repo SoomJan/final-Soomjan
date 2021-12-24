@@ -976,6 +976,16 @@ public class JandiController {
 	}
 	
 	
+	/**
+	 * 잔디 닉네임 변경 
+	 * 
+	 * @param nickName
+	 * @param rttr
+	 * @param model
+	 * @return
+	 * 
+	 * @author 임예람
+	 */
 	@PostMapping("modifyNickName")
 	public String modifyNickName(@RequestParam String nickName, RedirectAttributes rttr, Model model) {
 		

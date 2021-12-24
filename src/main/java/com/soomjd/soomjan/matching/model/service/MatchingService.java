@@ -38,5 +38,7 @@ public interface MatchingService {
 
 	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 
+	boolean updateMatched(int estimateCode);
+
 
 }

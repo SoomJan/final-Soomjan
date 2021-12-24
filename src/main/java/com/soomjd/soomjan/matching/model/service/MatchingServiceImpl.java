@@ -98,6 +98,12 @@ public class MatchingServiceImpl implements MatchingService{
 		return mapper.registChattingRoom(matchedChatMap);
 	}
 
+
+	@Override
+	public boolean updateMatched(int estimateCode) {
+		return mapper.updateMatched(estimateCode) > 0? true:false;
+	}
+
 //
 //	@Override
 //	public List<EstimateDTO> selectEstimate(Map<String, Object> map, SelectCriteria selectCriteria) {

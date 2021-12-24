@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text
+/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -19,21 +21,25 @@
           <li><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain">전체 클래스</a></li>
           <li><a href="${ pageContext.servletContext.contextPath }/findclass/findTopClassMain">인기 클래스</a></li>
         </ul>
-        <hr class="border-1px-black" />
         <ul>
           <c:if test="${ not empty findClassList }">
+            <hr class="border-1px-black" />
             <c:forEach var="categoryList" items="${ categoryList }">
-              <li><a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
+              <li><a style="color:#117800;"
+                href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
             </c:forEach>
+            <hr class="border-1px-black" /> 
           </c:if>
 
           <c:if test="${ not empty topClassList }">
+            <hr class="border-1px-black" />
             <c:forEach var="categoryList" items="${ categoryList }">
-              <li><a href="${ pageContext.servletContext.contextPath }/findclass/findTopClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
+              <li><a style="color:#117800;" 
+                href="${ pageContext.servletContext.contextPath }/findclass/findTopClassMain?categoryCode=${ categoryList.categoryCode }">${ categoryList.categoryName }</a></li>
             </c:forEach>
+            <hr class="border-1px-black" />
           </c:if>
         </ul>
-        <hr class="border-1px-black" />
       </div>
     </div>
   </body>

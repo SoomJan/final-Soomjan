@@ -136,14 +136,15 @@
     </insert>
     
     <select id="numberCheck" resultType="_int">
-        SELECT 
-		       A.CHECK_NUMBER
-		  FROM     
-			  (SELECT ROWNUM RNUM
-			        , CHECK_NUMBER 
-			     FROM EMAIL_CHECK_TBL 
-			    ORDER BY CHECK_CODE DESC) A
-	 	WHERE A.RNUM = 1
+        SELECT V2.CHECK_NUMBER
+		  FROM (SELECT ROWNUM RNUM
+		            ,  V.*
+				  FROM (SELECT A.CHECK_NUMBER
+						  FROM EMAIL_CHECK_TBL A
+						 ORDER BY CHECK_CODE DESC
+		               )V
+		         WHERE ROWNUM = 1
+		       )V2
     </select>
     
     <update id="checkUpdate" parameterType="HashMap">
@@ -179,6 +180,7 @@
 	<update id="modifyBlackStatus">
 		UPDATE SSACK_TBL
 		   SET IS_BLACK = 'N'
+		     , WARNING = 0
 		 WHERE EMAIL = #{ email }
 	</update>
 

@@ -27,6 +27,7 @@
     	<result column="ACCOUNT" property="account"/>
     	<result column="BANK" property="bank"/>
     	<result column="ACC_NAME" property="acc_name"/>
+    	<result column="TITLE" property="title"/>
     </resultMap>
     
     <resultMap id="managerResultSet" type="ManagerDTO">
@@ -89,6 +90,7 @@
         
         <association property="classDTO" resultMap="classResultMap"></association>
         <association property="paymentDTO" resultMap="paymentResultSet"></association>
+        <association property="calculateDTO" resultMap="calculateDTO"></association>
     </resultMap>
     
     <resultMap id="reportMemberResultSet" type="ReportMemberDTO">
@@ -108,6 +110,14 @@
     <resultMap id="reportStatementResultSet" type="ReportStatementDTO">
     	<id column="REP_TYPE_CODE" property="repTypeCode"/>
     	<result column="REP_TYPE" property="repType"/>
+    </resultMap>
+    
+    <resultMap id="calculateDTO" type="CalculateDTO">
+    	<id column="CALC_CODE" property="calCode"/>
+    	<result column="FEES" property="fees"/>
+    	<result column="EMAIL" property="email"/>
+    	<result column="CLASS_PURC_CODE" property="classPurchaseCode"/>
+    	<result column="CAL_DATE" property="calDate"/>
     </resultMap>
     
     <resultMap id="reportClassResultSet" type="ReportClassDTO">
@@ -285,6 +295,16 @@
 	        	]]>	
 	        	) F
      			WHERE F.RNUM >= #{ startRow }
+    </select>
+    
+    <select id="selectJandiMember" resultMap="jandiResultSet">
+    	SELECT
+    	       EMAIL
+    	     , NICKNAME
+    	     , PROFILE_PATH
+    	     , ENROLL_DATE
+    	  FROM JANDI_TBL
+    	 WHERE EMAIL = #{ email }
     </select>
     
      <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
@@ -495,9 +515,11 @@
            				   FROM PAYMENT_TBL P
           				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
           				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
-          				   <where>
-          				   <if test='(startDate != "" and startDate != null) and searchCondition != null'>
-						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+          				   LEFT JOIN CALCULATE_TBL CTB ON (PC.CLASS_PURC_CODE = CTB.CLASS_PURC_CODE)
+          				  <where> 
+						    	 <if test='(startDate != "" and startDate != null) and searchCondition != null'>
+						    		 CTB.CLASS_PURC_CODE IS NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
 						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
 						       	      <if test='searchCondition == "1"'>
 									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
@@ -508,23 +530,27 @@
 						     	 </if>
 						     	 
 						     	 <if test='(startDate != "" and startDate != null) and searchCondition == null'>
-						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						    		CTB.CLASS_PURC_CODE IS NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
 						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
 						     	 </if>
 						     	 
 						     	 <if test='(startDate =="" or startDate == null) and searchCondition != null'>
+						    		CTB.CLASS_PURC_CODE IS NULL
 						    		<if test='searchCondition == "1"'>
-									 	   PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 	  AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
 									 </if>
 									 <if test='searchCondition == "2"'>
-									 	   CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 	  AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
 									 </if>
 						     	 </if>
 						     	 
 						     	 <if test='(startDate =="" or startDate == null) and searchCondition == null'>
+						     	 	CTB.CLASS_PURC_CODE IS NULL
 						     	 </if>
-						     	 </where>
-	 						ORDER BY CLASS_PURC_CODE DESC )V)V2
+						     	
+						     </where>
+	 						ORDER BY PC.CLASS_PURC_CODE DESC )V)V2
 	 						WHERE V2.RNUM BETWEEN ${ startRow } AND ${ endRow }
 	</select>
 	
@@ -537,9 +563,11 @@
            				   FROM PAYMENT_TBL P
           				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
           				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
+						    LEFT JOIN CALCULATE_TBL CTB ON (PC.CLASS_PURC_CODE = CTB.CLASS_PURC_CODE)
 						     <where> 
 						    	 <if test='(startDate != "" and startDate != null) and searchCondition != null'>
-						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						    		 CTB.CLASS_PURC_CODE IS NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
 						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
 						       	      <if test='searchCondition == "1"'>
 									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
@@ -550,20 +578,23 @@
 						     	 </if>
 						     	 
 						     	 <if test='(startDate != "" and startDate != null) and searchCondition == null'>
-						    		 P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						    		CTB.CLASS_PURC_CODE IS NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
 						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
 						     	 </if>
 						     	 
 						     	 <if test='(startDate =="" or startDate == null) and searchCondition != null'>
+						    		CTB.CLASS_PURC_CODE IS NULL
 						    		<if test='searchCondition == "1"'>
-									 	   PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 	  AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
 									 </if>
 									 <if test='searchCondition == "2"'>
-									 	   CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 	  AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
 									 </if>
 						     	 </if>
 						     	 
 						     	 <if test='(startDate =="" or startDate == null) and searchCondition == null'>
+						     	 	CTB.CLASS_PURC_CODE IS NULL
 						     	 </if>
 						     	
 						     </where>)V)V2
@@ -574,17 +605,22 @@
 		SELECT
 		       COUNT(*)
 		  FROM REPORT_MEMBER_TBL R
-         <where>
-  		 	<if test="searchCondition == 1">
-  		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 2">
-  		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 3">
-  		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 </where>
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN SSACK_TBL A ON(A.EMAIL = R.REP_EMAIL)
+          <where>
+		 	<if test="searchCondition == 1">
+		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 2">
+		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 3">
+		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 4">
+		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 </where>
 	</select>
 	
 	<select id="selectReportMemberList" resultMap="reportMemberResultSet">
@@ -630,9 +666,12 @@
 		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 2">
-		 	     		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 3">
+		 	     		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 4">
 		 	     		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
@@ -649,18 +688,24 @@
 		SELECT
 		       COUNT(*)
 		  FROM REPORT_CLASS_TBL R
-		  
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
+		  JOIN JANDI_TBL A ON(A.EMAIL = C.EMAIL)
+
           <where>
-  		 	<if test="searchCondition == 1">
-  		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 2">
-  		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 3">
-  		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 </where>
+		 	<if test="searchCondition == 1">
+		 		C.TITLE LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 2">
+		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 3">
+		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 3">
+		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 </where>
 	</select>
 	
 		<select id="selectReportClassList" resultMap="reportClassResultSet">
@@ -704,9 +749,12 @@
 		                  JOIN JANDI_TBL A ON(A.EMAIL = C.EMAIL)
 		                  <where>
 		 	     		 	<if test="searchCondition == 1">
-		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	     		 		C.TITLE LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 2">
+		 	     		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 3">
 		 	     		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 3">
@@ -784,6 +832,165 @@
 		 JOIN JANDI_TBL J ON(J.EMAIL = CL.EMAIL)
 		WHERE R.REP_CODE = #{ repCode }
 	</select>
+	
+	<insert id="classcal" parameterType="CalculateDTO">
+	INSERT
+	  INTO Calculate_TBL
+	  (
+	  	CALC_CODE, FEES,EMAIL,CLASS_PURC_CODE,CAL_DATE
+	  )
+	VALUES
+	( SEQ_CALCULATE_TBL.NEXTVAL, #{fees},#{email},#{classPurchaseCode},SYSDATE  )
+	</insert>
 
+	<!-- 정산된 내역 페이징 처리 위한 갯수 -->
+	<select id="finishClassTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT 
+		       COUNT(*)
+          FROM (SELECT ROWNUM RNUM
+		             , V.* 
+           	 	  FROM (SELECT * 
+           				   FROM PAYMENT_TBL P
+          				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
+          				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
+          				   LEFT JOIN CALCULATE_TBL CTB ON (PC.CLASS_PURC_CODE = CTB.CLASS_PURC_CODE)
+						     <where> 
+						    	 <if test='(startDate != "" and startDate != null) and searchCondition != null'>
+						    		 CTB.CLASS_PURC_CODE IS NOT NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						       	      <if test='searchCondition == "1"'>
+									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	   AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     	 
+						     	 <if test='(startDate != "" and startDate != null) and searchCondition == null'>
+						    		CTB.CLASS_PURC_CODE IS NOT NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition != null'>
+						    		CTB.CLASS_PURC_CODE IS NOT NULL
+						    		<if test='searchCondition == "1"'>
+									 	  AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	  AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition == null'>
+						     	 	CTB.CLASS_PURC_CODE IS NOT NULL
+						     	 </if>
+						     	
+						     </where>)V)V2
+	
+	</select>
+	
+	<!-- 정산 완료 내역 데이터 조회 -->
+	<select id="selectfinishClass" resultMap="purchaseClassSet" parameterType="HashMap">
+	 
+	  SELECT V2.RNUM
+             , V2.*
+		  FROM (SELECT ROWNUM RNUM
+		              , V.*
+				  FROM (SELECT * 
+           				   FROM PAYMENT_TBL P
+          				   JOIN purchase_class_tbl PC ON (PC.PAY_CODE = P.PAY_CODE)
+          				   JOIN CLASS_TBL CT ON (PC.CLASS_CODE = CT.CLASS_CODE)
+          				   LEFT JOIN CALCULATE_TBL CTB ON (PC.CLASS_PURC_CODE = CTB.CLASS_PURC_CODE)
+          				  <where> 
+						    	 <if test='(startDate != "" and startDate != null) and searchCondition != null'>
+						    		 CTB.CLASS_PURC_CODE IS NOT NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						       	      <if test='searchCondition == "1"'>
+									 	    AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	   AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     	 
+						     	 <if test='(startDate != "" and startDate != null) and searchCondition == null'>
+						    		CTB.CLASS_PURC_CODE IS NOT NULL
+						    		 AND P.PAY_DATE BETWEEN TO_DATE('${startDate}', 'YY-MM-DD') 
+						       	          AND TO_DATE('${endDate}', 'YY-MM-DD')+1
+						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition != null'>
+						    		CTB.CLASS_PURC_CODE IS NOT NULL
+						    		<if test='searchCondition == "1"'>
+									 	  AND PC.EMAIL LIKE '%' || #{ searchValue } || '%'
+									 </if>
+									 <if test='searchCondition == "2"'>
+									 	  AND CT.TITLE LIKE '%' || #{ searchValue } || '%'
+									 </if>
+						     	 </if>
+						     	 
+						     	 <if test='(startDate =="" or startDate == null) and searchCondition == null'>
+						     	 	CTB.CLASS_PURC_CODE IS NOT NULL
+						     	 </if>
+						     </where>
+	 						ORDER BY PC.CLASS_PURC_CODE DESC )V)V2
+	 						WHERE V2.RNUM BETWEEN ${ startRow } AND ${ endRow }
+	</select>
+
+	<select id="selectRepMember" resultMap="ssackResultSet">
+		SELECT
+		       S.EMAIL
+		     , S.NICKNAME
+		     , S.WARNING
+		     , S.IS_BLACK
+		     , S.BLACK_END_DATE
+		  FROM SSACK_TBL S
+		  JOIN REPORT_MEMBER_TBL R ON(R.REP_EMAIL = S.EMAIL)
+		 WHERE R.REP_EMAIL = #{ repEmail }
+		   AND R.REP_CODE = #{ repCode }
+	</select>
+	
+	<update id="updateMemberWarning" parameterType="MemberDTO">
+		UPDATE SSACK_TBL S
+		   SET S.WARNING = S.WARNING + 1
+		 WHERE EMAIL = #{ email }
+	</update>
+	
+	<update id="updateMemberBlack" parameterType="MemberDTO">
+		UPDATE SSACK_TBL S
+		   SET S.IS_BLACK = 'Y'
+		     , S.BLACK_END_DATE = SYSDATE + 30
+		 WHERE EMAIL = #{ email }
+	</update>
+	
+ 	<select id="selectReportClass" resultType="hashmap">
+		SELECT
+			   C.CLASS_CODE
+			 , C.EMAIL
+			 , J.NICKNAME
+			 , S.WARNING
+			 , S.IS_BLACK
+		  FROM CLASS_TBL C
+		  JOIN JANDI_TBL J ON(J.EMAIL = C.EMAIL)
+		  JOIN REPORT_CLASS_TBL R ON(R.CLASS_CODE = C.CLASS_CODE)
+		  JOIN SSACK_TBL S ON(S.EMAIL = C.EMAIL)
+		 WHERE R.REP_CODE = #{ repCode }
+	</select>
+	
+	<update id="updateClassWarning">
+		UPDATE SSACK_TBL S
+		   SET S.WARNING = S.WARNING + 1
+		 WHERE EMAIL = #{ EMAIL }
+	</update>
+	
+	<update id="updateClassBlack">
+		UPDATE SSACK_TBL S
+		   SET S.IS_BLACK = 'Y'
+		     , S.BLACK_END_DATE = SYSDATE + 30
+		 WHERE EMAIL = #{ EMAIL }
+	</update>
 	
 </mapper>

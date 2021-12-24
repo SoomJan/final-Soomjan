@@ -61,16 +61,13 @@ pageEncoding="UTF-8"%>
         <ul>
           <h3>정산 관리</h3>
           <li>
-            <a
-              href="${ pageContext.servletContext.contextPath }/manager/classcal"
-              >클래스 결제 내역</a
-            >
+            <a href="${ pageContext.servletContext.contextPath }/manager/classcal" >클래스 미정산 내역</a>
           </li>
           <li>
-            <a
-              href="${ pageContext.servletContext.contextPath }/manager/advertcal"
-              >광고 결제 내역</a
-            >
+            <a href="${ pageContext.servletContext.contextPath }/manager/finishcal" >클래스 정산 내역</a>
+          </li>
+          <li>
+            <a href="${ pageContext.servletContext.contextPath }/manager/advertcal" >광고 결제 내역</a>
           </li>
         </ul>
         <ul>
