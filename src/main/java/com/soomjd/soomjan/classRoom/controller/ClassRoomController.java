@@ -74,6 +74,8 @@ public class ClassRoomController{
 	 * @param searchCondition
 	 * @param searchValue
 	 * @param currentPage
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("classRoom")
 	public void classRoom(Model model, @RequestParam int classCode, HttpSession session, @RequestParam(required = false) String searchCondition,
@@ -140,6 +142,8 @@ public class ClassRoomController{
 	 * 
 	 * @param model
 	 * @param currentPage
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("classLecture")
 	public void classLecture(Model model, @RequestParam(defaultValue = "1") int currentPage) {
@@ -180,6 +184,8 @@ public class ClassRoomController{
 	 * 
 	 * @param model
 	 * @param currentPage
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("classLearningBoard")
 	public void classLearningBoard(Model model, @RequestParam(defaultValue = "1") int currentPage) {
@@ -212,6 +218,8 @@ public class ClassRoomController{
 	 * 클레스룸 학습방 게시물 주소 요청
 	 * @param model
 	 * @param postCode
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("classLearningPost")
 	public void classLearningPost(Model model, @RequestParam int postCode) {
@@ -228,6 +236,8 @@ public class ClassRoomController{
 	 * 잔디의 채팅 페이지 주소 요청
 	 * @param model
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("jandiClassChat")
 	public String jandiClassChat(Model model) {
@@ -256,6 +266,8 @@ public class ClassRoomController{
 	 * @param model
 	 * @param session
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("mypageClassChat")
 	public String mypageClassChat(Model model, HttpSession session) {
@@ -283,6 +295,8 @@ public class ClassRoomController{
 	 * @param classMap
 	 * @param session
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("createClass")
 	public String createClass(@RequestParam Map<String, Object> classMap, HttpSession session) {
@@ -316,6 +330,8 @@ public class ClassRoomController{
 	 * 클레스 삭제 
 	 * @param model
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("deleteClass")
 	public String deleteClass(Model model) {
@@ -335,6 +351,8 @@ public class ClassRoomController{
 	 * @param contents 클래스 내용
 	 * @param tag 클래스 태그
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("modifyClass")
 	public String modifyClass(Model model, RedirectAttributes rttr, @RequestParam String contents,
@@ -371,6 +389,8 @@ public class ClassRoomController{
 	 * @param model
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("registLecture")
 	public String registLecture(HttpServletRequest request, Model model, RedirectAttributes rttr) {
@@ -403,6 +423,8 @@ public class ClassRoomController{
 	 * @param session
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("uploadMokchaFile")
 	public String uploadMokchaFile(@RequestParam MultipartFile file, @RequestParam int mokchaCode, HttpSession session,
@@ -452,6 +474,8 @@ public class ClassRoomController{
 	 * 학습방 게시물 생성
 	 * @param model
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("registLearningPost")
 	public String registLearningPost(Model model) {
@@ -482,6 +506,8 @@ public class ClassRoomController{
 	 * @param title
 	 * @param postCode
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("modifyLearnigPost")
 	public String modifyLearnigPost(Model model, RedirectAttributes rttr, @RequestParam String contents,
@@ -518,6 +544,8 @@ public class ClassRoomController{
 	 * @param session
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("uploadLearningFile")
 	public String uploadLearningFile(@RequestParam MultipartFile file, @RequestParam int postCode, HttpSession session,
@@ -576,6 +604,8 @@ public class ClassRoomController{
 	 * 파일 다운로드
 	 * @param request
 	 * @param response
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("*/download")
 	public void download(HttpServletRequest request, HttpServletResponse response) {
@@ -612,6 +642,8 @@ public class ClassRoomController{
 	 * @param session
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("uploadClassFile")
 	public String uploadClassFile(@RequestParam MultipartFile file, @RequestParam int classCode, HttpSession session,
@@ -659,6 +691,8 @@ public class ClassRoomController{
 	 * @param mokchaCode
 	 * @param session
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("deleteMokcha")
 	public String deleteMokcha(@RequestParam int mokchaCode, HttpSession session) {
@@ -683,6 +717,8 @@ public class ClassRoomController{
 	 * @param postCode
 	 * @param session
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("deleteLearnigPost")
 	public String deleteLearnigPost(@RequestParam int postCode, HttpSession session) {
@@ -708,6 +744,8 @@ public class ClassRoomController{
 	 * @param request
 	 * @param response
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("chatFileUpload")
 	public @ResponseBody Map<String, String> chatFileUpload(MultipartHttpServletRequest multipartRequest, HttpServletRequest request, HttpServletResponse response ) {
@@ -755,6 +793,8 @@ public class ClassRoomController{
 	 * @param email
 	 * @param request
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("purchaseClass")
 	@ResponseBody
@@ -830,6 +870,8 @@ public class ClassRoomController{
 	 * @param session
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("purchaseClass/success")
 	public String purchaseClassSucceess(HttpSession session, RedirectAttributes rttr) {
@@ -896,6 +938,8 @@ public class ClassRoomController{
 	 * @param session
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping("purchaseClass/fail")
 	public String purchaseClassFail(HttpSession session, RedirectAttributes rttr) {
@@ -921,11 +965,13 @@ public class ClassRoomController{
 	 * @param request
 	 * @param rttr
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping("reportMember")
 	public String reportMember(MultipartHttpServletRequest multipartRequest, HttpServletRequest request, RedirectAttributes rttr) {
 
-		// 
+		// 파라미터 저장
 		MultipartFile file = multipartRequest.getFile("repImage");
 		ReportMemberDTO reportMember = new ReportMemberDTO();
 		reportMember.setContents(request.getParameter("repContents"));
@@ -952,7 +998,7 @@ public class ClassRoomController{
 			String ext = originFileName.substring(originFileName.lastIndexOf("."));
 			String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
 			
-			// 파일 저장
+			// 파일 저장에에 성공하면 데이터베이스에 인서트
 			if (fileWrapper.uploadSingleFile(file, savedName, filePath)) {
 				
 				System.out.println("파일 업로드 성공!");
@@ -1018,15 +1064,20 @@ public class ClassRoomController{
 	}
 	
 	/**
+	 * 클래스 신고 메소드
+	 * 
 	 * @param repContents
 	 * @param repTypeCode
 	 * @param session
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@PostMapping(value="reportClass",  produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String reportClass(@RequestParam String repContents, @RequestParam int repTypeCode, HttpSession session) {
 
+		// 신고 클래스  DB에 저장할 값들을 맵에 저장
 		Map<String, Object> reportClassMap = new HashMap<String, Object>();
 		reportClassMap.put("repContents", repContents);
 		reportClassMap.put("repTypeCode", repTypeCode);
@@ -1045,23 +1096,32 @@ public class ClassRoomController{
 	}
 	
 	/**
+	 * 클래스 찜하기
+	 * 
 	 * @param session
 	 * @param status
 	 * @param model
 	 * @return
+	 * 
+	 * @author 임예람
 	 */
 	@GetMapping(value="jjimClass",  produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String jjimClass(HttpSession session, @RequestParam String status, Model model) {
+		// 찜할 클래스 코드와 로그인한 사용자의 이메일 가져오기
 		int classCode = (int) session.getAttribute("classCode");
 		String email = ((MemberDTO) session.getAttribute("loginMember")).getEmail();
 		
+		// 맵에 저장
 		Map<String, Object> jjimMap = new HashMap<String, Object>();
 		jjimMap.put("classCode", classCode);
 		jjimMap.put("email", email);
 		
 		String result = "";
 		
+		/* jsp에서 클래스를 이미 찜한 경우라면 Y를 넘겨주고, 찜하지 않은 경우라면 N을 넘겨준다.
+		 * 따라서 status가 Y면 찜을 해제하고 상태값을 N으로 바꿔주고,
+		 * status가 N이면 찜을 하고 상태값을 Y로 바꿔준다.*/
 		switch(status) {
 		case "Y" : 
 			if(classRoomService.removeLikedClass(jjimMap)) {

@@ -128,7 +128,23 @@ p {
 		if ('${ requestScope.nickMessage }' != '') {
 			alert("${ requestScope.nickMessage }");
 		}
+		
+		$('#careerCheck').html($('#careeaText').val().length);
+		$('#introCheck').html($('#introText').val().length);
 	});
+	
+	/* 텍스트 길이값 넘어가지 않게 체크하는 메소드 */
+	function checkLength(inputItem, spanItem, maxLength){
+		let $item = $(inputItem);
+		spanItem.html($item.val().length);
+		
+		if($item.val().length > maxLength){
+			alert(maxLength + "자를 초과할 수 없습니다.");
+			$item.val($item.val().substr(0, (maxLength-1)));
+			$item.focus();
+			spanItem.html($item.val().length);
+		}
+	}
 </script>
 
 </head>
@@ -167,20 +183,18 @@ p {
 					action="${ pageContext.servletContext.contextPath }/jandi/jandiIntro"
 					method="post">
 
-					<h2>잔디 경력</h2>
+					<h2>잔디 경력</h2> 
 					<hr class="border-1px-black" />
-					<br>
-					<textarea class="areaStyle" name="career" rows="10" cols="20"
-						wrap="hard" style="border: 1px solid black"
-						placeholder="경력을 작성해 주세요.">
-						${ requestScope.jandi.career }
-						</textarea>
+					<p style="float:right; font-size: 15px;">( <span id="careerCheck"></span> / 100자 )</p>
+					<textarea class="areaStyle" name="career" rows="10" cols="20" id="careeaText"
+						wrap="hard" style="border: 1px solid black" onkeyup="checkLength(this, $('#careerCheck'), 100);"
+						placeholder="경력을 작성해 주세요.">${ requestScope.jandi.career }</textarea>
 
 					<br> <br> <br>
 					<h2>소개</h2>
 					<hr class="border-1px-black" />
-					<br>
-					<textarea class="areaStyle" name="introduce" id="introText"
+					<p style="float:right; font-size: 15px;">( <span id="introCheck"></span> / 330자 )</p>
+					<textarea class="areaStyle" name="introduce" id="introText" onkeyup="checkLength(this, $('#introCheck'), 330);"
 						rows="20" cols="20" wrap="hard" style="border: 1px solid black"
 						placeholder="소개를 작성해 주세요.">${ requestScope.jandi.intro }</textarea>
 					<br> <br>
