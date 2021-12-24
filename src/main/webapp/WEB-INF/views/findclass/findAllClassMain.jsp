@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
     border-radius: 50px;
 
 }
-.dropsearch {margin-left: 14%;}
+.dropsearch {margin-left: 14%; width: 90%;}
   </style>
   
   <body>
@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%>
 									<small> </small>
 								</div>
 								<div class="col-lg-10 col-md-4 m-t-20">
-									<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>등록일 : ${ findClassList.createDate }</h3>
+									<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>${ findClassList.nickName }</h3>
 									<small> 
 										<c:if test="${ findClassList.avgStar == '0'}">
 											☆
