@@ -59,7 +59,7 @@ table {
 				<table style="width: 100%">
 					<tr>
 						<td style="width:30%">수업제목</td>
-						<td style="width:70%">${ myClasses.contents }</td>
+						<td style="width:70%">${ contentss }</td>
 					</tr>
 					<tr>
 						<td style="width:30%">광고 시작날짜</td>

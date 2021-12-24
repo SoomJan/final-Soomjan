@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,12 +46,26 @@ table {
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/nav.jsp" />
-	<div class="sidebar-content">
-		<h1 align="center">${ requestScope.message }</h1>
-		
-		<button type="button" onclick="${ pageContext.servletContext.contextPath }/jandi/myAd" style="float: right;">돌아가기 </button>
-	</div>
 
+	<div class="common-sidebar">
+		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
+		<div class="sidebar-content">
+			
+			<h1 align="center">${ requestScope.message }</h1>
+					
+			<button type="button" onclick="goBackAd();" style="float: right;">돌아가기 </button>
+			
+			<script>
+				function goBackAd(){
+					location.href='${ pageContext.servletContext.contextPath }/jandi/myAd';
+				}
+				
+			</script>			
+		
+		</div>	
+		
+		
+	</div>
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>
