@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <html>
   <head>
 
-    <title>클래스 미정산 내역</title>
+    <title>클래스 결제 내역</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
@@ -44,7 +44,7 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="main-content">
-      <h1 id="category"> 클래스 미정산 내역 </h1> <br>
+      <h1 id="category"> 클래스 정산 완료 내역 </h1> <br>
       
       
          	<%-- <!-- 총 정산 금액 -->
@@ -81,7 +81,7 @@ pageEncoding="UTF-8"%>
 		<%-- <fmt:formatNumber value="${total1  + total2}" pattern="\#,###.##"/><br> --%>
       
        <h3> 내역 </h3> 
-        <form action="${ pageContext.servletContext.contextPath }/manager/classcal" method="get">
+        <form action="${ pageContext.servletContext.contextPath }/manager/finishcal" method="get">
      		<input type="date" name="startDate" value="${ startDate }"> ~ <input type="date" name="endDate" value="${ endDate }"> &nbsp; &nbsp;
 				 <select id="searchCondition" name="searchCondition" >
             	 <option value="">선택해주세요</option>
@@ -188,6 +188,7 @@ pageEncoding="UTF-8"%>
         	$(function(){
           		$(".calClass").click(function(e){
           			
+          			if($(e.target).parent().children()[7].innerText == 'N'){
           			
 					 $("#calClass").show();	
 					 const classCode = $(e.target).parent().children()[0].innerText;
@@ -236,6 +237,10 @@ pageEncoding="UTF-8"%>
 						 
 						 $("#calClass").hide();		
 					 });
+					 
+          			}else {
+          				console.log("이미 존재")
+          			}
           		}); 
           	});
           </script>

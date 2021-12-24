@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.main.model.dao.MainMapper;
 
@@ -41,6 +42,18 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<ClassDTO> almostfinish() {
 		return mapper.almostfinish();
+	}
+
+	// 평점이 높은 강의
+	@Override
+	public List<ClassDTO> highScore() {
+		return mapper.highScore();
+	}
+
+	// 가장 최근에 등록된 공지
+	@Override
+	public FaqDTO lastestFaq() {
+		return mapper.lastestFaq();
 	}
 
 }

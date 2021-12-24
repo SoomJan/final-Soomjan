@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.classRoom.model.service.ClassRoomService;
+import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.faq.model.service.FaqService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.main.model.service.MainService;
@@ -50,19 +51,25 @@ public class MainController {
 		//뷰가 가장 많은 강의
 		List <ClassDTO> viewClass = mainService.viewClass();
 		
-		System.out.print(viewClass);
-		
 		// 가장 최근에 나온 강의
 		List <ClassDTO> latestClass= mainService.latestClass();
 		
 		// 곧 마감될 강의
 		List <ClassDTO> almostfinish = mainService.almostfinish();
 		
+		// 평점이 높은 강의
+		List<ClassDTO> highScore = mainService.highScore();
+		
+		// 가장 최근 공지
+		FaqDTO lastestFaq = mainService.lastestFaq();
+		
 		model.addAttribute("class2", class2);	
 		model.addAttribute("jandi", jandi);	
 		model.addAttribute("viewClass", viewClass);	
 		model.addAttribute("latestClass", latestClass);	
 		model.addAttribute("almostfinish", almostfinish);	
+		model.addAttribute("highScore", highScore);	
+		model.addAttribute("lastestFaq", lastestFaq);	
 		
 		
 		return "main/main";

@@ -8,6 +8,7 @@ import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
@@ -120,6 +121,14 @@ public interface ManagerService {
 	int updateClassBlack(Map<String, Object> claMap);
 
 	JandiDTO selectJandiMember(String email);
+	// 정산이 되었는지 아닌지 확인
+	boolean classcal(CalculateDTO calculate);
+
+	// 정산된 내역 페이징 처리
+	int finishClassTotalCount(Map<String, String> searchMap);
+
+	// 정산된 내역 데이터 불러오기
+	List<PurchaseClassDTO> selectfinishClass(SelectCriteriawithdate selectCriteriawithdate);
 
 
 
