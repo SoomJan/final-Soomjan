@@ -53,7 +53,7 @@ table {
 			<c:set var="resultValue" value="${requestScope.resultValue }"/>
 			
 			<c:choose>
-				<c:when test="${ resultValue == 'Y' }">
+				<c:when test="${ resultValue=='Y' }">
 					
 					<c:choose>
 						<c:when test="${ days eq 0 }">
