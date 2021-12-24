@@ -44,4 +44,11 @@ public interface JandiService {
 
 	List<FullAdDTO> selectDoingAdList();
 
+	int updateStartDate(int classCode);
+
+	FullAdDTO selectMyAd(Integer adCode);
+
+	ClassDTO selectMyClass(int classCode);
+
+
 }

@@ -183,7 +183,8 @@
 			 , FILE_PATH
 			 , ORG_FILE_PATH
 		  FROM CLASS_TBL
-		 WHERE EMAIL=#{ email } 	   	
+		 WHERE EMAIL=#{ email } 
+		 ORDER BY CLASS_CODE DESC	   	
 	
 	</select>
 	
@@ -228,11 +229,22 @@
 		  JOIN CLASS_TBL D ON(C.EMAIL=D.EMAIL)
 		 WHERE A.PAY_DATE BETWEEN #{startDay} AND #{endDay}
 		   AND D.EMAIL=#{ email }  
-		   	   
+	</select>
 	
-	
+	<select id="selectMyAd"  resultMap="adResultMap">
+		SELECT 
+		       AD_CODE
+			 , AD_CONTENTS
+			 , IMG_PATH
+			 , CLASS_CODE
+			 , START_DATE
+			 , ORG_IMG_PATH
+			 , IS_ADVERTISED
+		  FROM AD_TBL 
+		 WHERE AD_CODE=#{ adCode } 
 	
 	</select>
+	
 	
 	<update id="updateAdDate">
 		UPDATE
@@ -290,5 +302,32 @@
 	
 	</select>
 	
+	<update id="updateStartDate">
+		UPDATE 
+		       AD_TBL
+		   SET START_DATE=TO_DATE(TO_CHAR(SYSDATE+1,'YYYYMMDD'),'YYYY-MM-DD')
+		 WHERE AD_CODE=#{ adCode }      
+	</update>
+	
+	<select id="selectMyClass" resultMap="classesResultMap">
+		SELECT 
+			   CLASS_CODE
+			 , CREATE_DATE
+			 , CONTENTS
+			 , TAG
+			 , CATEGORY_CODE
+			 , EMAIL
+			 , BOARD_TYPE
+			 , VIEWS
+			 , MAX_COUNT
+			 , TITLE
+			 , PRICE
+			 , IS_DELETED
+			 , FILE_PATH
+			 , ORG_FILE_PATH
+		  FROM CLASS_TBL
+		 WHERE CLASS_CODE=#{ classCode }
+	</select>
 
 </mapper>
+

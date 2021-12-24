@@ -50,10 +50,10 @@ table {
 		<jsp:include page="/WEB-INF/views/common/mentorsidebar.jsp" />
 		<div class="sidebar-content">
 			<c:set var="days" value="${ requestScope.calDateDays }"/>
-			<c:set var="resultValue" value="${ requestScope.resultValue}"/>
-			<c:set var="adCode" value="${myAd.adCode }"/>
+			<c:set var="resultValue" value="${requestScope.resultValue }"/>
+			
 			<c:choose>
-				<c:when test="${ resultValue eq N }">
+				<c:when test="${ resultValue == 'Y' }">
 					
 					<c:choose>
 						<c:when test="${ days eq 0 }">

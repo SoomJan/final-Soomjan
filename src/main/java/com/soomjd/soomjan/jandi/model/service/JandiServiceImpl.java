@@ -116,5 +116,23 @@ public class JandiServiceImpl implements JandiService{
 		return jandiMapper.selectDoingAdList();
 	}
 
+	@Override
+	public int updateStartDate(int classCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.updateStartDate(classCode);
+	}
+
+	@Override
+	public FullAdDTO selectMyAd(Integer adCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectMyAd(adCode);
+	}
+
+	@Override
+	public ClassDTO selectMyClass(int classCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectMyClass(classCode);
+	}
+
 
 }
