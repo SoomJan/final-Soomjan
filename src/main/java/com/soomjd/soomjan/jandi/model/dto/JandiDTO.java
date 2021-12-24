@@ -13,11 +13,12 @@ public class JandiDTO {
 	private String account;
 	private String bank;
 	private String acc_name;
+	private String title;
 	
 	public JandiDTO() {	}
 	
 	public JandiDTO(String email, String nickName, String career, String intro, String profile_path, Date enroll_date,
-			String account, String bank, String acc_name) {
+			String account, String bank, String acc_name, String title) {
 		super();
 		this.email = email;
 		this.nickName = nickName;
@@ -28,6 +29,7 @@ public class JandiDTO {
 		this.account = account;
 		this.bank = bank;
 		this.acc_name = acc_name;
+		this.setTitle(title);
 	}
 
 	public String getEmail() {
@@ -102,12 +104,21 @@ public class JandiDTO {
 		this.acc_name = acc_name;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 	@Override
 	public String toString() {
 		return "JandiDTO [email=" + email + ", nickName=" + nickName + ", career=" + career + ", intro=" + intro
 				+ ", profile_path=" + profile_path + ", enroll_date=" + enroll_date + ", account=" + account + ", bank="
-				+ bank + ", acc_name=" + acc_name + "]";
+				+ bank + ", acc_name=" + acc_name + ", title=" + title + "]";
 	}
+
 	
 
 }

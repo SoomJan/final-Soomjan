@@ -27,6 +27,7 @@
     	<result column="ACCOUNT" property="account"/>
     	<result column="BANK" property="bank"/>
     	<result column="ACC_NAME" property="acc_name"/>
+    	<result column="TITLE" property="title"/>
     </resultMap>
     
     <resultMap id="managerResultSet" type="ManagerDTO">
@@ -285,6 +286,16 @@
 	        	]]>	
 	        	) F
      			WHERE F.RNUM >= #{ startRow }
+    </select>
+    
+    <select id="selectJandiMember" resultMap="jandiResultSet">
+    	SELECT
+    	       EMAIL
+    	     , NICKNAME
+    	     , PROFILE_PATH
+    	     , ENROLL_DATE
+    	  FROM JANDI_TBL
+    	 WHERE EMAIL = #{ email }
     </select>
     
      <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
@@ -574,17 +585,22 @@
 		SELECT
 		       COUNT(*)
 		  FROM REPORT_MEMBER_TBL R
-         <where>
-  		 	<if test="searchCondition == 1">
-  		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 2">
-  		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 3">
-  		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 </where>
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN SSACK_TBL A ON(A.EMAIL = R.REP_EMAIL)
+          <where>
+		 	<if test="searchCondition == 1">
+		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 2">
+		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 3">
+		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 4">
+		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 </where>
 	</select>
 	
 	<select id="selectReportMemberList" resultMap="reportMemberResultSet">
@@ -630,9 +646,12 @@
 		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 2">
-		 	     		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	     		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 3">
+		 	     		 		AND R.CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 4">
 		 	     		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 </where>
@@ -649,18 +668,24 @@
 		SELECT
 		       COUNT(*)
 		  FROM REPORT_CLASS_TBL R
-		  
+		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
+		  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
+		  JOIN JANDI_TBL A ON(A.EMAIL = C.EMAIL)
+
           <where>
-  		 	<if test="searchCondition == 1">
-  		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 2">
-  		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 	<if test="searchCondition == 3">
-  		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
-  		 	</if>
-  		 </where>
+		 	<if test="searchCondition == 1">
+		 		C.TITLE LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 2">
+		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 3">
+		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test="searchCondition == 3">
+		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 </where>
 	</select>
 	
 		<select id="selectReportClassList" resultMap="reportClassResultSet">
@@ -704,9 +729,12 @@
 		                  JOIN JANDI_TBL A ON(A.EMAIL = C.EMAIL)
 		                  <where>
 		 	     		 	<if test="searchCondition == 1">
-		 	     		 		R.REP_EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	     		 		C.TITLE LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 2">
+		 	     		 		AND A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 3">
 		 	     		 		AND R.REP_CONTENTS LIKE '%' || #{ searchValue } || '%'
 		 	     		 	</if>
 		 	     		 	<if test="searchCondition == 3">
@@ -785,5 +813,57 @@
 		WHERE R.REP_CODE = #{ repCode }
 	</select>
 
+	<select id="selectRepMember" resultMap="ssackResultSet">
+		SELECT
+		       S.EMAIL
+		     , S.NICKNAME
+		     , S.WARNING
+		     , S.IS_BLACK
+		     , S.BLACK_END_DATE
+		  FROM SSACK_TBL S
+		  JOIN REPORT_MEMBER_TBL R ON(R.REP_EMAIL = S.EMAIL)
+		 WHERE R.REP_EMAIL = #{ repEmail }
+		   AND R.REP_CODE = #{ repCode }
+	</select>
+	
+	<update id="updateMemberWarning" parameterType="MemberDTO">
+		UPDATE SSACK_TBL S
+		   SET S.WARNING = S.WARNING + 1
+		 WHERE EMAIL = #{ email }
+	</update>
+	
+	<update id="updateMemberBlack" parameterType="MemberDTO">
+		UPDATE SSACK_TBL S
+		   SET S.IS_BLACK = 'Y'
+		     , S.BLACK_END_DATE = SYSDATE + 30
+		 WHERE EMAIL = #{ email }
+	</update>
+	
+ 	<select id="selectReportClass" resultType="hashmap">
+		SELECT
+			   C.CLASS_CODE
+			 , C.EMAIL
+			 , J.NICKNAME
+			 , S.WARNING
+			 , S.IS_BLACK
+		  FROM CLASS_TBL C
+		  JOIN JANDI_TBL J ON(J.EMAIL = C.EMAIL)
+		  JOIN REPORT_CLASS_TBL R ON(R.CLASS_CODE = C.CLASS_CODE)
+		  JOIN SSACK_TBL S ON(S.EMAIL = C.EMAIL)
+		 WHERE R.REP_CODE = #{ repCode }
+	</select>
+	
+	<update id="updateClassWarning">
+		UPDATE SSACK_TBL S
+		   SET S.WARNING = S.WARNING + 1
+		 WHERE EMAIL = #{ EMAIL }
+	</update>
+	
+	<update id="updateClassBlack">
+		UPDATE SSACK_TBL S
+		   SET S.IS_BLACK = 'Y'
+		     , S.BLACK_END_DATE = SYSDATE + 30
+		 WHERE EMAIL = #{ EMAIL }
+	</update>
 	
 </mapper>

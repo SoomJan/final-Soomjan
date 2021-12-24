@@ -74,7 +74,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <!-- 경고가 없으면 빈 화면이 나옵니다. -->
         </c:when>
         <c:when test="${ not empty reportMember }">
-        <p>누적된 경고</p>
+        <div><p style="float: left;">새싹 누적된 경고</p><span style="float: right; margin-right: 2%; margin-top: 1%;">총 ${ requestScope.memberTotalCount }회</span></div>
         <table class="ui basic table warningtable">
           <thead>
             <tr>
@@ -87,6 +87,33 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <tr>
               <td>${reportList.repDate}</td>
               <td>${reportList.repType}</td>
+            </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+        </c:when>
+        </c:choose>
+        <br><br>
+        <c:choose>
+        <c:when test="${ empty reportClass }">
+          <!-- 경고가 없으면 빈 화면이 나옵니다. -->
+        </c:when>
+        <c:when test="${ not empty reportClass }">
+        <div><p style="float: left;">클래스 누적된 경고</p><span style="float: right; margin-right: 2%; margin-top: 1%;">총 ${ requestScope.classTotalCount }회</span></div>
+        <table class="ui basic table warningtable">
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>클래스</th>
+              <th>사유</th>
+            </tr>
+          </thead>
+          <tbody>
+          <c:forEach var="reportClassList" items="${ reportClass }">
+            <tr>
+              <td>${reportClassList.repDate}</td>
+              <td>${reportClassList.classDTO.title}</td>
+              <td>${reportClassList.reportStatementDTO.repType}</td>
             </tr>
             </c:forEach>
           </tbody>

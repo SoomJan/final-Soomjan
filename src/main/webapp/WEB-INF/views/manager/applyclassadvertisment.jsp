@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%>
           <thead>
             <tr>
               <th>클래스 이름</th>
-              <th>멘토</th>
+              <th>잔디닉네임</th>
               <th>날짜</th>
             </tr>
           </thead>
@@ -66,26 +66,26 @@ pageEncoding="UTF-8"%>
           </tbody>
         </table>
         <div class="manager-search">
-          <form class="manager-searchbox" method="post">
-            <input type="text" />
-            <button type="submit">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/research.png"
-              />
-            </button>
-          </form>
-        </div>
-        <div>
-          <div class="manager-paging">
-            <ul>
-              <li><a href="#">Prev</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">next</a></li>
-            </ul>
+          <input type="hidden" name="currentPage" value="1" />
+          <select
+            class="ui dropdown menu"
+            id="searchCondition"
+            name="searchCondition"
+          >
+          	<option value="" selected>선택</option>
+            <option value="1">클래스이름</option>
+            <option value="2">잔디닉네임</option>
+          </select>
+            <div class="ui search menti-search">
+  				<div class="ui icon input input-search">
+    			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
+    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+    		<!-- 	<input type="button" id="searchbtn"> -->
+  				</div>
+ 			 	<div class="results"></div>
+			</div>
           </div>
-        </div>
+                <jsp:include page="../common/Paging.jsp" />
       </div>
     </div>
   </body>

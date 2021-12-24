@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public class ClassDTO {
 	
@@ -29,26 +30,17 @@ public class ClassDTO {
 	public ClassDTO() {	}
 	
 	public ClassDTO(int categoryCode, int maxCount, int price, String title, String email) {
-		this.title = title;
-		this.price = price;
-		this.email = email;
-		this.maxCount = maxCount;
 		this.categoryCode = categoryCode;
-	}
-
-	
-
-	public Double getAvgReview() {
-		return avgReview;
-	}
-
-	public void setAvgReview(Double avgReview) {
-		this.avgReview = avgReview;
+		this.maxCount = maxCount;
+		this.price = price;
+		this.title = title;
+		this.email = email;
 	}
 
 	public ClassDTO(int classCode, Date createDate, String contents, String tag, int categoryCode, String email,
 			String boardType, int views, int maxCount, String nickName, String title, int price, String filePath,
-			String orgFilePath, String isDeleted, Double avgReview, JandiDTO jandiDTO, ClassPurchaseDTO classPurchaseDTO) {
+			String orgFilePath, String isDeleted, Double avgReview, JandiDTO jandiDTO,
+			ClassPurchaseDTO classPurchaseDTO) {
 		super();
 		this.classCode = classCode;
 		this.createDate = createDate;
@@ -190,6 +182,14 @@ public class ClassDTO {
 		this.isDeleted = isDeleted;
 	}
 
+	public Double getAvgReview() {
+		return avgReview;
+	}
+
+	public void setAvgReview(Double avgReview) {
+		this.avgReview = avgReview;
+	}
+
 	public JandiDTO getJandiDTO() {
 		return jandiDTO;
 	}
@@ -212,11 +212,8 @@ public class ClassDTO {
 				+ tag + ", categoryCode=" + categoryCode + ", email=" + email + ", boardType=" + boardType + ", views="
 				+ views + ", maxCount=" + maxCount + ", nickName=" + nickName + ", title=" + title + ", price=" + price
 				+ ", filePath=" + filePath + ", orgFilePath=" + orgFilePath + ", isDeleted=" + isDeleted
-				+ ", avgReview=" + avgReview + ", jandiDTO=" + jandiDTO + ", classPurchaseDTO=" + classPurchaseDTO
-				+ "]";
+				+ ", avgReview=" + avgReview + ", jandiDTO=" + jandiDTO + ", classPurchaseDTO=" + classPurchaseDTO + "]";
 	}
-
-
 	
-
+	
 }

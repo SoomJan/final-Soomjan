@@ -66,6 +66,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     #repNickName { margin-left: 11%;}
     .modal-body {margin-left: 10%;}
     #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
+    
+    #resultModal {
+	  height: 150px;
+	  top: 25%;
+	  left: 44%;
+	}
+
+	.title {
+	  position: relative;
+	  top: 15%;
+	}
+	
+	.re-modal-btns {
+	  margin-top: 10%;
+	}
+	
+	.btn {
+	  background-color: white !important;
+	}
+	
+	.resultContent {
+	  height: 150px;
+	  text-align: center;
+	  background-color: #91c788 !important;
+	}
     </style>
   </head>
   <body>
@@ -108,7 +133,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <form action="${ pageContext.servletContext.contextPath }/manager/reportedboard" method="get">
           <select class="ui dropdown menu" id="searchCondition" name="searchCondition">
             <option value="" selected>선택</option>
-            <option value="1">이메일</option>
+            <option value="1">클래스</option>
+            <option value="2">잔디닉네임</option>
             <option value="2">내용</option>
             <option value="3">신고처리여부</option>
           </select>
@@ -186,9 +212,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     			$("#repClassmodal").show();
     		});
     		
-      		$('#con-btn').click(function(){
+      		$('#con-btn').click(function(event){
       			//console.log(repCode);
+      			// $("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/classConfirm").submit();
+     			$("#resultModal").show();
+      			event.preventDefault();
+      		});
+      		
+      		$('.resultbtn').click(function(){
       			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/classConfirm").submit();
+      		});
+      		
+      		$('.resultExitbtn').click(function(){
+      			$('#resultModal').hide();
+      			$('#repClassmodal').hide();
       		});
       		
       		$('#end-btn').click(function(){
@@ -208,3 +245,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
   <jsp:include page="../common/footer.jsp" />
 </html>
+
+<div class="ui mini modal" id="resultModal">
+  <div class="content resultContent">
+    <div class="title">신고처리가 완료되었습니다.</div>
+    <div class="re-modal-btns">
+    <button class="ui button btn resultbtn">확인</button>
+    <button class="ui button btn resultExitbtn">취소</button>
+  </div>
+  </div>
+</div>
