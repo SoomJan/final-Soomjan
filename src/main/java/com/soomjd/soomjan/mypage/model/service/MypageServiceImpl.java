@@ -160,10 +160,10 @@ public class MypageServiceImpl implements MypageService{
 		return mapper.registJandi(jandi);
 	}
 
-	@Override
-	public boolean modifyIsJandi(String email) {
-		return mapper.modifyIsJandi(email);
-	}
+	/*
+	 * @Override public boolean modifyIsJandi(String email) { return
+	 * mapper.modifyIsJandi(email); }
+	 */
 
 	@Override
 	public List<ReportClassDTO> selectReportClass(Map<String, String> map) {
