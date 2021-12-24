@@ -28,11 +28,13 @@
 	height: 60%;
 	text-align: center;
 }
+main { width: 90% !important;}
+.common-sidebar{ width: 80% !important;}
 </style>
 </head>
 <body>
 	<jsp:include page="../common/nav.jsp" />
-
+<main>
 	<div class="common-sidebar">
 		<jsp:include page="../common/matching_mantee_sidebar.jsp" />
 		<div class="introduce">
@@ -124,6 +126,7 @@
 
 		</div>
 	</div>
-</body>
+</main>
 <jsp:include page="../common/footer.jsp" />
+</body>
 </html>
