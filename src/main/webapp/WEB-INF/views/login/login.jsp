@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
         <tr>
           <td style="text-align: center;">
               <img
-              src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"
+              src="${ pageContext.servletContext.contextPath }/resources/images/join3.png"
               style="width: 40%"
             />
           </td>
