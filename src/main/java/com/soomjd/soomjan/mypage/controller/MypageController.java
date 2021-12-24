@@ -522,27 +522,44 @@ public class MypageController {
 		return "redirect:/mypage/review";
 	}
 	
+	/**
+	 * 잔디 가입페이지 요청
+	 * @return
+	 * @author 임예람
+	 */
 	@GetMapping("joinJandi")
 	public String joinJandi() {
-		
 		return "jandi/join/joinJandi";
 	}
 	
+	/**
+	 * 잔디 가입하기
+	 * 
+	 * @param jandi
+	 * @param model
+	 * @param rttr
+	 * @return
+	 * 
+	 * @author 임예람
+	 */
 	@PostMapping("registJandi")
-	public String registJandi(@ModelAttribute JandiDTO jandi, Model model, RedirectAttributes rttr)
-			throws MemberRegistException {
+	public String registJandi(@ModelAttribute JandiDTO jandi, HttpSession session, RedirectAttributes rttr){
 		
-		MemberDTO member = (MemberDTO)model.getAttribute("loginMember");
+		// 로그인한 사용자 정보 가져와서 jandiDTO에 저장
+		MemberDTO member = (MemberDTO)session.getAttribute("loginMember");
 		String email = member.getEmail();
 		jandi.setEmail(email);
 
 		System.out.println(jandi);
 		
+		// 성공 여부에 따라 리다이렉트 메세지 설정 후 리다이렉트 하기
 		if(mypageService.registJandi(jandi) && mypageService.modifyIsJandi(jandi.getEmail())) {
+			
+			// 잔디 테이블의 인서트와 새싹 테이블의 잔디 여부가 변경되면 기존 세션의 값 변경 
+			session.setAttribute("isjandi", "Y");
 			member.setIsJandi('Y');
 			
-			model.addAttribute("isjandi", "Y");
-			model.addAttribute("loginMember", member);
+			session.setAttribute("loginMember", member);
 			
 			rttr.addFlashAttribute("jandiRegistMessage", "잔디 가입을 축하합니다.");
 		}else {

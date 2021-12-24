@@ -147,7 +147,10 @@ $(function(){
 			<span style="color:red;"><i class="bullhorn icon"></i></span>클래스 신고</button>
 		<button id="jjimBtn" style="float:right; color:black; background:none; border:none;"></button>
 	</div>
-	<p class="title"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
+	<br>
+	<div align="center">
+		<p class="title" style="width: 70%;"><b>${ sessionScope.classDTO.title } 클래스룸</b></p>
+	</div>
 	<br>
 	<!-- 탭 메뉴 상단 시작 -->
 	<table style="width: 100%">
