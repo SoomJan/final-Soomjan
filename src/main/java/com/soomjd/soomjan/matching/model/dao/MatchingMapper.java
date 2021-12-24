@@ -34,4 +34,6 @@ public interface MatchingMapper {
 	MatchedChattingDTO matchedChatting(MatchedChattingDTO matchedChatting);
 
 	boolean registChattingRoom(Map<String, Object> matchedChatMap);
+
+	int updateMatched(int estimateCode);
 }

@@ -60,6 +60,6 @@ public interface MypageMapper {
 
 	boolean registJandi(JandiDTO jandi);
 
-	boolean modifyIsJandi(String email);
+	boolean updateMatched(String email);
 
 }
