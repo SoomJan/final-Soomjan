@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
-import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
@@ -16,7 +14,6 @@ import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
 import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
-import com.soomjd.soomjan.mypage.model.dto.ReviewDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService{

@@ -67,5 +67,7 @@ public interface MypageMapper {
 	int selectClassTotalCount(Map<String, String> map);
 
 	int selectMemberTotalCount(Map<String, String> map);
+	
+	boolean modifyIsJandi(String email);
 
 }

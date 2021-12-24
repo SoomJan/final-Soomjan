@@ -21,8 +21,6 @@ public interface MemberMapper {
 
 	boolean registJandi(JandiDTO jandi);
 
-	boolean modifyIsJandi(String email);
-
 	String selectEncPassword(Map<String, String> map);
 
 	int selectEmail(Map<String, String> map);
