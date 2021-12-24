@@ -62,7 +62,7 @@ public interface MypageMapper {
 
 	boolean registJandi(JandiDTO jandi);
 
-	boolean modifyIsJandi(String email);
+	boolean updateMatched(String email);
 
 	List<ReportClassDTO> selectReportClass(Map<String, String> map);
 

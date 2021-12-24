@@ -247,5 +247,15 @@
     </insert>
     
     
+    <update id="updateMatched" parameterType="_int">
+    
+    	 
+		UPDATE ESTIMATE_TBL 
+		SET 
+		IS_MATCHED = 'Y'
+		WHERE ESTIMATE_CODE  = #{ estimateCode }
+    
+    </update>
+    
 
 </mapper>
