@@ -97,6 +97,7 @@ img {
 </style>
 <script>
 
+	// 강의 영상 올리기 전 빈 값 체크 
 	function checkValue(item){
 		if($(item).prev().val() != ""){
 			$('#mokchaFileForm').submit();
@@ -106,6 +107,7 @@ img {
 		}
 	}
 	
+	// 목차 토글
 	function mokchaToggle(item) {
 		if($(item).next().css('display') == 'none'){
 			$(item).next().css('display', 'block');
@@ -116,14 +118,15 @@ img {
 		}
 	}
 	
+	// 목차 삭제
 	function deleteMokcha(item){
 		console.log($(item).next());
-		
 		if(confirm("해당 목차를 삭제하시면 안의 내용까지 전부 삭제됩니댜. 삭제하시겠습니까?")){
 			$(item).parent().submit();
 		}
 	}
 	
+	// 글자 길이 체크
 	function checkLength(inputItem, spanItem, maxLength){
 		let $item = $(inputItem);
 		spanItem.html($item.val().length);
@@ -136,13 +139,13 @@ img {
 		}
 	}
 	
+	// 업로드 성공 여부 리다이렉트 메세지
 	$(function(){
 		if('${ requestScope.uploadMessage }' != ''){
 			alert('${ requestScope.uploadMessage }');
 			console.log('${ requestScope.uploadMessage }');
 		}
 	});
-	
 	
 </script>
 <body>
@@ -194,61 +197,35 @@ img {
 				<br><br>
 					<jsp:include page="../../common/Paging.jsp" />
 				<br>
-				<!-- 유튜브 영상 링크... 왜 안되나요..ㅜㅠ -->
-				<iframe width="560" height="315"
-					src="https://www.youtube.com/embed/cbuZfY2S2UQ"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowfullscreen>
-				</iframe>
-<%--  				<div class="newMokcha">
-					<form action="${pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
-						목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
-						<input type="text" class="inputSyle" name="mockchaName" 
-							placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);"> 
-						<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
-						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" ></textarea>
-						<button type="submit" class="btnStyle btn btn-primary" style="margin: 10px;">목차 추가하기</button>
-					</form>
-				</div> --%>
-				
 				<!-- <button class="btn-mokcha" data-toggle="modal" data-target="#addMokchaModal">추가</button> -->
-				
-			<div class="modal fade" id="addMokchaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel" style="text-align: center;">클래스 목차 추가하기</h4>
+				<div class="modal fade" id="addMokchaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel" style="text-align: center;">클래스 목차 추가하기</h4>
+							</div>
+							<form action="${ pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
+								<div class="modal-body" align="left">
+									목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
+								<input type="text" class="inputSyle" name="mockchaName" 
+									placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);" style="width: 550px;"> 
+									<br>
+								<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
+								<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" style="width: 550px;" ></textarea>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default btnBD"
+										data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-primary" style="margin: 10px;">추가</button>
+								</div>
+							</form>
+						</div>
 					</div>
-					<form action="${ pageContext.servletContext.contextPath }/jandi/class/registLecture" method="post">
-						<div class="modal-body" align="left">
-							목차 제목 ( <span id="titleCheck">0</span> / 30자 )<br> 
-						<input type="text" class="inputSyle" name="mockchaName" 
-							placeholder="목차 제목을 입력하세요." onkeyup="checkLength(this, $('#titleCheck'), 30);" style="width: 550px;"> 
-							<br>
-						<br> 목차 내용( <span id="contentsCheck">0</span> / 500자 )<br>
-						<textarea name="contents" class="contents" placeholder="목차 내용을 입력하세요." onkeyup="checkLength(this, $('#contentsCheck'), 500);" style="width: 550px;" ></textarea>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default btnBD"
-								data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary" style="margin: 10px;">추가</button>
-						</div>
-					</form>
 				</div>
-			</div>
-		</div>
-			
-				
-				
-				
-				
-				
-				
 			</div>
 		</div>
 	</div>

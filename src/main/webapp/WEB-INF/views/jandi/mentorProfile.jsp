@@ -61,7 +61,7 @@ p {
 
 .inputStyle {
 	border: none;
-	width: 100px;
+	width: 100%;
 	text-align: center;
 }
 
@@ -85,50 +85,50 @@ p {
 }
 </style>
 
+
 <script>
+	
 	function modifyProfile() {
 		console.log("클릭");
 		$('#openModalBtn').click();
 	}
 
 	$(function() {
+		/* 잔디 닉네임 변경 */
+		$('#modifyNickBtn').click(function() {
+			let nickName = $('#nickNameInput').val();
+			console.log(nickName);
+			if (nickName != "") {	// 닉네임 변경 값이 비어 있지 않으면 중복검사
+				$.ajax({
+					url : "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
+					type : "post",
+					data : {
+						nickName : nickName
+					},
+					success : function(data) {	// 중복 검사 결과, 중복된 결과가 있는 경우 알러창을 띄우고, 중복 결과가 없으면 변경하기
+						if (data == "true") {
+							alert("중복된 닉네임입니다.");
+						} else {
+							$('#modifyNickForm').submit();
+						}
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
 
-		$('#modifyNickBtn')
-				.click(
-						function() {
-							let nickName = $('#nickNameInput').val();
-							console.log(nickName);
-							if (nickName != "") {
-								$
-										.ajax({
-											url : "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
-											type : "post",
-											data : {
-												nickName : nickName
-											},
-											success : function(data) {
-												if (data == "true") {
-													alert("중복된 닉네임입니다.");
-												} else {
-													$('#modifyNickForm')
-															.submit();
-												}
-											},
-											error : function(error) {
-												console.log(error);
-											}
-										});
+			} else {	// 닉네임 값이 없는 경우
+				alert("변경할 닉네임을 입력해 주세요.");
+			}
 
-							} else {
-								alert("변경할 닉네임을 입력해 주세요.");
-							}
+		});
 
-						});
-
+		// 닉네임 성공 여부를 반환하는 리다이렉트 메세지
 		if ('${ requestScope.nickMessage }' != '') {
 			alert("${ requestScope.nickMessage }");
 		}
 		
+		// 해당 html의 글자 수 넣어주기
 		$('#careerCheck').html($('#careeaText').val().length);
 		$('#introCheck').html($('#introText').val().length);
 	});

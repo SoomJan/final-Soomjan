@@ -32,6 +32,7 @@ table{
 
 </style>
 <script>
+	// 해당 포스트 번호로 게시물 주소 요청
 	function movePost(item){
 		let postCode = $(item).prev().val();
 		console.log(postCode);

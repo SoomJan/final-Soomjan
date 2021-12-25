@@ -80,7 +80,7 @@ public class ManagerController {
 		
 		model.addAttribute("loginManager", managerService.loginManager(manager));
 		
-		return "redirect:/";
+		return "redirect:/manager/mentilist";
 		
 	}
 	

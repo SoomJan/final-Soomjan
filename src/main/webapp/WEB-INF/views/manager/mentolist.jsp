@@ -112,7 +112,7 @@ pageEncoding="UTF-8"%>
             </thead>
             <tbody>
             <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
-              <tr class="move jandiBtn">
+              <tr class="move jandiBtn" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandiMember.email }'">
                 <td>${ jandiMember.email }</td>
                 <td>${ jandiMember.acc_name }</td>
                 <td>${ jandiMember.nickName }</td>
