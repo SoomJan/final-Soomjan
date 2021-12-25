@@ -12,6 +12,8 @@
 <title>Signin Template for Bootstrap</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css" rel="stylesheet" />
+
 
 <style>
 .warningtable tbody {
@@ -42,32 +44,31 @@ main { width: 90% !important;}
 			<div class="matching-content">
 				<p class="estimate_title">견적서 현황</p>
 				<br>
-				<table class="estimate_table" style="width: 100%">
+				<table class="estimate_table_detail" style="width: 100%">
 
 					<tr>
-						<th width="10">No</th>
-						<th width="60"align="left">${ estimateDetail[0].estimateCode }</th>
+						<th class="detailJName">No</th>
+						<th >${ estimateDetail[0].estimateCode }</th>
 					</tr>
 					<tr>
-						<th width="10">카테고리</th>
-						<th width="60"align="left">${ estimateDetail[0].categoryDTO.categoryName }</th>
+						<th class="detailJName">카테고리</th>
+						<th>${ estimateDetail[0].categoryDTO.categoryName }</th>
 					</tr>
 					<tr>
-						<th width="10">진행상태</th>
-						<th width="60"align="left">${ estimateDetail[0].isMatched }</th>
+						<th class="detailJName">진행상태</th>
+						<th>${ estimateDetail[0].isMatched }</th>
 					</tr>
 					<tr>
-						<th width="10">작성일</th>
-						<th width="60" align="left">${ estimateDetail[0].writeDate }</th>
+						<th class="detailJName">작성일</th>
+						<th>${ estimateDetail[0].writeDate }</th>
 					</tr>
 					<tr>
-						<th width="10">제목</th>
-						<th width="60"align="left">${ estimateDetail[0].title }</th>
+						<th class="detailJName">제목</th>
+						<th>${ estimateDetail[0].title }</th>
 					</tr>
 					<tr>
-						<th width="10">내용</th>
-						<th width="60" align="left">
-						<br>
+						<th class="detailJName">내용</th>
+						<th style="margin-botton:30px; padding-right: 17px;">
 						 ${ estimateDetail[0].contents }
 						
 						</th>
@@ -78,36 +79,50 @@ main { width: 90% !important;}
 					<p class="estimate_title">진행중인 멘토 채팅</p>
 					
 					<div class="chatlist">
+					
+					<!-- <c:forEach> -->
 						<div class="chatting">
 						
-							<div class="profile">
-								<img src="">
-							</div>
-							
 							<div class="chat_content">
 							
-								<div class="chat_name">
+								<div class="chat_content_1">
+									<div class="chat_content_3"></div>
+									<div class="chat_content_4 profile"> 
+										<img src="${ pageContext.servletContext.contextPath }/resources/images/tutor1.png">
+									</div>
+								</div>
+								<div class="chat_content_2">
+									<div class="chat_content_3" onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chatting';"> 
+										<div class="chat_content_3_1" >잔디</div> 
+										<div class="chat_content_3_2"></div> 
+									</div>
+									<div class="chat_content_4"> <p></p></div>
+								</div>
+						
+						
+								<!-- <div class="chat_name">
 									<p align="center" class="chat_sendman">잔디</p>
 								</div>
-								
+							
 								<div class="chat_date">
 									<p>2021-11-26 02:30</p>
 								</div>
 								
+								<div class="profile">
+									<img src="">
+								</div>
+									
 								<div class="chat_pre">
-									<p align>잔디로 금방 만들어 드릴게요!</p>
-								</div>
+									<p>잔디로 금방 만들어 드릴게요!</p>
+								</div> -->
 								
-								<div class="chat_count">
-									<p class="chat_count_p">&nbsp;&nbsp;&nbsp;1</p>
-								</div>
+								
 							</div><!-- 채팅 한 개 끝 -->
 							
-							
-							
-							
 						</div> 
-						
+	
+	
+	
 	
 					</div> <!-- 채팅리스트 영역 끝 -->
 					

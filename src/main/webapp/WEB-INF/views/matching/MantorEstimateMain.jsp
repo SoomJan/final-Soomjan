@@ -62,6 +62,7 @@ main { width: 90% !important;}
 								<tr class="table_title">
 									<th>No</th>
 									<th>제목</th>
+									<th>카테고리</th>
 									<th>진행상태</th>
 								</tr>
 							</thead>
@@ -69,10 +70,11 @@ main { width: 90% !important;}
 								<tr></tr>
 								
 							<c:forEach var="estimate" items="${ allEstimateList }">
-								<tr>
-									<th width="10">${ estimate.estimateCode }</th>
-									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimateJ?estimateCode=${estimate.estimateCode}">${ estimate.title }</a></th>
-									<th width="30">${ estimate.isMatched }</th> 
+								<tr class="table_title2">
+									<th>${ estimate.estimateCode }</th>
+									<th><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimateJ?estimateCode=${estimate.estimateCode}">${ estimate.title }</a></th>
+									<th>${ estimate.categoryCode }</th>
+									<th>${ estimate.isMatched }</th> 
 								
 								</tr>
 								</c:forEach>
