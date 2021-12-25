@@ -41,16 +41,17 @@ public class FindJandiServiceImpl implements FindJandiService{
 		return null;
 	}
 
-<<<<<<< HEAD
-		// 언제 실행 지 
-	    //  무엇이을 실행할건지 
+
+	// 언제 실행 지 
+	//  무엇이을 실행할건지 
 	//  어떤 값을 받을건지 
 	@Override
 	public int SelectFindJandiTotalCount(Map<String, Object> searchMap) {
 		
 		int totalCount = findJandiMapper.SelectFindJandiTotalCount();
 		return totalCount;
-=======
+	}
+
 	@Override
 	public JandiDTO selectJandiInfo(String email) {
 		return findJandiMapper.selectJandiInfo(email);
@@ -59,7 +60,9 @@ public class FindJandiServiceImpl implements FindJandiService{
 	@Override
 	public List<FindClassDTO> selectThumbnailClassList(String email) {
 		return findJandiMapper.selectThumbnailClassList(email);
->>>>>>> refs/remotes/origin/master
+
 	}
+
+
 
 }

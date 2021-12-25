@@ -12,18 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.RequestParam;
-=======
-import org.springframework.web.servlet.ModelAndView;
->>>>>>> refs/remotes/origin/master
 
-<<<<<<< HEAD
+import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.servlet.ModelAndView;
+
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
-=======
+
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
->>>>>>> refs/remotes/origin/master
+
 import com.soomjd.soomjan.findJandi.model.service.FindJandiService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
