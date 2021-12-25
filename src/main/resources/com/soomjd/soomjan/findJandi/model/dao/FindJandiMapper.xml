@@ -10,10 +10,85 @@
     	<result column="PROFILE_PATH" property="profile_path"/>
     </resultMap>
     
+     <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiInfoResultMap">
+    	<id column="EMAIL" property="email"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CAREER" property="career"/>
+    	<result column="INTRO" property="intro"/>
+    	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="ENROLL_DATE" property="enroll_date"/>
+    	<result column="ACCOUNT" property="account"/>
+    	<result column="BANK" property="bank"/>
+    	<result column="ACC_NAME" property="acc_name"/>
+    </resultMap>
+    
+     <resultMap type="FindClassDTO" id="findClassResultMap">
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="CREATE_DATE" property="createDate"/>
+    	<result column="TAG" property="tag"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="PRICE" property="price"/>
+    	<result column="FILE_PATH" property="filePath"/>
+    	<result column="PROFILE_PATH" property="profilePath"/>
+    	<result column="NICKNAME" property="nickName"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    	<result column="AVGSTAR" property="avgStar"/>
+    	<result column="RVCOUNT" property="rvCount"/>
+    </resultMap>
+    
     <select id="selectFindJandi" resultMap="jandiResultMap">
     	SELECT jt.EMAIL
 			 , jt.NICKNAME
 			 , jt.PROFILE_PATH
 		FROM JANDI_TBL jt
+    </select>
+    
+    <select id="selectJandiInfo" resultMap="jandiInfoResultMap">
+    	SELECT J.EMAIL
+    		 , J.NICKNAME
+    		 , J.CAREER
+    		 , J.INTRO
+    		 , J.PROFILE_PATH
+    	  FROM JANDI_TBL J
+    	 WHERE J.EMAIL = #{ email }
+    </select>
+    
+    <select id="selectThumbnailClassList" resultMap="findClassResultMap">
+    	 SELECT V.CLASS_CODE
+		      , V.CREATE_DATE 
+		      , V.TAG 
+		      , V.TITLE 
+		      , V.PRICE 
+		      , V.FILE_PATH
+		      , V.VIEWS
+		      , V.PROFILE_PATH
+		      , V.NICKNAME 
+		      , V.CATEGORY_NAME
+		      , V.AVGSTAR
+		      , V.RVCOUNT
+		      , ROWNUM
+		 FROM (SELECT A.CLASS_CODE
+				     , A.CREATE_DATE 
+				     , A.TAG 
+				     , A.TITLE 
+				     , A.PRICE 
+				     , A.FILE_PATH
+				     , A.VIEWS
+				     , B.PROFILE_PATH
+				     , B.NICKNAME 
+				     , C.CATEGORY_NAME
+				     , NVL(AVG(D.STAR), 0) AVGSTAR
+				     , COUNT(D.REVIEW_CODE) RVCOUNT
+				  FROM CLASS_TBL A
+				  JOIN JANDI_TBL B ON (A.EMAIL = B.EMAIL)
+				  JOIN CATEGORY_TBL C ON (A.CATEGORY_CODE = C.CATEGORY_CODE)
+				  LEFT JOIN CLASS_REVIEW_TBL D ON (A.CLASS_CODE = D.CLASS_CODE)
+				 WHERE A.IS_DELETED = 'N'
+				   AND A.EMAIL = #{ email }
+			  GROUP BY A.CLASS_CODE , A.CREATE_DATE , A.TAG , A.TITLE , A.PRICE , A.VIEWS 
+			         , A.FILE_PATH , B.PROFILE_PATH , B.NICKNAME , C.CATEGORY_NAME
+			  ORDER BY A.VIEWS DESC
+		     )V
+		 WHERE ROWNUM BETWEEN 1 AND 3
     </select>
 </mapper>

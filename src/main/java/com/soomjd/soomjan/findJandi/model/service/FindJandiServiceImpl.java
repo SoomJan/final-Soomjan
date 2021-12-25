@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.findJandi.model.dao.FindJandiMapper;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 
 @Service
@@ -36,6 +37,16 @@ public class FindJandiServiceImpl implements FindJandiService{
 	public List<JandiDTO> selectTopFindJandiList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public JandiDTO selectJandiInfo(String email) {
+		return findJandiMapper.selectJandiInfo(email);
+	}
+
+	@Override
+	public List<FindClassDTO> selectThumbnailClassList(String email) {
+		return findJandiMapper.selectThumbnailClassList(email);
 	}
 
 }

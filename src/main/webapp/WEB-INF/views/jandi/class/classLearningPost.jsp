@@ -56,23 +56,22 @@ img {
 <script>
 	$(function(){
 		
+		// 파일 업로드 리다이렉트 메세지
 		if('${ requestScope.uploadMessage }' != ''){
 			alert('${ requestScope.uploadMessage }');
-			console.log('${ requestScope.uploadMessage }');
+		}
+		// 게시물 변경 리다이렉트 메세지
+		if('${ requestScope.modifyMessage }' != ''){
+			alert('${ requestScope.modifyMessage }');
 		}
 		
-		let message = '${ requestScope.modifyMessage }';
-		console.log(message);
-		
-		if( message !== "" ){
-			alert(message);
-		}
-		
+		// 게시물 글자 수 보여주기
 		$('#titleCheck').html($('#title').val().length);
 		$('#contentsCheck').html($('#postContents').val().length);
 		
 	});
 	
+	// 파일 업로드시 빈값 체크
 	function checkValue(item){
 		if($(item).prev().val() != ""){
 			$(item).parent().submit();
@@ -83,24 +82,23 @@ img {
 		
 	}
 	
+	// 학습방 게시물 변경
 	function modifyPost(){
-		
 		if(confirm("학습방 게시물 페이지를 변경하시겠습니까?")){
 			$('#postForm')
-				.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost")
-				.submit();
+				.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/modifyLearnigPost").submit();
 		}
 	}
 	
+	// 게시물 삭제
 	function deletePost(){
-		
 		if(confirm("해당 게시물을 삭제하시겠습니까?")){
 			$('#postForm')
-			.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/deleteLearnigPost")
-			.submit();
+			.prop("action", "${pageContext.servletContext.contextPath }/jandi/class/deleteLearnigPost").submit();
 		}
 	}
 	
+	// 글자수 체크 메소드
 	function checkLength(inputItem, spanItem, maxLength){
 		let $item = $(inputItem);
 		spanItem.html($item.val().length);

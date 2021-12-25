@@ -31,10 +31,12 @@ public class ClassInterceptor implements HandlerInterceptor{
 		boolean result = false;
 		
 		if(intent.equals("jandi")) {
-			ClassDTO classDTO = (ClassDTO) session.getAttribute("classDTO");
-			
-			result = classDTO.getEmail().equals(member.getEmail());
-			
+			if(requestUri.equals(request.getContextPath() + "/jandi/class/createClass")) {
+				result = true;
+			}else {
+				ClassDTO classDTO = (ClassDTO) session.getAttribute("classDTO");
+				result = classDTO.getEmail().equals(member.getEmail());
+			}
 		}else if(intent.equals("mypage")) {
 			List<Map<String, String>> currentMemberList = (List<Map<String, String>>) session.getAttribute("currentMemberList");
 			for(Map<String, String> memberMap : currentMemberList) {
@@ -46,6 +48,7 @@ public class ClassInterceptor implements HandlerInterceptor{
 			}
 		}
 		System.out.println("인터셉터 결과 : " + result);
+		
 		if(!result) {
 			modelAndView.setViewName("main/main");
 		}

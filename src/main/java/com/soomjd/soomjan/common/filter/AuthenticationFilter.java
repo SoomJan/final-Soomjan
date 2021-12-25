@@ -111,7 +111,7 @@ public class AuthenticationFilter implements Filter{
 				}
 				
 			}else if(manager != null) { //매니저 로그인을 한 경우
-				if(isManagerPermit || isAllPermit) {
+				if(isManagerPermit || isAllPermit || isMemberPermit) {
 					chain.doFilter(request, response);
 				}else {
 					((HttpServletResponse) response).sendError(403);

@@ -277,8 +277,19 @@
 	</update>
 	
 	<select id="selectThumbnailClassList" resultMap="findClassResultMap">
-		 SELECT V.*
-		       , ROWNUM
+		 SELECT V.CLASS_CODE
+		      , V.CREATE_DATE 
+		      , V.TAG 
+		      , V.TITLE 
+		      , V.PRICE 
+		      , V.FILE_PATH
+		      , V.VIEWS
+		      , V.PROFILE_PATH
+		      , V.NICKNAME 
+		      , V.CATEGORY_NAME
+		      , V.AVGSTAR
+		      , V.RVCOUNT
+		      , ROWNUM
 		 FROM (SELECT A.CLASS_CODE
 				     , A.CREATE_DATE 
 				     , A.TAG 

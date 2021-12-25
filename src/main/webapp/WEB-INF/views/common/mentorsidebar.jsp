@@ -52,7 +52,7 @@ a {
  a:hover { color: #91C788 !important; }
  
  .titleInput{
- 	-webkit-appearance:
+ 	border: 0.5px solid black;
  }
 </style>
 
