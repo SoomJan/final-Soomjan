@@ -149,12 +149,13 @@ ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
    </select>
    
    <select id="lastestFaq" resultMap="faqResult">
-	   SELECT *
+	    SELECT *
 		FROM(
-		SELECT TITLE, CONTENTS, WRITE_DATE
+		SELECT TITLE, CONTENTS, WRITE_DATE, IS_DELETED
 		FROM FAQ_TBL
 		order by write_date DESC)
-		WHERE ROWNUM = 1
+		WHERE IS_DELETED = 'N'
+          AND ROWNUM = 1
    </select>
 	
 

@@ -89,8 +89,8 @@ pageEncoding="UTF-8"%>
     <main class="container-fluid">
       <div class="main-search">
         <h4>숨어있는 잔디를 찾아보세요</h4>
-        <form class="main-searchbox" method="post">
-          <input type="text" placeholder="찾으시는 강의가 있으신가요?" />
+        <form class="main-searchbox" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get">
+          <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" />
           <button type="submit">
             <img
               src="${ pageContext.servletContext.contextPath }/resources/images/research.png"
@@ -197,16 +197,8 @@ pageEncoding="UTF-8"%>
           <h1>📬최근 공지사항</h1>
           <span><h2>${lastestFaq.title }</h2></span><span> <h5>${lastestFaq.writeDate }</h5></span>
           <h2>${lastestFaq.contents }</h2>
-         
         </div>
-        <!-- <div class="mainadvertisement-right">
-          <a href="#"><button>신청하러 가기</button></a>
-        </div> -->
       </div>
-
-
-
-
 
       <div class="intro-board">
        <h1>가장 최근에 나온 강의!!</h1>

@@ -154,7 +154,18 @@ public class ManagerServiceImpl implements ManagerService {
 	public int selectFaqTotalCount(Map<String, String> searchMap) {
 		return mapper.selectFaqTotalCount(searchMap);
 	}
+	
+	// 공지사항 비활성화
+	@Override
+	public boolean disabledContents(int postCode) {
+		return mapper.disabledContents(postCode)>0? true : false;
+	}
 
+	// 매니저 활성화
+	@Override
+	public boolean enabledContents(int postCode) {
+		return mapper.enabledContents(postCode)>0? true : false;
+	}
 	@Override
 	public int inactiveManager(List<Integer> checkbox) {
 		return mapper.inactivemanager(checkbox);
@@ -306,6 +317,12 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<PurchaseClassDTO> selectfinishClass(SelectCriteriawithdate selectCriteriawithdate) {
 		return mapper.selectfinishClass(selectCriteriawithdate);
 	}
+
+
+	
+
+
+	
 
 
 

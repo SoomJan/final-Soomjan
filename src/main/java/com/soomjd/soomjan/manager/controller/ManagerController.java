@@ -730,6 +730,40 @@ public class ManagerController {
 		}
 	}
 	
+	// 공지사항 비활성화
+	@GetMapping("/disabledContents/{postCode}")
+	public String classcal(@PathVariable("postCode") int postCode) {
+		
+		System.out.print(postCode);
+		
+		if(managerService.disabledContents(postCode)) {
+		
+			return "redirect:/manager/notice";
+			
+		}else {
+			return null;
+		}
+		
+	}
+	
+	// 공지사항 활성화
+		@GetMapping("/enabledContents/{postCode}")
+		public String enabledContents(@PathVariable("postCode") int postCode) {
+			
+			System.out.print(postCode);
+			
+			if(managerService.enabledContents(postCode)) {
+			
+				return "redirect:/manager/notice";
+				
+			}else {
+				return null;
+			}
+			
+		}
+	
+	
+	
 	// 모든 결제내역 조회
 	@GetMapping("/classcal")
 	public String classcal(Model model,
