@@ -18,7 +18,6 @@
 	href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css"
 	rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/chat.css?" rel="stylesheet" />
-<link href="css/glyphicons-halflings-regular.svg" rel="stylesheet" />
 <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
 
@@ -140,9 +139,9 @@ img {
 	
 	$(function(){
 		
-		console.log("${ matchedCode }");
+		console.log("${ requestScope.matchedCode }");
 		const email = "${ sessionScope.loginMember.email }";
-		const matched_code = ${ matchedCode };
+		const matched_code = ${ requestScope.matchedCode };
 		// 테스트 채팅방 정보 
 		let chatInfo = {
 			email: email,

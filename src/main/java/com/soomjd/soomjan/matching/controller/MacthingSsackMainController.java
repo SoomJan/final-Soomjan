@@ -111,13 +111,20 @@ public class MacthingSsackMainController {
 	
 	// 작성된 견적서 디테일 보여주기
 	@GetMapping("/detailEstimate")
-	public String detailEstimate(Model model ,String estimateCode) {
+	public String detailEstimate(Model model ,int estimateCode , HttpSession session) {
 		
 		// 견적서 받아오는 코드
 		List<EstimateDTO> estimateDetail = matchingService.estimateDetail(estimateCode); //estimateCode값 넘김
 		System.out.println(estimateDetail);
 		model.addAttribute("estimateDetail",estimateDetail);
 		
+		// 채팅 리스트 받아오는 코드
+		MatchedChattingDTO matchedChattingDTO = new MatchedChattingDTO();
+		matchedChattingDTO.setEstimateCode(estimateCode);
+		matchedChattingDTO.setEmail(((MemberDTO)session.getAttribute("loginMember")).getEmail());
+		List<Map<String,Object>> jandiProfileAndName = matchingService.jandiProfileAndName(matchedChattingDTO);
+		System.out.println("jandiProfileAndName" + jandiProfileAndName);
+		model.addAttribute("jandiProfileAndName",jandiProfileAndName);
 		
 		return "matching/ManteeEstimateDetail";
 	}
@@ -173,12 +180,13 @@ public class MacthingSsackMainController {
 	
 	// 채팅 리스트 메인화면
 	@GetMapping("/chatList")
-	public String chatList(CategoryDTO category, Model model) {
+	public String chatList( Model model ,HttpSession session) {
 		
-		List<CategoryDTO> categoryList = matchingService.selectCategory(category);
-		System.out.println(categoryList);
-		model.addAttribute("categoryList",categoryList);
+		// 내가 가지고 있는 채팅 리스트 받아오는 코드
+		String myEmail =  ((MemberDTO)session.getAttribute("loginMember")).getEmail();
+		List<Map<String,Object>> myChatList = matchingService.selectMyChatList(myEmail);
 		
+		model.addAttribute("myChatList",myChatList);
 		
 		return "matching/MantorChatMain";
 	}
@@ -227,17 +235,17 @@ public class MacthingSsackMainController {
 	
 		}
 
-		return "matching/ManteeChatting";
+		return "redirect:/matching/chattingroom?matchedCode="+chatting.getMatchedCode();
 	}
 	
 	@GetMapping("chattingroom")
 	public String chattingroom(@RequestParam int matchedCode, Model model) {
 		
-		model.addAttribute(matchedCode);
+		model.addAttribute("matchedCode",matchedCode);
 		
 		return "matching/ManteeChatting";
 	}
 	
-	// 
+	
 	
 }

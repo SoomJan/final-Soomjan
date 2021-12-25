@@ -23,7 +23,7 @@ public interface MatchingService {
 	List<EstimateDTO> selectEstimate(SelectCriteria selectCriteria);
 
 	// 견적서 타이틀 클릭 시 디테일 데이터 가져오기
-	List<EstimateDTO> estimateDetail(String estimateCode);
+	List<EstimateDTO> estimateDetail(int estimateCode);
 	
 	// 견적서 타이틀 클릭 시 잔디 화면에서 디테일 데이터 가져오기
 	List<EstimateDTO> estimateDetailJ(String estimateCode);
@@ -42,6 +42,12 @@ public interface MatchingService {
 
 	// 새싹 견적서 리스트 -> 디테일 이동할 때 matchedCode 가져오기 (로그인한 내 이메일 전달해줘서)
 	List<Map<String, Object>> chatEstimateCode(String jmail);
+
+	// 견적서에 매칭된 잔디 사진이랑 이름 보여주기
+	List<Map<String, Object>> jandiProfileAndName(MatchedChattingDTO matchedChattingDTO);
+
+	// 내 채팅방 전체 보여주기
+	List<Map<String, Object>> selectMyChatList(String myEmail);
 
 
 }

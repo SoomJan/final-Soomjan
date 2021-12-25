@@ -62,7 +62,7 @@ public class MatchingServiceImpl implements MatchingService{
 
 	// 견적서 디테일 보는 화면
 	@Override
-	public List<EstimateDTO> estimateDetail(String estimateCode) {
+	public List<EstimateDTO> estimateDetail(int estimateCode) {
 		
 		return mapper.estimateDetail(estimateCode);
 	}
@@ -108,6 +108,18 @@ public class MatchingServiceImpl implements MatchingService{
 	@Override
 	public List<Map<String, Object>> chatEstimateCode(String jmail) {
 		return mapper.chatEstimateCode(jmail);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> jandiProfileAndName(MatchedChattingDTO matchedChattingDTO) {
+		return mapper.jandiProfileAndName(matchedChattingDTO);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectMyChatList(String myEmail) {
+		return mapper.selectMyChatList(myEmail);
 	}
 
 //
