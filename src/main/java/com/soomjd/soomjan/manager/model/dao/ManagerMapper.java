@@ -28,7 +28,9 @@ public interface ManagerMapper {
 
 	List<ManagerDTO> managerMember(ManagerDTO manager);
 
-	int selectTotalCount(Map<String, String> searchMap);
+	int selectSsackTotalCount(Map<String, String> searchMap);
+	
+	int selectJandiTotalCount(Map<String, String> searchMap);
 
 	int emailCheck(Map<String, String> map);
 
@@ -132,9 +134,31 @@ public interface ManagerMapper {
 	// 정산된 내역 List 불러오기
 	List<PurchaseClassDTO> selectfinishClass(SelectCriteriawithdate selectCriteriawithdate);
 
-	
+	/**
+	 * 블랙리스트 회원 수 조회
+	 * @return
+	 */
+	int selectBlackCount(Map<String, String> searchMap);
 
 	
+	/**
+	 * 블랙리스트 회원 조회
+	 * @return
+	 */
+	List<MemberDTO> selectBlackMemberList(SelectCriteria selectCriteria);
+
+	
+	/**
+	 * 블랙리스트 해지
+	 * @author 효진
+	 */
+	int updateBlackCancelMember(String email);
+
+	/**
+	 * 블랙리스트 회원인지 아닌지 확인
+	 * @author 효진
+	 */
+	boolean isBlackCheck(Map<String, String> checkMap);
 
 	
 }

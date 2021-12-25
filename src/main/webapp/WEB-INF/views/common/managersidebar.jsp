@@ -36,6 +36,7 @@ pageEncoding="UTF-8"%>
           <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentee">신고된 회원</a></li>
           <%-- <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedmentor">신고된 잔디</a></li> --%>
           <li><a href="${ pageContext.servletContext.contextPath }/manager/reportedboard">신고된 클래스</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/manager/blackmember">블랙리스트 회원</a></li>
         </ul>
         <ul>
           <h3>클래스 관리</h3>

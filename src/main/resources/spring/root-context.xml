@@ -61,6 +61,7 @@
          <tx:method name="modify*" rollback-for="Exception" propagation="REQUIRED" isolation="SERIALIZABLE" />
          <tx:method name="remove*" rollback-for="Exception" propagation="REQUIRED" isolation="SERIALIZABLE" />
          <tx:method name="delete*" rollback-for="Exception" propagation="REQUIRED" isolation="SERIALIZABLE" />
+         <tx:method name="update*" rollback-for="Exception" propagation="REQUIRED" isolation="SERIALIZABLE" />
       </tx:attributes>
    </tx:advice> 
    

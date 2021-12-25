@@ -46,9 +46,9 @@ pageEncoding="UTF-8"%>
 	}
     
     .create-pro {
-    	border: 3px solid #91c788;
+    	border: 5px solid #91c788;
     	padding: 4%;
-    	border-radius: 10px;
+    	border-radius: 30px;
     	height: auto;
     }
     
@@ -56,6 +56,16 @@ pageEncoding="UTF-8"%>
     .title{font-weight: 800;}
     
    .input > input {width: 400px;}
+   
+   .modalContent {background-color: #91c788;}
+   
+   #mngName { margin-left: 18%;}
+   #mngNickName {margin-left: 15%;}
+   #mngId {margin-left: 15%;}
+   #password {margin-left: 12%;}
+   #password2 {margin-left: 5%;}
+   
+   
     
   </style>
   </head>
@@ -90,44 +100,44 @@ pageEncoding="UTF-8"%>
             </c:forEach>
         </tbody>
       </table>
-
+		<br>
       <form>
-      <input class="delete btn" type="submit" value="계정 비활성화">
+      <input class="ui button delete btn" type="submit" value="계정 비활성화" style="width: 130px;">
       </form>
 
       <h3>관리자 계정 생성 </h3>
       <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post" id="createForm">     
       <div>
-     	 <div class="checkmain">
-    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName" placeholder="이름을 입력해주세요."><span class="nameCheck" style="margin-left:10px; margin-top: 7px;"></span></div>
+     	 <div class="checkmain">이름
+    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"><span class="nameCheck" style="margin-left:10px; margin-top: 7px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
-      	<div class="checkmain">
-    	<div class="ui input"><input type="text" class="pd2" id="mngNickName" name="mngNickName" placeholder="닉네임을 입력해주세요."><h5 id="nickNamecheck"></h5></div>
+      	<div class="checkmain">닉네임
+    	<div class="ui input"><input type="text" class="pd2" id="mngNickName" name="mngNickName"><span id="nickNamecheck" style="margin-left:10px; margin-top: 7px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
-      	<div class="checkmain">
-    	<div class="ui input"><input type="text" class="pd3" id="mngId" name="mngId" placeholder="아이디를 입력해주세요."><h5 id="emailcheck"></h5></div>
+      	<div class="checkmain">아이디
+    	<div class="ui input"><input type="text" class="pd3" id="mngId" name="mngId"><span id="emailcheck" style="margin-left:10px; margin-top: 7px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
-      	<div class="checkmain">
-    	<div class="ui input"><input type="password" class="pd4" id="password" name="password" placeholder="비밀번호를 입력해주세요."><h5 id="pwd"></h5></div>
+      	<div class="checkmain">비밀번호
+    	<div class="ui input"><input type="password" class="pd4" id="password" name="password"><span id="pwd" style="margin-left:10px; margin-top: 7px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
-      	<div class="checkmain">	
-    	 <div class="ui input"><input type="password" class="pd5" id="password2" name="password2" placeholder="비밀번호를 한번 더 입력해주세요."><h5 id="pwdcheck"></h5></div>
+      	<div class="checkmain">비밀번호확인
+    	 <div class="ui input"><input type="password" class="pd5" id="password2" name="password2"><span id="pwdcheck" style="margin-left:10px; margin-top: 7px;"></span></div>
     	</div>
       </div>
       
-      <input class="create btn" id="create" type="button" value="계정 생성">
+      <input class="ui button create btn" id="create" type="button" value="계정 생성" style="width: 130px;">
       </form>
 
       <script>
@@ -326,7 +336,7 @@ pageEncoding="UTF-8"%>
 
 <!-- 모달창 모아두는 곳 -->
 <div class="ui mini modal" id="nameModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">이름을 입력해주세요.</div>
     <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
@@ -335,7 +345,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="nickModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">닉네임을 입력해주세요.</div>
     <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
@@ -344,7 +354,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="idModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">아이디를 입력해주세요.</div>
     <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
@@ -353,7 +363,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="pwdModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">비밀번호를 입력해주세요.</div>
     <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
@@ -362,7 +372,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="createModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">관리자를 등록하시겠습니까?</div>
     <div class="re-modal-btns">
     <button class="ui button btn" id="crebtn">확인</button>
@@ -372,7 +382,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="resultModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">계정 등록이 완료되었습니다.</div>
     <div class="re-modal-btns">
     <button class="ui button btn" onclick="location.href='${ pageContext.servletContext.contextPath }/manager/manproduce'">확인</button>
@@ -381,7 +391,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="nullModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">선택된 관리자가 존재하지 않습니다.</div>
     <div class="re-modal-btns">
     <button class="ui button btn">확인</button>
@@ -390,7 +400,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="deleteModal">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">해당 관리자계정을 비활성화하시겠습니까?</div>
     <div class="re-modal-btns">
     <button class="ui button btn deletebtn1">확인</button>
@@ -400,7 +410,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 <div class="ui mini modal" id="resultModal2">
-  <div class="content">
+  <div class="content" style="background-color: #91c788;">
     <div class="title">계정 비활성화가 완료되었습니다.</div>
     <div class="re-modal-btns">
     <button class="ui button btn resultbtn">확인</button>

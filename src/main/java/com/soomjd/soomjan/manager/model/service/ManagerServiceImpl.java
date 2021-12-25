@@ -52,42 +52,49 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.allManager(manager);
 	}
 
+	// 잔디 멤버 리스트 조회하기
 	@Override
 	public List<JandiDTO> jandiMember(SelectCriteria searchMap) {
 		return mapper.jandiMember(searchMap);
 	}
 
-
+	// 관리자 계정 리스트 조회하기
 	@Override
 	public List<ManagerDTO> managerMember(ManagerDTO manager) {
 		return mapper.managerMember(manager);
 	}
 
-
+	// 새싹 멤버 전체 회원 수 확인하기
 	@Override
-	public int selectTotalCount(Map<String, String> searchMap) {
-		return mapper.selectTotalCount(searchMap);
+	public int selectSsackTotalCount(Map<String, String> searchMap) {
+		return mapper.selectSsackTotalCount(searchMap);
+	}
+	
+	// 잔디 멤버 전체 회원 수 확인하기
+	@Override
+	public int selectJandiTotalCount(Map<String, String> searchMap) {
+		return mapper.selectJandiTotalCount(searchMap);
 	}
 
-
+	// 새싹 멤버 조회하기
 	@Override
 	public List<MemberDTO> ssackMember(SelectCriteria searchMap) {
 		return mapper.ssackMember(searchMap);
 	}
 
-
+	// 관리자 계정 생성하기
 	@Override
 	public boolean msregistMember(ManagerDTO manager) {
 		return mapper.registMsMember(manager) > 0? true:false;
 	}
 
-
+	// 관리자 계정 생성 시 이메일 중복 확인하기
 	@Override
 	public boolean emailCheck(Map<String, String> map) {
 		return mapper.emailCheck(map) > 0? true:false;
 	}
 
-
+	// 관리자 계정 생성 시 닉네임 중복 확인하기
 	@Override
 	public boolean nickNameCheck(Map<String, String> map) {
 		return mapper.nickNameCheck(map) > 0? true:false;
@@ -190,103 +197,103 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.allContent();
 	}
 
-
+	// 신고된 회원 전체 수 확인하기
 	@Override
 	public int selectReportSsackTotalCount(Map<String, String> searchMap) {
 		return mapper.selectReportSsackTotalCount(searchMap);
 	}
 
-
+	// 신고된 회원 리스트 조회하기
 	@Override
 	public List<ReportMemberDTO> selectReportMember(SelectCriteria selectCriteria) {
 		return mapper.selectReportMemberList(selectCriteria);
 	}
 
-
+	// 신고된 클래스 리스트 조회하기
 	@Override
 	public List<ReportClassDTO> selectReportClass(SelectCriteria selectCriteria) {
 		return mapper.selectReportClassList(selectCriteria);
 	}
 
-
+	// 신고된 클래스 전체 수 확인하기
 	@Override
 	public int selectReportClassTotalCount(Map<String, String> searchMap) {
 		return mapper.selectReportClassTotalCount(searchMap);
 	}
 
-
+	// 신고된 회원 상세내용 확인하기
 	@Override
 	public ReportMemberDTO selectRepMember(int repCode) {
 		return mapper.selectRepMemberList(repCode);
 	}
 
-
+	// 신고된 회원 신고처리하기
 	@Override
 	public int modifyConfirmMember(ReportMemberDTO repMember) {
 		return mapper.modifyConfirmMember(repMember);
 	}
 
-
+	// 신고된 회원 반려처리 하기
 	@Override
 	public int modifySendbackMember(ReportMemberDTO repMember) {
 		return mapper.modifySendbackMember(repMember);
 	}
 
-
+	// 신고된 클래스 신고처리하기
 	@Override
 	public int modifyConfirmClass(ReportClassDTO repClass) {
 		return mapper.modifyConfirmClass(repClass);
 	}
 
-
+	// 신고된 클래스 반려처리하기
 	@Override
 	public int modifySendbackClass(ReportClassDTO repClass) {
 		return mapper.modifySendbackClass(repClass);
 	}
 
-
+	// 신고 처리 후 신고된 클래스 조회하기
 	@Override
 	public ReportClassDTO selectRepClass(int repCode) {
 		return mapper.selectRepClass(repCode);
 	}
 
-
+	// 신고처리 된 클래스를 올린 회원 경고 수 확인하기
 	@Override
 	public int modifyWarningCount(ReportClassDTO repClass) {
 		return mapper.modifyWarningCount(repClass);
 	}
 
-
+	// 신고처리 후 신고된 회원 조회하기
 	@Override
 	public MemberDTO selectRepMember(ReportMemberDTO repMember) {
 		return mapper.selectRepMember(repMember);
 	}
 
-
+	// 신고처리 된 회원 경고 +1 처리하기
 	@Override
 	public int updateMemberWarning(MemberDTO member) {
 		return mapper.updateMemberWarning(member);
 	}
 
-
+	// 경고 3회 된 회원 블랙리스트 회원 처리하기
 	@Override
 	public int updateMemberBlack(MemberDTO member) {
 		return mapper.updateMemberBlack(member);
 	}
 
-
+	// 신고된 클래스 조회
 	@Override
 	public Map<String, Object> selectReportClass(ReportClassDTO repClass) {
 		return mapper.selectReportClass(repClass);
 	}
 
-
+	// 신고된 클래스를 올린 회원 경고 +1 처리하기
 	@Override
 	public int updateClassWarning(Map<String, Object> claMap) {
 		return mapper.updateClassWarning(claMap);
 	}
 
-
+	// 경고 3회 된 잔디 블랙리스트 회원으로 변경하기
 	@Override
 	public int updateClassBlack(Map<String, Object> claMap) {
 		return mapper.updateClassBlack(claMap);
@@ -318,12 +325,25 @@ public class ManagerServiceImpl implements ManagerService {
 		return mapper.selectfinishClass(selectCriteriawithdate);
 	}
 
+	// 블랙리스트 전체 회원 수 확인하기
+	@Override
+	public int selectBlackCount(Map<String, String> searchMap) {
+		return mapper.selectBlackCount(searchMap);
+	}
 
-	
+
+	// 블랙리스트 멤버 조회하기
+	@Override
+	public List<MemberDTO> selectBlackMemberList(SelectCriteria selectCriteria) {
+		return mapper.selectBlackMemberList(selectCriteria);
+	}
 
 
-	
-
+	// 블랙리스트 해지하기
+	@Override
+	public int updateBlackCancelMember(String email) {
+		return mapper.updateBlackCancelMember(email);
+	}
 
 
 

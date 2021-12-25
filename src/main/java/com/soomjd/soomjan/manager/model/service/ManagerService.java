@@ -29,7 +29,9 @@ public interface ManagerService {
 
 	List<ManagerDTO> managerMember(ManagerDTO manager);
 
-	int selectTotalCount(Map<String, String> searchMap);
+	int selectSsackTotalCount(Map<String, String> searchMap);
+	
+	int selectJandiTotalCount(Map<String, String> searchMap);
 
 	boolean msregistMember(ManagerDTO manager);
 
@@ -80,50 +82,41 @@ public interface ManagerService {
 	// 모든 결제상황 조회, 정산 처리용
 	List<PurchaseClassDTO> allContent();
 
-	// 신고된 멤버 전체 갯수
 	int selectReportSsackTotalCount(Map<String, String> searchMap);
 
-	// 신고된 멤버 조회
 	List<ReportMemberDTO> selectReportMember(SelectCriteria selectCriteria);
 
-	// 신고된 멤버 조회
 	List<ReportClassDTO> selectReportClass(SelectCriteria selectCriteria);
 
-	// 신고된 클래스 목록 갯수
 	int selectReportClassTotalCount(Map<String, String> searchMap);
 
-	// 신고된 회원 상세조회
 	ReportMemberDTO selectRepMember(int repCode);
 
-	// 신고된 회원 신고처리
 	int modifyConfirmMember(ReportMemberDTO repMember);
 
-	// 신고된 회원 반려처리
 	int modifySendbackMember(ReportMemberDTO repMember);
 
-	// 신고된 클래스 신고처리
 	int modifyConfirmClass(ReportClassDTO repClass);
 
-	// 신고된 클래스 반려처리
 	int modifySendbackClass(ReportClassDTO repClass);
 
-	// 신고된 클래스 상세조회
 	ReportClassDTO selectRepClass(int repCode);
 
-	// 신고된 클래스를 가진 회원 경고 처리
 	int modifyWarningCount(ReportClassDTO repClass);
 
-	// 신고된 멤버의 경고 및 블랙리스트 여부 조회
 	MemberDTO selectRepMember(ReportMemberDTO repMember);
 
 	int updateMemberWarning(MemberDTO member);
 
 	int updateMemberBlack(MemberDTO member);
 
+	// 신고된 클래스 조회하기
 	Map<String, Object> selectReportClass(ReportClassDTO repClass);
 
+	// 신고된 클래스를 올린 잔디 경고 처리
 	int updateClassWarning(Map<String, Object> claMap);
 
+	// 신고된 클래스를 올린 잔디 블랙리스트 회원으로 변경하기
 	int updateClassBlack(Map<String, Object> claMap);
 
 	JandiDTO selectJandiMember(String email);
@@ -135,6 +128,13 @@ public interface ManagerService {
 
 	// 정산된 내역 데이터 불러오기
 	List<PurchaseClassDTO> selectfinishClass(SelectCriteriawithdate selectCriteriawithdate);
+	
+	int selectBlackCount(Map<String, String> searchMap);
+
+	List<MemberDTO> selectBlackMemberList(SelectCriteria selectCriteria);
+
+	int updateBlackCancelMember(String email);
+
 
 	
 

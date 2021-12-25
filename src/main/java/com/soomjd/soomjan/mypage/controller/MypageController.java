@@ -390,23 +390,29 @@ public class MypageController {
 		return mv;
 	}
 
-	// 수강완료
+	/**
+	 * 수강 완료 페이지 조회
+	 * @author 효진
+	 */
 	@GetMapping("finish")
 	public String finishForm(Model model, HttpSession session, @RequestParam(required = false) String searchCondition,
 			@RequestParam(required = false) String searchValue, @RequestParam(defaultValue = "1") int currentPage) {
 
+		// session에서 로그인된 정보 불러오기
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 
-		System.out.println("finishList");
+		// searchMap에 검색정보와 로그인한 email 담기
 		Map<String, String> searchMap = new HashMap<>();
 		searchMap.put("searchCondition", searchCondition);
 		searchMap.put("searchValue", searchValue);
 		searchMap.put("email", member.getEmail());
 		System.out.println("searchMap : " + searchMap);
 
+		// 수강완료 클래스 전체 수 조회하기
 		int totalCount = mypageService.selectFinishTotalCount(searchMap);
 		System.out.println("tatalCount : " + totalCount);
 
+		// 한 페이지 당 5개씩 조회하기
 		int limit = 5;
 		int buttonAmount = 5;
 
@@ -419,74 +425,91 @@ public class MypageController {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		}
 
+		// criteriaMap에 selectCriteria와 로그인 된 email 담기
 		Map<String, Object> criteriaMap = new HashMap<String, Object>();
 		criteriaMap.put("selectCriteria", selectCriteria);
 		criteriaMap.put("email", member.getEmail());
 
-		System.out.println("selectCriteria : " + selectCriteria);
-
+		// criteriaMap을 이용하여 수강완료 클래스 조회하기
 		List<PurchaseClassDTO> finishList = mypageService.finishClass(criteriaMap);
 		System.out.println("finishList : " + finishList);
 
+		// model 객체에 수강완료리스트와 selectCriteria 담기
 		model.addAttribute("finishList", finishList);
 		model.addAttribute("selectCriteria", selectCriteria);
-		System.out.println("selectCriteria : " + selectCriteria);
 
 		return "mypage/finish";
 	}
 
-	// 수강후기 작성
+	/**
+	 * 수강완료페이지 - 수강후기 작성
+	 * @author 효진
+	 */
 	@PostMapping("finishReview")
 	public String finishReview(HttpServletRequest request, HttpSession session, Model model) {
 
+		// session에서 로그인 된 정보 가져오기
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
+		
+		// 카테고리이름과 내용 파라미터 값 가져오기
 		String categoryName = request.getParameter("t-categoryName");
 		String contents = request.getParameter("contents");
 		
+		// 가져온 파라미터 값 확인하기
 		System.out.println(request.getParameter("classCode"));
 		System.out.println(request.getParameter("reviewStar"));
 
+		// 파라미터 값 가져오기
 		int classCode = Integer.parseInt(request.getParameter("classCode"));
 		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
 		int classPurcCode = Integer.parseInt(request.getParameter("classPurcCode"));
 
+		// 파라미터 값 확인하기
 		System.out.println("후기를 작성할 클래스 코드 : " + request.getParameter("classCode"));
 		System.out.println("후기를 작성할 후기 별점 : " + request.getParameter("reviewStar"));
 
+		// reviewMap에 로그인 된 email과 가져온 파라미터 값 담기
 		Map<String, Object> reviewMap = new HashMap<>();
 		reviewMap.put("email", member.getEmail());
-
 		reviewMap.put("classCode", classCode);
 		reviewMap.put("reviewStar", reviewStar);
 		reviewMap.put("classPurcCode", classPurcCode);
-
 		reviewMap.put("categoryName", categoryName);
 		reviewMap.put("contents", contents);
 
+		// reviewMap에 담긴 값 확인하기
 		System.out.println("reviewMap : " + reviewMap);
 
+		// reviewMap을 이용하여 작성된 수강 후기 DB에 저장하기
 		int reviewContent = mypageService.insertReviewContent(reviewMap);
 		System.out.println("reviewContent : " + reviewContent);
 
+		// model 객체에 리뷰 담기
 		model.addAttribute("reviewContent", reviewContent);
 
 		return "redirect:/mypage/review";
 	}
 
-	// 수강후기
+	/**
+	 * 수강후기 페이지 조회
+	 * @author 효진
+	 */
 	@GetMapping("review")
 	public String reviewForm(Model model, HttpSession session, @RequestParam(defaultValue = "1") int currentPage) {
 
+		// session에서 로그인 된 정보 가져오기
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 
+		// searchMap에 로그인 된 email 담기
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("email", member.getEmail());
-
 		System.out.println("searchMap : " + searchMap);
 
+		// 수강 후기 갯수 조회하기
 		int totalCount = mypageService.selectReviewTotalCount(searchMap);
 		System.out.println("totalCount : " + totalCount);
 
+		// 한 페이지에 5개씩 조회하기
 		int limit = 5;
 		int buttonAmount = 5;
 
@@ -497,26 +520,35 @@ public class MypageController {
 		reviewMap.put("email", member.getEmail());
 		System.out.println("reviewMap : " + reviewMap);
 		
+		// 로그인 된 email과 검색정보를 사용하여 수강 후기 리스트 조회하기
 		List<Map<String, Object>> reviewList = mypageService.selectReviewList(reviewMap);
 		System.out.println("reviewList : " + reviewList);
 		 
+		// model 객체에 수강후기 리스트와 selectCriteria 담기
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("selectCriteria", selectCriteria);
 		 
-		 
-
 		return "mypage/review";
 	}
 	
+	/**
+	 * 수강 후기 삭제
+	 * @author 효진
+	 */
 	@PostMapping("deleteReview")
-	public String deleteReview(HttpServletRequest request, HttpSession session) {
+	public String deleteReview(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
 		
+		// rvCode 파라미터 값 가져오기
 		int rvCode = Integer.parseInt(request.getParameter("rvCode"));
 		
+		// 가져온 파라미터 값 확인하기
 		System.out.println("rvCode : " + rvCode);
 		
+		// 삭제 성공여부 확인하기
 		if(mypageService.deleteReview(rvCode) > 0) {
-			
+			rttr.addFlashAttribute("deleteMessage", "삭제에 성공했습니다.");
+		} else {
+			rttr.addFlashAttribute("deleteMessage", "삭제에 실패했습니다.");
 		}
 		
 		return "redirect:/mypage/review";

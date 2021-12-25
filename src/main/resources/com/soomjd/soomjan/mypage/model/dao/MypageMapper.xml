@@ -577,7 +577,7 @@
 		  	 , F.CATEGORY_NAME
 		  	 , F.TITLE
 		  	 , F.NICKNAME
-		  	 , F.ORG_FILE_PATH
+		  	 , F.FILE_PATH
 		 FROM (SELECT ROWNUM RNUM
 		            , D.EMAIL
 		            , D.REVIEW_CODE
@@ -589,7 +589,7 @@
 		  	      	, D.CATEGORY_NAME
 		  	      	, D.TITLE
 		  	      	, D.NICKNAME
-		  	      	, D.ORG_FILE_PATH
+		  	      	, D.FILE_PATH
 		        FROM (SELECT
 		                     R.EMAIL
 		                   , R.REVIEW_CODE
@@ -601,7 +601,7 @@
 		  	      		   , C.CATEGORY_NAME
 		  	      		   , L.TITLE
 		  	      		   , J.NICKNAME
-		  	      		   , L.ORG_FILE_PATH
+		  	      		   , L.FILE_PATH
 		                FROM CLASS_REVIEW_TBL R
 		  	      		JOIN CLASS_TBL L ON (L.CLASS_CODE = R.CLASS_CODE )
 		  	      		JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)

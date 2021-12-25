@@ -73,10 +73,6 @@
       <th>클래스제목</th>
       <th>강사닉네임</th>
       <th>수강완료</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
       <th>수강후기</th>
     </tr>
   </thead>
@@ -88,10 +84,6 @@
       <td>${ finishClass.classDTO.title }</td>
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
-      <td><input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }"></td>
-      <td><input type="hidden" value="${ finishClass.reviewDTO.isDelete }"></td>
-      <td><input type="hidden" value="${ finishClass.classCode }"></td>
-            <td><input type="hidden" value="${ finishClass.classPurcCode }"></td>
       <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq NULL }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
@@ -99,14 +91,11 @@
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>
+    <input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }">
+    <input type="hidden" value="${ finishClass.reviewDTO.isDelete }">
+    <input type="hidden" value="${ finishClass.classCode }">
+    <input type="hidden" value="${ finishClass.classPurcCode }">
     </c:forEach>
-<!--     <tr>
-      <td>2021.07.19</td>
-      <td>웹디자인 잘 가르칠 수 있는디</td>
-      <td>천재디자인</td>
-      <td>2021.11.19</td>
-      <td><button class="ui button reviewbtn" onclick="reviewbtn(this);">수강후기작성</button></td>
-    </tr> -->
   </tbody>
 </table>
 <br>
@@ -150,11 +139,6 @@
 			   <a href="#" id="5">★</a>
 			   <input type="hidden" id="reviewStar" name="reviewStar" value="3">
  			 <p>
- 			 <!--  1. 클래스가 on이 붙어있는 요소의 갯수 찾기  -->
- 			 
- 			 <!-- 2. 갯수를  hidden 담기 -> script로 작성  -->
- 			 
- 			 <!-- 3. 작성된값 체크  -->
         </div>
         <br><br>
           <textarea name="contents" class="review-text"></textarea>
@@ -194,9 +178,9 @@
    			$('.t-categoryName').val($($tr).children().eq(0).html()); 
     		$('.t-title').val($($tr).children().eq(1).html());
   			$('.t-nickName').val($($tr).children().eq(2).html());
-  			$('#classCode').val($($tr).children().eq(6).children().eq(0).val());
-  			$('#classPurcCode').val($($tr).children().eq(7).children().eq(0).val());
-  			$('.t-date').val($($tr).children().eq(4).children().eq(0).val() + "-" + $($tr).children().eq(3).html());  
+  			$('#classCode').val($($tr).parent().children().eq(3).val());
+  			$('#classPurcCode').val($($tr).parent().children().eq(4).val());
+  			$('.t-date').val($($tr).parent().children().eq(1).val() + "-" + $($tr).children().eq(3).html());  
   			$('#reviewmodal').fadeIn();
   			e.preventDefault();
   		});
@@ -211,20 +195,10 @@
         	e.preventDefault();
         });
         
-/*     	function obtn(item) {
-           $("#reviewmodal").fadeOut();
-           $("#finishmodal").fadeOut();
-            $('#finish2modal').show();
-            $("#o2btn").click(function(){
-               $("#finish2modal").fadeOut();
-            });
-          }  */
-          
         $("#obtn").on('click', function(e){
         	$("#reviewmodal").fadeOut();
         	$("#finishmodal").fadeOut();
         	$("#finish2modal").fadeIn();
-        	/* $("#reviewform").submit(); */
         	e.preventDefault();
         });
           
@@ -240,32 +214,6 @@
         	 e.preventDefault();
           });
          
-/*          function xbtn(item) {
-            $("#reviewmodal").fadeOut();
-            $("#finishmodal").fadeOut();
-         } */
-         
-/*          $('.o2btn').on('click',function(){
-        
-            $('#finish2modal').modal('hide');
-         }; */
-          
-    /*   function xbtn(item) {
-          window.location.reload();
-        }  */
-        
-/*     $(function(){
-        $('#o2btn').click(function(){
-        ('#finish2modal').hide();
-     });
-   }); */
-   
-/* 	   $('#star a').click(function(){ 
-			 $(this).parent().children("a").removeClass("on");    
-			 $(this).addClass("on").prevAll("a").addClass("on");
-			 console.log($(this).attr("value"));
-		 }); */
-		 
 	$( document ).ready(function() {
 		$( "#star a" ).click(function() {
 			$(this).parent().children("a").removeClass("on");
