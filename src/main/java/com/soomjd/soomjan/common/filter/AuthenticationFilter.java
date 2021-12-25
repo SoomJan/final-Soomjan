@@ -20,6 +20,12 @@ import javax.servlet.http.HttpSession;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
+/**
+ * @author 임예람
+ * 
+ * 주소 요청에 따른 권한 필터
+ *
+ */
 @WebFilter(urlPatterns = {"/*"})
 public class AuthenticationFilter implements Filter{
 
