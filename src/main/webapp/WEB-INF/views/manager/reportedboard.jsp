@@ -177,6 +177,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<hr>
 			<div class="context-modal-btn">
 			   <input type="hidden" id="repCodeInput" name="repCode">
+			   <input type="hidden" id="isBlack" name="isBlack">
 	           <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">신고</button>
 	           <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">반려</button>
             </div>
@@ -202,6 +203,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       					$('#repTitle').val(data.classDTO.title);
       					$('#repContents').val(data.repContents);
       					$('#repNickName').val(data.nickName);
+      					$('#isBlack').val(data.isBlack);
       				},
       				error: function(xhr, status, error){
       					console.log(error);
@@ -213,9 +215,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     		});
     		
       		$('#con-btn').click(function(event){
-      			//console.log(repCode);
-      			// $("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/classConfirm").submit();
-     			$("#resultModal").show();
+      			
+      			 let isBlack = $('#isBlack').val();
+       		    console.log(isBlack);
+
+       		    if(isBlack == 'Y') {
+       		    	alert('이미 블랙리스트 회원입니다.');
+       		    } else {
+     				$("#resultModal").show();
+       		    }
       			event.preventDefault();
       		});
       		
