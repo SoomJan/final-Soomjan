@@ -154,11 +154,11 @@ p {
 												<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>등록일 : ${ findClassList.createDate }</h3>
 												<small> 
 													<c:if test="${ findClassList.avgStar == '0'}">
-														☆
+														<span style="color:lightgray;"><i class="star icon"></i></span>
 													</c:if>
 													<c:if test="${ findClassList.avgStar != '0'}">
 													<c:forEach begin="1" end="${ findClassList.avgStar }">
-												    ★
+												   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
 													</c:forEach>  
 												    </c:if>
 													(${ findClassList.rvCount })

@@ -64,6 +64,9 @@
     	<result column="NICKNAME" property="nickName"/>
     </resultMap>
     
+    <!-- 
+    
+    -->
     <select id="selectClassByClassCode" resultMap="classResultMap">
     	SELECT
     			  C.CLASS_CODE
