@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <html>
   <head>
 
-    <title>클래스 결제 내역</title>
+    <title>클래스 미정산 내역</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
@@ -35,7 +35,7 @@ pageEncoding="UTF-8"%>
     }
 
     </style>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
   </head>
   <body>
@@ -44,10 +44,10 @@ pageEncoding="UTF-8"%>
     <div class="common-sidebar">
       <jsp:include page="../common/managersidebar.jsp" />
       <div class="main-content">
-      <h1 id="category"> 클래스 결제 내역 </h1> <br>
+      <h1 id="category"> 클래스 미정산 내역 </h1> <br>
       
       
-         	<!-- 총 정산 금액 -->
+         	<%-- <!-- 총 정산 금액 -->
       		<c:set var = "total" value = "0" />
 			<c:forEach var="result" items="${allContent}" varStatus="status">     
 			<c:set var= "total" value="${total + result.classDTO.price}"/>
@@ -76,7 +76,7 @@ pageEncoding="UTF-8"%>
 		정산된 수수료 : <fmt:formatNumber value="${total1 * 0.1}" pattern="\#,###.##"/><br>
 			
 		정산 할 금액 : <fmt:formatNumber value="${total2 * 0.9}" pattern="\#,###.##"/><br>
-		정산 할 수수료 : <fmt:formatNumber value="${total2 * 0.1}" pattern="\#,###.##"/><br>
+		정산 할 수수료 : <fmt:formatNumber value="${total2 * 0.1}" pattern="\#,###.##"/><br> --%>
 			
 		<%-- <fmt:formatNumber value="${total1  + total2}" pattern="\#,###.##"/><br> --%>
       
@@ -85,7 +85,7 @@ pageEncoding="UTF-8"%>
      		<input type="date" name="startDate" value="${ startDate }"> ~ <input type="date" name="endDate" value="${ endDate }"> &nbsp; &nbsp;
 				 <select id="searchCondition" name="searchCondition" >
             	 <option value="">선택해주세요</option>
-            	 <option value="1">아이디</option>
+            	 <option value="1">구매자</option>
           	 	 <option value="2">강의</option>
          	 </select>&nbsp; &nbsp;
          	 <input type="search" id="searchValue" name="searchValue" value="${ searchValue }" placeholder="검색어를 입력해주세요">
@@ -95,7 +95,6 @@ pageEncoding="UTF-8"%>
           <table class="ui basic table warningtable">
             <thead>
               <tr>
-              	<th><input type="checkbox"></th>
                 <th>결제 번호</th>
                 <th>결제 날짜</th>
                 <th>구매자</th>
@@ -103,31 +102,27 @@ pageEncoding="UTF-8"%>
                 <th>결제 금액</th>
                 <th>수수료</th>
                 <th>정산 금액(원)</th>
-                <th>정산 여부</th>
               </tr>
             </thead>
             <tbody>
           	  <c:forEach var="cal" items="${ reviewContent }">
-            	 <tr>
-	            	<td><input class="check" type="checkbox"></td>
+            	 <tr class="calClass">
 	                <td>${ cal.classPurcCode }</td>
 	                <td>${ cal.paymentDTO.payDate }</td>
 	                <td>${ cal.email }</td>
 	                <td>${ cal.classDTO.title }</td>
-	                <td class="payment">${ cal.classDTO.price }</td>
-	                <td class="fees">${ cal.classDTO.price * 0.1 }</td>
-	                <td>${ cal.classDTO.price * 0.9 }</td>
-	                <td class="calYn">${ cal.status }</td>
+	                <td class="payment"><fmt:formatNumber value="${cal.classDTO.price}" pattern="\#,###.##"/></td>
+	                <td class="fees"><fmt:formatNumber value="${cal.classDTO.price * 0.1}" pattern="\#,###.##"/></td>
+	                <td><fmt:formatNumber value="${cal.classDTO.price * 0.9}" pattern="\#,###.##"/></td>
          	    </tr>
              </c:forEach>
              
              <c:if test="${ !empty reviewContent }">
               <tr>
-                <td colspan="5"><strong>총합계</strong></td>
+                <td colspan="4"><strong>총합계</strong></td>
                 <td><strong class="paymentSum"></strong></td>
                 <td><strong class="feesSum"></strong></td>
                 <td><strong class="calSum"></strong></td>
-                <td></td>
             </tr>
             </c:if>
             
@@ -140,7 +135,6 @@ pageEncoding="UTF-8"%>
             </tbody>
           </table>
 
-			 <input class="calculate" type="submit" value="정산하기">
 			 
 			<jsp:include page="../common/Paging.jsp" />
 
@@ -148,13 +142,13 @@ pageEncoding="UTF-8"%>
   	</div>
   	
   	 <script>
- 
+  	 	
             /* 결제 금액 합계 구하기 */
             let payment = $(".payment")
 
             let sum = 0;
             for(let i = 0; i < payment.length; i++) {
-              let value = payment[i].getInnerHTML().replace(",","");
+              let value = payment[i].getInnerHTML().replace(",","").replace("\\","");
 
               let parseValue = parseInt(value);
               sum += parseValue;
@@ -171,7 +165,7 @@ pageEncoding="UTF-8"%>
 
             let sum2 = 0;
             for(let i = 0; i < fees.length; i++) {
-              let value = fees[i].getInnerHTML().replace(",","");
+              let value = fees[i].getInnerHTML().replace(",","").replace("\\","");
 
               let parseValue = parseInt(value);
               sum2 += parseValue;
@@ -189,111 +183,61 @@ pageEncoding="UTF-8"%>
 
             $(".calSum").html(calSum.toLocaleString());
 
-            /* 전체선택, 전체 취소 */
-            $("this").ready(function(){
-              $(".all").click(function(){
-                if($(".all").prop("checked")) {
-                  $(".check").prop("checked", true);
-                } else {
-                  $(".check").prop("checked", false);
-                }
-              });
-            });
-
-            /* 정산하기 버튼 모달 처리 */
-         /*    $(function(){
-              $(".calculate").click(function(e){
-
-                let checkNum = $("input:checked").length;
-                console.log(checkNum);
-                
-                let checkcal = $("document.getElementsByClassName('check')[8].checked");
-                console.log(checkcal);
-                
-                e.preventDefault();
-
-                if(!checkNum) {
-                	// 선택 내역 없음
-                  $("#checkModal").fadeIn();
-                  $(".btn").click(function(){
-                    $("#checkModal").fadeOut();
-                  });
-                  
-                } else {
-                
-	            	$.ajax({
-	                    url: "${ pageContext.servletContext.contextPath }/manager/classcal",
-	                    type: "post", 
-	                    data: {categoryCode : categoryCode},
-	                    success: function(categoryName == "false") {
-	                    	
-	                    	 console.log(categoryName);
-	                    } else {
-	                    	$("#checkCategoryName").prop("placeholder", categoryName);
-	                    	$("#changeName").attr('style', "display:block;");
-	                    	$("#checkName").attr('disabled', false);
-	                    	$('#checkName').val('');
-	                    	} 
-	                    },
-	                    error: function(error) {
-	                        console.log(error);
-	                      }
-	          		});
-	          	});
-	            }); */
-	                	
-                  /*  $("#calModal").fadeIn();
-                   $(".btn").click(function(){
-                    $("#calModal").fadeOut();
-                      $("#resultModal").fadeIn();
-                      $(".btn").click(function(){
-                        window.location.reload();
-                      });
-                  });
-                }
-              });
-            });  */
             
-            $(function(){
-                $(".calculate").click(function(e){
-                
-                	let check3 = document.getElementsByClassName('check');
-                	var check4 = [];
-                	
-                	console.log(check3);
-                	for(let i = 0; i < check3.length; i++){
-                		if(check3[i].checked == true){
-                			check4.push(check3[i].checked);
-                		}else{
-                			console.log("아님");
-                		}
-                		
-                	}
-                	
-                	console.log(check4);
-                });
-            });
-                
-
-            // 완료된 정산 인풋박스 비활성화
-            let finishcal = $(".check");
             
-            let check1 = document.getElementsByTagName('tr');
-            let check2 = document.getElementsByClassName('check');
-            
-           for(let i = 0; i < check1.length; i++ ){
-        	   if(check1[i].children[8].getInnerHTML() == 'Y' ){
-        		   check2[i-1].setAttribute("disabled",false)
-        	   } else {
-        		   console.log("good");
-        	   }
-         	  };
-            
-          /*  let select = document.getElementsByTagName('select');
-           console.log(select); */
-           
-           	
-           
+        	$(function(){
+          		$(".calClass").click(function(e){
+          			
+          			
+					 $("#calClass").show();	
+					 const classCode = $(e.target).parent().children()[0].innerText;
+					 const calDate = $(e.target).parent().children()[1].innerText;
+					 const buyEmail = $(e.target).parent().children()[2].innerText;
+					 const buyLecture = $(e.target).parent().children()[3].innerText;
+					 const calPay = $(e.target).parent().children()[4].innerText;
+					 const calFee = $(e.target).parent().children()[5].innerText;
+					 const afterPay = $(e.target).parent().children()[6].innerText;
+					 
+					 console.log(classCode);
+					 console.log(calDate);
+					 console.log(buyEmail);
+					 console.log(buyLecture);
+					 console.log(calPay);
+					 console.log(calFee);
+					 console.log(afterPay);
+					 
+					 $('#modal_date').empty();
+					 $('#modal_email').empty();
+					 $('#modal_lecture').empty();
+					 $('#modal_pay').empty();
+					 $('#modal_fee').empty();
+					 $('#modal_after').empty();
+					 
+					 $('#clanum').prepend(classCode);
+					 $('#modal_date').append(calDate);
+					 $('#modal_email').append(buyEmail);
+					 $('#modal_lecture').append(buyLecture);
+					 $('#modal_pay').append(calPay);
+					 $('#modal_fee').append(calFee);
+					 $('#modal_after').append(afterPay);
+					 
+					 
+					 // value 값 넣기
+					 $('.clanum').attr("value",classCode);
+					 $('.purEmail').attr("value",buyEmail);
+					 	
+					 	//fmt 형태 int로 변환
+					 	let calFee1 = calFee.replace("\\","").replace(",","");
+					 $('.purFees').attr("value",calFee1);
+					 
+					 console.log(calFee1);
+					 
+					 $("#cancel-btn").click(function(e){
+						 
+						 $("#calClass").hide();		
+					 });
+          		}); 
+          	});
           </script>
   	
   	
@@ -321,11 +265,33 @@ pageEncoding="UTF-8"%>
   </div>
 </div>
 
-<div class="ui mini modal" id="resultModal">
+<div class="ui mini modal" id="resultModal" >
   <div class="content">
     <p class="title">정산 처리가 완료되었습니다.</p>
     <div class="re-modal-btn">
     <button id="result" class="ui button btn">확인</button>
   </div>
   </div>
+</div>
+
+
+<!-- 정산 자세히 보기 모달 -->
+<div class="ui mini modal" id="calClass" >
+<form action="${ pageContext.servletContext.contextPath }/manager/classcal" method="post">
+  <div class="content" style="height:auto;">
+   구매 강의 : <p id="modal_lecture"></p>
+   구매 날짜 : <p id="modal_date"></p>
+   구매자 :  <p id="modal_email"></p>
+   구매 가격 :  <p id="modal_pay"></p>
+   구매 수수료 :  <p id="modal_fee"></p>
+   정산 가격 :  <p id="modal_after"></p>
+   <input type="hidden" name="classPurchaseCode" class="clanum">
+   <input type="hidden" name="email" class="purEmail">
+   <input type="hidden" name="fees" class="purFees">
+    <div class="re-modal-btn">
+    <button id="result" type="submit" class="ui button btn">확인</button>
+    <button type="button" id="cancel-btn" class="ui button btn">취소</button>
+  	</div>
+  </div>
+  </form>
 </div>

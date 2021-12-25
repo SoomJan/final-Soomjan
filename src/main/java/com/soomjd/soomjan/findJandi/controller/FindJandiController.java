@@ -4,17 +4,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
+=======
+import org.springframework.web.servlet.ModelAndView;
+>>>>>>> refs/remotes/origin/master
 
+<<<<<<< HEAD
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
+=======
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+>>>>>>> refs/remotes/origin/master
 import com.soomjd.soomjan.findJandi.model.service.FindJandiService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/findJandi/*")
@@ -88,6 +100,20 @@ public class FindJandiController {
 		
  		
 	}
+	
+	@GetMapping("/jandiProfile/{email:.+}")
+	public ModelAndView jandiProfile(@PathVariable String email){
+		
+		ModelAndView mv = new ModelAndView();
+ 		System.out.println(email);
+		
+		mv.addObject("jandiInfo", findJandiService.selectJandiInfo(email));
+		mv.addObject("thumbNailClassList", findJandiService.selectThumbnailClassList(email));
+		
+		mv.setViewName("/findJandi/jandiProfile");
+		return mv;
+	}
+
 	
 	@GetMapping("/detailJandi")
 	public void detailJandi() {}

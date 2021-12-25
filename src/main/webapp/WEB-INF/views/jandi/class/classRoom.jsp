@@ -37,16 +37,19 @@
 
 <script>
 $(function(){
+	// 업로드 성공 여부 리다이렉트 메세지
 	if('${ requestScope.uploadMessage }' != ''){
 		alert('${ requestScope.uploadMessage }');
 		console.log('${ requestScope.uploadMessage }');
 	}
 	
+	// 클래스룸 변경 성고 여부 리다이렉트 메세지
 	let message = '${ requestScope.modifyMessage }';
-	if( message !== "" ){
+	if( message != "" ){
 		alert(message);
 	}
 	
+	/* 태그 분리 해서 페이지에 보여주기 */
 	let tags = $('#tag').val().replace(" ","");
 	let tagArr = tags.split('#');
 	for(let tag of tagArr){
@@ -57,6 +60,7 @@ $(function(){
 		}
 	}
 	
+	// 내용 길이 체크
 	$('#tagCheck').html($('#tag').val().length);
 	$('#contentsCheck').html($('#classContents').val().length);
 	
@@ -68,10 +72,21 @@ $(function(){
 	
 });
 
+/* 
+ * 글자 길이 체크 메소드 
+ * 
+ * parameters
+ * inputItem : 글자가 담겨져 있는 input태그
+ * spanItem  : 글자 길이를 보여줄 span태그
+ * maxLength : 길이를 제한할 글자 수
+ * 
+ * 임예람
+ */
 function checkLength(inputItem, spanItem, maxLength){
 	let $item = $(inputItem);
 	spanItem.html($item.val().length);
 	
+	// 길이 제한을 넘기면 max길이 만큼 다시 자른다.
 	if($item.val().length > maxLength){
 		alert(maxLength + "자를 초과할 수 없습니다.");
 		$item.val($item.val().substr(0, (maxLength-1)));
@@ -79,6 +94,18 @@ function checkLength(inputItem, spanItem, maxLength){
 		spanItem.html($item.val().length);
 	}
 }
+
+/* 페이징 처리 스크립트 */
+$(function(){
+	if('${ selectCriteria.searchCondition }' != ''){
+		$("#searchCondition").val("${ selectCriteria.searchCondition }");
+	}
+});
+// 셀렉트 값이 바뀔 때 마다 정렬
+$('#searchCondition').change(function(){
+	$('#searchform').submit();
+});
+
 </script>
 <body>
 	<jsp:include page="../../common/nav.jsp" />
@@ -146,9 +173,11 @@ function checkLength(inputItem, spanItem, maxLength){
 					<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
 						<div class="content">
 							<div class="left aligned header afterheader">
+								<c:if test="${ review.star != '0'}">
 								<c:forEach begin="1" end="${ review.star }">
-									<i class="star icon"></i>
-								</c:forEach>
+							   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
+								</c:forEach>  
+							    </c:if>
 								<span>( ${ review.star } / 5)</span>
 							</div>
 							<div class="left aligned description">
@@ -166,18 +195,6 @@ function checkLength(inputItem, spanItem, maxLength){
 				<jsp:include page="../../common/Paging.jsp" />
 				
 				</c:if>
-				
-				<script>
-					$(function(){
-						if('${ selectCriteria.searchCondition }' != ''){
-							$("#searchCondition").val("${ selectCriteria.searchCondition }");
-						}
-					});
-					
-					$('#searchCondition').change(function(){
-						$('#searchform').submit();
-					});
-				</script>
 		</div>
 	</div>
 	

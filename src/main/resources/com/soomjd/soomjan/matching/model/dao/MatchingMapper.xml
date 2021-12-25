@@ -42,6 +42,8 @@
    
     </resultMap>
     
+    
+    
     <resultMap id="memberDTO" type="MemberDTO">
     	<id column="EMAIL" property="email"/>
     	<result column="NICKNAME" property="nickName"/>	
@@ -160,7 +162,7 @@
 		 WHERE ESTIMATE_CODE = #{ estimateCode }
     </select>
     
-    <!-- 잔디가 보는 견적서 디테일 -->
+     <!-- 잔디가 보는 견적서 디테일 -->
      <select id="estimateDetailJ" resultMap="estimateDetailList" >
     	SELECT
 		       E.ESTIMATE_CODE
@@ -177,6 +179,7 @@
 		 WHERE ESTIMATE_CODE = #{ estimateCode }
     </select> 
     
+   
     
     
     <select id="selecetMainTotal" resultType="_int">
@@ -246,6 +249,32 @@
     	
     </insert>
     
+    
+    <update id="updateMatched" parameterType="_int">
+    
+		UPDATE ESTIMATE_TBL 
+		SET 
+		IS_MATCHED = 'Y'
+		WHERE ESTIMATE_CODE  = #{ estimateCode }
+    
+    </update>
+    
+    
+    <select id="chatEstimateCode" resultType="hashmap">
+    	
+    	SELECT M.MATCHED_CODE,
+       M.EMAIL,
+       M.ESTIMATE_CODE,
+       J.NICKNAME,
+       J.PROFILE_PATH
+ 		  FROM MATCHED_TBL M
+		  JOIN JANDI_TBL J ON(J.EMAIL = M.EMAIL)
+		 WHERE M.MATCHED_CODE IN (SELECT MA.MATCHED_CODE FROM MATCHED_TBL MA WHERE MA.EMAIL = #{ jmail })
+		   AND M.EMAIL != #{ jmail }
+    
+    
+    
+    </select>
     
 
 </mapper>

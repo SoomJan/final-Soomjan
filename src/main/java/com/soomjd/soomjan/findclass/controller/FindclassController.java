@@ -37,6 +37,8 @@ public class FindclassController {
 
 		System.out.println("파인드 클래스 메인입니다 ㅋㅋ");
 		System.out.println("보여줄 클래스 카테고리 : " + categoryCode);
+	    System.out.println("검색할 검색값 : " + searchValue);
+	    System.out.println("정렬 조건 : " + searchCondition);
 
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchCondition", searchCondition);
@@ -52,12 +54,12 @@ public class FindclassController {
 		int totalCount = findClassService.selectFindClassTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
 
-		int limit = 5;
+		int limit = 9;
 		int buttonAmount = 5;
 
 		SelectCriteria selectCriteria = null;
 
-		if (searchCondition != null && !"".equals(searchCondition)) {
+		if (searchCondition != null && !"".equals(searchCondition) || searchValue != null && !"".equals(searchValue)) {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
 					searchValue);
 		} else {

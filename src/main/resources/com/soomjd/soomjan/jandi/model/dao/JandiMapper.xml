@@ -3,6 +3,19 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soomjd.soomjan.jandi.model.dao.JandiMapper">
+
+	<resultMap type="com.soomjd.soomjan.jandi.model.dto.MemberDTO" id="memberResultMap">
+        <id column="EMAIL" property="email"/>
+        <result column="NICKNAME" property="nickName"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="PHONE" property="phone"/>
+        <result column="IS_JANDI" property="isJandi"/>
+        <result column="WARNING" property="warning"/>
+        <result column="IS_BLACK" property="isBlack"/>
+        <result column="ENROLL_DATE" property="enrollDate"/>
+        <result column="IS_EXIT" property="isExit"/>
+        <result column="NAME" property="name"/>
+    </resultMap>
     
     <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiResultMap">
     	<id column="EMAIL" property="email"/>
@@ -183,7 +196,8 @@
 			 , FILE_PATH
 			 , ORG_FILE_PATH
 		  FROM CLASS_TBL
-		 WHERE EMAIL=#{ email } 	   	
+		 WHERE EMAIL=#{ email } 
+		 ORDER BY CLASS_CODE DESC	   	
 	
 	</select>
 	
@@ -199,6 +213,8 @@
 			 , IS_ADVERTISED
 		  FROM AD_TBL
 		 WHERE CLASS_CODE=#{ classesCode } 
+		 ORDER BY AD_CODE DESC
+		 
 	</select>
 	
 	
@@ -228,11 +244,23 @@
 		  JOIN CLASS_TBL D ON(C.EMAIL=D.EMAIL)
 		 WHERE A.PAY_DATE BETWEEN #{startDay} AND #{endDay}
 		   AND D.EMAIL=#{ email }  
-		   	   
+	</select>
 	
-	
+	<select id="selectMyAd"  resultMap="adResultMap">
+		SELECT 
+		       AD_CODE
+			 , AD_CONTENTS
+			 , IMG_PATH
+			 , CLASS_CODE
+			 , START_DATE
+			 , ORG_IMG_PATH
+			 , IS_ADVERTISED
+		  FROM AD_TBL 
+		 WHERE AD_CODE=#{ adCode } 
+		 ORDER BY AD_CODE DESC
 	
 	</select>
+	
 	
 	<update id="updateAdDate">
 		UPDATE
@@ -249,8 +277,19 @@
 	</update>
 	
 	<select id="selectThumbnailClassList" resultMap="findClassResultMap">
-		 SELECT V.*
-		       , ROWNUM
+		 SELECT V.CLASS_CODE
+		      , V.CREATE_DATE 
+		      , V.TAG 
+		      , V.TITLE 
+		      , V.PRICE 
+		      , V.FILE_PATH
+		      , V.VIEWS
+		      , V.PROFILE_PATH
+		      , V.NICKNAME 
+		      , V.CATEGORY_NAME
+		      , V.AVGSTAR
+		      , V.RVCOUNT
+		      , ROWNUM
 		 FROM (SELECT A.CLASS_CODE
 				     , A.CREATE_DATE 
 				     , A.TAG 
@@ -290,5 +329,112 @@
 	
 	</select>
 	
-
+	<update id="updateStartDate">
+		UPDATE 
+		       AD_TBL
+		   SET START_DATE=TO_DATE(TO_CHAR(SYSDATE+1,'YYYYMMDD'),'YYYY-MM-DD')
+		 WHERE AD_CODE=#{ adCode }      
+	</update>
+	
+	<select id="selectMyClass" resultMap="classesResultMap">
+		SELECT 
+			   CLASS_CODE
+			 , CREATE_DATE
+			 , CONTENTS
+			 , TAG
+			 , CATEGORY_CODE
+			 , EMAIL
+			 , BOARD_TYPE
+			 , VIEWS
+			 , MAX_COUNT
+			 , TITLE
+			 , PRICE
+			 , IS_DELETED
+			 , FILE_PATH
+			 , ORG_FILE_PATH
+		  FROM CLASS_TBL
+		 WHERE CLASS_CODE=#{ classCode }
+	</select>
+	
+	<insert id="updatePayment">    
+		INSERT 
+		  INTO PAYMENT_TBL
+		(
+			PAY_CODE
+		  , PAY
+		  , BANK
+		  , OWNER
+		  , ACCOUNT
+		  , PAY_DATE
+		  , PAY_TYPE
+		)
+		VALUES
+		(  
+		    SEQ_PAYMENT_TBL.NEXTVAL
+		  , 300000
+		  , '카카오페이'
+		  , #{nickName}
+		  , #{phone}
+		  , SYSDATE
+		  , 'ad'  	
+		)  
+	</insert>
+	
+	<select id="selectPayCode" resultType="_int">
+		SELECT
+		       PAY_CODE
+		  FROM PAYMENT_TBL
+		 WHERE OWNER=#{nickName} 
+		   AND PAY_TYPE='ad'
+	</select>
+	
+	<insert id="updatePurchaseAd">
+		INSERT
+		  INTO PURCHASE_AD_TBL
+		( 
+		  AD_CODE
+		, PAY_CODE
+		, AD_PURC_CODE
+		, EMAIL
+		)
+		VALUES
+		(
+		  #{ adCode }
+		, #{ payCode }
+		, SEQ_PURCHASE_AD_TBL.NEXTVAL
+		, #{ email }	
+		)
+		  
+	
+	</insert>
+	
+		<select id="selectMyAdList"  resultMap="adResultMap">
+		SELECT 
+		       AD_CODE
+			 , AD_CONTENTS
+			 , IMG_PATH
+			 , CLASS_CODE
+			 , START_DATE
+			 , ORG_IMG_PATH
+			 , IS_ADVERTISED
+		  FROM AD_TBL 
+		 WHERE AD_CODE=#{ adCode } 
+		 ORDER BY AD_CODE DESC
+	
+	</select>
+	
+	<select id="selectAllAd" resultMap="adResultMap">
+		SELECT 
+		       AD_CODE
+			 , AD_CONTENTS
+			 , IMG_PATH
+			 , CLASS_CODE
+			 , START_DATE
+			 , ORG_IMG_PATH
+			 , IS_ADVERTISED
+		  FROM AD_TBL 
+		 WHERE AD_CODE=#{ adCode }
+	</select>
+	
 </mapper>
+

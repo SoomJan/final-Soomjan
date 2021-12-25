@@ -20,7 +20,8 @@
       .buytable thead tr th {background-color: #E3FFEC !important;} /* 구매내역 테이블 */
       .buytable thead tr th {border-bottom: none !important;}
       .buytable tbody tr td {text-align: center; vertical-align : middle;}
-      .dropsearch {margin-left: 12%;}
+      .dropsearch {margin-left: 14%;}
+      .finish-go {color: #52734D !important;}
     </style>
 </head>
 <body>
@@ -29,7 +30,7 @@
       <jsp:include page="../common/mypagesidebar.jsp" />
       <div class="sidebar-content">
         <p class="taking-title">멤버쉽 구매내역</p>
-        <br><br>
+        <br>
         <div class="dropsearch">
           <form id="form" action="${ pageContext.servletContext.contextPath }/mypage/buy" method="get">
             <input type="hidden" name="currentPage" value="1" />
@@ -40,7 +41,7 @@
 		</select>
     <div class="ui search">
       <div class="ui icon input pro">
-        <input class="prompt" type="search" name="searchValue" value="<c:out value=" ${
+        <input class="prompt" type="search" name="searchValue" value="<c:out value="${
           sessionScope.selectCriteria.searchValue }" />">
           <button id="searchbtn" style="border: none; background:none; position: relative; right: 18%;"><img
             src="${ pageContext.servletContext.contextPath }/resources/images/search.png"
@@ -55,8 +56,9 @@
   <c:choose>
         <c:when test="${ empty buyList }">
           <div class="unlist-text">
-            멤버쉽 구매내역이 없습니다.<br>
-            새로운 클래스를 구매해주세요.
+            멤버쉽 구매내역이 없거나, 조회된 결과가 없습니다.
+            <br><br><br>
+  <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" class="finish-go"><u>클래스 구매하러가기</u></a>
           </div>
         </c:when>
         <c:when test="${ not empty buyList }">

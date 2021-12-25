@@ -122,7 +122,7 @@ img {
 			+ "</div></div><br>";
 			
 			$('.chatRight').append($senderBox);
-	};
+	}
 	
 	
 	function addReceiveBox(chat){
@@ -136,12 +136,13 @@ img {
 			+ "</div></div><br>";
 			
 			$('.chatRight').append($receiverBox);
-	};
+	}
 	
 	$(function(){
 		
+		console.log("${ matchedCode }");
 		const email = "${ sessionScope.loginMember.email }";
-		const matched_code = ${ chatting.matchedCode };
+		const matched_code = ${ matchedCode };
 		// 테스트 채팅방 정보 
 		let chatInfo = {
 			email: email,

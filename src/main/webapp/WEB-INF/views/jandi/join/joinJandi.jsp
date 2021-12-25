@@ -8,11 +8,12 @@
 <title>멘토 프로필</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css" rel="stylesheet"/>
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage/mypagesidebar.css" rel="stylesheet" />
+<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/semantic/semantic.css">
 <link href="${ pageContext.servletContext.contextPath }/resources/css/main.css" rel="stylesheet" />
-<link href="${ pageContext.servletContext.contextPath }/resources/css/mypage.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mentor/mentormain.css" rel="stylesheet"/>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/mentor/mentorsidebar.css" rel="stylesheet"/>
 <style>
 .warningtable tbody {
 	text-align: center;
@@ -101,6 +102,7 @@ input:focus{
 </style>
 
 <script>
+	// 입력받을 문자열 길이 체크
 	function checkLength(inputItem, spanItem, maxLength){
 		let $item = $(inputItem);
 		spanItem.html($item.val().length);
@@ -115,6 +117,7 @@ input:focus{
 	
 	$(function(){
 		
+		/* 잔디 페이지 인서트시 데이터 조건 체크 */
 		$('#registBtn').click(function(){
 			
 			let result = true;
@@ -154,33 +157,33 @@ input:focus{
 			
 		
 	/* 닉네임 중복 체크 */
-	     $('#dupBtn').click(function() {
-	        let nickName = $("#nickName").val();
+     $('#dupBtn').click(function() {
+        let nickName = $("#nickName").val();
 
-	        if (!nickName) {
-	          alert("닉네임을 입력해 주세요.");
-	        } else {
-	          $.ajax({
-	            url: "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
-	            type: "post",
-	            data: { nickName: nickName },
-	            success: function (data) {
-	              if (data == "true") {
-	              	console.log(data);
-                	$("#p_nick").text("중복된 닉네임이 있습니다.");
-	              	$("#p_nick").css("color", "red");
-	              } else {
-	              	$("#p_nick").text("사용 가능한 닉네임 입니다.");
-	              	$("#p_nick").css("color", "blue");
-	              	$('#registBtn').prop('disabled', false);
-	              }
-	            },
-	            error: function (error) {
-	              console.log(error);
-	            }
-	          });
-	        }
-	      });
+        if (!nickName) {
+          alert("닉네임을 입력해 주세요.");
+        } else {
+          $.ajax({
+            url: "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
+            type: "post",
+            data: { nickName: nickName },
+            success: function (data) {
+              if (data == "true") {
+              	console.log(data);
+               	$("#p_nick").text("중복된 닉네임이 있습니다.");
+              	$("#p_nick").css("color", "red");
+              } else {
+              	$("#p_nick").text("사용 가능한 닉네임 입니다.");
+              	$("#p_nick").css("color", "blue");
+              	$('#registBtn').prop('disabled', false);
+              }
+            },
+            error: function (error) {
+              console.log(error);
+            }
+          });
+        }
+      });
 		
 	});
 	

@@ -1,9 +1,7 @@
 package com.soomjd.soomjan.manager.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
@@ -34,6 +33,7 @@ import com.soomjd.soomjan.common.paging.Pagenationwithdate;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
+import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
@@ -45,7 +45,7 @@ import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
 
 @Controller
 @RequestMapping("/manager/*")
-@SessionAttributes({"loginManager", "ssackList", "jandiList", "managerList", "selectCriteria", "reportMemberList", "reportClassList"})
+@SessionAttributes({"loginManager", "ssackList", "jandiList", "managerList", "selectCriteria", "reportMemberList", "reportClassList", "blackMemberList"})
 public class ManagerController {
 	
 	private final ManagerService managerService;
@@ -80,7 +80,7 @@ public class ManagerController {
 		
 		model.addAttribute("loginManager", managerService.loginManager(manager));
 		
-		return "redirect:/";
+		return "redirect:/manager/mentilist";
 		
 	}
 	
@@ -108,89 +108,93 @@ public class ManagerController {
 	 * @author 효진
 	 */
 	@GetMapping("mentilist")
-	   public String mentilist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
-	      
-	      System.out.println("===== ssackList =====");
-	      
-	      Map<String, String> searchMap = new HashMap<>();
-	      searchMap.put("searchCondition", searchCondition);
-	      searchMap.put("searchValue", searchValue);
-	      System.out.println("searchMap : " + searchMap);
-	      
-	      int totalCount = managerService.selectTotalCount(searchMap);
-	      System.out.println("totalCount : " + totalCount);
-	      
-	      int limit = 10;
-	      int buttonAmount = 5;
-	      
-	      SelectCriteria selectCriteria = null;
-	      
-	      if(searchCondition != null && !"".equals(searchCondition)) {
-	         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
-	      } else {
-	         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
-	      }
-	      
-	      System.out.println("selectCriteria : " + selectCriteria);
-	      
-	      
-	        List<MemberDTO> ssackList = managerService.ssackMember(selectCriteria);
-	        System.out.println("ssackList : " + ssackList);
-	        
-	        model.addAttribute("ssackList", ssackList);
-	        model.addAttribute("selectCriteria", selectCriteria);
-	        
-	        System.out.println("selectCriteria : " + selectCriteria);
-	       
-	      
-	/*      List<MemberDTO> ssackList = managerService.ssackMember(ssack);
-	      System.out.println(ssackList);
-	      model.addAttribute("ssackList", ssackList);*/
-	      
-	      return "manager/mentilist";
-	   }
+	public String mentilist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
+      
+	    // 새싹멤버 목록 페이징 처리
+        Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+        System.out.println("searchMap : " + searchMap);
+      
+        // 새싹 멤버 수 조회
+        int totalCount = managerService.selectSsackTotalCount(searchMap);
+        System.out.println("totalCount : " + totalCount);
+      
+        // 한 페이지 당 10개씩 조회
+        int limit = 10;
+        int buttonAmount = 5;
+      
+        // 검색이 있는지 없는지에 따라 검색내용 추가해서 조회하기
+        SelectCriteria selectCriteria = null;
+      
+        if(searchCondition != null && !"".equals(searchCondition)) {
+           selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+        } else {
+           selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+        }
+      
+        System.out.println("selectCriteria : " + selectCriteria);
+      
+        // selectCriteria를 이용하여 새싹 멤버 목록 조회하기
+	    List<MemberDTO> ssackList = managerService.ssackMember(selectCriteria);
+	    System.out.println("ssackList : " + ssackList);
+	    
+	    // model에 새싹멤버리스트와 selectCriteria 저장하기
+	    model.addAttribute("ssackList", ssackList);
+	    model.addAttribute("selectCriteria", selectCriteria);
+	    
+	    System.out.println("selectCriteria : " + selectCriteria);
+      
+      return "manager/mentilist";
+   }
 	
 	/**
 	 * 잔디멤버 조회
 	 * @author 효진
 	 */
 	@GetMapping("/mentolist")
-	public String mentolist(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
+	public String mentolist(Model model, 
+			@RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage) {
+	  
+		// 잔디멤버 페이징 처리하기
+		Map<String, String> searchMap = new HashMap<>();
+		searchMap.put("searchCondition", searchCondition);
+		searchMap.put("searchValue", searchValue);
+		System.out.println("searchMap : " + searchMap);
+		  
+		// 잔디 멤버 수 조회하기
+		int totalCount = managerService.selectJandiTotalCount(searchMap);
+		System.out.println("totalCount : " + totalCount);
+		  
+		// 한 페이지에 5개씩 조회하기
+		int limit = 5;
+		int buttonAmount = 5;
+		  
+		// 검색이 있는지 없는지에 따라 검색내용 추가해서 조회하기
+		SelectCriteria selectCriteria = null;
 		
-		System.out.println("===== jandiList =====");
-	      
-	      Map<String, String> searchMap = new HashMap<>();
-	      searchMap.put("searchCondition", searchCondition);
-	      searchMap.put("searchValue", searchValue);
-	      System.out.println("searchMap : " + searchMap);
-	      
-	      int totalCount = managerService.selectTotalCount2(searchMap);
-	      System.out.println("totalCount : " + totalCount);
-	      
-	      int limit = 10;
-	      int buttonAmount = 5;
-	      
-	      SelectCriteria selectCriteria = null;
-		
-	      if(searchCondition != null && !"".equals(searchCondition)) {
-		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
-		      } else {
-		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
-		      }
+		if(searchCondition != null && !"".equals(searchCondition)) {
+		       selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		    } else {
+		       selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		    }
 		      
-		      System.out.println("selectCriteria : " + selectCriteria);
-		      
-		      
-		        List<JandiDTO> jandiList = managerService.jandiMember(selectCriteria);
-		        System.out.println("jandiList : " + jandiList);
-		        
-		        model.addAttribute("jandiList", jandiList);
-		        model.addAttribute("selectCriteria", selectCriteria);
-		        
-		        System.out.println("selectCriteria : " + selectCriteria);
+	    System.out.println("selectCriteria : " + selectCriteria);
+	      
+	    // selectCriteria를 이용하여 잔디멤버 리스트 조회하기
+	    List<JandiDTO> jandiList = managerService.jandiMember(selectCriteria);
+	    System.out.println("jandiList : " + jandiList);
+	        
+	    // model에 잔디멤버리스트와 selectCriteria 담기
+	    model.addAttribute("jandiList", jandiList);
+	    model.addAttribute("selectCriteria", selectCriteria);
+	        
+	    System.out.println("selectCriteria : " + selectCriteria);
 		
 		
-		return "manager/mentolist";
+	  return "manager/mentolist";
 	}
 	
 	/**
@@ -200,8 +204,11 @@ public class ManagerController {
 	@GetMapping("/manproduce")
 	public String manproduce(ManagerDTO manager, Model model) {
 		
+		// 관리자 조회하기
 		List<ManagerDTO> managerList = managerService.managerMember(manager);
 		System.out.println(managerList);
+		
+		// 관리자리스트를 model에 저장하기
 		model.addAttribute("managerList", managerList);
 		
 		return "manager/manproduce";
@@ -214,15 +221,20 @@ public class ManagerController {
 	@PostMapping("msregist")
 	public String msRegistMember(@ModelAttribute ManagerDTO manager) throws MemberRegistException {
 		
+		// manager 값 확인하기
 		System.out.println("manager : " + manager);
 		
+		// 관리자 password 암호화 처리하기
 		manager.setPassword(passwordEncoder.encode(manager.getPassword()));
 		
+		// 관리자 계정 생성 확인
 		if(!managerService.msregistMember(manager)) {
 			
 			throw new MemberRegistException("관리자 계정 생성에 실패하셨습니다.");
+			
 		} else {
 			
+			// 원래 페이지로 리다이렉트하기
 			return "redirect:/manager/manproduce";
 		}
 	}
@@ -233,14 +245,15 @@ public class ManagerController {
 	 */
 	@PostMapping("inactiveManager")
 	public void inactiveManager(@ModelAttribute ManagerDTO manager, @RequestParam("checkbox[]") ArrayList<Integer> checkbox ) throws MemberRegistException {
-		// 1. jsp -> 1 값을 전 달 -> "1" -> Integer.parser
-		// 1. @RequestParam -> request.getParameter()
-		// 1. @ModelAttribute -> 여러값을 가져다 사용수 있따.
+
+		// manager, checkbox 값 확인하기
 		System.out.println("manager : " + manager);
 		System.out.println("checkbox : " + checkbox);
 		
-
+		// 체크된 값 확인하여 비활성화 하기
 		int result = managerService.inactiveManager(checkbox);
+		
+		// 값이 변경되었는지 확인하기
 		System.out.println("result : " + result);
 			
 	}
@@ -252,11 +265,14 @@ public class ManagerController {
 	@PostMapping("/emailCheck")
 	public void emailCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
 		
+		// email 값 확인하기
 		System.out.println("email : " + email);
 		
+		// map에 email 담기
 		Map<String, String> map = new HashMap<>();
 		map.put("email", email);
 		
+		// DB에 들어있는지 email 중복 확인하기
 		boolean isDup = managerService.emailCheck(map);
 		System.out.println("isDup : " + isDup);
 		
@@ -274,11 +290,14 @@ public class ManagerController {
 	@PostMapping("/nickNameCheck")
 	public void nickNameCheck(HttpServletResponse response, @RequestParam("nickName") String nickName) throws IOException {
 		
+		// nickName 값 확인하기
 		System.out.println("nickName : " + nickName );
 		
+		// map에 nickName 담기
 		Map<String, String> map = new HashMap<>();
 		map.put("nickName", nickName);
 		
+		// DB에 들어있는지 nickName 중복 확인하기
 		boolean isDup = managerService.nickNameCheck(map);
 		System.out.println("isDup : " + isDup);
 		
@@ -300,17 +319,21 @@ public class ManagerController {
 			@RequestParam(required = false) String searchValue,
 			@RequestParam(defaultValue = "1") int currentPage) {
 		
+		// 신고된 회원 페이징 처리
 		 Map<String, String> searchMap = new HashMap<>();
 	     searchMap.put("searchCondition", searchCondition);
 	     searchMap.put("searchValue", searchValue);
 	     System.out.println("searchMap : " + searchMap);
 	      
+	     // 신고된 회원 전체 수 
 	     int totalCount = managerService.selectReportSsackTotalCount(searchMap);
 	     System.out.println("totalCount : " + totalCount);
 	      
+	     // 한 페이지에 10개씩 보여주기
 	     int limit = 10;
 	     int buttonAmount = 5;
 	      
+	     // 검색이 있는지 없는지에 따라 검색내용 추가해서 조회하기
 	     SelectCriteria selectCriteria = null;
 		
 	     if(searchCondition != null && !"".equals(searchCondition)) {
@@ -319,12 +342,11 @@ public class ManagerController {
 		      selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		   }
 		      
-	     System.out.println("selectCriteria : " + selectCriteria);
-      
-      
+	     // selectCriteria를 이용하여 신고된 회원 리스트 조회하기 
 	     List<ReportMemberDTO> reportMemberList = managerService.selectReportMember(selectCriteria);
 	     System.out.println("reportMemberList : " + reportMemberList);
 	        
+	     // model에 신고된 회원 리스트와 selectCriteria 담기
 	     model.addAttribute("reportMemberList", reportMemberList);
 	     model.addAttribute("selectCriteria", selectCriteria);
 	        
@@ -342,14 +364,17 @@ public class ManagerController {
 			@RequestParam(required = false) String searchValue,
 			@RequestParam(defaultValue = "1") int currentPage) {
 		
+		// 신고된 클래스 페이징 처리
 		Map<String, String> searchMap = new HashMap<>();
 	     searchMap.put("searchCondition", searchCondition);
 	     searchMap.put("searchValue", searchValue);
 	     System.out.println("searchMap : " + searchMap);
 	      
+	     // 신고된 클래스 전체 수 조회하기
 	     int totalCount = managerService.selectReportClassTotalCount(searchMap);
 	     System.out.println("totalCount : " + totalCount);
-	      
+	     
+	     // 한 페이지에 10개씩 조회하기
 	     int limit = 10;
 	     int buttonAmount = 5;
 	      
@@ -363,16 +388,83 @@ public class ManagerController {
 		      
 	     System.out.println("selectCriteria : " + selectCriteria);
      
-     
+	     // selectCriteria를 이용하여 신고된 클래스 전체 리스트 조회하기
 	     List<ReportClassDTO> reportClassList = managerService.selectReportClass(selectCriteria);
 	     System.out.println("reportClassList : " + reportClassList);
-	        
+	     
+	     // model에 신고된 클래스 전체 리스트와 selectCriteria 담기
 	     model.addAttribute("reportClassList", reportClassList);
 	     model.addAttribute("selectCriteria", selectCriteria);
 	        
 	     System.out.println("selectCriteria : " + selectCriteria); 
 				
 		return "manager/reportedboard";
+	}
+	
+	
+	/**
+	 * 블랙리스트 회원 조회
+	 * @return
+	 */
+	@GetMapping("/blackmember")
+	public String blackmember(Model model, @RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage ) {
+		
+		// 블랙리스트 회원 페이징 처리
+		Map<String, String> searchMap = new HashMap<>();
+	    searchMap.put("searchCondition", searchCondition);
+	    searchMap.put("searchValue", searchValue);
+	    System.out.println("searchMap : " + searchMap);
+	    
+	    // 블랙리스트 회원 전체 수 조회하기
+	    int totalCount = managerService.selectBlackCount(searchMap);
+	    System.out.println("totalCount : " + totalCount);
+	    
+	    // 한 페이지에 10개씩 조회하기
+	    int limit = 10;
+	    int buttonAmount = 5;
+      
+	    // 검색이 있는지 없는지에 따라 검색내용 추가해서 조회하기
+	    SelectCriteria selectCriteria = null;
+	
+	    if(searchCondition != null && !"".equals(searchCondition)) {
+	    	selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+	    } else {
+	    	selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+	    }
+	    
+	    System.out.println("selectCriteria : " + selectCriteria);
+	    
+	    // selectCriteria를 이용하여 블랙리스트 회원 전체 리스트 조회하기
+	    List<MemberDTO> blackMemberList = managerService.selectBlackMemberList(selectCriteria);
+	    System.out.println("blackMemberList : " + blackMemberList);
+	    
+	    // model에 블랙리스트 전체 리스트 와 selectCriteria 담기
+	    model.addAttribute("selectCriteria", selectCriteria);
+	    model.addAttribute("blackMemberList", blackMemberList);
+	     
+	    
+		
+		return "manager/blackmember";
+	}
+	
+	/**
+	 * 블랙리스트 해지
+	 * @author 효진
+	 */
+	@PostMapping("blackCancel")
+	public String blackCancel(@RequestParam String email) {
+		
+		// email 값 확인하기
+		System.out.println("email : " + email);
+		
+		// email을 이용하여 블랙리스트 'Y'를 'N'으로 업데이트하기
+		int result = managerService.updateBlackCancelMember(email);
+		System.out.println("result : " + result);
+		
+		// 원래페이지로 리다이렉트하기
+		return "redirect:/manager/blackmember";
 	}
 	
 	/**
@@ -382,20 +474,26 @@ public class ManagerController {
 	@GetMapping(value = "repDetail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String repMemberDetail(@RequestParam("repCode") int repCode) {
-		System.out.println(repCode);
+		
+		// repCode 파라미터 값 확인하기 
+		System.out.println("repCode : " + repCode);
+		
+		// repCode를 이용하여 신고된 회원 조회하기
 		ReportMemberDTO repMember = managerService.selectRepMember(repCode);
 		System.out.println("repMemberList : " + repMember);
 		
+		// JSON 객체 생성하여 데이터 담기
 		JSONObject jsonObject = new JSONObject();
-		
 		jsonObject.put("repEmail", repMember.getRepEmail());
 		jsonObject.put("repCategory", repMember.getReportStatementDTO().getRepType());
 		jsonObject.put("repContents", repMember.getContents());
 		jsonObject.put("imgPath", repMember.getImgPath());
 		jsonObject.put("repNickName", repMember.getNickName());
+		jsonObject.put("isBlack", repMember.getIsBlack());
 		
 		System.out.println("확인용 : \n" +jsonObject);
 		
+		// JSONObject를 string으로 변환하여 전달하기
 		return jsonObject.toJSONString();
 	}
 	
@@ -407,16 +505,39 @@ public class ManagerController {
 	@PostMapping("confirm")
 	public String reportConFirmMember(@ModelAttribute ReportMemberDTO repMember) {
 		
+		// repMember에 담긴 신고된 회원의 상세정보 확인하기
 		System.out.println("repMember : " + repMember);
 	
+		// 신고된 회원 신고처리 하기
 		int result = managerService.modifyConfirmMember(repMember);
 		
 		if(result > 0 ) {
 			System.out.println("신고처리성공");
+			// 신고처리 된 회원  MemberDTO에서 조회하기
+			MemberDTO member = managerService.selectRepMember(repMember);
+			System.out.println("member : " + member);
+			
+			/*
+			 * 신고된 회원이 블랙리스트 회원이 아닐 경우 경고 +1이 추가되며,
+			 * 경고가 2일경우 블랙리스트 회원으로 처리되어 IS_BLACK이 'Y'로 변경된다.
+			 */
+			if(member.getIsBlack() != 'Y') {
+				if(member.getWarning() < 3) {
+					
+					int result2 = managerService.updateMemberWarning(member);
+					
+				}
+				if(member.getWarning() == 2) {
+					
+					int result3 = managerService.updateMemberBlack(member);
+				}
+			}
+			
 		} else {
 			System.out.println("신고처리실패");
 		}
 		
+		// 원래 페이지로 리다이렉트하기
 		return "redirect:/manager/reportedmentee";
 	}
 	
@@ -427,8 +548,10 @@ public class ManagerController {
 	@PostMapping("sendBack")
 	public String reportSendbackMember(@ModelAttribute ReportMemberDTO repMember) {
 		
+		// repMember에 담긴 신고된 회원의 상세정보 확인하기
 		System.out.println("repMember : " + repMember);
 		
+		// 신고된 회원 반려처리 하기
 		int result = managerService.modifySendbackMember(repMember);
 		
 		if(result > 0 ) {
@@ -437,6 +560,7 @@ public class ManagerController {
 			System.out.println("실패");
 		}
 		
+		// 원래페이지로 리다이렉트하기
 		return "redirect:/manager/reportedmentee";
 	}
 	
@@ -447,7 +571,11 @@ public class ManagerController {
 	@GetMapping(value = "repClassDetail", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public ReportClassDTO repClassDetail(@RequestParam("repCode") int repCode) {
+		
+		// repCode 값 확인하기
 		System.out.println(repCode);
+		
+		//repCode를 이용하여 신고된 클래스 리스트 조회하기
 		ReportClassDTO repClass = managerService.selectRepClass(repCode);
 		System.out.println("repClass : " + repClass);
 		
@@ -456,33 +584,58 @@ public class ManagerController {
 	
 	/**
 	 * 신고클래스 상세내용(신고처리)
+	 * @author 효진
 	 */
 	@PostMapping("classConfirm")
 	public String reportConfirmClass(@ModelAttribute ReportClassDTO repClass) {
 		
+		// repClass를 이용하여 신고된 클래스 상세 내용 조회하기
 		System.out.println("repClass : " + repClass);
 		
+		// repClass를 이용하여 클래스 신고처리하기
 		int result = managerService.modifyConfirmClass(repClass);
 		
+		// 신고처리 된 클래스 조회하기
 		if(result > 0 ) {
 			System.out.println("신고처리성공");
-			int result2 = managerService.modifyWarningCount(repClass);
+			Map<String, Object> claMap = managerService.selectReportClass(repClass);
+			System.out.println("claMap : " + claMap);
+			
+			/*
+			 * 신고된 클래스를 올린 잔디가 블랙리스트 회원이 아닐 경우 경고가 +1 추가되며,
+			 * 신고갯수가 2일 경우 블랙리스트 회원으로 변경되어 IS_BLACK이 'Y'로 변경된다.
+			 */
+			if((String)claMap.get("IS_BLACK") != "Y") {
+				// 1번 바 -> 1, 2번 -> 2, 3-> 3
+				if(Integer.parseInt(claMap.get("WARNING").toString()) < 3) {
+					
+					 int result2 = managerService.updateClassWarning(claMap);
+					
+				}
+				if(Integer.parseInt(claMap.get("WARNING").toString()) == 2) {
+					
+					int result3 = managerService.updateClassBlack(claMap);
+				}
+			}
 		} else {
 			System.out.println("신고처리실패");
 		}
 		
-		
+		// 원래 페이지로 리다이렉트하기
 		return "redirect:/manager/reportedboard";
 	}
 	
 	/**
 	 * 신고클래스 상세내용(반려처리)
+	 * @author 효진
 	 */
 	@PostMapping("classSendBack")
 	public String reportSendBackClass(@ModelAttribute ReportClassDTO repClass) {
 		
+		// repClass로 신고된 클래스 상세내용 조회하기
 		System.out.println("repCLass : " + repClass);
 		
+		// 신고된 클래스 반려처리 하기
 		int result = managerService.modifySendbackClass(repClass);
 		
 		if(result > 0 ) {
@@ -676,6 +829,40 @@ public class ManagerController {
 		}
 	}
 	
+	// 공지사항 비활성화
+	@GetMapping("/disabledContents/{postCode}")
+	public String classcal(@PathVariable("postCode") int postCode) {
+		
+		System.out.print(postCode);
+		
+		if(managerService.disabledContents(postCode)) {
+		
+			return "redirect:/manager/notice";
+			
+		}else {
+			return null;
+		}
+		
+	}
+	
+	// 공지사항 활성화
+		@GetMapping("/enabledContents/{postCode}")
+		public String enabledContents(@PathVariable("postCode") int postCode) {
+			
+			System.out.print(postCode);
+			
+			if(managerService.enabledContents(postCode)) {
+			
+				return "redirect:/manager/notice";
+				
+			}else {
+				return null;
+			}
+			
+		}
+	
+	
+	
 	// 모든 결제내역 조회
 	@GetMapping("/classcal")
 	public String classcal(Model model,
@@ -691,10 +878,9 @@ public class ManagerController {
 	      searchMap.put("searchValue", searchValue);
 	      searchMap.put("startDate", startDate);
 	      searchMap.put("endDate", endDate);
-	      System.out.println("searchMap : " + searchMap);
-	      
 	      
 	    int totalCount = managerService.PurchaseClassTotalCount(searchMap);
+	    
 	    System.out.println("totalCount : " + totalCount);
 	      
 	    int limit = 10;
@@ -753,13 +939,73 @@ public class ManagerController {
 
 	}
 	
-	// 인풋박스 버튼 누르면 정산하기
+	// 모달창에서 calculate_tbl 데이터 넣기 (= 정산)
 	@PostMapping("/classcal")
-	public String classcal() {
+	public String classcal(Model model, @ModelAttribute CalculateDTO calculate) throws MemberRegistException {
+		
+		System.out.print("classCode : " + calculate);
 		
 		
+		
+		if(managerService.classcal(calculate)) {
+			
+			System.out.print("인서트 성공~~");
+		}else {
+			throw new MemberRegistException("수정에 실패하였습니다.");
+		}
 		
 		return "redirect:/manager/classcal";
 	}
+	
+	// 정산된 결제 내역 보기
+	@GetMapping("/finishcal")
+	public String finishcal(Model model,
+			@RequestParam(required = false) String searchCondition, 
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String startDate,
+			@RequestParam(required = false) String endDate) {
+		
+		Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      searchMap.put("startDate", startDate);
+	      searchMap.put("endDate", endDate);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	      
+	    int totalCount = managerService.finishClassTotalCount(searchMap);
+	    System.out.println("totalCount : " + totalCount);
+	      
+	    int limit = 10;
+	    int buttonAmount = 5;
+	      
+	    SelectCriteriawithdate selectCriteriawithdate = null;
+		
+	    if((startDate != null && !"".equals(startDate)) && (searchCondition != null && !"".equals(searchCondition))) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, startDate, endDate);
+	    } else if(startDate != null && !"".equals(startDate)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, null, null, startDate, endDate);
+	    } else if(searchCondition != null && !"".equals(searchCondition)) {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue, null, null);
+	    } else {
+	    	selectCriteriawithdate = Pagenationwithdate.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		  }
+	    
+	    System.out.println("selectCriteria : " + selectCriteriawithdate);
+		
+		List<PurchaseClassDTO> reviewContent = managerService.selectfinishClass(selectCriteriawithdate);
+
+		model.addAttribute("reviewContent", reviewContent);
+		model.addAttribute("selectCriteria", selectCriteriawithdate);
+		model.addAttribute("searchCondition", searchCondition);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
+		return "manager/finishcal";
+	}
+	
+	
 	
 }

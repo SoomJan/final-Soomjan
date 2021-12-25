@@ -54,7 +54,7 @@
               <div class="left aligned header" id="reviewheader">
              <div style="float: left; color: red;">
  			   <c:forEach begin="1" end="${ reviewClass.STAR }">
-			   		<i class="star icon"></i>
+			   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
 			   </c:forEach>
 			 </div>
 			 <c:set var="writeDate" value="${ reviewClass.WRITE_DATE }"/>
@@ -62,7 +62,7 @@
               </div>
               <div class="left aligned description reviewList">
                 <div class="card-content">${ reviewClass.CONTENTS }</div>
-                <div><img src="${ pageContext.servletContext.contextPath }/resources/images/${ reviewClass.ORG_FILE_PATH }"></div>
+                <div><img src="${ pageContext.servletContext.contextPath }/resources/images/${ reviewClass.FILE_PATH }"></div>
               </div>
             </div>
             <div class="extra content" id="ti-date">
@@ -78,24 +78,6 @@
     </div>
     
     <script>
-/*     	$(function(){
-    		$('.delete-go').click(function(e){
-    			$('#deleteModal').fadeIn();
-    			e.preventDefault();
-    		});
-    	});
-    	
-    	function deleteReview(item) {
-    		console.log($(item).next());
-    		$(item).parent().submit();	
-    	}
-    	
-    	$(function(){
-    		$('#xbtn').click(function(e){
-    			$('#deleteModal').fadeOut();
-    			e.preventDefault();
-    		});
-    	}); */
     	
     	function deleteReview(item){
     		console.log($(item).next());
@@ -109,18 +91,3 @@
 </body>
 <jsp:include page="../common/footer.jsp" />
 </html>
-
-<%-- <div class="ui mini modal" id="deleteModal">
-  <div class="contents">
-  <br><br>
-    <p class="titles">선택한 후기를 삭제하시겠습니까?</p>
-    <div class="re-modal-btn">
-    <c:out value="${ reviewClass.REVIEW_CODE }"/>
-    <form action="${pageContext.servletContext.contextPath }/mypage/deleteReview" method="post">
-      <button id="okbtn" class="ui button btn" onclick="deleteReview(this);">확인</button>
-      <input type="hidden" name="rvCode" value="${ reviewClass.REVIEW_CODE }">
-    </form>
-      <button id="xbtn" class="ui button btn">취소</button>
-    </div>
-  </div>
-</div> --%>

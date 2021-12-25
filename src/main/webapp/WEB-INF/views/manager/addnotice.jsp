@@ -6,7 +6,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   <head>
 
     <title>공지사항 작성</title>
-
+<link href="${ pageContext.servletContext.contextPath }/resources/css/manager/addnotice.css" rel="stylesheet" />
   </head>
   <body>
     <jsp:include page="../common/nav.jsp" />

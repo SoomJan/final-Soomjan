@@ -48,6 +48,7 @@
 }
 
 .pagination > li > a { color: white !important;}
+.manager-paging > ul {list-style:none;}
 </style>
 <body>
 
@@ -120,6 +121,16 @@
 		
 		if(${ !empty selectCriteria.searchValue? true: false }) {
 			searchText += "&searchValue=${ selectCriteria.searchValue }";
+		}
+
+		/* 클래스 찾기 페이지 카테고리 조건 추가 */
+		if(${ !empty categoryCode? true: false }) {
+			searchText += "&categoryCode=${ categoryCode }";
+		}
+
+		/* 마이페이지 구매내역 페이지 정렬 조건 추가 */
+		if(${ !empty sort? true: false }) {
+			searchText += "&sort=${ sort }";
 		}
 			
 		if(document.getElementById("startPage")) {

@@ -50,6 +50,10 @@ a {
 }
 
  a:hover { color: #91C788 !important; }
+ 
+ .titleInput{
+ 	border: 0.5px solid black;
+ }
 </style>
 
 </head>
@@ -104,7 +108,7 @@ a {
 									<option value="${ category.CATEGORY_CODE }">${ category.CATEGORY_NAME }</option>
 								</c:forEach>
 							</select> <br>
-							<br> 클래스 제목 <input type="text" name="title" id="classTitle"><br>
+							<br> 클래스 제목 <input type="text" name="title" id="classTitle" class="titleInput"><br>
 							<br> 클래스 정원 <input type="number" name="maxCount" id="maxCount"> 명 <br>
 							<br> 클래스 가격 <input type="number" name="price" id="price"> 원
 						</div>

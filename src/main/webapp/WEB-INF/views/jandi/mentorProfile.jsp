@@ -61,7 +61,7 @@ p {
 
 .inputStyle {
 	border: none;
-	width: 100px;
+	width: 100%;
 	text-align: center;
 }
 
@@ -85,50 +85,66 @@ p {
 }
 </style>
 
+
 <script>
+	
 	function modifyProfile() {
 		console.log("클릭");
 		$('#openModalBtn').click();
 	}
 
 	$(function() {
+		/* 잔디 닉네임 변경 */
+		$('#modifyNickBtn').click(function() {
+			let nickName = $('#nickNameInput').val();
+			console.log(nickName);
+			if (nickName != "") {	// 닉네임 변경 값이 비어 있지 않으면 중복검사
+				$.ajax({
+					url : "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
+					type : "post",
+					data : {
+						nickName : nickName
+					},
+					success : function(data) {	// 중복 검사 결과, 중복된 결과가 있는 경우 알러창을 띄우고, 중복 결과가 없으면 변경하기
+						if (data == "true") {
+							alert("중복된 닉네임입니다.");
+						} else {
+							$('#modifyNickForm').submit();
+						}
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
 
-		$('#modifyNickBtn')
-				.click(
-						function() {
-							let nickName = $('#nickNameInput').val();
-							console.log(nickName);
-							if (nickName != "") {
-								$
-										.ajax({
-											url : "${ pageContext.servletContext.contextPath }/member/jandiNickDupCheck",
-											type : "post",
-											data : {
-												nickName : nickName
-											},
-											success : function(data) {
-												if (data == "true") {
-													alert("중복된 닉네임입니다.");
-												} else {
-													$('#modifyNickForm')
-															.submit();
-												}
-											},
-											error : function(error) {
-												console.log(error);
-											}
-										});
+			} else {	// 닉네임 값이 없는 경우
+				alert("변경할 닉네임을 입력해 주세요.");
+			}
 
-							} else {
-								alert("변경할 닉네임을 입력해 주세요.");
-							}
+		});
 
-						});
-
+		// 닉네임 성공 여부를 반환하는 리다이렉트 메세지
 		if ('${ requestScope.nickMessage }' != '') {
 			alert("${ requestScope.nickMessage }");
 		}
+		
+		// 해당 html의 글자 수 넣어주기
+		$('#careerCheck').html($('#careeaText').val().length);
+		$('#introCheck').html($('#introText').val().length);
 	});
+	
+	/* 텍스트 길이값 넘어가지 않게 체크하는 메소드 */
+	function checkLength(inputItem, spanItem, maxLength){
+		let $item = $(inputItem);
+		spanItem.html($item.val().length);
+		
+		if($item.val().length > maxLength){
+			alert(maxLength + "자를 초과할 수 없습니다.");
+			$item.val($item.val().substr(0, (maxLength-1)));
+			$item.focus();
+			spanItem.html($item.val().length);
+		}
+	}
 </script>
 
 </head>
@@ -167,20 +183,18 @@ p {
 					action="${ pageContext.servletContext.contextPath }/jandi/jandiIntro"
 					method="post">
 
-					<h2>잔디 경력</h2>
+					<h2>잔디 경력</h2> 
 					<hr class="border-1px-black" />
-					<br>
-					<textarea class="areaStyle" name="career" rows="10" cols="20"
-						wrap="hard" style="border: 1px solid black"
-						placeholder="경력을 작성해 주세요.">
-						${ requestScope.jandi.career }
-						</textarea>
+					<p style="float:right; font-size: 15px;">( <span id="careerCheck"></span> / 300자 )</p>
+					<textarea class="areaStyle" name="career" rows="10" cols="20" id="careeaText"
+						wrap="hard" style="border: 1px solid black" onkeyup="checkLength(this, $('#careerCheck'), 300);"
+						placeholder="경력을 작성해 주세요.">${ requestScope.jandi.career }</textarea>
 
 					<br> <br> <br>
 					<h2>소개</h2>
 					<hr class="border-1px-black" />
-					<br>
-					<textarea class="areaStyle" name="introduce" id="introText"
+					<p style="float:right; font-size: 15px;">( <span id="introCheck"></span> / 330자 )</p>
+					<textarea class="areaStyle" name="introduce" id="introText" onkeyup="checkLength(this, $('#introCheck'), 330);"
 						rows="20" cols="20" wrap="hard" style="border: 1px solid black"
 						placeholder="소개를 작성해 주세요.">${ requestScope.jandi.intro }</textarea>
 					<br> <br>
@@ -190,6 +204,7 @@ p {
 				<hr>
 				<div>
 					<br>
+					<a style="float:right;" href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=&searchValue=${ jandi.nickName }">더 보기</a>
 					<p>"${ requestScope.jandi.nickName }" 멘토님의 진행중인 클래스</p>
 					<hr class="border-1px-black" />
 					<div class="row">
@@ -220,11 +235,11 @@ p {
 												<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>등록일 : ${ findClassList.createDate }</h3>
 												<small> 
 													<c:if test="${ findClassList.avgStar == '0'}">
-														☆
+														<span style="color:lightgray;"><i class="star icon"></i></span>
 													</c:if>
 													<c:if test="${ findClassList.avgStar != '0'}">
 													<c:forEach begin="1" end="${ findClassList.avgStar }">
-												    ★
+												   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
 													</c:forEach>  
 												    </c:if>
 													(${ findClassList.rvCount })
@@ -243,7 +258,6 @@ p {
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 	<!-- Modal -->

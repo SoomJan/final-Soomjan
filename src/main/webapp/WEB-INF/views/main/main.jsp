@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -88,8 +89,8 @@ pageEncoding="UTF-8"%>
     <main class="container-fluid">
       <div class="main-search">
         <h4>숨어있는 잔디를 찾아보세요</h4>
-        <form class="main-searchbox" method="post">
-          <input type="text" placeholder="찾으시는 강의가 있으신가요?" />
+        <form class="main-searchbox" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get">
+          <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" />
           <button type="submit">
             <img
               src="${ pageContext.servletContext.contextPath }/resources/images/research.png"
@@ -98,10 +99,10 @@ pageEncoding="UTF-8"%>
         </form>
       </div>
       <div class="recommendclass">
-        <a href="#"><button class="btn-hover color-1">JAVA</button></a>
-        <a href="#"><button class="btn-hover color-1">MVC</button></a>
-        <a href="#"><button class="btn-hover color-1">SPRING</button></a>
-        <a href="#"><button class="btn-hover color-1">프론트앤드</button></a>
+        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=1"><button class="btn-hover color-1">프로그래밍</button></a>
+        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=2"><button class="btn-hover color-1">웹 개발</button></a>
+        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=3"><button class="btn-hover color-1">백엔드</button></a>
+        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=4"><button class="btn-hover color-1">풀 스택</button></a>
         <a href="#"><button class="btn-hover color-1">백앤드</button></a>
       </div>
       <br />
@@ -110,7 +111,7 @@ pageEncoding="UTF-8"%>
      <div class="intro-board">
        <h1>이런 강의는 어때요??</h1>
        <h4>항상 인기 많은 잔디 수업 지금 소개합니다~!</h4>
-        <br /><br />
+        <br />
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -121,13 +122,15 @@ pageEncoding="UTF-8"%>
           	</div>
           		 <div><h3 class="classinstructor">${ class1.jandiDTO.nickName }</h3></div>
            		 <div><h4 class="classtitle">${ class1.title }</h4></div>	
+           		 <div><span class="classprice"><%-- ${ class1.price } --%>
+           		 <fmt:formatNumber value="${class1.price}" pattern="\#,###.##"/></span> </div>	
            		 <c:if test="${ class1.avgReview eq null}">
-           		  <div><h4 class="classtitle">0</h4></div>	
+           		  <div><h4 class="classtitle">⭐ ️️0</h4></div>	
            		 </c:if>
            		 <c:if test="${ class1.avgReview ne null}">
-           		 <div><h4 class="classtitle">${ class1.avgReview }</h4></div>
+           		 <div><h4 class="classtitle">⭐ ️${ class1.avgReview }</h4></div>
            		 </c:if>	
-           		 <div><span class="classprice">${ class1.price }</span> <span class="views">${ class1.views }</span></div>	
+           		 <span class="views">🔍${ class1.views }</span>
           </div>
           </c:forEach>
         </div>
@@ -139,7 +142,7 @@ pageEncoding="UTF-8"%>
       <div class="intro-board">
       	<h1>열혈 잔디🌿</h1>
         <h4>최근 일주일간 가장 많이 검색된 잔디를 소개합니다.</h4>
-        <br /><br />
+        <br />
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -161,7 +164,7 @@ pageEncoding="UTF-8"%>
       <div class="intro-board">
       	<h1>모두가 좋아하는 수업</h1>
         <h4>검색 순위가 제일 높은 수업들만 모아봤어요!</h4>
-        <br /><br />
+        <br />
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -172,13 +175,14 @@ pageEncoding="UTF-8"%>
           	</div>
           		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
            		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
+           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
            		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">0</h4></div>	
+           		  <div><h4 class="classtitle">❤️0</h4></div>	
            		 </c:if>
            		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">${ viewClass.avgReview }</h4> </div>
+           		 <div> <h4 class="classtitle">❤️${ viewClass.avgReview }</h4> </div>
            		 </c:if>
-           		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
+           		 <span class="views">🔍${ viewClass.views }</span>
           </div>
           </c:forEach>
         </div>
@@ -189,20 +193,17 @@ pageEncoding="UTF-8"%>
       
 	<!-- 중간 광고 타임 -->
       <div class="mainadvertisement">
-        <div></div>
         <div class="mainadvertisement-left">
-          <h1>이런 강의는 어때요?</h1>
+          <h1>📬최근 공지사항</h1>
+          <span><h2>${lastestFaq.title }</h2></span><span> <h5>${lastestFaq.writeDate }</h5></span>
+          <h2>${lastestFaq.contents }</h2>
         </div>
-        <div class="mainadvertisement-right">
-          <a href="#"><button>신청하러 가기</button></a>
-        </div>
-
-        <div></div>
       </div>
 
       <div class="intro-board">
-        <span><h1>가장 최근에 나온 강의!!</h1></span>
-        <span><h4>따끈한 신작 강의 입니다~</h4></span>
+       <h1>가장 최근에 나온 강의!!</h1>
+        <h4>따끈한 신작 강의 입니다~</h4>
+         <br>
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -211,15 +212,16 @@ pageEncoding="UTF-8"%>
           	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
           	</div>
-          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
-           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
-           		 <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">0</h4></div>	
+          		<div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
+           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
+           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
+           		  <c:if test="${ viewClass.avgReview eq null}">
+           		  <div><h4 class="classtitle">❤️0</h4></div>	
            		 </c:if>
            		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">${ viewClass.avgReview }</h4> </div>	
+           		 <div> <h4 class="classtitle">❤️${ viewClass.avgReview }</h4> </div>
            		 </c:if>
-           		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
+           		 <span class="views">🔍${ viewClass.views }</span>	
           </div>
           </c:forEach>
         </div>
@@ -228,8 +230,9 @@ pageEncoding="UTF-8"%>
       </div>
       
       <div class="intro-board">
-        <span><h1>곧 마감될 강의</h1></span>
-        <span><h4>자리가 얼마 남지 않은 강의입니다~</h4></span>
+        <h1>곧 마감될 강의</h1>
+        <h4>자리가 얼마 남지 않은 강의입니다~</h4>
+         <br>
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -240,7 +243,37 @@ pageEncoding="UTF-8"%>
           	</div>
           		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
            		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>	
-           		 <div><span class="classprice">${ viewClass.price }</span> <span class="views">${ viewClass.views }</span></div>	
+           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
+           		 <span class="views">🔍${ viewClass.views }</span>	
+          </div>
+          </c:forEach>
+        </div>
+        <div class="swiper-button-next">&gt;</div>
+        <div class="swiper-button-prev">&lt;</div>
+      </div>
+      
+      <div class="intro-board">
+        <h1>평점이 높은 강의!</h1>
+        <h4>새싹들이 인정한 믿고 듣는 좋은 수업!</h4>
+        <br>
+      </div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <c:forEach var="viewClass" items="${ highScore }" end="3">
+          <div class="swiper-slide photo">
+          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
+				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
+          	</div>
+          		 <div> <h3 class="classinstructor">${ viewClass.jandiDTO.nickName }</h3></div>
+           		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
+           		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
+           		  <c:if test="${ viewClass.avgReview eq null}">
+           		  <div><h4 class="classtitle">❤️0</h4></div>	
+           		 </c:if>
+           		 <c:if test="${ viewClass.avgReview ne null}">
+           		 <div> <h4 class="classtitle">❤️${ viewClass.avgReview }</h4> </div>
+           		 </c:if>
+           		 <span class="views">🔍${ viewClass.views }</span>	
           </div>
           </c:forEach>
         </div>

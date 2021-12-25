@@ -44,6 +44,15 @@
          <association property="classPurchaseDTO" resultMap="classPurchaseResultMap"></association>
     </resultMap>
     
+    <resultMap id="faqResult" type="FaqDTO">
+    	<id column="POST_CODE" property="postCode"/>
+    	<result column="TITLE" property="title"/>
+    	<result column="CONTENTS" property="contents"/>
+    	<result column="WRITE_DATE" property="writeDate"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="MNG_NO" property="mngNo"/>
+    </resultMap>
+    
     
      <select id="mainJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
@@ -114,7 +123,39 @@ JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL)
 WHERE PT.STATUS = 'Y'
 GROUP BY PT.CLASS_CODE, C.MAX_COUNT, C.FILE_PATH, C.TITLE, C.PRICE, J.NICKNAME, C.VIEWS
 ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
+   </select>
    
+   
+   <!-- 평점 높은 강의 -->
+   <select id="highScore" resultMap="classResultMap">
+   	SELECT 
+        C.CLASS_CODE
+      , C.FILE_PATH
+      , C.TITLE
+      , C.PRICE
+      , C.VIEWS
+      , C.CREATE_DATE
+      , J.NICKNAME
+      , AVG(CR.star)
+   	  FROM CLASS_TBL C 
+   	  JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+      LEFT JOIN (SELECT STAR
+                  , CLASS_CODE
+               FROM CLASS_REVIEW_TBL) CR ON (CR.CLASS_CODE = C.CLASS_CODE)
+   	  WHERE C.IS_DELETED = 'N'  
+      GROUP BY C.CLASS_CODE, C.FILE_PATH, C.TITLE, C.PRICE, C.VIEWS, J.NICKNAME, C.CREATE_DATE
+   	  HAVING AVG(CR.star) IS NOT NULL
+   	  ORDER BY AVG(CR.star) DESC
+   </select>
+   
+   <select id="lastestFaq" resultMap="faqResult">
+	    SELECT *
+		FROM(
+		SELECT TITLE, CONTENTS, WRITE_DATE, IS_DELETED
+		FROM FAQ_TBL
+		order by write_date DESC)
+		WHERE IS_DELETED = 'N'
+          AND ROWNUM = 1
    </select>
 	
 

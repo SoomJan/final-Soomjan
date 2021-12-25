@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.findJandi.model.dao.FindJandiMapper;
+import com.soomjd.soomjan.findclass.model.dto.FindClassDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 
 @Service
@@ -40,6 +41,7 @@ public class FindJandiServiceImpl implements FindJandiService{
 		return null;
 	}
 
+<<<<<<< HEAD
 		// 언제 실행 지 
 	    //  무엇이을 실행할건지 
 	//  어떤 값을 받을건지 
@@ -48,6 +50,16 @@ public class FindJandiServiceImpl implements FindJandiService{
 		
 		int totalCount = findJandiMapper.SelectFindJandiTotalCount();
 		return totalCount;
+=======
+	@Override
+	public JandiDTO selectJandiInfo(String email) {
+		return findJandiMapper.selectJandiInfo(email);
+	}
+
+	@Override
+	public List<FindClassDTO> selectThumbnailClassList(String email) {
+		return findJandiMapper.selectThumbnailClassList(email);
+>>>>>>> refs/remotes/origin/master
 	}
 
 }

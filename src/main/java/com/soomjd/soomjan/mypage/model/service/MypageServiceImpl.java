@@ -6,15 +6,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.soomjd.soomjan.common.paging.SelectCriteria;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 import com.soomjd.soomjan.member.model.dto.ReportMemberDTO;
 import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
 import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
-import com.soomjd.soomjan.mypage.model.dto.ReviewDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -66,7 +65,7 @@ public class MypageServiceImpl implements MypageService{
 		List<ReportMemberDTO> reportMember = mapper.selectReportMember(map);
 		
 		return reportMember;
-	}
+	}	
 
 	@Override
 	public List<PurchaseClassDTO> selectTakingClass(Map<String, Object> map) {
@@ -162,7 +161,21 @@ public class MypageServiceImpl implements MypageService{
 	public boolean modifyIsJandi(String email) {
 		return mapper.modifyIsJandi(email);
 	}
-	
-	
+
+	@Override
+	public List<ReportClassDTO> selectReportClass(Map<String, String> map) {
+		return mapper.selectReportClass(map);
+	}
+
+	@Override
+	public int selectClassTotalCount(Map<String, String> map) {
+		return mapper.selectClassTotalCount(map);
+	}
+
+	@Override
+	public int selectMemberTotalCount(Map<String, String> map) {
+		return mapper.selectMemberTotalCount(map);
+	}
+
 
 }

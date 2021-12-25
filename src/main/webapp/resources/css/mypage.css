@@ -171,12 +171,12 @@ ul.tabs li.current{
 .plusbtn {float: left;}
 .plus h4 {position: relative; padding-left: 5%; top: 10px;}
 
-.modal {
+ .modal {
   height: 150px;
   top: 35%;
   left: 40%;
 }
-
+ 
 .titles {
   position: relative;
   margin: 0 auto;

@@ -9,6 +9,7 @@ import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 public interface JandiService {
 
@@ -43,5 +44,23 @@ public interface JandiService {
 	List<FindClassDTO> selectThumbnailClassList(String email);
 
 	List<FullAdDTO> selectDoingAdList();
+
+	int updateStartDate(int classCode);
+
+	FullAdDTO selectMyAd(Integer adCode);
+
+	ClassDTO selectMyClass(int classCode);
+
+	int updatePayment(Map<String, Object> key2);
+
+	List<Integer> selectPayCode(String nickName);
+
+	int updatePurchaseAd(Map<String, Object> key);
+
+	List<FullAdDTO> selectMyAdList(Integer integer);
+
+	List<FullAdDTO> selectAllAd(Integer classCode);
+
+
 
 }

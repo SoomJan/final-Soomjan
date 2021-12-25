@@ -8,7 +8,7 @@ public class EstimateDTO {
 	
 	private int estimateCode;
 	private int categoryCode;
-	private char isMatched;
+	private String isMatched;
 	private java.sql.Date writeDate;
 	private String title;
 	private String contents;
@@ -21,7 +21,7 @@ public class EstimateDTO {
 	public EstimateDTO() {
 	}
 
-	public EstimateDTO(int estimateCode, int categoryCode, char isMatched, Date writeDate, String title,
+	public EstimateDTO(int estimateCode, int categoryCode, String isMatched, Date writeDate, String title,
 			String contents, String email, char isDeleted, CategoryDTO categoryDTO, MemberDTO memberDTO, int rnum) {
 		super();
 		this.estimateCode = estimateCode;
@@ -53,11 +53,11 @@ public class EstimateDTO {
 		this.categoryCode = categoryCode;
 	}
 
-	public char getIsMatched() {
+	public String getIsMatched() {
 		return isMatched;
 	}
 
-	public void setIsMatched(char isMatched) {
+	public void setIsMatched(String isMatched) {
 		this.isMatched = isMatched;
 	}
 

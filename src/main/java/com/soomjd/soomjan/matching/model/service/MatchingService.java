@@ -38,5 +38,10 @@ public interface MatchingService {
 
 	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 
+	boolean updateMatched(int estimateCode);
+
+	// 새싹 견적서 리스트 -> 디테일 이동할 때 matchedCode 가져오기 (로그인한 내 이메일 전달해줘서)
+	List<Map<String, Object>> chatEstimateCode(String jmail);
+
 
 }

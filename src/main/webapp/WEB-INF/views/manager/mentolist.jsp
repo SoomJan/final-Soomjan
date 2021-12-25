@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>등록된 멘토 조회</title>
+    <title>등록된 잔디 조회</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
@@ -57,7 +57,34 @@ pageEncoding="UTF-8"%>
     	left: 15%;
     	top: 35%;
 	} */
-
+	
+	#jandiModal { height: auto; left: 40%; width: 550px; top: 10%; }
+    .modal-header{text-align: center;}
+    .modal-content-text { border: 2px solid; padding: 3%; background-color: #91C788; border-color: #91C788;}
+    .context-modal-btn { margin-left: 70%;}
+    #email {margin-left: 11%;}
+    #nickName {margin-left: 11%;}
+    #enrollDate {margin-left: 2%;}
+    .modal-body {margin-left: 8%;}
+    #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
+    
+    .inputSyle{
+		border-radius: 0.5rem;
+		border: 1.5px solid #91C788;
+		background-color: #91C788;
+		height: 30px;
+		padding:2%;
+	  }
+	  
+  	 .contents{
+		resize: none;
+		border-radius: 0.5rem;
+		border: 1.5px solid #91C788;
+		background-color: #91C788;
+		height: 100px;
+		padding:2%;
+	} 
+	.dropsearch { margin-left: 15%;}
     .dropdown {float: left; left: 6%; top:10px;} /* 정렬 */
     </style>
   </head>
@@ -72,6 +99,7 @@ pageEncoding="UTF-8"%>
           <table class="ui basic table warningtable">
             <thead>
               <tr>
+              	<th></th>
                 <th>이메일</th>
                 <th>이름</th>
                 <th>닉네임</th>
@@ -80,7 +108,8 @@ pageEncoding="UTF-8"%>
             </thead>
             <tbody>
             <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
-              <tr class="move">
+              <tr class="move jandiBtn" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandiMember.email }'">
+              	<td><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ jandiMember.profile_path }" style="width:100px;"></td>
                 <td>${ jandiMember.email }</td>
                 <td>${ jandiMember.acc_name }</td>
                 <td>${ jandiMember.nickName }</td>
@@ -89,24 +118,6 @@ pageEncoding="UTF-8"%>
             </c:forEach>
             </tbody>
           </table>
-
-          <script>
-         
- /*          $(function(){
-            $(".move").hover(function(){
-              $(this).css('background', 'gray');
-            }, function(){
-              $(this).css('background', 'white');
-            });
-          }); */
-
-/*           $(function(){
-            $(".move").click(function(){
-              location.href="${ pageContext.servletContext.contextPath }/test.jsp";
-            });
-          }); */
-
-          </script>
           <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
                   <div class="dropsearch">

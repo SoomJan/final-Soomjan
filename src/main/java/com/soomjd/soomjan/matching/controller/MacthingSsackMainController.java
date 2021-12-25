@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,8 @@ public class MacthingSsackMainController {
 		List<EstimateDTO> estimateDetail = matchingService.estimateDetailJ(estimateCode); //estimateCode값 넘김
 		System.out.println(estimateDetail);
 		model.addAttribute("estimateDetail",estimateDetail);
+		String jmail = ((MemberDTO)model.getAttribute("loginMember")).getEmail();
+		List<Map<String,Object>> chatJName = matchingService.chatEstimateCode(jmail);
 		
 		
 		return "matching/MantorEstimateDetail";
@@ -182,7 +185,11 @@ public class MacthingSsackMainController {
 	
 	// 채팅하기 누르면 나오는 페이지(1223)
 	@GetMapping("/chatting")
-	public String chatting(Model model, @RequestParam("estimateCode") int estimateCode, @RequestParam("email")String email , HttpSession session) {
+	public String chatting(Model model,  HttpSession session, HttpServletRequest request) throws RegistFailedException {
+		
+		String isMatched = request.getParameter("isMatched");
+		int estimateCode = Integer.parseInt(request.getParameter("estimateCode"));
+		String email = request.getParameter("email");
 		
 		MatchedChattingDTO matchedChatting = new MatchedChattingDTO();
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
@@ -191,8 +198,10 @@ public class MacthingSsackMainController {
 		
 		MatchedChattingDTO chatting = matchingService.selectChattingRoom(matchedChatting);
 		
-		System.out.println(chatting);
+		System.out.println("채팅의 값 : " + chatting);
 		
+		System.out.println(email);
+
 		if(chatting == null) {
 			
 			Map<String,Object> matchedChatMap = new HashMap<String, Object>();
@@ -202,17 +211,33 @@ public class MacthingSsackMainController {
 			if(matchingService.registChattingRoom(matchedChatMap)) {
 				
 				chatting = matchingService.selectChattingRoom(matchedChatting);
-				
+				boolean result = matchingService.updateMatched(estimateCode);
+
+				System.out.println("매칭 업데이트 성공 여부 : " + result);
+				if(result) {
+					return "redirect:/matching/chattingroom?matchedCode="+chatting.getMatchedCode();
+				} else {
+					
+					throw new RegistFailedException("채팅 수정에 실패하였습니다.");
+				}
+			
 			} else {
 				System.out.println("실패");
 			}
-			
-			
+	
 		}
+
+		return "matching/ManteeChatting";
+	}
+	
+	@GetMapping("chattingroom")
+	public String chattingroom(@RequestParam int matchedCode, Model model) {
 		
-		model.addAttribute("chatting",chatting);
+		model.addAttribute(matchedCode);
 		
 		return "matching/ManteeChatting";
 	}
+	
+	// 
 	
 }

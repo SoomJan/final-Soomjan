@@ -36,7 +36,7 @@ pageEncoding="UTF-8"%>
 	      <div class="card">
 	            <div class="card-body little-profi text-center">
 	                <div class="intmentor-img"><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ jandi.profile_path }" alt="user"  
-	                	onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/detailJandi'"></div>
+	                	onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandi.email }'"></div>
 	                <p>${ jandi.nickname }</p>
 	            </div>
 	      </div>

@@ -54,12 +54,12 @@ table {
 			<h1 align="center">결제하기</h1>
 
 			<form action="${ pageContext.servletContext.contextPath }/jandi/jandiPay" method="POST" id="dateForm">
-				<input type="hidden" value="${ myAd.adCode }" id="adCode">
+
 				<button type=submit id="kakao-pay" style="float: right">결제하기</button>
 				<table style="width: 100%">
 					<tr>
 						<td style="width:30%">수업제목</td>
-						<td style="width:70%">${ myClasses.contents }</td>
+						<td style="width:70%">${ contentss }</td>
 					</tr>
 					<tr>
 						<td style="width:30%">광고 시작날짜</td>

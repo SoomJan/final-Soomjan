@@ -43,10 +43,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <button onclick="modifycontents()">수정하기</button>
 
         <c:if test="${faq.isDeleted eq 'N'}">
-        <button onclick="location.href='${pageContext.servletContext.contextPath}/manager/modifyContents'">비활성화</button>
+        <button onclick="location.href='${pageContext.servletContext.contextPath}/manager/disabledContents/${ faq.postCode }'">비활성화</button>
       </c:if>
       <c:if test="${faq.isDeleted eq 'Y'}">
-        <button onclick="location.href='${pageContext.servletContext.contextPath}/manager/noticeDetail/${ faq.postCode }'">비활성화 해제</button>
+        <button onclick="location.href='${pageContext.servletContext.contextPath}/manager/enabledContents/${ faq.postCode }'">비활성화 해제</button>
       </c:if>
       </div>
           <script>

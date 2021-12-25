@@ -93,6 +93,37 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     #repCategory { position: relative; left: 10px;}
     .modal-body {margin-left: 8%;}
     #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
+    
+    #resultModal {
+	  height: 150px;
+	  top: 25%;
+	  left: 44%;
+	}
+	
+	#alreadyModal {
+	  height: 150px;
+	  top: 25%;
+	  left: 44%;
+	}
+
+	.title {
+	  position: relative;
+	  top: 15%;
+	}
+	
+	.re-modal-btns {
+	  margin-top: 10%;
+	}
+	
+	.btn {
+	  background-color: white !important;
+	}
+	
+	.resultContent {
+	  height: 150px;
+	  text-align: center;
+	  background-color: #91c788 !important;
+	}
       
     </style>
   </head>
@@ -140,8 +171,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           >
             <option value="" selected>선택</option>
             <option value="1">이메일</option>
-            <option value="2">내용</option>
-            <option value="3">신고처리여부</option>
+            <option value="2">닉네임</option>
+            <option value="3">내용</option>
+            <option value="4">신고처리여부</option>
           </select>
             <div class="ui search menti-search">
   				<div class="ui icon input input-search">
@@ -159,7 +191,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
     </div>
  
-    
     <!-- 신고 자세히보기 모달창 -->
     <form id="repForm" method="POST">
    <div class="ui small modal" id="repMembermodal">
@@ -184,6 +215,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<hr>
 			<div class="context-modal-btn">
 			   <input type="hidden" id="repCodeInput" name="repCode">
+			   <input type="hidden" id="isBlack" name="isBlack">
 	           <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">신고</button>
 	           <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">반려</button>
             </div>
@@ -192,41 +224,55 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </form>
 	<script>
 	$(function(){
-  		$(".repbtn").click(function(e){
-  			console.log($(e.target).parent().children("input[type=hidden]").val());
-  			const repCode = $(e.target).parent().children("input[type=hidden]").val();
-  			$('#repCodeInput').val(repCode);
-  			$.ajax({
-  				url: "${ pageContext.servletContext.contextPath }/manager/repDetail",
-  				data: {repCode : repCode},
-  				type: "GET",
-  				async:false,
-  				success: function(data){
-  					console.log('들어감');
-  					console.log(data.repCategory);
-  					$('#repCategory').val(data.repCategory);
-  					$('#repEmail').val(data.repEmail);
-  					$('#repNickName').val(data.repNickName);
-  					$('#repContents').val(data.repContents);
-  					$('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
-  				},
-  				error: function(xhr, status, error){
-  					console.log(error);
-  					console.log(xhr);
-  				}
-  			});
-  			//$('#repMemberModal').show();
+        $(".repbtn").click(function(e){
+           console.log($(e.target).parent().children("input[type=hidden]").val());
+           const repCode = $(e.target).parent().children("input[type=hidden]").val();
+           $('#repCodeInput').val(repCode);
+           $.ajax({
+              url: "${ pageContext.servletContext.contextPath }/manager/repDetail",
+              data: {repCode : repCode},
+              type: "GET",
+              async:false,
+              success: function(data){
+                 console.log('들어감');
+                 console.log(data.repCategory);
+                 $('#repCategory').val(data.repCategory);
+                 $('#repEmail').val(data.repEmail);
+                 $('#repNickName').val(data.repNickName);
+                 $('#repContents').val(data.repContents);
+                 $('#isBlack').val(data.isBlack);
+                 $('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
+              },
+              error: function(xhr, status, error){
+                 console.log(error);
+                 console.log(xhr);
+              }
+           });
+           $("#repMembermodal").show();
+        });
+
+  		
+  		$('#con-btn').click(function(event){
   			
-  			$("#repMembermodal").show();
-  			
-/*   		  	$("#xbtn").click(function(){
-         	 	$("#repMembermodal").hide();
-          	} */
+  		    let isBlack = $('#isBlack').val();
+  		    console.log(isBlack);
+
+  		    if(isBlack == 'Y') {
+  		    	alert('이미 블랙리스트 회원입니다.');
+  		    } else {
+  			 $("#resultModal").show();
+  		    }
+  			 event.preventDefault();
   		});
   		
-  		$('#con-btn').click(function(){
-  			//console.log(repCode);
-  			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit();
+  		$('.resultbtn').click(function(){
+  			
+  			 $("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit(); 
+  		});
+  		
+  		$('.resultExitbtn').click(function(){
+  			$('#resultModal').hide();
+  			$('#repMembermodal').hide();
   		});
   		
   		$('#end-btn').click(function(){
@@ -248,3 +294,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
   <jsp:include page="../common/footer.jsp" />
 </html>
+
+<div class="ui mini modal" id="resultModal">
+  <div class="content resultContent">
+    <div class="title">신고처리가 완료되었습니다.</div>
+    <div class="re-modal-btns">
+    <button class="ui button btn resultbtn">확인</button>
+    <button class="ui button btn resultExitbtn">취소</button>
+  </div>
+  </div>
+</div>

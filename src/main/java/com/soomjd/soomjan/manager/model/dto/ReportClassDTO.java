@@ -15,6 +15,8 @@ public class ReportClassDTO {
 	private String repYn;
 	private String categoryName;
 	private String nickName;
+	private int warning;
+	private String isBlack;
 	
 	private ReportStatementDTO reportStatementDTO;
 	private ClassDTO classDTO;
@@ -24,7 +26,7 @@ public class ReportClassDTO {
 
 	public ReportClassDTO(int repCode, String email, String repContents, int classCode, Date repDate, int repTypeCode,
 			String repYn, String categoryName, String nickName, ReportStatementDTO reportStatementDTO,
-			ClassDTO classDTO) {
+			ClassDTO classDTO, int warning, String isBlack) {
 		super();
 		this.repCode = repCode;
 		this.email = email;
@@ -37,6 +39,8 @@ public class ReportClassDTO {
 		this.nickName = nickName;
 		this.reportStatementDTO = reportStatementDTO;
 		this.classDTO = classDTO;
+		this.warning = warning;
+		this.isBlack = isBlack;
 	}
 
 	public int getRepCode() {
@@ -126,13 +130,29 @@ public class ReportClassDTO {
 	public void setClassDTO(ClassDTO classDTO) {
 		this.classDTO = classDTO;
 	}
+	
+	public String getIsBlack() {
+		return isBlack;
+	}
+
+	public void setIsBlack(String isBlack) {
+		this.isBlack = isBlack;
+	}
 
 	@Override
 	public String toString() {
 		return "ReportClassDTO [repCode=" + repCode + ", email=" + email + ", repContents=" + repContents
 				+ ", classCode=" + classCode + ", repDate=" + repDate + ", repTypeCode=" + repTypeCode + ", repYn="
 				+ repYn + ", categoryName=" + categoryName + ", nickName=" + nickName + ", reportStatementDTO="
-				+ reportStatementDTO + ", classDTO=" + classDTO + "]";
+				+ reportStatementDTO + ", classDTO=" + classDTO + ", warning=" + warning + ", isBlack=" + isBlack + "]";
+	}
+
+	public int getWarning() {
+		return warning;
+	}
+
+	public void setWarning(int warning) {
+		this.warning = warning;
 	}
 
 	

@@ -13,6 +13,7 @@ import com.soomjd.soomjan.jandi.model.dto.CalAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.FullAdDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Service
 public class JandiServiceImpl implements JandiService{
@@ -115,6 +116,61 @@ public class JandiServiceImpl implements JandiService{
 		// TODO Auto-generated method stub
 		return jandiMapper.selectDoingAdList();
 	}
+
+	@Override
+	public int updateStartDate(int classCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.updateStartDate(classCode);
+	}
+
+	@Override
+	public FullAdDTO selectMyAd(Integer adCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectMyAd(adCode);
+	}
+
+	@Override
+	public ClassDTO selectMyClass(int classCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectMyClass(classCode);
+	}
+
+	@Override
+	public int updatePayment(Map<String, Object> key2) {
+		// TODO Auto-generated method stub
+		return jandiMapper.updatePayment(key2);
+	}
+	
+	@Override
+	public List<Integer> selectPayCode(String nickName) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectPayCode(nickName);
+	}
+
+	@Override
+	public int updatePurchaseAd(Map<String, Object> key) {
+		// TODO Auto-generated method stub
+		return jandiMapper.updatePurchaseAd(key);
+	}
+
+	@Override
+	public List<FullAdDTO> selectMyAdList(Integer integer) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectMyAdList(integer);
+	}
+
+	@Override
+	public List<FullAdDTO> selectAllAd(Integer classCode) {
+		// TODO Auto-generated method stub
+		return jandiMapper.selectAllAd(classCode);
+	}
+
+	
+
+
+
+
+
 
 
 }
