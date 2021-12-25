@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +79,7 @@ main { width: 90% !important;}
 					
 					<div class="chatlist">
 					
-					<!-- <c:forEach> -->
+					<!-- <c:forEach> </c:forEach>-->
 						<div class="chatting">
 						
 							<div class="chat_content">
