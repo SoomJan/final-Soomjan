@@ -544,7 +544,7 @@
     	WHERE  M.IS_DELETED = 'N'
     	  AND  M.CLASS_CODE = #{ classCode }
         AND ROWNUM BETWEEN 1 AND 5
-    	ORDER BY M.WRITE_DATE DESC
+    	ORDER BY M.WRITE_DATE ASC
     </select>
     
     <insert id="registReportClass" parameterType="hashmap">
