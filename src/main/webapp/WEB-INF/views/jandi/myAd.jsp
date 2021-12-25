@@ -64,6 +64,9 @@ table {
 						</c:otherwise>
 					</c:choose>
 				</c:when>
+				<c:when test="${ resultValue=='W' }">
+					<h3 style="color: #147900;" align="right">내일부터 광고 예정입니다!</h3>
+				</c:when>
 				<c:otherwise>
 					<button type="button" style="float:right" onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiBuy?adCode=${ adCode }'">결제하기</button>
 				</c:otherwise> 
