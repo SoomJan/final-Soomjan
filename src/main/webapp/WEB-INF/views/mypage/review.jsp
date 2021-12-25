@@ -54,7 +54,7 @@
               <div class="left aligned header" id="reviewheader">
              <div style="float: left; color: red;">
  			   <c:forEach begin="1" end="${ reviewClass.STAR }">
-			   		<i class="star icon"></i>
+			   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
 			   </c:forEach>
 			 </div>
 			 <c:set var="writeDate" value="${ reviewClass.WRITE_DATE }"/>

@@ -173,9 +173,11 @@ $('#searchCondition').change(function(){
 					<div class="ui card" id="aftercard" style="margin: 5%; margin-top:0px; width: 90%;">
 						<div class="content">
 							<div class="left aligned header afterheader">
+								<c:if test="${ review.star != '0'}">
 								<c:forEach begin="1" end="${ review.star }">
-									<i class="star icon"></i>
-								</c:forEach>
+							   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
+								</c:forEach>  
+							    </c:if>
 								<span>( ${ review.star } / 5)</span>
 							</div>
 							<div class="left aligned description">

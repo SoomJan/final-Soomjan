@@ -185,9 +185,9 @@ p {
 
 					<h2>잔디 경력</h2> 
 					<hr class="border-1px-black" />
-					<p style="float:right; font-size: 15px;">( <span id="careerCheck"></span> / 100자 )</p>
+					<p style="float:right; font-size: 15px;">( <span id="careerCheck"></span> / 300자 )</p>
 					<textarea class="areaStyle" name="career" rows="10" cols="20" id="careeaText"
-						wrap="hard" style="border: 1px solid black" onkeyup="checkLength(this, $('#careerCheck'), 100);"
+						wrap="hard" style="border: 1px solid black" onkeyup="checkLength(this, $('#careerCheck'), 300);"
 						placeholder="경력을 작성해 주세요.">${ requestScope.jandi.career }</textarea>
 
 					<br> <br> <br>
@@ -235,11 +235,11 @@ p {
 												<h3 class="m-b-0 font-light">₩ ${ findClassList.price } <br>등록일 : ${ findClassList.createDate }</h3>
 												<small> 
 													<c:if test="${ findClassList.avgStar == '0'}">
-														☆
+														<span style="color:lightgray;"><i class="star icon"></i></span>
 													</c:if>
 													<c:if test="${ findClassList.avgStar != '0'}">
 													<c:forEach begin="1" end="${ findClassList.avgStar }">
-												    ★
+												   		<span style="color:#ffcc00;"><i class="star icon"></i></span>
 													</c:forEach>  
 												    </c:if>
 													(${ findClassList.rvCount })
