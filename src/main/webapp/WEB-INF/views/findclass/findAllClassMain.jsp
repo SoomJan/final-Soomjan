@@ -67,7 +67,8 @@ pageEncoding="UTF-8"%>
 			        		<option value="4">별점 낮은순</option>
 						</select>
 			        	<div class="main-searchbox" style="width:350px;">
-					        <input type="text" id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" />
+					        <input type="search" id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" value="<c:out value="${
+								selectCriteria.searchValue }" />">
 				          	<button type="submit">
 				           		<img src="${ pageContext.servletContext.contextPath }/resources/images/research.png"/>
 				         	</button>
@@ -138,7 +139,7 @@ pageEncoding="UTF-8"%>
 					$("#searchCondition").val("${ selectCriteria.searchCondition }");
 
 					/* 페이지 리로드 시 검색값 유지하기 */
-					$("#searchValue").val("${ selectCriteria.searchValue }")
+					$("#searchValue").val("${ selectCriteria.searchValue }");
 				
 
 					/* 마우스 커서 이벤트 */

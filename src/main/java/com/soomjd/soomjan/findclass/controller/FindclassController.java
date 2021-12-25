@@ -59,7 +59,7 @@ public class FindclassController {
 
 		SelectCriteria selectCriteria = null;
 
-		if (searchCondition != null && !"".equals(searchCondition)) {
+		if (searchCondition != null && !"".equals(searchCondition) || searchValue != null && !"".equals(searchValue)) {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
 					searchValue);
 		} else {
