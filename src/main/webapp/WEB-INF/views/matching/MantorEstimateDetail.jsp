@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <title>Signin Template for Bootstrap</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="${ pageContext.servletContext.contextPath }/resources/css/matching/matching_mantee.css" rel="stylesheet" />
 <style>
 .warningtable tbody {
 	text-align: center;
@@ -36,44 +38,42 @@ main { width: 90% !important;}
 			<div class="matching-content">
 				<p class="estimate_title">견적서 현황</p>
 				<br>
-				<table class="estimate_table" style="width: 100%">
+				<table class="estimate_table_detail" style="width: 100%;">
 
 					<tr>
-						<th width="10">No</th>
-						<th width="60"align="left">${ estimateDetail[0].estimateCode }</th>
+						<th class="detailJName">No</th>
+						<th>${ estimateDetail[0].estimateCode }</th>
 					</tr>
 					
 					<tr>
-						<th width="10">카테고리</th>
-						<th width="60"align="left">${ estimateDetail[0].categoryDTO.categoryName }</th>
+						<th class="detailJName"> 카테고리</th>
+						<th >${ estimateDetail[0].categoryDTO.categoryName }</th>
 					</tr> 
 					
 					<tr>
-						<th width="10">작성자</th>
-						<th width="60"align="left">${ estimateDetail[0].memberDTO.nickName }</th>
+						<th class="detailJName">작성자</th>
+						<th >${ estimateDetail[0].memberDTO.nickName }</th>
 					</tr>
 					
 					<tr>
-						<th width="10">진행상태</th>
-						<th width="60"align="left">${ estimateDetail[0].isMatched }</th>
+						<th class="detailJName">진행상태</th>
+						<th >${ estimateDetail[0].isMatched }</th>
 					</tr>
 					<tr>
-						<th width="10">작성일</th>
-						<th width="60" align="left">${ estimateDetail[0].writeDate }</th>
+						<th class="detailJName">작성일</th>
+						<th >${ estimateDetail[0].writeDate }</th>
 					</tr>
 					<tr>
-						<th width="10">제목</th>
-						<th width="60"align="left">${ estimateDetail[0].title }</th>
+						<th class="detailJName">제목</th>
+						<th>${ estimateDetail[0].title }</th>
 					</tr>
-					<tr>
-						<th width="10">내용</th>
-						<th width="60" align="left">
-						<br>
-						 ${ estimateDetail[0].contents }
+					<tr >
+						<th class="detailJName">내용</th>
+						<td style="margin-botton:30px; padding-right: 17px;">
+						 <c:out value="${ estimateDetail[0].contents }"/>
 						
-						</th>
+						</td>
 					</tr> 
-
 				</table>
 				<br><br>
 					

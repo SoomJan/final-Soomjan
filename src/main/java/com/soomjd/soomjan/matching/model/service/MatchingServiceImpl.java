@@ -104,6 +104,12 @@ public class MatchingServiceImpl implements MatchingService{
 		return mapper.updateMatched(estimateCode) > 0? true:false;
 	}
 
+
+	@Override
+	public List<Map<String, Object>> chatEstimateCode(String jmail) {
+		return mapper.chatEstimateCode(jmail);
+	}
+
 //
 //	@Override
 //	public List<EstimateDTO> selectEstimate(Map<String, Object> map, SelectCriteria selectCriteria) {

@@ -162,6 +162,8 @@ public class MacthingSsackMainController {
 		List<EstimateDTO> estimateDetail = matchingService.estimateDetailJ(estimateCode); //estimateCode값 넘김
 		System.out.println(estimateDetail);
 		model.addAttribute("estimateDetail",estimateDetail);
+		String jmail = ((MemberDTO)model.getAttribute("loginMember")).getEmail();
+		List<Map<String,Object>> chatJName = matchingService.chatEstimateCode(jmail);
 		
 		
 		return "matching/MantorEstimateDetail";
@@ -213,30 +215,29 @@ public class MacthingSsackMainController {
 
 				System.out.println("매칭 업데이트 성공 여부 : " + result);
 				if(result) {
-					return "redirect:/matching/chattingroom";
+					return "redirect:/matching/chattingroom?matchedCode="+chatting.getMatchedCode();
 				} else {
 					
 					throw new RegistFailedException("채팅 수정에 실패하였습니다.");
 				}
 			
-				
-				
 			} else {
 				System.out.println("실패");
 			}
-			
-			model.addAttribute("chatting",chatting);
-			
-		// 채팅 누르면 진행 상태가 Y로 변경되도록
 	
 		}
-		
+
 		return "matching/ManteeChatting";
 	}
 	
 	@GetMapping("chattingroom")
-	public String chattingroom() {
+	public String chattingroom(@RequestParam int matchedCode, Model model) {
+		
+		model.addAttribute(matchedCode);
+		
 		return "matching/ManteeChatting";
 	}
+	
+	// 
 	
 }

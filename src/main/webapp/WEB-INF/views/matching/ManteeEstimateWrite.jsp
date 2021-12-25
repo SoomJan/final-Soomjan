@@ -43,8 +43,7 @@ main { width: 90% !important;}
 				<div class="matching-content">
 					<p class="estimate_title">견적서 작성하기</p>
 						<form action="${ pageContext.servletContext.contextPath }/matching/estimateSend/${ sessionScope.loginMember.email }" id="writeForm" method="post">
-							<table class="estimate_table" style="width: 100%">
-						<br><br>
+							<table class="estimate_tableW" style="width: 100%">
 						
 								<tr>
 									<th class="table_head" style="padding-left : 60px;">제목</th>
@@ -66,9 +65,8 @@ main { width: 90% !important;}
 						 
 									<tr>
 										<th class="table_head" style="padding-left : 60px;">내용</th>
-										<th class="table_content1">
-											<textarea class="content_area" name="contents">
-											</textarea>
+										<th class="table_content1" style="padding-bottom:10px;">
+											<textarea class="content_area" name="contents"></textarea>
 										</th>
 									</tr>
 	

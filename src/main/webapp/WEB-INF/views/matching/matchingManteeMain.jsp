@@ -52,7 +52,7 @@ main { width: 90% !important;}
 								<tr></tr>
 								
 							<c:forEach var="estimate" items="${ estimateList }">
-								<tr>
+								<tr class="table_title2">
 									<th width="10">${ estimate.rnum }</th>
 									<th width="60"><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimate?estimateCode=${estimate.estimateCode}">${ estimate.title }</a></th>
 									<th width="30">${ estimate.isMatched }</th> 

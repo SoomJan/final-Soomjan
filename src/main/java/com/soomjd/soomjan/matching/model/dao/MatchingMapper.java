@@ -36,4 +36,6 @@ public interface MatchingMapper {
 	boolean registChattingRoom(Map<String, Object> matchedChatMap);
 
 	int updateMatched(int estimateCode);
+
+	List<Map<String, Object>> chatEstimateCode(String jmail);
 }
