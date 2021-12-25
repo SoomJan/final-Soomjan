@@ -71,11 +71,11 @@
 		
 		if (document.cookie != "") {
 			var cookie_array = cookie.split("; ");
-			console.log(cookie_array)
 			
-			for ( var index in cookie_array) {
-				var cookie_name = cookie_array[index].split("=");
-				if (cookie_name[0] == "mycookie") {
+			for(var i = 0; i < cookie_array.length; i++){
+				var cookie_name = cookie_array[i].split("=");
+				
+				if(cookie_name[0] == "mycookie" || cookie_name[0] == "mycookie1"){
 					return cookie_name[1];
 				}
 			}
@@ -88,7 +88,7 @@
 </head>
 <body>
 
-<div class="modal" id="checkModal">
+<%-- <div class="modal" id="checkModal">
   <div class="content">
       <div class="modal-content">
         <img src="${ pageContext.servletContext.contextPath }/resources/images/sprout.png">
@@ -108,7 +108,7 @@
       <button class="modal-today-close1"> 오늘 하루 동안 보지 않기</button>
  	</div>
   </div>
-</div>
+</div> --%>
 
 
 <!-- 두 번째 모달창 -->

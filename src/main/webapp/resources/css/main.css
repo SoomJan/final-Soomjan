@@ -383,7 +383,7 @@ body {
 .mainadvertisement {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  height: 200px;
+  height: auto;
   background-color: #e3ffec;
   /* border: 1px solid black; */
 }

@@ -484,6 +484,20 @@
 	  </where>
 	</select>
 	
+	<!-- 공지사항 비활성화 -->
+	<update id="disabledContents">
+		UPDATE FAQ_TBL
+		   SET IS_DELETED = 'Y'
+		 WHERE POST_CODE = #{ postCode}  
+	</update>
+	
+	<!-- 공지사항 활성화 -->
+	<update id="enabledContents">
+		UPDATE FAQ_TBL
+		   SET IS_DELETED = 'N'
+		 WHERE POST_CODE = #{postCode}  
+	</update>
+	
 	<update id="inactivemanager" parameterType="java.util.ArrayList">
 		UPDATE MANAGER_TBL
 		   SET IS_DELETED = 'Y'

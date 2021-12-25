@@ -62,6 +62,12 @@ public interface ManagerService {
 	
 	// 공지사항 갯수 조회 (페이징 처리)
 	int selectFaqTotalCount(Map<String, String> searchMap);
+	
+	// 공지사항 비활성화
+	boolean disabledContents(int postCode);
+	
+	// 공지사항 활성화
+	boolean enabledContents(int postCode);
 
 	int inactiveManager(List<Integer> checkbox);
 
@@ -129,6 +135,10 @@ public interface ManagerService {
 
 	// 정산된 내역 데이터 불러오기
 	List<PurchaseClassDTO> selectfinishClass(SelectCriteriawithdate selectCriteriawithdate);
+
+	
+
+	
 
 
 
