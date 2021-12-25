@@ -60,13 +60,22 @@ public class FindJandiController {
  		
 	}
 	
+	/**
+	 * 잔디프로필 요청
+	 * @param email
+	 * @return
+	 * 
+	 * @author 임예람
+	 */
 	@GetMapping("/jandiProfile/{email:.+}")
 	public ModelAndView jandiProfile(@PathVariable String email){
 		
 		ModelAndView mv = new ModelAndView();
  		System.out.println(email);
 		
+ 		// 잔디 상세내용 조회
 		mv.addObject("jandiInfo", findJandiService.selectJandiInfo(email));
+		// 해당 잔디의 클래스 조회
 		mv.addObject("thumbNailClassList", findJandiService.selectThumbnailClassList(email));
 		
 		mv.setViewName("/findJandi/jandiProfile");

@@ -6,6 +6,11 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * @author 임예람
+ *
+ * 공통 에러 핸들러
+ */
 @ControllerAdvice
 public class ExceptionHandlerController{
 	
