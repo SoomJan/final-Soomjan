@@ -29,7 +29,7 @@ public interface MatchingService {
 	List<EstimateDTO> estimateDetailJ(String estimateCode);
 
 	// 전체 견적서 리스트(잔디) 총 갯수 가져오기
-	int selecetEstimateTotal();
+	int selecetEstimateTotal(Map<String, String> searchMap);
 
 	// 전체 견적서 리스트(잔디) 가져오기
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
