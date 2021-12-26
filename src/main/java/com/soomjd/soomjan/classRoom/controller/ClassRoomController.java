@@ -75,7 +75,7 @@ public class ClassRoomController{
 	 * @param searchValue
 	 * @param currentPage
 	 * 
-	 * @author 임예람
+	 * @author 임예람, 양효진
 	 */
 	@GetMapping("classRoom")
 	public void classRoom(Model model, @RequestParam int classCode, HttpSession session, @RequestParam(required = false) String searchCondition,
@@ -185,7 +185,7 @@ public class ClassRoomController{
 	 * @param model
 	 * @param currentPage
 	 * 
-	 * @author 임예람
+	 * @author 임예람, 양효진
 	 */
 	@GetMapping("classLearningBoard")
 	public void classLearningBoard(Model model, @RequestParam(defaultValue = "1") int currentPage) {

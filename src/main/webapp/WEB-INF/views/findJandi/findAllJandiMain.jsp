@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
 				<input type="hidden" name="categoryCode" value="${ categoryCode }">
 				<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
 					<option value="1">최신순</option>
-					<option value="2" >인기순</option>
+					<option value="2">인기순</option>
 		       		<option value="3">별점 높은순</option>
 		       		<option value="4">별점 낮은순</option>
 				</select>

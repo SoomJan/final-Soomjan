@@ -179,7 +179,7 @@
   		 WHERE EMAIL = #{ email }
 	</select>
 	
-	<!-- 블랙리스트 해지 하기 -->
+	<!-- 블랙리스트 해지 하기 by임예람  -->
 	<update id="modifyBlackStatus">
 		UPDATE SSACK_TBL
 		   SET IS_BLACK = 'N'

@@ -30,12 +30,6 @@ public class FindJandiServiceImpl implements FindJandiService{
 	}
 
 	@Override
-	public List<JandiDTO> mainJandi() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<JandiDTO> selectTopFindJandiList() {
 		// TODO Auto-generated method stub
 		return null;
@@ -61,6 +55,12 @@ public class FindJandiServiceImpl implements FindJandiService{
 	public List<FindClassDTO> selectThumbnailClassList(String email) {
 		return findJandiMapper.selectThumbnailClassList(email);
 
+	}
+
+	@Override
+	public List<JandiDTO> mainJandi() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

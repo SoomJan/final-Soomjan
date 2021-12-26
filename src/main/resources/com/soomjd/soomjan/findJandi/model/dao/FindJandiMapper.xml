@@ -118,5 +118,24 @@
 		     )V
 		 WHERE ROWNUM BETWEEN 1 AND 3
     </select>
+    
+    <!-- <select >
+    	SELECT ROWNUM,
+		       V.SUMVIEWS,
+		       V.NICKNAME,
+		       V.PROFILE_PATH,
+		       V.EMAIL
+		  FROM (SELECT SUM(CL.VIEWS) SUMVIEWS,
+		          J.NICKNAME,
+		          J.PROFILE_PATH,
+		          J.EMAIL
+		     FROM JANDI_TBL J
+		     JOIN CLASS_TBL CL ON (J.EMAIL = CL.EMAIL)
+		     WHERE CL.IS_DELETED = 'N'
+		     GROUP BY J.EMAIL, J.NICKNAME, J.PROFILE_PATH
+		     ORDER BY SUMVIEWS DESC
+		     )V
+		   WHERE ROWNUM BETWEEN 1 AND 9
+    </select> -->
 
 </mapper>

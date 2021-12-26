@@ -64,7 +64,7 @@
     	<result column="NICKNAME" property="nickName"/>
     </resultMap>
     
-    <!-- 클래스 코드로 클래스 정보 조회 -->
+    <!-- 클래스 코드로 클래스 정보 조회  by 임예람 -->
     <select id="selectClassByClassCode" resultMap="classResultMap">
     	SELECT
     			  C.CLASS_CODE
@@ -88,7 +88,7 @@
     	  ORDER BY C.CREATE_DATE DESC
     </select>
     
-    <!-- 해당 클래스를 듣는 회원의 이메일 목록 조회  -->
+    <!-- 해당 클래스를 듣는 회원의 이메일 목록 조회 by 임예람  -->
     <select id="selectCurrentMemberList" resultType="hashmap">
     	SELECT EMAIL
     	  FROM PURCHASE_CLASS_TBL
@@ -96,7 +96,7 @@
     	   AND CLASS_CODE = #{ classCode }
     </select>
     
-    <!-- 해당 클래스의 목차 목록 조회 -->
+    <!-- 해당 클래스의 목차 목록 조회  by 임예람 , 양효진 -->
     <select id="selectMokchaList" resultMap="mokchaResultMap" parameterType="hashMap">
     	SELECT
     	      B.RNUM
@@ -129,7 +129,7 @@
 			  	WHERE B.RNUM >= #{ selectCriteria.startRow }
     </select>
     
-    <!-- 해당 클래스의 학습방 게시물 목록 조회 -->
+    <!-- 해당 클래스의 학습방 게시물 목록 조회 by 임예람, 양효진 -->
     <select id="selectLearningPostList" resultMap="learningPostResultMap" parameterType="hashMap" >
     	SELECT
     	      B.RNUM
@@ -176,7 +176,7 @@
     	
     </select>
     
-    <!-- 해당 클래스의 채팅방 목록 조회 -->
+    <!-- 해당 클래스의 채팅방 목록 조회  by 임예람 -->
     <select id="selectChatRoomList" resultType="hashMap" parameterType="hashMap">
     	SELECT 
     		   C.CHAT_CODE
@@ -189,7 +189,7 @@
     	   AND C.EMAIL != #{ email }
     </select>
     
-    <!-- 클래스 생성 하기 -->
+    <!-- 클래스 생성 하기 by 임예람 -->
     <insert id="registClass" parameterType="ClassDTO">
     	INSERT INTO CLASS_TBL
     	(
@@ -212,14 +212,14 @@
     	)
     </insert>
     
-    <!-- 사용자가 생성한 클래스 중 가장 최근 생성한 클래스의 클래스 코드를 가져오기  -->
+    <!-- 사용자가 생성한 클래스 중 가장 최근 생성한 클래스의 클래스 코드를 가져오기  by 임예람  -->
     <select id="selectClassCode" resultType="_int">
     	SELECT MAX(CLASS_CODE)
     	  FROM CLASS_TBL
     	 WHERE EMAIL = #{ email }
     </select>
     
-    <!-- 사용자의 클래스 코드와 타이틀 목록 조회 하기  -->
+    <!-- 사용자의 클래스 코드와 타이틀 목록 조회 하기  by 임예람  -->
     <select id="selectClassCodeList" resultType="hashmap">
     	SELECT 
     		   CLASS_CODE
@@ -230,14 +230,14 @@
     	  ORDER BY CREATE_DATE DESC
     </select>
     
-    <!-- 클래스 삭제 하기 -->
+    <!-- 클래스 삭제 하기 by 임예람  -->
     <update id="deleteClass">
     	UPDATE CLASS_TBL
     	   SET IS_DELETED = 'Y'
     	 WHERE CLASS_CODE = #{ classCode }
     </update>
     
-    <!-- 클래스의 정보 수정하기 -->
+    <!-- 클래스의 정보 수정하기 by 임예람  -->
     <update id="modifyClass" parameterType="ClassDTO">
     	UPDATE CLASS_TBL
     	   SET CONTENTS = #{ contents }
@@ -245,7 +245,7 @@
     	 WHERE CLASS_CODE = #{ classCode }
     </update>
     
-    <!-- 목차 추가하기  -->
+    <!-- 목차 추가하기  by 임예람  -->
     <insert id="registLecture" parameterType="MokchaDTO">
     	INSERT INTO LECTURE_MOKCHA_TBL
     	VALUES
@@ -259,7 +259,7 @@
     	)
     </insert>
     
-    <!-- 목차에 파일 추가하기 -->
+    <!-- 목차에 파일 추가하기 by 임예람  -->
     <insert id="registLectureFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
     	INSERT INTO LECTURE_FILE_TBL
     	VALUES
@@ -274,7 +274,7 @@
     	)
     </insert>
     
-    <!-- 포스트 번호로 포스트 정보 조회하기 -->
+    <!-- 포스트 번호로 포스트 정보 조회하기 by 임예람  -->
     <select id="selectPostByPostCode" resultMap="learningPostResultMap">
     	SELECT
     		   L.POST_CODE
@@ -293,7 +293,7 @@
 		  ORDER BY L.WRITE_DATE DESC
     </select>
     
-    <!-- 학습방 게시물 코드로 해당 게시물의 파일 목록 가져오기 -->
+    <!-- 학습방 게시물 코드로 해당 게시물의 파일 목록 가져오기 by 임예람  -->
     <select id="selectLearningFileList" resultMap="fileResultMap">
     	SELECT
     		   F.FILE_PATH
@@ -311,7 +311,7 @@
 		  ORDER BY F.WRITE_DATE DESC
     </select>
     
-    <!-- 해당 클래스의 목차 속 파일 가져오기 -->
+    <!-- 해당 클래스의 목차 속 파일 가져오기  by 임예람 -->
     <select id="selectMokchaFileList" resultMap="fileResultMap">
     	SELECT
     		   F.FILE_PATH
@@ -329,7 +329,7 @@
 		   AND F.IS_DELETED = 'N'
     </select>
     
-    <!-- 학습방 게시물 수정하기 -->
+    <!-- 학습방 게시물 수정하기 by 임예람 -->
     <update id="modifyLearnigPost" parameterType="LearningPostDTO">
     	UPDATE LEARNING_TBL
     	   SET CONTENTS = #{ contents }
@@ -338,7 +338,7 @@
     	 WHERE POST_CODE = #{ postCode }
     </update>
     
-    <!-- 학습방 게시물에 첨부 파일 추가하기 -->
+    <!-- 학습방 게시물에 첨부 파일 추가하기 by 임예람  -->
     <insert id="registLearningFile" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassFileDTO">
     	INSERT INTO LEARNING_FILE_TBL
     	VALUES
@@ -354,7 +354,7 @@
     	)
     </insert>
     
-    <!-- 학습방 게시물 생성하기 -->
+    <!-- 학습방 게시물 생성하기 by 임예람  -->
     <insert id="registLearnigPost">
     	INSERT INTO LEARNING_TBL
     	VALUES
@@ -370,7 +370,7 @@
     	)
     </insert>
     
-    <!-- 사용자가 쓴 게시물 목록 중에 가장 최근에 쓴 게시물 코드 조회하기  -->
+    <!-- 사용자가 쓴 게시물 목록 중에 가장 최근에 쓴 게시물 코드 조회하기 by 임예람   -->
     <select id="selectNewPostCode" resultType="_int">
     	SELECT MAX(POST_CODE)
     	  FROM LEARNING_TBL
@@ -378,7 +378,7 @@
     	   AND IS_DELETED = 'N'
     </select>
     
-    <!-- 클래스 썸네일 변경하기 -->
+    <!-- 클래스 썸네일 변경하기 by 임예람  -->
     <update id="modifyClassFile" parameterType="ClassDTO">
     	UPDATE CLASS_TBL
     	   SET FILE_PATH = #{ filePath }
@@ -386,49 +386,49 @@
     	WHERE CLASS_CODE = #{ classCode }
     </update>
     
-    <!-- 목차 삭제하기 -->
+    <!-- 목차 삭제하기 by 임예람  -->
     <update id="modifyLectureIsDeleted">
     	UPDATE LECTURE_MOKCHA_TBL
     	   SET IS_DELETED = 'Y'
     	 WHERE MOKCHA_CODE = #{ mokchaCode }
     </update>
     
-    <!-- 해당 목차의 파일 삭제하기 -->
+    <!-- 해당 목차의 파일 삭제하기 by 임예람  -->
     <update id="modifyLectureFileIsDeleted">
     	UPDATE LECTURE_FILE_TBL
     	   SET IS_DELETED = 'Y'
     	 WHERE MOKCHA_CODE = #{ mokchaCode }
     </update>
     
-    <!-- 해당 목차의 파일 리스트 가져오기 -->
+    <!-- 해당 목차의 파일 리스트 가져오기 by 임예람  -->
     <select id="selectMokchaFileListByMokchaCode" resultMap="fileResultMap">
     	SELECT FILE_PATH
     	  FROM LECTURE_FILE_TBL
     	 WHERE MOKCHA_CODE = #{ mokchaCode }
     </select>
     
-    <!-- 학습방 게시물 삭제하기 -->
+    <!-- 학습방 게시물 삭제하기 by 임예람  -->
     <update id="modifyLearnigPostIsDeleted">
     	UPDATE LEARNING_TBL
     	   SET IS_DELETED = 'Y'
     	 WHERE POST_CODE = #{ postCode }
     </update>
     
-    <!-- 학습방 파일 삭제하기 -->
+    <!-- 학습방 파일 삭제하기 by 임예람  -->
     <update id="modifyLearningFileIsDeleted">
     	UPDATE LEARNING_FILE_TBL
     	   SET IS_DELETED = 'Y'
     	 WHERE POST_CODE = #{ postCode }
     </update>
     
-    <!-- 학습방 게시물 속 파일 조회하기 -->
+    <!-- 학습방 게시물 속 파일 조회하기  by 임예람 -->
     <select id="selectLearningFileListByPostCode" resultMap="fileResultMap">
     	SELECT FILE_PATH
     	  FROM LEARNING_FILE_TBL
     	 WHERE POST_CODE = #{ postCode }
     </select>
     
-    <!-- 클래스 구매하기  결제 테이블, 클래스 구매 테이블 인서트 -->
+    <!-- 클래스 구매하기  결제 테이블, 클래스 구매 테이블 인서트 by 임예람  -->
     <insert id="registPurchaseClass" parameterType="com.soomjd.soomjan.classRoom.model.dto.ClassPurchaseDTO">
     	INSERT ALL 
 		  INTO PAYMENT_TBL VALUES(
@@ -451,7 +451,7 @@
 		   FROM DUAL
     </insert>
     
-    <!-- 채팅방 생성하기 클래스 작성자, 클래스 구매자 -->
+    <!-- 채팅방 생성하기 클래스 작성자, 클래스 구매자 by 임예람  -->
     <insert id="registChatRoom" parameterType="hashmap">
     	INSERT ALL 
 		   INTO CLASS_CHAT_ROOM_TBL VALUES(
@@ -467,7 +467,7 @@
 		    FROM DUAL
     </insert>
     
-    <!-- 해당 클래스 채팅방에서 사용자의 채팅방 조회하기  -->
+    <!-- 해당 클래스 채팅방에서 사용자의 채팅방 조회하기 by 임예람   -->
     <select id="selectClassChatBySSACKEmail" parameterType="hashmap" resultType="hashmap">
     	SELECT C.CHAT_CODE
     	  FROM CLASS_CHAT_ROOM_TBL C
@@ -476,12 +476,12 @@
     	   AND C.EMAIL = #{ email }
     </select>
     
-    <!-- 신고 문구 조회 하기 -->
+    <!-- 신고 문구 조회 하기 by 임예람  -->
     <select id="selectAllReportStatement" resultType="hashmap">
     	select * FROM REPORT_STATEMENT_TBL
     </select>
     
-    <!-- 회원 신고 하기 -->
+    <!-- 회원 신고 하기 by 임예람  -->
     <insert id="registReportMember" parameterType="com.soomjd.soomjan.member.model.dto.ReportMemberDTO">
     	INSERT INTO 
     	REPORT_MEMBER_TBL(
@@ -508,7 +508,7 @@
 			)
     </insert>
     
-    <!-- 해당 클래스의 학습방 목록 전체 개수 조회하기 -->
+    <!-- 해당 클래스의 학습방 목록 전체 개수 조회하기 by 양효진  -->
     <select id="selectLearningBoardTotalCount" resultType="_int" parameterType="HashMap">
     	SELECT
     	       COUNT(*)
@@ -517,7 +517,7 @@
     	   AND IS_DELETED = 'N'
     </select>
     
-    <!-- 해당 클래스의 리뷰 목록 개수 조회하기 -->
+    <!-- 해당 클래스의 리뷰 목록 개수 조회하기 by 임예람  -->
     <select id="selectReviewListByClassCodeTotalCount" resultType="_int">
     	SELECT
     	       COUNT(*)
@@ -526,7 +526,7 @@
     	   AND IS_DELETED = 'N'
     </select>
     
-    <!-- 해당 클래스의 리뷰 목록 조회하기 -->
+    <!-- 해당 클래스의 리뷰 목록 조회하기 by 임예람  -->
     <select id="selectReviewListByClassCode" parameterType="hashmap" resultMap="reviewResultMap">
     	SELECT
     	      B.RNUM
@@ -580,7 +580,7 @@
 		  	WHERE F.RNUM >= #{ selectCriteria.startRow } 
     </select>
     
-    <!-- 해당 클래스의 리뷰 평점 조회하기 -->
+    <!-- 해당 클래스의 리뷰 평점 조회하기 by 임예람  -->
     <select id="selectAvgReviewStar" resultType="_double">
     	SELECT AVG(STAR)
     	  FROM CLASS_REVIEW_TBL
@@ -588,7 +588,7 @@
     	   AND IS_DELETED = 'N'
     </select>
      
-     <!-- 해당 클래스의 목차 개수 조회하기 -->
+     <!-- 해당 클래스의 목차 개수 조회하기 by 양효진 -->
     <select id="selectClassLectureTotalCount" resultType="_int" parameterType="HashMap">
     	SELECT
     	       COUNT(*)
@@ -597,7 +597,7 @@
     	   AND IS_DELETED = 'N'
     </select>
     
-    <!-- 해당 클래스의 조회수 올리기  -->
+    <!-- 해당 클래스의 조회수 올리기  by 권순표  -->
     <update id="viewsUp" parameterType="HashMap">
         UPDATE 
 		       CLASS_TBL A 
@@ -611,7 +611,7 @@
 		   
     </update>
     
-    <!-- 목차의 타이틀 5개만 조회하기 -->
+    <!-- 목차의 타이틀 5개만 조회하기 by 임예람  -->
     <select id="selectMokchaTitleList" resultMap="mokchaResultMap">
     	 SELECT M.MOKCHA_CODE
     	      , M.MOKCHA_NAME
@@ -623,7 +623,7 @@
     	ORDER BY M.WRITE_DATE ASC
     </select>
     
-    <!-- 클래스 신고 하기  -->
+    <!-- 클래스 신고 하기 by 임예람   -->
     <insert id="registReportClass" parameterType="hashmap">
     	INSERT INTO REPORT_CLASS_TBL(
 			   REP_CODE
@@ -644,13 +644,13 @@
 			)
     </insert>
     
-    <!-- 해당 클래스를 찜한 회원 목록 가져오기 -->
+    <!-- 해당 클래스를 찜한 회원 목록 가져오기 by 임예람  -->
     <select id="selectJJimClassMemberList" resultType="hashmap">
     	SELECT * FROM LIKED_CLASS_TBL
     	 WHERE CLASS_CODE = #{ classCode }
     </select>
     
-    <!-- 찜한 클래스에 등록하기 -->
+    <!-- 찜한 클래스에 등록하기 by 임예람  -->
     <insert id="registLikedClass">
     	INSERT INTO
     		   LIKED_CLASS_TBL VALUES(
@@ -659,7 +659,7 @@
     	)
     </insert>
     
-    <!-- 찜한 클래스에서 샂게(해지)하기 -->
+    <!-- 찜한 클래스에서 샂게(해지)하기  by 임예람 -->
     <delete id="removeLikedClass">
     	DELETE FROM LIKED_CLASS_TBL
     	 WHERE EMAIL = #{ email }
