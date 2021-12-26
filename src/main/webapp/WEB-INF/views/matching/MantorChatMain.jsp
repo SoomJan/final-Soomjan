@@ -39,78 +39,53 @@ main { width: 90% !important;}
 		<jsp:include page="../common/matching_mantee_sidebar.jsp" />
 		<div class="introduce">
 
-			<div class="matching-content">
-				
 				<p class="estimate_title">채팅 리스트</p>
-					<div class="search">
-						<select id="search_category_cb" name="search_category">
-							<option value="">선택하세요.</option>
-								<c:forEach var="category" items="${categoryList}" >
-									<option value="${category.categoryCode}">${category.categoryName}</option>
-								</c:forEach>
-						</select>
+			<div class="matching-content" style="background-color: #e1f2e7; padding-top: 10px; border-radius: 20px;" >
+				
+					
+								<c:forEach var="chatList" items="${myChatList}">
+					<div class="chatting" style="border:1px solid #48a66b">
 						
-						<input id="search_area" type="text" value="">
-						
-						<button class="search_btn">검색</button>
-						</div> <!-- search div  -->	
-						
-						<br><br><br><br>
-						
-						<div class="board_table">
-							<table style="width: 100%" class="estimate table">	
-								<thead>
-									<tr class="table_title">
-										<th>No</th>
-										<th>제목</th>
-										<th>카테고리</th>
-										<th>진행상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-									
-									</tr>
+							<div class="chat_content"  onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chattingroom?matchedCode=${chatList.MATCHED_CODE}'">
+								<div class="chat_content_1">
+									<div class="chat_content_3"></div>
+									<div class="chat_content_4 profile"> 
+										
+										<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${chatList.PROFILE_PATH}">
+									</div>
+								</div>
+								<div class="chat_content_2">
+									<div class="chat_content_3"> 
+										<div class="chat_content_3_1" > ${chatList.NICKNAME}</div> 
+										<div class="chat_content_3_2"> ${ chatList.TITLE}</div> 
+									</div>
+									<div class="chat_content_4"> <p></p></div>
+								</div>
 								
-									<tr class="table_content">
-										<td width="10" >3</td>
-										<td width="50">높은 가격으로 모십니다!</td>
-										<td width="30">모바일</td>
-										<td width="10">Y</td>
-									</tr>
-									
-									<tr class="table_content">
-										<td width="10" >2</td>
-										<td width="50">편한 분위기에서 강의하실 분</td>
-										<td width="30">데이터베이스</td>
-										<td width="10">N</td>
-									</tr>
-									
-									<tr class="table_content">
-										<td width="10" >1</td>
-										<td width="50">절 성장시켜주실 고수분</td>
-										<td width="30">개발 · 프로그래밍</td>
-										<td width="10">Y</td>
-									</tr>
 								
-								</tbody>
+						
 							
-							</table>
-					</div>	<!-- board_table div  -->	
+							</div><!-- 채팅 한 개 끝 -->
+							
+						</div> 
+								</c:forEach>
+	
+						
+							
 				
 				<br><br>
 				
-				
-				 <jsp:include page="../common/Paging.jsp" />
+				<%-- 
+				 <jsp:include page="../common/Paging.jsp" /> --%>
 				
 				
 				<!-- <div class="back">
 					<button class="backBtn">목록으로</button>
 				</div> -->
 
-				<div class="write">
+				<!-- <div class="write">
 					<button class="writeBtn">매칭 요청</button>
-				</div>
+				</div> -->
 				
 			</div> <!-- matching-content 끝 -->
 

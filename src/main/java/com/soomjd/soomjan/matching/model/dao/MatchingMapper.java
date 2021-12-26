@@ -24,10 +24,11 @@ public interface MatchingMapper {
 
 	List<EstimateDTO> ssackList(SelectCriteria selectCriteria);
 
-	List<EstimateDTO> estimateDetail(String estimateCode);
+	List<EstimateDTO> estimateDetail(int estimateCode);
+	
 	List<EstimateDTO> estimateDetailJ(String estimateCode);
 
-	int selecetEstimateTotal();
+	int selecetEstimateTotal(Map<String, String> searchMap);
 
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
 
@@ -38,4 +39,8 @@ public interface MatchingMapper {
 	int updateMatched(int estimateCode);
 
 	List<Map<String, Object>> chatEstimateCode(String jmail);
+
+	List<Map<String, Object>> jandiProfileAndName(MatchedChattingDTO matchedChattingDTO);
+
+	List<Map<String, Object>> selectMyChatList(String myEmail);
 }

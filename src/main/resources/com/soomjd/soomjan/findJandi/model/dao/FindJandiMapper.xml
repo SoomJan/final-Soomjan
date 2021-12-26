@@ -37,12 +37,39 @@
     </resultMap>
     
     <select id="selectFindJandi" resultMap="jandiResultMap">
-    	SELECT jt.EMAIL
-			 , jt.NICKNAME
-			 , jt.PROFILE_PATH
-		FROM JANDI_TBL jt
+    	SELECT
+		       B.RNUM
+		     , B.EMAIL
+		     , B.NICKNAME
+		     , B.PROFILE_PATH
+		  FROM 
+			(SELECT 
+			       ROWNUM RNUM
+			     , A.EMAIL
+				 , A.NICKNAME 
+			     , A.PROFILE_PATH	
+			FROM
+				(SELECT
+				       jt.EMAIL
+					 , jt.NICKNAME 
+					 , jt.PROFILE_PATH	
+				  FROM JANDI_TBL jt
+				 ORDER BY jt.NICKNAME DESC) A
+			 <![CDATA[
+			 WHERE ROWNUM <= #{ endRow }) B
+		   WHERE RNUM >= #{ startRow }
+			 ]]>	
     </select>
     
+     <select id="SelectFindJandiTotalCount" resultType="_int" parameterType="HashMap">
+        SELECT
+		       COUNT(*)
+		  FROM JANDI_TBL A
+	      	  
+    </select>
+
+
+    <!-- 잔디 페이지에서 보여줄 잔디 정보 조회하기 by 임예람-->
     <select id="selectJandiInfo" resultMap="jandiInfoResultMap">
     	SELECT J.EMAIL
     		 , J.NICKNAME
@@ -91,4 +118,5 @@
 		     )V
 		 WHERE ROWNUM BETWEEN 1 AND 3
     </select>
+
 </mapper>

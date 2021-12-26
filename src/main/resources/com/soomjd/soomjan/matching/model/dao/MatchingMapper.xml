@@ -127,15 +127,24 @@
     		 , C.ESTIMATE_CODE
 		     , C.TITLE
 		     , C.IS_MATCHED
+		     , C.CATEGORY_NAME
 		  FROM (SELECT ROWNUM RNUM
 		   		, B.ESTIMATE_CODE
 		   		, B.TITLE
 		    	, B.IS_MATCHED
+		    	, B.CATEGORY_NAME
 		    	FROM(SELECT 
 		    	     A.ESTIMATE_CODE
 		    	   , A.TITLE
 		    	   , A.IS_MATCHED
+		    	   , CA.CATEGORY_NAME
 		    	   FROM ESTIMATE_TBL A
+		    	   JOIN CATEGORY_TBL CA ON (CA.CATEGORY_CODE = A.CATEGORY_CODE)
+		    	   <where>
+    			  		<if test="'searchCondition' != null">
+    	 	 	  		A.TITLE LIKE '%' || #{searchValue} || '%'
+    	 		 		</if>
+    	 			</where>
                    ORDER BY A.ESTIMATE_CODE DESC
                    )B 
                    <![CDATA[
@@ -143,6 +152,8 @@
 	        	]]>	
               ) C
               WHERE C.RNUM >= #{ startRow }
+              
+              
                 
     </select>
     
@@ -195,6 +206,12 @@
     	SELECT
     		   COUNT(*)
     	  FROM ESTIMATE_TBL
+    	  <where>
+    	  <if test="'searchCondition' != null">
+    	    TITLE LIKE '%' || #{searchValue} || '%'
+    	  </if>
+    	  </where>
+    	  
     </select>
     
     
@@ -276,5 +293,37 @@
     
     </select>
     
+    
+    <select id="jandiProfileAndName" resultType="hashmap">
+    	
+    	SELECT E.ESTIMATE_CODE
+		  	 , J.EMAIL
+		  	 , J.NICKNAME 
+		  	 , J.PROFILE_PATH 
+		  	 , M.MATCHED_CODE
+		  FROM ESTIMATE_TBL E
+		  JOIN MATCHED_TBL M ON (E.ESTIMATE_CODE = M.ESTIMATE_CODE)
+		  JOIN JANDI_TBL J ON(M.EMAIL = J.EMAIL)
+		 WHERE J.EMAIL != #{ email }
+		   AND E.ESTIMATE_CODE = #{ estimateCode }
+    
+    </select>
+    
+    
+    <select id="selectMyChatList" resultType="hashmap">
+    
+    	SELECT M.MATCHED_CODE,
+       M.EMAIL,
+       M.ESTIMATE_CODE,
+       J.NICKNAME,
+       J.PROFILE_PATH,
+       E.TITLE
+ 		  FROM MATCHED_TBL M
+		  JOIN JANDI_TBL J ON(J.EMAIL = M.EMAIL)
+		  JOIN ESTIMATE_TBL E ON(E.ESTIMATE_CODE = M.ESTIMATE_CODE)
+		 WHERE M.MATCHED_CODE IN (SELECT MA.MATCHED_CODE FROM MATCHED_TBL MA WHERE MA.EMAIL = #{ myEmail })
+		   AND M.EMAIL != #{ myEmail }
+    
+    </select>
 
 </mapper>

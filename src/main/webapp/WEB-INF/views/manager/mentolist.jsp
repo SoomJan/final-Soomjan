@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>등록된 멘토 조회</title>
+    <title>등록된 잔디 조회</title>
 
     <link
       href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css"
@@ -64,6 +64,7 @@ pageEncoding="UTF-8"%>
     .context-modal-btn { margin-left: 70%;}
     #email {margin-left: 11%;}
     #nickName {margin-left: 11%;}
+    #enrollDate {margin-left: 2%;}
     .modal-body {margin-left: 8%;}
     #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
     
@@ -75,21 +76,15 @@ pageEncoding="UTF-8"%>
 		padding:2%;
 	  }
 	  
-	 .contents{
+  	 .contents{
 		resize: none;
 		border-radius: 0.5rem;
 		border: 1.5px solid #91C788;
 		background-color: #91C788;
 		height: 100px;
 		padding:2%;
-	
-	}
-	
-	.resultContent {
-	  height: 150px;
-	  text-align: center;
-	}
-
+	} 
+	.dropsearch { margin-left: 15%;}
     .dropdown {float: left; left: 6%; top:10px;} /* 정렬 */
     </style>
   </head>
@@ -104,6 +99,7 @@ pageEncoding="UTF-8"%>
           <table class="ui basic table warningtable">
             <thead>
               <tr>
+              	<th></th>
                 <th>이메일</th>
                 <th>이름</th>
                 <th>닉네임</th>
@@ -113,6 +109,7 @@ pageEncoding="UTF-8"%>
             <tbody>
             <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
               <tr class="move jandiBtn" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandiMember.email }'">
+              	<td><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ jandiMember.profile_path }" style="width:100px;"></td>
                 <td>${ jandiMember.email }</td>
                 <td>${ jandiMember.acc_name }</td>
                 <td>${ jandiMember.nickName }</td>
@@ -121,24 +118,6 @@ pageEncoding="UTF-8"%>
             </c:forEach>
             </tbody>
           </table>
-
-          <script>
-         
- /*          $(function(){
-            $(".move").hover(function(){
-              $(this).css('background', 'gray');
-            }, function(){
-              $(this).css('background', 'white');
-            });
-          }); */
-
-/*           $(function(){
-            $(".move").click(function(){
-              location.href="${ pageContext.servletContext.contextPath }/test.jsp";
-            });
-          }); */
-
-          </script>
           <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
                   <div class="dropsearch">
@@ -167,65 +146,6 @@ pageEncoding="UTF-8"%>
 			 <jsp:include page="../common/Paging.jsp" />
         </div>
         </div>
-        
-        <!-- 잔디회원 상세조회 -->
-        <form id="jandiForm" method="POST">
-        <div class="ui small modal" id="jandiModal">
-       <div class="header modal-header"><h3>잔디 상세내용</h3><img id="xbtn" src="${ pageContext.servletContext.contextPath }/resources/images/xbtn.png" onclick="modalEndBtn(this)"></div>
-       <div class="content resultContent">
-        <br>
-          <div class="modal-body" align="left"> 
-          	이미지 첨부<br>
-			<br>
-			<img id=imgPath name="imgPath" style="width: 300px;"/> 
-			<br><br>
-			이메일 <input type="text" class="inputSyle email" id="email" name="email" style="width: 300px;" readonly> 
-			<br><br>
-			닉네임 <input type="text" class="inputSyle nickName" id="nickName" name="nickName" style="width: 300px;" readonly> 
-			<br><br> 
-			클래스<br>
-			<br>
-			<textarea name="jandiClass" id="jandiClass" class="contents jandiClass" readonly style="width: 400px;" ></textarea>
-			</div>
-			<br><br>
-			잔디가입날짜 <input type="text" class="inputSyle enrollDate" id="enrollDate" name="enrollDate" style="width: 300px;" readonly> 
-			<hr>
-			<div class="context-modal-btn">
-	           <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">확인</button>
-            </div>
-        </div>
-      </div>
-      </form>
-      <script>
-      $(function(){
-    		$(".jandiBtn").click(function(e){
-    			console.log($(e.target).parent().children(0).val());
-    			const email = $(e.target).parent().children(0).val();
-    			$.ajax({
-    				url: "${ pageContext.servletContext.contextPath }/manager/jandiDetail",
-    				data: {email : email},
-    				type: "GET",
-    				async:false,
-    				success: function(data){
-    					console.log('들어감');
-    					console.log(data.repCategory);
-    					$('#email').val(data.email);
-    					$('#nickName').val(data.nickName);
-    					$('#jandiClass').val(data.title);
-    					$('#enrollDate').val(data.enrollDate);
-    					$('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/' + data.profile_path);
-    				},
-    				error: function(xhr, status, error){
-    					console.log(error);
-    					console.log(xhr);
-    				}
-    			});
-    			
-    			$("#jandiModal").show();
-    			
-    		});
-      });
-      </script>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

@@ -111,33 +111,54 @@ public class MacthingSsackMainController {
 	
 	// 작성된 견적서 디테일 보여주기
 	@GetMapping("/detailEstimate")
-	public String detailEstimate(Model model ,String estimateCode) {
+	public String detailEstimate(Model model ,int estimateCode , HttpSession session) {
 		
 		// 견적서 받아오는 코드
 		List<EstimateDTO> estimateDetail = matchingService.estimateDetail(estimateCode); //estimateCode값 넘김
 		System.out.println(estimateDetail);
 		model.addAttribute("estimateDetail",estimateDetail);
 		
+		// 채팅 리스트 받아오는 코드
+		MatchedChattingDTO matchedChattingDTO = new MatchedChattingDTO();
+		matchedChattingDTO.setEstimateCode(estimateCode);
+		matchedChattingDTO.setEmail(((MemberDTO)session.getAttribute("loginMember")).getEmail());
+		List<Map<String,Object>> jandiProfileAndName = matchingService.jandiProfileAndName(matchedChattingDTO);
+		System.out.println("jandiProfileAndName" + jandiProfileAndName);
+		model.addAttribute("jandiProfileAndName",jandiProfileAndName);
 		
 		return "matching/ManteeEstimateDetail";
 	}
 	
 	// 전체 견적서 리스트 메인화면
 	@GetMapping("/estimateMain")
-	public String estimateMain(Model model,CategoryDTO category, String memberEmail, @RequestParam(defaultValue = "1") int currentPage) {
+	public String estimateMain(Model model,CategoryDTO category, String memberEmail, @RequestParam(defaultValue = "1") int currentPage, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue) {
 		
 //		MemberDTO loginMember = (MemberDTO) model.getAttribute("loginMember");
 //		System.out.println("loginMember : "+ loginMember);
 		
-		int totalCount = matchingService.selecetEstimateTotal();
+		// 검색할 조건,값 찾아오기
+		Map<String, String> searchMap = new HashMap<>();
+        searchMap.put("searchCondition", searchCondition);
+        searchMap.put("searchValue", searchValue);
+        System.out.println("searchMap : " + searchMap);
+        
+        
+		int totalCount = matchingService.selecetEstimateTotal(searchMap);
 		
 		int limit = 10;
 		int buttonAmount = 5;
 		
 		SelectCriteria selectCriteria = null;
 		
-		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
 		
+		// 검색어가 있으면, 있는걸로 없으면 그냥 페이징 보내기
+//		if(searchCondition == null && !"".equals(searchCondition)) {
+//	           selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+//	        } else {
+//	           selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+//	        }
+	
 		
 		System.out.println(selectCriteria);
 		
@@ -173,12 +194,13 @@ public class MacthingSsackMainController {
 	
 	// 채팅 리스트 메인화면
 	@GetMapping("/chatList")
-	public String chatList(CategoryDTO category, Model model) {
+	public String chatList( Model model ,HttpSession session) {
 		
-		List<CategoryDTO> categoryList = matchingService.selectCategory(category);
-		System.out.println(categoryList);
-		model.addAttribute("categoryList",categoryList);
+		// 내가 가지고 있는 채팅 리스트 받아오는 코드
+		String myEmail =  ((MemberDTO)session.getAttribute("loginMember")).getEmail();
+		List<Map<String,Object>> myChatList = matchingService.selectMyChatList(myEmail);
 		
+		model.addAttribute("myChatList",myChatList);
 		
 		return "matching/MantorChatMain";
 	}
@@ -227,17 +249,17 @@ public class MacthingSsackMainController {
 	
 		}
 
-		return "matching/ManteeChatting";
+		return "redirect:/matching/chattingroom?matchedCode="+chatting.getMatchedCode();
 	}
 	
 	@GetMapping("chattingroom")
 	public String chattingroom(@RequestParam int matchedCode, Model model) {
 		
-		model.addAttribute(matchedCode);
+		model.addAttribute("matchedCode",matchedCode);
 		
 		return "matching/ManteeChatting";
 	}
 	
-	// 
+	
 	
 }

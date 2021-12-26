@@ -5,7 +5,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
   <head>
 
-    <title>등록된 멘티 조회</title>
+    <title>등록된 새싹 조회</title>
 
     <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/manager.css" rel="stylesheet"/>
 
@@ -56,6 +56,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         top: 20px;
         /* border: 1px solid blue; */
       }
+      
+      .manager-search{margin-left: 20%;}
 
     </style>
   </head>
@@ -94,30 +96,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </c:forEach>
           </tbody>
         </table>
-
-        <script>
-/*           $(function () {
-            $(".move").hover(
-              function () {
-                $(this).css("background", "gray");
-              },
-              function () {
-                $(this).css("background", "white");
-              }
-            );
-          }); */
-
- /*          $(function () {
-            $(".move").click(function () {
-              location.href =
-                "${ pageContext.servletContext.contextPath }/test.jsp";
-            });
-          }); */
-        </script>
-
-          <form
-            action="${ pageContext.servletContext.contextPath }/manager/mentilist"
-            method="get" id="searchform">
+          <form action="${ pageContext.servletContext.contextPath }/manager/mentilist" method="get" id="searchform">
         <div class="manager-search">
           <input type="hidden" name="currentPage" value="1" />
           <select
@@ -134,7 +113,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.selectCriteria.searchValue }"/>">
     			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
-    		<!-- 	<input type="button" id="searchbtn"> -->
   				</div>
  			 	<div class="results"></div>
 			</div>
@@ -143,13 +121,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			</form>
         </div>
       </div>
-      <script>
-/*        	$(function(){
-      		$("#searchbtn").click(function(){
-      			$("#searchform").submit();
-      		});
-      	}); */
-      </script>
   </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

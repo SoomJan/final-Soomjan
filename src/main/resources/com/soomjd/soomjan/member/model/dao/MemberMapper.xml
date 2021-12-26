@@ -165,18 +165,21 @@
 		 WHERE A.EMAIL = #{ value }
     </select>
     
+    <!-- 잔디 닉네임 중복 체크하기 by임예람 -->
    	<select id="selectJandiNickDupCheck" resultType="_int">
 		SELECT COUNT(EMAIL)
 		FROM JANDI_TBL
 		WHERE NICKNAME = #{ nickName }
 	</select>
 	
+	<!-- 블랙리스트 해지까지 얼마나 남았는지 조회하기 by임예람 -->
 	<select id="selectBlackDDay" resultType="_double">
 		SELECT BLACK_END_DATE - SYSDATE
    		  FROM SSACK_TBL
   		 WHERE EMAIL = #{ email }
 	</select>
 	
+	<!-- 블랙리스트 해지 하기 -->
 	<update id="modifyBlackStatus">
 		UPDATE SSACK_TBL
 		   SET IS_BLACK = 'N'

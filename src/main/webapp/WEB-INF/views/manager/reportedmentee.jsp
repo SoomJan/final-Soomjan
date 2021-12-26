@@ -7,10 +7,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <title>신고된 회원 조회</title>
 
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css?"
-      rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css?" rel="stylesheet"/>
 
     <style>
    	.input-search {
@@ -93,6 +90,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     #repCategory { position: relative; left: 10px;}
     .modal-body {margin-left: 8%;}
     #xbtn {width: 20px; float: right; position: relative; bottom: 40px;}
+    
     #resultModal {
 	  height: 150px;
 	  top: 25%;
@@ -214,6 +212,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<hr>
 			<div class="context-modal-btn">
 			   <input type="hidden" id="repCodeInput" name="repCode">
+			   <input type="hidden" id="isBlack" name="isBlack">
 	           <button class="ui button btn1" id="con-btn" style="background-color: #91C788 !important;">신고</button>
 	           <button class="ui button btn1" id='end-btn' style="background-color: lightgray !important;">반려</button>
             </div>
@@ -221,68 +220,77 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
       </form>
 	<script>
+	/* 모달창에 신고된 회원 상세 내용 띄워주기 */
 	$(function(){
-  		$(".repbtn").click(function(e){
-  			console.log($(e.target).parent().children("input[type=hidden]").val());
-  			const repCode = $(e.target).parent().children("input[type=hidden]").val();
-  			$('#repCodeInput').val(repCode);
-  			$.ajax({
-  				url: "${ pageContext.servletContext.contextPath }/manager/repDetail",
-  				data: {repCode : repCode},
-  				type: "GET",
-  				async:false,
-  				success: function(data){
-  					console.log('들어감');
-  					console.log(data.repCategory);
-  					$('#repCategory').val(data.repCategory);
-  					$('#repEmail').val(data.repEmail);
-  					$('#repNickName').val(data.repNickName);
-  					$('#repContents').val(data.repContents);
-  					$('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
-  				},
-  				error: function(xhr, status, error){
-  					console.log(error);
-  					console.log(xhr);
-  				}
-  			});
-  			//$('#repMemberModal').show();
-  			
-  			$("#repMembermodal").show();
-  			
-/*   		  	$("#xbtn").click(function(){
-         	 	$("#repMembermodal").hide();
-          	} */
-  		});
-  		
+        $(".repbtn").click(function(e){
+           console.log($(e.target).parent().children("input[type=hidden]").val());
+           const repCode = $(e.target).parent().children("input[type=hidden]").val();
+           $('#repCodeInput').val(repCode);
+           $.ajax({
+              url: "${ pageContext.servletContext.contextPath }/manager/repDetail",
+              data: {repCode : repCode},
+              type: "GET",
+              async:false,
+              success: function(data){
+                 console.log('들어감');
+                 console.log(data.repCategory);
+                 $('#repCategory').val(data.repCategory);
+                 $('#repEmail').val(data.repEmail);
+                 $('#repNickName').val(data.repNickName);
+                 $('#repContents').val(data.repContents);
+                 $('#isBlack').val(data.isBlack);
+                 $('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
+              },
+              error: function(xhr, status, error){
+                 console.log(error);
+                 console.log(xhr);
+              }
+           });
+           $("#repMembermodal").show();
+        });
+
+  		/* 신고버튼 클릭 후 '확인' 버튼 클릭 시 블랙리스트 회원인지 조회하기 */
   		$('#con-btn').click(function(event){
-  			//console.log(repCode);
-  			 //$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit();
+  			
+  		    let isBlack = $('#isBlack').val();
+  		    console.log(isBlack);
+
+  		    if(isBlack == 'Y') {
+  		    	alert('이미 블랙리스트 회원입니다.');
+  		    } else {
   			 $("#resultModal").show();
+  		    }
   			 event.preventDefault();
   		});
   		
+  		/* 신고처리 */
   		$('.resultbtn').click(function(){
-  			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit();
+  			
+  			 $("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit(); 
   		});
   		
+  		/* '취소' 클릭시 모달창 닫기 */
   		$('.resultExitbtn').click(function(){
   			$('#resultModal').hide();
   			$('#repMembermodal').hide();
   		});
   		
+  		/* 반려버튼 클릭 시 신고반려 처리하기 */
   		$('#end-btn').click(function(){
   			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/sendBack").submit();
   		});
   		
+  		/* 검색 기능 */
   		$('#searchbtn').click(function(){
   			$("#frm").prop("action","${ pageContext.servletContext.contextPath }/manager/reportedmentee").submit();
   		});
   		
   	});
-  		
-  	function modalEndBtn(item){
-  		$("#repMembermodal").hide();
-  	}
+  	
+		/* 모달창 상단의  x버튼 클릭 시 모달창 닫기 */
+	  	function modalEndBtn(item){
+	  		$("#repMembermodal").hide();
+	  	}
 	
 	</script>
   </body>

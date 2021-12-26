@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,46 +80,28 @@ main { width: 90% !important;}
 					
 					<div class="chatlist">
 					
-					<!-- <c:forEach> </c:forEach>-->
+					
+								<c:forEach var="jandiInfo" items="${jandiProfileAndName}">
 						<div class="chatting">
 						
-							<div class="chat_content">
-							
+							<div class="chat_content" onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chattingroom?matchedCode=${jandiInfo.MATCHED_CODE}'">
 								<div class="chat_content_1">
 									<div class="chat_content_3"></div>
 									<div class="chat_content_4 profile"> 
-										<img src="${ pageContext.servletContext.contextPath }/resources/images/tutor1.png">
+										
+										<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${jandiInfo.PROFILE_PATH}">
 									</div>
 								</div>
-								<div class="chat_content_2">
-									<div class="chat_content_3" onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chatting';"> 
-										<div class="chat_content_3_1" >잔디</div> 
+								<div class="chat_content_2" >
+									<div class="chat_content_3" > 
+										<div class="chat_content_3_1" > ${jandiInfo.NICKNAME}</div> 
 										<div class="chat_content_3_2"></div> 
 									</div>
 									<div class="chat_content_4"> <p></p></div>
 								</div>
-						
-						
-								<!-- <div class="chat_name">
-									<p align="center" class="chat_sendman">잔디</p>
-								</div>
-							
-								<div class="chat_date">
-									<p>2021-11-26 02:30</p>
-								</div>
-								
-								<div class="profile">
-									<img src="">
-								</div>
-									
-								<div class="chat_pre">
-									<p>잔디로 금방 만들어 드릴게요!</p>
-								</div> -->
-								
-								
 							</div><!-- 채팅 한 개 끝 -->
-							
 						</div> 
+								</c:forEach>
 	
 	
 	
@@ -133,9 +116,6 @@ main { width: 90% !important;}
 				</div>
 				
 
-				<!-- <div class="write">
-					<button class="writeBtn">멘토 요청보기</button>
-				</div> -->
 			</div>
 
 		</div>

@@ -42,18 +42,23 @@ main { width: 90% !important;}
 				<div class="request-list">
 					<p class="explain">전체 견적서 리스트</p>
 					
+					<form action="${ pageContext.servletContext.contextPath }/matching/estimateMain" method="get">
+					
 					<div class="search">
-						<select id="search_category_cb" name="search_category">
+						<select id="search_category_cb" name="searchCondition" style="display:none">
 							<option value="">선택하세요.</option>
 								<c:forEach var="category" items="${categoryList}" >
 									<option value="${category.categoryCode}">${category.categoryName}</option>
 								</c:forEach>
 						</select>
 						
-						<input id="search_area" type="text" value="">
+						<input id="search_area" type="text" value="" name="searchValue">
 						
 						<button class="search_btn">검색</button>
 					</div> <!-- search div  -->	
+					
+					</form>
+					
 					<br><br><br><br>
 					<div id="allrequest">
 						<table style="width: 100%" class="estimateList">
@@ -73,7 +78,7 @@ main { width: 90% !important;}
 								<tr class="table_title2">
 									<th>${ estimate.estimateCode }</th>
 									<th><a href="${ pageContext.servletContext.contextPath }/matching/detailEstimateJ?estimateCode=${estimate.estimateCode}">${ estimate.title }</a></th>
-									<th>${ estimate.categoryCode }</th>
+									<th>${ estimate.categoryDTO.categoryName }</th>
 									<th>${ estimate.isMatched }</th> 
 								
 								</tr>

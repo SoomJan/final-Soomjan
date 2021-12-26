@@ -15,6 +15,7 @@
         <result column="ENROLL_DATE" property="enrollDate"/>
         <result column="IS_EXIT" property="isExit"/>
         <result column="NAME" property="name"/>
+        <result column="BLACK_END_DATE" property="blackEndDate"/>
     </resultMap>
     
     <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiResultSet">
@@ -103,6 +104,7 @@
         <result column="IMG_PATH" property="imgPath"/>
         <result column="REP_YN" property="repYn"/>
         <result column="NICKNAME" property="nickName"/>
+        <result column="IS_BLACK" property="isBlack"/>
         
         <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
     </resultMap>
@@ -130,6 +132,7 @@
         <result column="REP_YN" property="repYn"/>
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="NICKNAME" property="nickName" />
+        <result column="IS_BLACK" property="isBlack"/>
         
         <association property="classDTO" resultMap="classResultMap"></association>
         <association property="reportStatementDTO" resultMap="reportStatementResultSet"></association>
@@ -187,6 +190,26 @@
 		 WHERE IS_DELETED = 'N'
     </select>
     
+	<!-- 새싹 멤버 전체 수 확인하기 -->
+	<select id="selectSsackTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT
+		       COUNT(*)
+		  FROM SSACK_TBL A
+		  
+		   <where>
+		 	 <if test='searchCondition == "1"'>
+		 	   A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		 	 <if test='searchCondition == "2"'>
+		 	   AND A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		 	 <if test='searchCondition == "3"'>
+		 	   AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
+		 	 </if>
+		  </where>
+	</select>
+    
+    <!-- 새싹 멤버 조회하기 -->
     <select id="ssackMember" resultMap="ssackResultSet">
 
 		SELECT
@@ -244,6 +267,25 @@
      			WHERE F.RNUM >= #{ startRow }	  	 
 	</select>
 	
+	<!-- 잔디 멤버 전체 수 확인하기 -->
+	<select id="selectJandiTotalCount" resultType="_int" parameterType="hashMap">
+		SELECT
+		       COUNT(*)
+		  FROM JANDI_TBL
+    	<where>
+		 	<if test='searchCondition == "1"'>
+		 		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test='searchCondition == "2"'>
+		 		AND A.WARNING LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 	<if test='searchCondition == "3"'>
+		 		AND A.ACC_NAME LIKE '%' || #{ searchValue } || '%'
+		 	</if>
+		 </where>
+	</select>
+	
+	<!-- 잔디멤버 조회하기 -->
 	<select id="jandiMember" resultMap="jandiResultSet">
 				SELECT
 		       F.RNUM
@@ -299,12 +341,14 @@
     
     <select id="selectJandiMember" resultMap="jandiResultSet">
     	SELECT
-    	       EMAIL
-    	     , NICKNAME
-    	     , PROFILE_PATH
-    	     , ENROLL_DATE
-    	  FROM JANDI_TBL
-    	 WHERE EMAIL = #{ email }
+    	       J.EMAIL
+    	     , J.NICKNAME
+    	     , J.PROFILE_PATH
+    	     , J.ENROLL_DATE
+    	     , C.TITLE
+    	  FROM JANDI_TBL J
+    	  JOIN CLASS_TBL C ON(J.EMAIL = C.EMAIL)
+    	 WHERE J.EMAIL = #{ email }
     </select>
     
      <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
@@ -319,25 +363,8 @@
 			 , A.MNG_NICKNAME
 		    FROM MANAGER_TBL A
     </select>
-
-	<select id="selectTotalCount" resultType="_int" parameterType="hashMap">
-		SELECT
-		       COUNT(*)
-		  FROM SSACK_TBL A
-		  
-		   <where>
-		 	 <if test='searchCondition == "1"'>
-		 	   A.NICKNAME LIKE '%' || #{ searchValue } || '%'
-		 	 </if>
-		 	 <if test='searchCondition == "2"'>
-		 	   AND A.WARNING LIKE '%' || #{ searchValue } || '%'
-		 	 </if>
-		 	 <if test='searchCondition == "3"'>
-		 	   AND A.IS_BLACK LIKE '%' || #{ searchValue } || '%'
-		 	 </if>
-		  </where>
-	</select>
 	
+	<!-- 매니저 계정 생성 -->
 	<insert id="registMsMember" parameterType="ManagerDTO">
 		INSERT
 		  INTO MANAGER_TBL
@@ -362,6 +389,7 @@
 		)
 	</insert>
 	
+	<!-- 매니저계정 생성 이메일 중복 체크 -->
 	<select id="emailCheck" resultType="_int" parameterType="HashMap">
 		SELECT
 		       COUNT(*)
@@ -369,6 +397,7 @@
 		 WHERE MNG_ID = #{ email }
 	</select>
 	
+	<!-- 매니저게정 생성 닉네임 중복 체크 -->
 	<select id="nickNameCheck" resultType="_int" parameterType="HashMap">
 		SELECT
 		       COUNT(*)
@@ -615,6 +644,7 @@
 	
 	</select>
 	
+	<!-- 신고된 회원 전체 횟수 -->
 	<select id="selectReportSsackTotalCount" resultType="_int" parameterType="hashMap">
 		SELECT
 		       COUNT(*)
@@ -637,6 +667,7 @@
 		 </where>
 	</select>
 	
+	<!-- 신고된 회원 전체 목록 조회 -->
 	<select id="selectReportMemberList" resultMap="reportMemberResultSet">
 		SELECT
 		       F.RNUM
@@ -698,7 +729,8 @@
      			WHERE F.RNUM >= #{ startRow }
 	</select>
 	
-		<select id="selectReportClassTotalCount" resultType="_int" parameterType="hashMap">
+	<!-- 신고된 클래스 전체 횟수 -->
+	<select id="selectReportClassTotalCount" resultType="_int" parameterType="hashMap">
 		SELECT
 		       COUNT(*)
 		  FROM REPORT_CLASS_TBL R
@@ -706,7 +738,7 @@
 		  JOIN CLASS_TBL C ON(C.CLASS_CODE = R.CLASS_CODE)
 		  JOIN JANDI_TBL A ON(A.EMAIL = C.EMAIL)
 
-          <where>
+         <where>
 		 	<if test="searchCondition == 1">
 		 		C.TITLE LIKE '%' || #{ searchValue } || '%'
 		 	</if>
@@ -719,10 +751,11 @@
 		 	<if test="searchCondition == 3">
 		 		AND R.REP_YN LIKE '%' || #{ searchValue } || '%'
 		 	</if>
-		 </where>
+	 	</where>
 	</select>
 	
-		<select id="selectReportClassList" resultMap="reportClassResultSet">
+	<!-- 신고된 전체 클래스 목록 조회 -->
+	<select id="selectReportClassList" resultMap="reportClassResultSet">
 		SELECT
 		       F.RNUM
 		     , F.REP_CODE
@@ -784,6 +817,66 @@
      			WHERE F.RNUM >= #{ startRow }	
 	</select>
 	
+	<!-- 블랙리스트 회원 수 -->
+	<select id="selectBlackCount" resultType="_int" parameterType="hashMap">
+		SELECT
+		      COUNT(*)
+		  FROM SSACK_TBL
+		 WHERE IS_BLACK = 'Y'
+	</select>
+	
+	<!-- 블랙리스트 회원 조회 -->
+	<select id="selectBlackMemberList" resultMap="ssackResultSet">
+		 SELECT
+		       F.RNUM
+		     , F.EMAIL
+		     , F.NICKNAME
+		     , F.IS_BLACK
+		     , F.BLACK_END_DATE
+		     , F.NAME
+		  FROM (SELECT ROWNUM RNUM 
+		             , D.EMAIL
+		             , D.NICKNAME
+		             , D.IS_BLACK
+		             , D.BLACK_END_DATE
+		             , D.NAME
+		          FROM (SELECT
+		                       S.EMAIL
+		                     , S.NICKNAME
+		                     , S.IS_BLACK
+		                     , S.BLACK_END_DATE
+		                     , S.NAME
+		                  FROM SSACK_TBL S
+		                  <where>
+		                  	S.IS_BLACK = 'Y'
+		 	     		 	<if test="searchCondition == 1">
+		 	     		 		AND S.EMAIL LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 2">
+		 	     		 		AND S.NAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 	<if test="searchCondition == 3">
+		 	     		 		AND S.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		 	     		 	</if>
+		 	     		 </where>
+		 	     	 ORDER BY S.BLACK_END_DATE DESC
+		 	    	  ) D
+		 	    <![CDATA[
+	        	WHERE ROWNUM <= #{ endRow } 
+	        	]]>	
+	        	) F
+     			WHERE F.RNUM >= #{ startRow }
+	</select>
+	
+	<!-- 블랙리스트 해지 -->
+	<update id="updateBlackCancelMember">
+		UPDATE SSACK_TBL S
+		   SET S.IS_BLACK = 'N'
+		     , S.WARNING = 0
+		 WHERE S.EMAIL = #{ email }
+	</update>
+	
+	<!-- 신고된 회원 상세 조회 -->
 	<select id="selectRepMemberList" resultMap="reportMemberResultSet">
 		SELECT
 		       R.EMAIL
@@ -796,36 +889,42 @@
 		     , R.REP_YN
 		     , S.REP_TYPE
 		     , A.NICKNAME
+		     , A.IS_BLACK
 		  FROM REPORT_MEMBER_TBL R
 		  JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
 		  JOIN SSACK_TBL A ON(A.EMAIL = R.REP_EMAIL)
 		 WHERE R.REP_CODE = #{ repCode }
 	</select>
 	
+	<!-- 신고된 회원 신고처리 -->
 	<update id="modifyConfirmMember" parameterType="ReportMemberDTO">
 		UPDATE REPORT_MEMBER_TBL
 		   SET REP_YN = 'Y'
 		 WHERE REP_CODE = #{ repCode }
 	</update>
 	
+	<!-- 신고된 회원 반려처리 -->
 	<update id="modifySendbackMember" parameterType="ReportMemberDTO">
 		UPDATE REPORT_MEMBER_TBL
 		   SET REP_YN = 'N'
 		 WHERE REP_CODE = #{ repCode }
 	</update>
 	
+	<!-- 신고된 클래스 신고 처리 -->
 	<update id="modifyConfirmClass" parameterType="ReportClassDTO">
 		UPDATE REPORT_CLASS_TBL
 		   SET REP_YN = 'Y'
 		 WHERE REP_CODE = #{ repCode }
 	</update>
 
+	<!-- 신고된 클래스 반려처리 -->
 	<update id="modifySendbackClass" parameterType="ReportClassDTO">
 		UPDATE REPORT_CLASS_TBL
 		   SET REP_YN = 'N'
 		 WHERE REP_CODE = #{ repCode }
 	</update>
 	
+	<!-- 신고된 클래스 상세조회 -->
 	<select id="selectRepClass" resultMap="reportClassResultSet">
 		SELECT
 		       R.REP_CODE
@@ -839,11 +938,13 @@
 		     , C.CATEGORY_NAME
 		     , CL.TITLE
 		     , J.NICKNAME
+		     , A.IS_BLACK
 		 FROM REPORT_CLASS_TBL R
 		 JOIN REPORT_STATEMENT_TBL S ON(S.REP_TYPE_CODE = R.REP_TYPE_CODE)
 		 JOIN CLASS_TBL CL ON (CL.CLASS_CODE = R.CLASS_CODE)
 		 JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = CL.CATEGORY_CODE)
 		 JOIN JANDI_TBL J ON(J.EMAIL = CL.EMAIL)
+		 JOIN SSACK_TBL A ON(A.EMAIL = J.EMAIL)
 		WHERE R.REP_CODE = #{ repCode }
 	</select>
 	
@@ -954,6 +1055,7 @@
 	 						WHERE V2.RNUM BETWEEN ${ startRow } AND ${ endRow }
 	</select>
 
+	<!-- 신고처리 한 회원 조회해서 담기 -->
 	<select id="selectRepMember" resultMap="ssackResultSet">
 		SELECT
 		       S.EMAIL
@@ -967,12 +1069,14 @@
 		   AND R.REP_CODE = #{ repCode }
 	</select>
 	
+	<!-- 신고처리된 회원 경고처리 -->
 	<update id="updateMemberWarning" parameterType="MemberDTO">
 		UPDATE SSACK_TBL S
 		   SET S.WARNING = S.WARNING + 1
 		 WHERE EMAIL = #{ email }
 	</update>
 	
+	<!-- 경고 3번 된 회원 블랙리스트 처리 -->
 	<update id="updateMemberBlack" parameterType="MemberDTO">
 		UPDATE SSACK_TBL S
 		   SET S.IS_BLACK = 'Y'
@@ -980,6 +1084,7 @@
 		 WHERE EMAIL = #{ email }
 	</update>
 	
+	<!-- 신고처리 한 클래스 조회해서 담기 -->
  	<select id="selectReportClass" resultType="hashmap">
 		SELECT
 			   C.CLASS_CODE
@@ -994,12 +1099,14 @@
 		 WHERE R.REP_CODE = #{ repCode }
 	</select>
 	
+	<!-- 신고처리 된 클래스의 잔디 경고처리 -->
 	<update id="updateClassWarning">
 		UPDATE SSACK_TBL S
 		   SET S.WARNING = S.WARNING + 1
 		 WHERE EMAIL = #{ EMAIL }
 	</update>
 	
+	<!-- 경고 3번 된 잔디 블랙리스트 처리 -->
 	<update id="updateClassBlack">
 		UPDATE SSACK_TBL S
 		   SET S.IS_BLACK = 'Y'

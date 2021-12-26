@@ -17,6 +17,7 @@ public class ReportMemberDTO {
 	private char repYn;
 	private String repType;
 	private String nickName;
+	private String isBlack;
 	
 	private ReportStatementDTO reportStatementDTO;
 	
@@ -24,7 +25,7 @@ public class ReportMemberDTO {
 
 	public ReportMemberDTO(String email, int repCode, String contents, Date repDate, String imgPath, String repEmail,
 			int repTypeCode, String orgImgPath, char repYn, String repType, String nickName,
-			ReportStatementDTO reportStatementDTO) {
+			ReportStatementDTO reportStatementDTO, String isBlack) {
 		super();
 		this.email = email;
 		this.repCode = repCode;
@@ -38,6 +39,7 @@ public class ReportMemberDTO {
 		this.repType = repType;
 		this.nickName = nickName;
 		this.reportStatementDTO = reportStatementDTO;
+		this.isBlack = isBlack;
 	}
 
 	public String getEmail() {
@@ -136,12 +138,20 @@ public class ReportMemberDTO {
 		this.reportStatementDTO = reportStatementDTO;
 	}
 
+	public String getIsBlack() {
+		return isBlack;
+	}
+
+	public void setIsBlack(String isBlack) {
+		this.isBlack = isBlack;
+	}
+
 	@Override
 	public String toString() {
 		return "ReportMemberDTO [email=" + email + ", repCode=" + repCode + ", contents=" + contents + ", repDate="
 				+ repDate + ", imgPath=" + imgPath + ", repEmail=" + repEmail + ", repTypeCode=" + repTypeCode
 				+ ", orgImgPath=" + orgImgPath + ", repYn=" + repYn + ", repType=" + repType + ", nickName=" + nickName
-				+ ", reportStatementDTO=" + reportStatementDTO + "]";
+				+ ", reportStatementDTO=" + reportStatementDTO +  ", isBlack=" + isBlack + "]";
 	}
 
 	
