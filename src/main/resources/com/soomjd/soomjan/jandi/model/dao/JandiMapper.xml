@@ -243,7 +243,7 @@
 		  JOIN JANDI_TBL C ON(B.EMAIL=C.EMAIL)
 		  JOIN CLASS_TBL D ON(C.EMAIL=D.EMAIL)
 		 WHERE A.PAY_DATE BETWEEN #{startDay} AND #{endDay}
-		   AND D.EMAIL=#{ email }  
+		   AND B.EMAIL=#{ email }  
 	</select>
 	
 	<select id="selectMyAd"  resultMap="adResultMap">
