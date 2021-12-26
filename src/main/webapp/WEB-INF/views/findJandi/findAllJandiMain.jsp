@@ -17,6 +17,26 @@ pageEncoding="UTF-8"%>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   </head>
+  
+  <script>
+  	$(function(){
+  		
+  		/* 셀렉트박스 선택 시 페이지 리로드 */
+  		$("#searchCondition").on("change", function(){
+  			$("#searchform").submit();
+  		});
+
+  		/* 페이지 리로드 시 셀렉트 박스 값 유지하기 */
+  		$("#searchCondition").val("${ selectCriteria.searchCondition }");
+
+  		/* 페이지 리로드 시 검색값 유지하기 */
+  		$("#searchValue").val("${ selectCriteria.searchValue }");
+  		
+  	});
+ 	
+  
+  </script>
+  
   <body>
 
     <jsp:include page="../common/nav.jsp" />
@@ -33,16 +53,13 @@ pageEncoding="UTF-8"%>
   	<div class="row">
 		<div class="row" style="margin-bottom:10px;">
 			<div class="dropsearch">
-			<form id="searchform" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get" >
-				<input type="hidden" name="categoryCode" value="${ categoryCode }">
+			<form id="searchform" action="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain" method="get" >
 				<select class="ui dropdown" id="searchCondition" name="searchCondition" style="margin-left:120px; float:left; border-radius: 1.5rem;">
 					<option value="1">최신순</option>
 					<option value="2">인기순</option>
-		       		<option value="3">별점 높은순</option>
-		       		<option value="4">별점 낮은순</option>
 				</select>
 		       	<div class="main-searchbox" style="width:350px;">
-			        <input type="search" id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" value="<c:out value="${
+			        <input type="search" id="searchValue" name="searchValue" placeholder="찾으시는 잔디가 있으신가요?" value="<c:out value="${
 						selectCriteria.searchValue }" />">
 		          	<button type="submit">
 		           		<img src="${ pageContext.servletContext.contextPath }/resources/images/research.png"/>
