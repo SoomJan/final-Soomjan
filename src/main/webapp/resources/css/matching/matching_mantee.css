@@ -447,8 +447,7 @@ estimate_tableW > tr{
 
 #search_area {
 	position: relative;
-	left: 15px;
-	width: 530px;
+	width: 85%;
 	height: 40px;
 	border-radius: 15px;
 	border: 2px solid #48a66b;

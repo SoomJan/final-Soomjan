@@ -7,10 +7,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <title>신고된 회원 조회</title>
 
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css?"
-      rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css?" rel="stylesheet"/>
 
     <style>
    	.input-search {
@@ -223,6 +220,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
       </form>
 	<script>
+	/* 모달창에 신고된 회원 상세 내용 띄워주기 */
 	$(function(){
         $(".repbtn").click(function(e){
            console.log($(e.target).parent().children("input[type=hidden]").val());
@@ -251,7 +249,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
            $("#repMembermodal").show();
         });
 
-  		
+  		/* 신고버튼 클릭 후 '확인' 버튼 클릭 시 블랙리스트 회원인지 조회하기 */
   		$('#con-btn').click(function(event){
   			
   		    let isBlack = $('#isBlack').val();
@@ -265,29 +263,34 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   			 event.preventDefault();
   		});
   		
+  		/* 신고처리 */
   		$('.resultbtn').click(function(){
   			
   			 $("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/confirm").submit(); 
   		});
   		
+  		/* '취소' 클릭시 모달창 닫기 */
   		$('.resultExitbtn').click(function(){
   			$('#resultModal').hide();
   			$('#repMembermodal').hide();
   		});
   		
+  		/* 반려버튼 클릭 시 신고반려 처리하기 */
   		$('#end-btn').click(function(){
   			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/sendBack").submit();
   		});
   		
+  		/* 검색 기능 */
   		$('#searchbtn').click(function(){
   			$("#frm").prop("action","${ pageContext.servletContext.contextPath }/manager/reportedmentee").submit();
   		});
   		
   	});
-  		
-  	function modalEndBtn(item){
-  		$("#repMembermodal").hide();
-  	}
+  	
+		/* 모달창 상단의  x버튼 클릭 시 모달창 닫기 */
+	  	function modalEndBtn(item){
+	  		$("#repMembermodal").hide();
+	  	}
 	
 	</script>
   </body>

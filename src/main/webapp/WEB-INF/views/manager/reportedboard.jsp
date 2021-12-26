@@ -7,10 +7,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <title>신고된 클래스 조회</title>
 
-    <link
-      href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css"
-      rel="stylesheet"
-    />
+    <link href="${ pageContext.servletContext.contextPath }/resources/css/manager/managermain.css" rel="stylesheet"/>
 
     <style>
     .input-search {
@@ -142,7 +139,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   				<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="<c:out value="${ sessionScope.searchValue }"/>">
     			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
-    		<!-- 	<input type="button" id="searchbtn"> -->
   				</div>
  			 	<div class="results"></div>
 			</div>
@@ -186,6 +182,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </form>
       
       <script>
+      /* 모달창에 신고 상세 내용 띄워주기 */
       	$(function(){
     		$(".repClassBtn").click(function(e){
     			
@@ -214,6 +211,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     			$("#repClassmodal").show();
     		});
     		
+    		/* 신고버튼 눌렀을 때 블랙리스트 회원인지 아닌지 확인하기 */
       		$('#con-btn').click(function(event){
       			
       			 let isBlack = $('#isBlack').val();
@@ -227,24 +225,29 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       			event.preventDefault();
       		});
       		
+    		/* 신고버튼 클릭 후 '확인'누르면 신고 처리*/
       		$('.resultbtn').click(function(){
       			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/classConfirm").submit();
       		});
       		
+    		/* x 버튼 누르면 모든 모달창 닫기 */
       		$('.resultExitbtn').click(function(){
       			$('#resultModal').hide();
       			$('#repClassmodal').hide();
       		});
       		
+    		/* 반려 버튼 클릭 시 신고 반려처리*/
       		$('#end-btn').click(function(){
       			$("#repForm").prop("action","${ pageContext.servletContext.contextPath }/manager/classSendBack").submit();
       		});
       		
+    		/* 검색 기능 */
       		$('#searchbtn').click(function(){
       			$("#frm").prop("action","${ pageContext.servletContext.contextPath }/manager/reportedboard").submit();
       		});
       	});
       	
+      	/* 모달 상단 x 버튼 클릭 시 모달창 닫기 */
     	function modalEndBtn(item){
       		$("#repClassmodal").hide();
       	}

@@ -148,7 +148,7 @@ pageEncoding="UTF-8"%>
         <div class="swiper-wrapper">
           <c:forEach var="jandi" items="${ jandi }" end="7">
           <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='https://www.naver.com'">
+          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandi.email }'">
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${jandi.profile_path}"  />
           	</div>
           		 <div><h3 class="classinstructor">${ jandi.nickName }</h3></div>

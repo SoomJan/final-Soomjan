@@ -62,7 +62,7 @@
               </div>
               <div class="left aligned description reviewList">
                 <div class="card-content">${ reviewClass.CONTENTS }</div>
-                <div><img src="${ pageContext.servletContext.contextPath }/resources/images/${ reviewClass.FILE_PATH }"></div>
+                <div><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${ reviewClass.FILE_PATH }"></div>
               </div>
             </div>
             <div class="extra content" id="ti-date">
