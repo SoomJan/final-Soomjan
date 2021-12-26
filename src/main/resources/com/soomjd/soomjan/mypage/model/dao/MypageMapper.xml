@@ -195,6 +195,7 @@
 		       *
 		  FROM REPORT_MEMBER_TBL A
 		  JOIN REPORT_STATEMENT_TBL B ON(A.REP_TYPE_CODE = B.REP_TYPE_CODE)
+		  JOIN SSACK_TBL S ON(S.EMAIL = A.REP_EMAIL)
 		 WHERE A.REP_EMAIL = #{ email }
 		   AND A.REP_YN = 'Y'
 	</select>
@@ -233,6 +234,7 @@
 		       COUNT(*)
 		  FROM REPORT_MEMBER_TBL A
 		  JOIN REPORT_STATEMENT_TBL B ON(A.REP_TYPE_CODE = B.REP_TYPE_CODE)
+		  JOIN SSACK_TBL S ON(S.EMAIL = A.REP_EMAIL)
 		 WHERE A.REP_EMAIL = #{ email }
 		   AND A.REP_YN = 'Y'
 	</select>
@@ -322,6 +324,7 @@
 		</where>
 	</select>
 
+	<!-- 수강완료 클래스 조회 -->
 	<select id="finishClass" resultMap="purchaseClassSet" parameterType="hashmap">
 		SELECT
 		       F.RNUM
@@ -391,6 +394,7 @@
 		  	    WHERE F.RNUM >= #{ selectCriteria.startRow }	
 	</select>
 	
+	<!-- 클래스 후기 페이지 조회 -->
 	<select id="selectReviewClass" resultMap="purchaseClassSet" parameterType="HashMap">
 		SELECT
 		       C.EMAIL
@@ -406,6 +410,7 @@
 		 WHERE C.EMAIL = #{ email }
 	</select>
 	
+	<!-- 수강후기 작성 -->
 	<insert id="insertReviewContent" parameterType="HashMap">
 		INSERT INTO CLASS_REVIEW_TBL
 		(
@@ -556,6 +561,7 @@
 		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
 	</select>
 	
+	<!-- 수강후기 전체 갯수 -->
 	<select id="selectReviewTotalCount" resultType="_int" parameterType="HashMap">
 		SELECT
 		       COUNT(*)
@@ -564,6 +570,7 @@
 		   AND IS_DELETED = 'N'
 	</select>
 	
+	<!-- 수강후기 리스트 -->
 	<select id="selectReviewList" resultType="hashmap">
 		SELECT
 		       F.RNUM
@@ -617,11 +624,7 @@
 		  	    WHERE F.RNUM >= #{ selectCriteria.startRow }   
 	</select>
 	
-<!-- 	<update id="endClass" parameterType="purchaseClassSet">
-	
-	
-	</update> -->
-	
+	<!-- 수강후기 삭제 -->
 	<update id="deleteReview">
 		UPDATE CLASS_REVIEW_TBL
 		   SET IS_DELETED = NULL
