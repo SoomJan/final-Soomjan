@@ -43,6 +43,7 @@
 		FROM JANDI_TBL jt
     </select>
     
+    <!-- 잔디 페이지에서 보여줄 잔디 정보 조회하기 -->
     <select id="selectJandiInfo" resultMap="jandiInfoResultMap">
     	SELECT J.EMAIL
     		 , J.NICKNAME
