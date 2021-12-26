@@ -46,7 +46,7 @@ main { width: 90% !important;}
 								<c:forEach var="chatList" items="${myChatList}">
 					<div class="chatting" style="border:1px solid #48a66b">
 						
-							<div class="chat_content">
+							<div class="chat_content"  onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chattingroom?matchedCode=${chatList.MATCHED_CODE}'">
 								<div class="chat_content_1">
 									<div class="chat_content_3"></div>
 									<div class="chat_content_4 profile"> 
@@ -55,7 +55,7 @@ main { width: 90% !important;}
 									</div>
 								</div>
 								<div class="chat_content_2">
-									<div class="chat_content_3" onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chattingroom?matchedCode=${chatList.MATCHED_CODE}'"> 
+									<div class="chat_content_3"> 
 										<div class="chat_content_3_1" > ${chatList.NICKNAME}</div> 
 										<div class="chat_content_3_2"> ${ chatList.TITLE}</div> 
 									</div>
