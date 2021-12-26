@@ -81,10 +81,10 @@ main { width: 90% !important;}
 					<div class="chatlist">
 					
 					
+								<c:forEach var="jandiInfo" items="${jandiProfileAndName}">
 						<div class="chatting">
 						
 							<div class="chat_content">
-								<c:forEach var="jandiInfo" items="${jandiProfileAndName}">
 								<div class="chat_content_1">
 									<div class="chat_content_3"></div>
 									<div class="chat_content_4 profile"> 
@@ -99,14 +99,9 @@ main { width: 90% !important;}
 									</div>
 									<div class="chat_content_4"> <p></p></div>
 								</div>
-						
-								</c:forEach>
-							
-								
-								
 							</div><!-- 채팅 한 개 끝 -->
-							
 						</div> 
+								</c:forEach>
 	
 	
 	

@@ -127,15 +127,24 @@
     		 , C.ESTIMATE_CODE
 		     , C.TITLE
 		     , C.IS_MATCHED
+		     , C.CATEGORY_NAME
 		  FROM (SELECT ROWNUM RNUM
 		   		, B.ESTIMATE_CODE
 		   		, B.TITLE
 		    	, B.IS_MATCHED
+		    	, B.CATEGORY_NAME
 		    	FROM(SELECT 
 		    	     A.ESTIMATE_CODE
 		    	   , A.TITLE
 		    	   , A.IS_MATCHED
+		    	   , CA.CATEGORY_NAME
 		    	   FROM ESTIMATE_TBL A
+		    	   JOIN CATEGORY_TBL CA ON (CA.CATEGORY_CODE = A.CATEGORY_CODE)
+		    	   <where>
+    			  		<if test="'searchCondition' != null">
+    	 	 	  		A.TITLE LIKE '%' || #{searchValue} || '%'
+    	 		 		</if>
+    	 			</where>
                    ORDER BY A.ESTIMATE_CODE DESC
                    )B 
                    <![CDATA[
@@ -143,6 +152,8 @@
 	        	]]>	
               ) C
               WHERE C.RNUM >= #{ startRow }
+              
+              
                 
     </select>
     
@@ -195,6 +206,12 @@
     	SELECT
     		   COUNT(*)
     	  FROM ESTIMATE_TBL
+    	  <where>
+    	  <if test="'searchCondition' != null">
+    	    TITLE LIKE '%' || #{searchValue} || '%'
+    	  </if>
+    	  </where>
+    	  
     </select>
     
     
