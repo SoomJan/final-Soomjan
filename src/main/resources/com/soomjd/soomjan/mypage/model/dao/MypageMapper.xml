@@ -638,8 +638,8 @@
           </foreach>
 	</update>
 
-
-	    <insert id="registJandi" parameterType="com.soomjd.soomjan.jandi.model.dto.JandiDTO">
+	<!-- 잔디 가입 하기  by임예람 -->
+	<insert id="registJandi" parameterType="com.soomjd.soomjan.jandi.model.dto.JandiDTO">
     	INSERT INTO 
     		   JANDI_TBL J
    		   (
@@ -664,6 +664,7 @@
 		  	)
     </insert>
     
+    <!-- 잔디 여부 변경하기  by임예람 -->
     <update id="modifyIsJandi">
     	UPDATE SSACK_TBL SS
     	   SET SS.IS_JANDI = 'Y'
