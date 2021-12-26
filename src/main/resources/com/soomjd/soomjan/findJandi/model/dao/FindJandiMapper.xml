@@ -8,6 +8,7 @@
     	<id column="EMAIL" property="email"/>
     	<result column="NICKNAME" property="nickname"/>
     	<result column="PROFILE_PATH" property="profile_path"/>
+    	<result column="SUMVIEWS" property="sumviews"/>
     </resultMap>
     
      <resultMap type="com.soomjd.soomjan.jandi.model.dto.JandiDTO" id="jandiInfoResultMap">
@@ -36,35 +37,59 @@
     	<result column="RVCOUNT" property="rvCount"/>
     </resultMap>
     
-    <select id="selectFindJandi" resultMap="jandiResultMap">
+    <select id="selectFindAllJandi" resultMap="jandiResultMap">
     	SELECT
 		       B.RNUM
 		     , B.EMAIL
+		     , B.SUMVIEWS
 		     , B.NICKNAME
 		     , B.PROFILE_PATH
 		  FROM 
 			(SELECT 
 			       ROWNUM RNUM
 			     , A.EMAIL
+			     , A.SUMVIEWS
 				 , A.NICKNAME 
 			     , A.PROFILE_PATH	
 			FROM
-				(SELECT
-				       jt.EMAIL
+				(SELECT SUM(CL.VIEWS) SUMVIEWS
+				     , jt.EMAIL
 					 , jt.NICKNAME 
 					 , jt.PROFILE_PATH	
 				  FROM JANDI_TBL jt
-				 ORDER BY jt.NICKNAME DESC) A
+			     JOIN CLASS_TBL CL ON (jt.EMAIL = CL.EMAIL)
+			     WHERE CL.IS_DELETED = 'N'
+			     <if test='searchValue != null'>
+			       AND jt.NICKNAME LIKE '%' || #{ searchValue } || '%' 
+			     </if>
+			     GROUP BY jt.EMAIL, jt.NICKNAME, jt.PROFILE_PATH, jt.ENROLL_DATE
+				 <if test='searchCondition == null'>
+				 	 ORDER BY jt.NICKNAME ASC
+				 </if>
+				 <if test='searchCondition == "1"'>
+				 	 ORDER BY jt.ENROLL_DATE DESC
+				 </if>
+				 <if test='searchCondition == "2"'>
+				 	 ORDER BY SUMVIEWS DESC
+				 </if>	 
+					 
+			 ) A
 			 <![CDATA[
-			 WHERE ROWNUM <= #{ endRow }) B
-		   WHERE RNUM >= #{ startRow }
-			 ]]>	
+			 WHERE ROWNUM <= #{ endRow }
+			 ]]>
+			 ) B
+		     WHERE B.RNUM >= #{ startRow } 
+			 	
+							 
     </select>
     
      <select id="SelectFindJandiTotalCount" resultType="_int" parameterType="HashMap">
         SELECT
 		       COUNT(*)
 		  FROM JANDI_TBL A
+	   	  <if test='searchValue != null'>
+			     AND A.NICKNAME LIKE '%' || #{ searchValue } || '%' 
+		  </if>
 	      	  
     </select>
 
@@ -119,7 +144,7 @@
 		 WHERE ROWNUM BETWEEN 1 AND 3
     </select>
     
-    <!-- <select >
+    <select id="selectTopFindJandiList" resultMap="jandiResultMap">
     	SELECT ROWNUM,
 		       V.SUMVIEWS,
 		       V.NICKNAME,
@@ -136,6 +161,6 @@
 		     ORDER BY SUMVIEWS DESC
 		     )V
 		   WHERE ROWNUM BETWEEN 1 AND 9
-    </select> -->
+    </select>
 
 </mapper>

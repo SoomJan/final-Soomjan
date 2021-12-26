@@ -12,14 +12,14 @@ import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 public interface FindJandiMapper {
 
 
-	List<JandiDTO> selectFindJandi(SelectCriteria selectCriteria);
+	List<JandiDTO> selectFindAllJandi(SelectCriteria selectCriteria);
 
 	JandiDTO selectJandiInfo(String email);
 
 	List<FindClassDTO> selectThumbnailClassList(String email);
 
-	List<JandiDTO> selectrFindJandi(SelectCriteria selectCriteria);
-
 	int SelectFindJandiTotalCount();
+
+	List<JandiDTO> selectTopFindJandiList();
 
 }

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.soomjd.soomjan.common.paging.Pagenation;
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
-
 import com.soomjd.soomjan.findJandi.model.service.FindJandiService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
-import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/findJandi/*")
@@ -52,16 +47,12 @@ public class FindJandiController {
 	@GetMapping("/findAllJandiMain")
 	public void findAllJandiMain(Model model,@RequestParam(defaultValue = "1") int currentPage
 			, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue) {
-		// request.getParameter("currentPage") 
-		// http://localhost:8888/findAllJandiMain?currentPage=1
-		// 잔디 목록 조회하기
-		//List<JandiDTO> jandiList = findJandiService.selectfindJandi();
-		//System.out.println("jandiList : " + jandiList);
 		
-		//model.addAttribute("jandiList", jandiList);
-		// 검색을 위한 
+		// 검색값을 저장할 map 객체 선언
 		Map<String, Object> searchMap = new HashMap<>();
-		
+		// 파라미터로 가져온 searchValue를 map에 저장
+		searchMap.put("searchValue", searchValue);
+		// 한페이지당 뜨는 프로필 제한 갯수를 정하고, 페이징 버튼 갯수 정하기
 		int limit = 9;
 		int buttonAmount = 5;
 		
@@ -79,6 +70,7 @@ public class FindJandiController {
 		}
 		
 		System.out.println("selectCriteria : " + selectCriteria);
+		
 		searchMap.put("selectCriteria", selectCriteria);
 		
 		List<JandiDTO> jandiList = findJandiService.selectfindJandi(selectCriteria);
@@ -91,11 +83,20 @@ public class FindJandiController {
 	
 
 	
+	/**
+	 * 인기잔디를 불러오는 메소드
+	 * @param model
+	 * 
+	 * @author 오수빈
+	 */
 	@GetMapping("/findTopJandiMain")
 	public void findTopJandiMain(Model model) {
-		
+		// 인기잔디리스트 조회
 		List<JandiDTO> jandiTopList = findJandiService.selectTopFindJandiList();
 		
+		System.out.println("jandiTopList : " + jandiTopList);
+		
+		model.addAttribute("jandiTopList", jandiTopList);
  		
 	}
 	
@@ -121,13 +122,4 @@ public class FindJandiController {
 		return mv;
 	}
 
-	
-	@GetMapping("/detailJandi")
-	public void detailJandi() {}
-	
-	@GetMapping("/readmentor")
-	public void readmentor() {}
-	
-	@GetMapping("/jandiProfile")
-	public void jandiProfile() {}
 }
