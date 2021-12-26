@@ -39,14 +39,14 @@ main { width: 90% !important;}
 		<jsp:include page="../common/matching_mantee_sidebar.jsp" />
 		<div class="introduce">
 
-			<div class="matching-content">
-				
 				<p class="estimate_title">채팅 리스트</p>
+			<div class="matching-content" style="background-color: #e1f2e7; padding-top: 10px; border-radius: 20px;" >
+				
 					
-					<div class="chatting">
+								<c:forEach var="chatList" items="${myChatList}">
+					<div class="chatting" style="border:1px solid #48a66b">
 						
 							<div class="chat_content">
-								<c:forEach var="chatList" items="${myChatList}">
 								<div class="chat_content_1">
 									<div class="chat_content_3"></div>
 									<div class="chat_content_4 profile"> 
@@ -64,28 +64,28 @@ main { width: 90% !important;}
 								
 								
 						
-								</c:forEach>
 							
 							</div><!-- 채팅 한 개 끝 -->
 							
 						</div> 
+								</c:forEach>
 	
 						
 							
 				
 				<br><br>
 				
-				
-				 <jsp:include page="../common/Paging.jsp" />
+				<%-- 
+				 <jsp:include page="../common/Paging.jsp" /> --%>
 				
 				
 				<!-- <div class="back">
 					<button class="backBtn">목록으로</button>
 				</div> -->
 
-				<div class="write">
+				<!-- <div class="write">
 					<button class="writeBtn">매칭 요청</button>
-				</div>
+				</div> -->
 				
 			</div> <!-- matching-content 끝 -->
 

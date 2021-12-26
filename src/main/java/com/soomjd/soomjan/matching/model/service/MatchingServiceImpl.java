@@ -76,8 +76,8 @@ public class MatchingServiceImpl implements MatchingService{
 
 
 	@Override
-	public int selecetEstimateTotal() {
-		return mapper.selecetEstimateTotal();
+	public int selecetEstimateTotal(Map<String, String> searchMap) {
+		return mapper.selecetEstimateTotal(searchMap);
 	}
 
 

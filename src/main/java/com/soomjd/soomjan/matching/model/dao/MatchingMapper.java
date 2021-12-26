@@ -28,7 +28,7 @@ public interface MatchingMapper {
 	
 	List<EstimateDTO> estimateDetailJ(String estimateCode);
 
-	int selecetEstimateTotal();
+	int selecetEstimateTotal(Map<String, String> searchMap);
 
 	List<EstimateDTO> estimateMainJ(SelectCriteria selectCriteria);
 
