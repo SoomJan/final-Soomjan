@@ -1,6 +1,8 @@
 package com.soomjd.soomjan.findJandi.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,9 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.ModelAndView;
 
+import com.soomjd.soomjan.common.paging.Pagenation;
+import com.soomjd.soomjan.common.paging.SelectCriteria;
+
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
+
 import com.soomjd.soomjan.findJandi.model.service.FindJandiService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
@@ -30,9 +39,7 @@ public class FindJandiController {
 	// controller에서 Service를 요청하려면 
 	// controller에서는 service에 대한 정보를 가지고 있어야한다.
 	// has-a 관계이다.
-	
-	// findJandiService를 요청하기 위한 변수
-	private final FindJandiService findJandiService;
+	private FindJandiService findJandiService = null;
 	
 	// 매개변수
 	// 매개변수 있는 생성자를 이용해서 의존성 주입
@@ -43,14 +50,46 @@ public class FindJandiController {
 	
 	// 멘토보기를 클릭했을 때 호출되는 메소드
 	@GetMapping("/findAllJandiMain")
-	public void findAllJandiMain(Model model) {
-		
+	public void findAllJandiMain(Model model,@RequestParam(defaultValue = "1") int currentPage
+			, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue) {
+		// request.getParameter("currentPage") 
+		// http://localhost:8888/findAllJandiMain?currentPage=1
 		// 잔디 목록 조회하기
-		List<JandiDTO> jandiList = findJandiService.selectfindJandi();
+		//List<JandiDTO> jandiList = findJandiService.selectfindJandi();
+		//System.out.println("jandiList : " + jandiList);
+		
+		//model.addAttribute("jandiList", jandiList);
+		// 검색을 위한 
+		Map<String, Object> searchMap = new HashMap<>();
+		
+		int limit = 9;
+		int buttonAmount = 5;
+		
+		// 전체 잔디 수 조회
+		int totalCount = findJandiService.SelectFindJandiTotalCount(searchMap);
+		System.out.println("totalCount : " + totalCount);
+		
+		SelectCriteria selectCriteria = null;
+
+		if (searchCondition != null && !"".equals(searchCondition)) {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
+					searchValue);
+		} else {
+			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		}
+		
+		System.out.println("selectCriteria : " + selectCriteria);
+		searchMap.put("selectCriteria", selectCriteria);
+		
+		List<JandiDTO> jandiList = findJandiService.selectfindJandi(selectCriteria);
+		
 		System.out.println("jandiList : " + jandiList);
 		
 		model.addAttribute("jandiList", jandiList);
+		model.addAttribute("selectCriteria",selectCriteria);
 	}
+	
+
 	
 	@GetMapping("/findTopJandiMain")
 	public void findTopJandiMain(Model model) {
