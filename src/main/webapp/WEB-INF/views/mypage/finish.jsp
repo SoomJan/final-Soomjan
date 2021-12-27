@@ -80,10 +80,10 @@
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>
-    <input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }">
-    <input type="hidden" value="${ finishClass.reviewDTO.isDelete }">
-    <input type="hidden" value="${ finishClass.classCode }">
-    <input type="hidden" value="${ finishClass.classPurcCode }">
+	    <input type="hidden" name="payDate" id="payDate" value="${ finishClass.paymentDTO.payDate }">
+	    <input type="hidden" value="${ finishClass.classCode }">
+	    <input type="hidden" value="${ finishClass.classPurcCode }">
+	    <input type="hidden" value="${ finishClass.reviewDTO.isDelete }">
     </c:forEach>
   </tbody>
 </table>
@@ -111,8 +111,8 @@
               	<td><input type="text" class="t-categoryName" name="t-categoryName" style="border:none; text-align:center;"></td>
                 <td><input type="text" class="t-nickName" name="t-nickName" style="border:none; text-align:center;"></td>
                 <td><input type="text" class="t-date" name="t-date" style="border:none; text-align:center;"></td>
-                <input type="hidden" name="classCode" id="classCode" value="${ finishClass.classCode }">
-                <input type="hidden" name="classPurcCode" id="classPurcCode" value="${ finishClass.classPurcCode }">
+                <input type="hidden" name="classCode" id="classCode" value="">
+                <input type="hidden" name="classPurcCode" id="classPurcCode" value="">
               </tr>
             </tbody>
           </table>
@@ -166,17 +166,18 @@
   		$(".reviewbtn").on('click', function(e){
   			let $reviewbtn = e.target;
   			let $tr = $($reviewbtn).parent().parent();
-  			console.log($tr);
-  			console.log($($tr).children().eq(0).html());
-  			console.log($($tr).children().eq(4).children().eq(0).val());
-  			console.log("classCode : " + $($tr).children().eq(6).children().eq(0).val());
    			$('.t-categoryName').val($($tr).children().eq(0).html()); 
     		$('.t-title').val($($tr).children().eq(1).html());
   			$('.t-nickName').val($($tr).children().eq(2).html());
-  			$('#classCode').val($($tr).parent().children().eq(3).val());
-  			$('#classPurcCode').val($($tr).parent().children().eq(4).val());
-  			$('.t-date').val($($tr).parent().children().eq(1).val() + "-" + $($tr).children().eq(3).html());  
+  			$('#classCode').val($($tr).next().next().val());
+  			$('#classPurcCode').val($($tr).next().next().next().val());
+  			$('.t-date').val($($tr).next().val() + "-" + $($tr).children().eq(3).html());  
   			$('#reviewmodal').fadeIn();
+  			console.log($tr);
+  			console.log($('.t-title').val());
+  			console.log($($tr).children().eq(4).children().eq(0).val());
+  			console.log("classCode : " + $('#classCode').val());
+  			console.log("classPurcCode : " + $('#classPurcCode').val());
   			e.preventDefault();
   		});
         

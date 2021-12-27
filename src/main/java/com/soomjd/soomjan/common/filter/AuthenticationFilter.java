@@ -46,7 +46,6 @@ public class AuthenticationFilter implements Filter{
 		allPermitList.add("faq");
 		allPermitList.add("css");
 		allPermitList.add("resources");
-		allPermitList.add("matching");
 		
 		// 로그인한 사용자만 볼 수 있는 권한
 		List<String> memberPermitList = new ArrayList<String>();

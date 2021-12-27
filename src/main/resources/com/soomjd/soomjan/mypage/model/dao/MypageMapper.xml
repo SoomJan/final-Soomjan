@@ -636,10 +636,10 @@
 	</select>
 	
 	<!-- 수강후기 삭제 -->
-	<update id="deleteReview" parameterType="_int">
+	<delete id="deleteReview" parameterType="_int">
 		DELETE FROM CLASS_REVIEW_TBL
 		 WHERE REVIEW_CODE = #{ rvCode }
-	</update>
+	</delete>
 	
 	<!-- 수강 기간이 마감될 클래스들의 상태값 수강 완료로 바꿔주기 by 권순표 -->
     <update id="endClass" parameterType="PurchaseClassDTO">
