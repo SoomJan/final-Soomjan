@@ -119,13 +119,13 @@
             <br>
             <div class="review">
           <p class="review-title">클래스는 만족하셨나요?</p>
-            <p id="star">
+            <p id="pstar">
 			   <a href="#" class="on" id="1">★</a>
 			   <a href="#" class="on" id="2">★</a>
 			   <a href="#" class="on" id="3">★</a>
 			   <a href="#" id="4">★</a>
 			   <a href="#" id="5">★</a>
-			   <input type="hidden" id="reviewStar" name="reviewStar" value="3">
+			   <input type="hidden" id="star" name="star" value="3">
  			 <p>
         </div>
         <br><br>
@@ -216,12 +216,12 @@
         
       	/* 별점 표시 - 기본 3개 */
 		$( document ).ready(function() {
-			$( "#star a" ).click(function() {
+			$( "#pstar a" ).click(function() {
 				$(this).parent().children("a").removeClass("on");
 				$(this).addClass("on").prevAll("a").addClass("on");
 					var starRate = $(this).attr('id');
 					console.log(starRate);
-				$("#reviewStar").val(starRate);
+				$("#star").val(starRate);
 					return false;
 			});
 		}); 
