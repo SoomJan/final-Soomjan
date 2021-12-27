@@ -73,10 +73,10 @@
       <td>${ finishClass.classDTO.title }</td>
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq NULL }">
+      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y' || finishClass.reviewDTO.isDelete eq null }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 || finishClass.reviewDTO.isDelete eq 'N' }">
+      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N' }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>

@@ -149,6 +149,11 @@ public class MypageServiceImpl implements MypageService{
 
 	@Override
 	public int deleteReview(int rvCode) {
+		
+		// 1. rvCode를 가지고 select - 리뷰정보
+		// 2. 리뷰에 대한 내용을 이용해 insert
+		// 3. delete 리뷰 호출..
+		
 		return mapper.deleteReview(rvCode);
 	}
 
