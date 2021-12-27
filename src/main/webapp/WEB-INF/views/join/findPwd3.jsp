@@ -97,6 +97,7 @@ pageEncoding="UTF-8"%>
         });
 
 
+          /* 비밀번호 수정 */
           function goLogin() {
 
             let pwd = $("#pwdBoolean").prop("checked");

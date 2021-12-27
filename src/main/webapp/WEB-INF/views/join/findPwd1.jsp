@@ -49,11 +49,13 @@ pageEncoding="UTF-8"%>
 
         <script>
 
+          /* 이메일 존재 여부 확인 */
           function finishbtn() {
 
             let name = $("#name").val();
             let email = $("#email").val();
 
+            /* 빈값 체크 */
             if(!name) {
               showModal("이름을 입력해주세요.");
             } else if(!email) {

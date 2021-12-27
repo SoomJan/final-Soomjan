@@ -39,20 +39,35 @@ public class MemberController {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	/**
+	 * @author 권순표
+	 * 이용 약관 조회
+	 */
 	@GetMapping("terms")
 	public String termsForm() {
 		
 		return "join/userAgreement";
 	}
 
+	/**
+	 * @author 권순표
+	 * 회원가입 폼 조회
+	 */
 	@GetMapping("regist")
 	public String registForm() {
 
 		return "join/join";
 	}
 
+	/**
+	 * @author 권순표
+	 * 회원 정보 등록
+	 * @param member 사용자가 입력한 정보
+	 * @param proof 사용자가 입력한 인증 번호
+	 * @return 회원가입 성공 여부
+	 */
 	@PostMapping("regist")
-	public String registMember(@ModelAttribute MemberDTO member, @RequestParam("proof") String proof, HttpServletRequest request)
+	public String registMember(@ModelAttribute MemberDTO member, @RequestParam("proof") String proof)
 			throws MemberRegistException {
 
 		System.out.println("회원가입할 회원의 정보 : " + member);
@@ -82,6 +97,12 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * @author 권순표
+	 * 이메일 중복 체크
+	 * @param response 이메일 중복 여부
+	 * @param email 사용자가 입력한 이메일
+	 */
 	@PostMapping("idDupCheck")
 	public void idDupCheck(HttpServletResponse response, @RequestParam("email") String email) throws IOException {
 		
@@ -100,6 +121,12 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * @author 권순표
+	 * 인증번호 확인
+	 * @param response 인증번호 일치 여부
+	 * @param number 사용자가 입력한 인증 번호
+	 */
 	@PostMapping("mailCheck")
 	public void mailCheck(HttpServletResponse response, @RequestParam("number") String number) throws IOException {
 		
@@ -118,6 +145,12 @@ public class MemberController {
 		
 	}
 	
+	/** 
+	 * @author 권순표
+	 * 닉네임 중복 체크
+	 * @param response 닉네임 중복 여부
+	 * @param nickName 사용자가 입력한 닉네임
+	 */
 	@PostMapping("nickDupCheck")
 	public void nickDupCheck(HttpServletResponse response, @RequestParam("nickName") String nickName) throws IOException {
 		
@@ -136,12 +169,23 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * @author 권순표
+	 * 로그인 페이지 조회
+	 */
 	@GetMapping("login")
 	public String loginFrom() {
 
 		return "login/login";
 	}
 
+	/**
+	 * @author 권순표 
+	 * 사용자 로그인
+	 * @param response 이메일 및 비밀번호 일치 여부
+	 * @param email 사용자 입력 이메일
+	 * @param password 사용자 입력 비밀번호
+	 */
 	@PostMapping("login")
 	public void login(SessionStatus status, HttpServletResponse response, @RequestParam("email") String email, @RequestParam("password") String password, Model model) throws IOException {
 		
@@ -154,12 +198,16 @@ public class MemberController {
 	    map.put("email", email);
 	    map.put("password", password);
 	    
+	    /* 사용자가 입력한 이메일이 존재하는지 확인 */
 	    if(!memberService.selectEmail(map)) {
 	    	response.getWriter().write("emailFalse");
+	    
+	    /* 해당 이메일의 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 확인 */
 	    } else if (!passwordEncoder.matches(password, memberService.selectEncPassword(map))) {
 	    	response.getWriter().write("pwdFalse");
-	    } else {
 	    	
+	    /* 회원 정보를 조회 후 세션에 담아준다. */	
+	    } else {
 	    	MemberDTO loginMember = memberService.loginMember(map);
 	    	model.addAttribute("loginMember", loginMember);
 	    	
@@ -196,12 +244,23 @@ public class MemberController {
 	    }
 	}
 	
+	/**
+	 * @author 권순표
+	 * 이메일 찾기 폼 조회
+	 */
 	@GetMapping("findEmail")
 	public String findEmailForm() {
 		
 		return "join/findEmail";
 	}
 	
+	/**
+	 * @author 권순표
+	 * 사용자 이메일 찾기
+	 * @param response 사용자의 이메일
+	 * @param name 사용자가 입력한 이름
+	 * @param phone 사용자가 입력한 핸드폰 번호
+	 */
 	@PostMapping("findEmail")
 	public void findEmail(HttpServletResponse response, @RequestParam("name") String name, @RequestParam("phone") String phone) throws IOException {
 		
@@ -223,12 +282,23 @@ public class MemberController {
 	}
 	
 	
+	/**
+	 * @author 권순표
+	 * 비밀번호 찾기 폼 조회
+	 */
 	@GetMapping("findPwd")
 	public String findPwdForm() {
 		
 		return "join/findPwd1";
 	}
 	
+	/**
+	 * @author 권순표
+	 * 사용자 비밀번호 찾기
+	 * @param response 사용자 이메일 존재 여부
+	 * @param name 사용자 입력한 이름
+	 * @param email 사용자가 입력한 이메일
+	 */
 	@PostMapping("findPwd")
 	public void findPwd(HttpServletResponse response, @RequestParam("name") String name, @RequestParam("email") String email) throws IOException {
 		
@@ -249,6 +319,11 @@ public class MemberController {
 		}
 	}
 	
+	/**
+	 * @author 권순표
+	 * 사용자 비밀번호 찾기
+	 * @param email 사용자 입력 이메일
+	 */
 	@PostMapping("findPwd2")
 	public ModelAndView findPwd2(@RequestParam("email") String email, ModelAndView mv) {
 		
@@ -260,6 +335,13 @@ public class MemberController {
 		return mv;
 	}
 	
+	/**
+	 * @author 권순표
+	 * 사용자 이메일로 전송한 인증번호와 사용자가 입력한 인증번호 일치 확인
+	 * @param number 사용자 입력 인증번호
+	 * @param email 사용자 입력 이메일
+	 * @param response 인증번호 일치 여부
+	 */
 	@PostMapping("pwdCheck")
 	public void pwdCheck(@RequestParam("number") String number, @RequestParam("email") String email, HttpServletResponse response) throws IOException {
 		
@@ -279,6 +361,11 @@ public class MemberController {
 	}
 	
 	
+	/**
+	 * @author 권순표
+	 * 사용자 비밀번호 찾기
+	 * @param email 사용자 입력 이메일
+	 */
 	@PostMapping("findPwd3")
 	public ModelAndView findPwd3(@RequestParam("email") String email, ModelAndView mv) {
 		
@@ -290,6 +377,13 @@ public class MemberController {
 		return mv;
 	}
 	
+	/**
+	 * @author 권순표
+	 * 사용자 비밀번호 수정
+	 * @param response 수정 성공 여부
+	 * @param email 사용자 입력 이메일
+	 * @param pwd 사용자 입력 패스워드
+	 */
 	@PostMapping("updatePwd")
 	public void updatePwd(HttpServletResponse response, @RequestParam("email") String email, @RequestParam("pwd") String pwd) throws IOException {
 		
@@ -313,8 +407,11 @@ public class MemberController {
 		}
 	}
 	
-	
-	
+	/**
+	 * @author 권순표
+	 * 사용자 로그아웃
+	 * @param status 현재 세션
+	 */
 	@GetMapping("/logout")
 	public String logout(SessionStatus status) {
 		
