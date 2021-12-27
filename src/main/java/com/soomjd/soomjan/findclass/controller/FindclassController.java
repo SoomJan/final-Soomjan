@@ -34,8 +34,11 @@ public class FindclassController {
 	 * @param categoryCode 사용자가 클릭한 카테고리 번호
 	 */
 	@GetMapping("/findAllClassMain")
-	public ModelAndView findAllClassMain(ModelAndView mv, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,
-			@RequestParam(defaultValue = "1") int currentPage, @RequestParam(required = false) String categoryCode) {
+	public ModelAndView findAllClassMain(ModelAndView mv,
+			@RequestParam(required = false) String searchCondition,
+			@RequestParam(required = false) String searchValue,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String categoryCode) {
 
 		System.out.println("파인드 클래스 메인입니다 ㅋㅋ");
 		System.out.println("보여줄 클래스 카테고리 번호 : " + categoryCode);
@@ -81,7 +84,7 @@ public class FindclassController {
 		List<CategoryDTO> categoryList = findClassService.selectCategory();
 		System.out.println(categoryList);
 
-		/* 코드가 복잡해지지만 조회 화면에 카테고리 이름을 띄워주고 싶어요 */
+		/* 조회 화면에 띄워줄 카테고리 이름 구하기 */
 		String categoryName = "";
 
 		if(categoryCode != null && categoryCode != "") {
@@ -134,7 +137,7 @@ public class FindclassController {
 		List<CategoryDTO> categoryList = findClassService.selectCategory();
 		System.out.println(categoryList);
 
-		/* 코드가 복잡해지지만 조회 화면에 카테고리 이름을 띄워주고 싶어요 */
+		/* 조회 화면에 띄워줄 카테고리 이름 구하기 */
 		String categoryName = "";
 
 		if(categoryCode != null && categoryCode != "") {
