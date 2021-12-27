@@ -5,7 +5,7 @@
 <html>
 <head>
 
-<title>멘토 프로필</title>
+<title>잔디 프로필</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>

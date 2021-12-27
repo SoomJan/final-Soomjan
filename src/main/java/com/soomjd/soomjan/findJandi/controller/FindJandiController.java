@@ -59,6 +59,7 @@ public class FindJandiController {
 		// 전체 잔디 수 조회
 		int totalCount = findJandiService.SelectFindJandiTotalCount(searchMap);
 		System.out.println("totalCount : " + totalCount);
+		
 		// 검색에대한 정보를 담은 객체에 null 값으로 초기화
 		SelectCriteria selectCriteria = null;
 		// 검색조건이 null이 아니거나 빈칸이 아니라면 검색조건과 검색값을 SelectCriteria 넣어준다

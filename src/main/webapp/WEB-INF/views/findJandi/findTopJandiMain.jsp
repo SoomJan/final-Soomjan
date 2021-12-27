@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%>
 
   <!-- Page Heading -->
   <h1 class="my-4">멘토 보기 | 
-    <small>인기 멘토</small>
+    <small>인기 잔디</small>
   </h1>
   
 
