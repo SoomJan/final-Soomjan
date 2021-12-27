@@ -68,8 +68,8 @@
   <thead>
     <tr>
       <th colspan="2">클래스제목</th>
-      <th id="dateSortBtn">구입 날짜</th>
-      <th id="paySortBtn">결제 금액</th>
+      <th id="dateSortBtn">구입 날짜 <span id="dateIcon"><i class="sort icon"></i></span></th>
+      <th id="paySortBtn">결제 금액 <span id="payIcon"><i class="sort icon"></i></span></th>
     </tr>
   </thead>
   <tbody>
@@ -138,9 +138,11 @@
           }
         );
 
+        /* <i class="sort amount down icon"></i>
+        <i class="sort amount up icon"></i> */
         /* 구입날짜 정렬 */
         $("#dateSortBtn").click(function() {
-
+	
           let sort = $("#sort").val();
 
         if(!sort || sort == "P" || sort == "PA" || sort == "DA") {
