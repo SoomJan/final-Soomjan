@@ -665,4 +665,5 @@
     	 WHERE EMAIL = #{ email }
     	   AND CLASS_CODE = #{ classCode }
     </delete>
+    
 </mapper>
