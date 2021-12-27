@@ -70,6 +70,10 @@ table{
 				<h4>등록할 이미지 파일을 선택해 주세요.</h4>
 				<hr style="margin-top:10px; margin-bottom: 10px;">
 				<input type="file" name="adPoster" style="margin-left: 30px;">
+				<div style="margin: 20px;">
+					광고 사진은 홈페이지 전면에 게재되기 때문에 좌우로 긴 사진을 사용하는 것이 좋습니다. 
+					비율이 맞지 않는 경우 사진이 부득이하게 편집될 수 있습니다.
+				</div>
 				
 				<br><br>
 				<h4>광고 안내</h4>

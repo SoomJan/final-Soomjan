@@ -66,7 +66,7 @@ public class JandiServiceImpl implements JandiService{
 	}
 
 	@Override
-	public int selectClassesCode(String myClass) {
+	public List<Integer> selectClassesCode(String myClass) {
 		
 		return jandiMapper.selectClassesCode(myClass);
 	}

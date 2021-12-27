@@ -89,10 +89,12 @@ table {
 						$.ajax({
 							url:"${ pageContext.servletContext.contextPath }/jandi/jandiPay",
 							dataType:'text',
+							async:false,
 							success:function(data){
 								alert(data);
 								
-								location.href=data;
+								/* location.href=data; */
+								window.open(data);
 								
 							},
 							error:function(error,status,xhr){

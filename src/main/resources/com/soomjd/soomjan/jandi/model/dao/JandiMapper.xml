@@ -336,7 +336,7 @@
 	<update id="updateStartDate">
 		UPDATE 
 		       AD_TBL
-		   SET START_DATE=TO_DATE(TO_CHAR(SYSDATE+1,'YYYYMMDD'),'YYYY-MM-DD')
+		   SET START_DATE=TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYY-MM-DD')
 		 WHERE AD_CODE=#{ adCode }      
 	</update>
 	
@@ -437,7 +437,7 @@
 			 , ORG_IMG_PATH
 			 , IS_ADVERTISED
 		  FROM AD_TBL 
-		 WHERE AD_CODE=#{ adCode }
+		 WHERE CLASS_CODE=#{ adCode }
 	</select>
 	
 </mapper>
