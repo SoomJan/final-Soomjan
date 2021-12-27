@@ -523,11 +523,8 @@ public class MypageController {
 	 * @author 효진
 	 */
 	@PostMapping("deleteReview")
-	public String deleteReview(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
-		
-		// rvCode 파라미터 값 가져오기
-		int rvCode = Integer.parseInt(request.getParameter("rvCode"));
-		
+	public String deleteReview(@RequestParam int rvCode, HttpSession session, RedirectAttributes rttr) {
+
 		// 가져온 파라미터 값 확인하기
 		System.out.println("rvCode : " + rvCode);
 		
