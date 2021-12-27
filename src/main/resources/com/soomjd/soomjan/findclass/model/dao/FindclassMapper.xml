@@ -47,9 +47,31 @@
     <!-- 현재 운영중인 전체 클래스 조회 by 권순표 -->
     <select id="selectfindclass" resultMap="findClassResultMap" parameterType="HashMap">
     	SELECT V2.RNUM
-		     , V2.*
+		     , V2.CLASS_CODE
+		     , V2.CREATE_DATE 
+		     , V2.TAG 
+		     , V2.TITLE 
+		     , V2.PRICE 
+		     , V2.FILE_PATH
+		     , V2.VIEWS
+		     , V2.PROFILE_PATH
+		     , V2.NICKNAME 
+		     , V2.CATEGORY_NAME
+		     , V2.AVGSTAR
+		     , V2.RVCOUNT
 		  FROM (SELECT ROWNUM RNUM
-				     , V.*
+				     , V.CLASS_CODE
+				     , V.CREATE_DATE 
+				     , V.TAG 
+				     , V.TITLE 
+				     , V.PRICE 
+				     , V.FILE_PATH
+				     , V.VIEWS
+				     , V.PROFILE_PATH
+				     , V.NICKNAME 
+				     , V.CATEGORY_NAME
+				     , V.AVGSTAR
+				     , V.RVCOUNT
 				  FROM (SELECT A.CLASS_CODE
 						     , A.CREATE_DATE 
 						     , A.TAG 
@@ -108,9 +130,31 @@
    <!-- 인기 클래스 정보 조회 by 권순표 -->
     <select id="selectTopClass" resultMap="findClassResultMap" parameterType="Hashmap">
         SELECT V2.RNUM
-             , V2.*
+             , V2.CLASS_CODE
+             , V2.CREATE_DATE 
+             , V2.TAG 
+             , V2.TITLE 
+             , V2.PRICE 
+             , V2.FILE_PATH
+             , V2.VIEWS
+             , V2.PROFILE_PATH
+             , V2.NICKNAME 
+             , V2.CATEGORY_NAME
+             , V2.AVGSTAR
+             , V2.RVCOUNT
 		  FROM (SELECT ROWNUM RNUM
-		             , V.*
+		             , V.CLASS_CODE
+		             , V.CREATE_DATE 
+		             , V.TAG 
+		             , V.TITLE 
+		             , V.PRICE 
+		             , V.FILE_PATH
+		             , V.VIEWS
+		             , V.PROFILE_PATH
+		             , V.NICKNAME 
+		             , V.CATEGORY_NAME
+		             , V.AVGSTAR
+		             , V.RVCOUNT
 				  FROM (SELECT A.CLASS_CODE
 						     , A.CREATE_DATE 
 						     , A.TAG 
