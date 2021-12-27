@@ -73,10 +73,10 @@
       <td>${ finishClass.classDTO.title }</td>
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq NULL }">
+      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y' || finishClass.reviewDTO.isDelete eq null }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 || finishClass.reviewDTO.isDelete eq 'N' }">
+      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N' }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>
@@ -119,13 +119,13 @@
             <br>
             <div class="review">
           <p class="review-title">클래스는 만족하셨나요?</p>
-            <p id="star">
+            <p id="pstar">
 			   <a href="#" class="on" id="1">★</a>
 			   <a href="#" class="on" id="2">★</a>
 			   <a href="#" class="on" id="3">★</a>
 			   <a href="#" id="4">★</a>
 			   <a href="#" id="5">★</a>
-			   <input type="hidden" id="reviewStar" name="reviewStar" value="3">
+			   <input type="hidden" id="star" name="star" value="3">
  			 <p>
         </div>
         <br><br>
@@ -216,12 +216,12 @@
         
       	/* 별점 표시 - 기본 3개 */
 		$( document ).ready(function() {
-			$( "#star a" ).click(function() {
+			$( "#pstar a" ).click(function() {
 				$(this).parent().children("a").removeClass("on");
 				$(this).addClass("on").prevAll("a").addClass("on");
 					var starRate = $(this).attr('id');
 					console.log(starRate);
-				$("#reviewStar").val(starRate);
+				$("#star").val(starRate);
 					return false;
 			});
 		}); 

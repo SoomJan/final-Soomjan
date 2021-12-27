@@ -135,6 +135,8 @@ public interface ManagerService {
 
 	int updateBlackCancelMember(String email);
 
+	int selectManagerTotalCount(ManagerDTO manager);
+
 
 	
 

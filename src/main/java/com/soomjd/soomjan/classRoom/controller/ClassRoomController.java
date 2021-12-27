@@ -75,7 +75,7 @@ public class ClassRoomController{
 	 * @param searchValue
 	 * @param currentPage
 	 * 
-	 * @author 임예람
+	 * @author 임예람, 양효진
 	 */
 	@GetMapping("classRoom")
 	public void classRoom(Model model, @RequestParam int classCode, HttpSession session, @RequestParam(required = false) String searchCondition,
@@ -185,7 +185,7 @@ public class ClassRoomController{
 	 * @param model
 	 * @param currentPage
 	 * 
-	 * @author 임예람
+	 * @author 임예람, 양효진
 	 */
 	@GetMapping("classLearningBoard")
 	public void classLearningBoard(Model model, @RequestParam(defaultValue = "1") int currentPage) {
@@ -548,8 +548,8 @@ public class ClassRoomController{
 	 * @author 임예람
 	 */
 	@PostMapping("uploadLearningFile")
-	public String uploadLearningFile(@RequestParam MultipartFile file, @RequestParam int postCode, HttpSession session,
-			RedirectAttributes rttr) {
+	public String uploadLearningFile(@RequestParam MultipartFile file, @RequestParam int postCode
+			, HttpSession session, RedirectAttributes rttr) {
 
 		// 해당 잔디인지 아닌지 구분하기 위해 선언
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
@@ -573,17 +573,15 @@ public class ClassRoomController{
 		String originFileName = file.getOriginalFilename();
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-
 		
 		//파일 저장에 성공하면 데이터베이스에 인서트 후 리다이렉트 메세지 설정
 		if(fileWrapper.uploadSingleFile(file, savedName, filePath)) {
-	  
-		// DB에 저장할 파일 DTO 
-		ClassFileDTO classFile = new ClassFileDTO();
-		classFile.setEmail(member.getEmail()); classFile.setFilePath(dir + "/" +
-		savedName); classFile.setOrgFilePath(originFileName);
-		classFile.setPostCode(postCode);
-	  
+			// DB에 저장할 파일 DTO 
+			ClassFileDTO classFile = new ClassFileDTO();
+			classFile.setEmail(member.getEmail()); classFile.setFilePath(dir + "/" +
+			savedName); classFile.setOrgFilePath(originFileName);
+			classFile.setPostCode(postCode);
+			
 			if(classRoomService.registLearningFile(classFile) > 0) {
 				rttr.addFlashAttribute("uploadMessage", "업로드를 완료했습니다."); 
 			}else {

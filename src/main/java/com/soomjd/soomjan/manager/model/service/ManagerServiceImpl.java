@@ -346,5 +346,11 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 
+	@Override
+	public int selectManagerTotalCount(ManagerDTO manager) {
+		return mapper.selectManagerTotalCount(manager);
+	}
+
+
 
 }

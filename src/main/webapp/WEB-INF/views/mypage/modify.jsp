@@ -95,7 +95,7 @@ pageEncoding="UTF-8"%>
           });
         });
 
-        /* 이메일 중복 체크 */
+        /* 닉네임 중복 체크 */
         function duplicationCheck2() {
           let nickName = $("#nickName").val();
 
@@ -140,7 +140,7 @@ pageEncoding="UTF-8"%>
             /* 닉네임만 바뀌었을 경우 중복 체크 */
             if(!(nickName == "${ sessionScope.loginMember.nickName }")) {
               if(!nickBool) {
-                showModal("이메일을 다시 확인해주세요.");
+                showModal("닉네임을 다시 확인해주세요.");
                 return false;
               }
             }
@@ -153,6 +153,7 @@ pageEncoding="UTF-8"%>
               }
             }
 
+            /* 회원 정보 수정 */
               $.ajax({
                 url: "${ pageContext.servletContext.contextPath }/mypage/modify",
                 type: "post",

@@ -94,7 +94,7 @@ pageEncoding="UTF-8"%>
 
         <div class="content">
           <div class="title">닉네임</div>
-          <input type="text" name="nickName" id="nickName"/>
+          <input type="text" placeholder="닉네임을 입력하세요" name="nickName" id="nickName"/>
           <button type="button" class="onButton" onclick="return duplicationCheck2()">중복확인</button>
           <input type="checkbox" id="nickBoolean" style="display: none" />
         </div>

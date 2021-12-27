@@ -19,6 +19,7 @@
         <result column="BLACK_END_DATE" property="blackEndDate"/>
     </resultMap>
     
+    <!-- 회원 정보 등록하기 by 권순표 -->
     <insert id="insertMember" parameterType="MemberDTO">
         INSERT
 		  INTO SSACK_TBL
@@ -49,6 +50,7 @@
 		)
     </insert>
     
+    <!-- 암호화된 비밀번호 조회하기 by 권순표 -->
     <select id="selectEncPassword" resultType="java.lang.String" parameterType="HashMap">
         SELECT
 		       A.PASSWORD
@@ -57,6 +59,7 @@
 		   AND IS_EXIT = 'N'
     </select>
     
+    <!-- 이메일의 존재 유무 확인하기 by 권순표 -->
     <select id="selectEmail" resultType="_int" parameterType="HashMap">
         SELECT 
 		       COUNT(*)
@@ -65,6 +68,7 @@
            AND IS_EXIT = 'N'
     </select>
     
+    <!-- 세션에 등록할 회원 정보 구해오기 by 권순표 -->
     <select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
         SELECT
 		       A.EMAIL
@@ -82,6 +86,7 @@
 		   AND A.IS_EXIT = 'N'
     </select>
     
+    <!-- 이메일 중복 체크 by 권순표 -->
     <select id="idDupCheck" resultType="_int" parameterType="HashMap">
         SELECT
 		       COUNT(*)
@@ -89,6 +94,7 @@
 		 WHERE A.EMAIL= #{ email }
     </select>
     
+    <!-- 닉네임 중복 체크 by 권순표 -->
     <select id="nickDupCheck" resultType="_int" parameterType="HashMap">
         SELECT
 		       COUNT(*)
@@ -96,6 +102,7 @@
 		 WHERE A.NICKNAME= #{ nickName }
     </select>
     
+    <!-- 사용자 이메일 찾기 by 권순표 -->
     <select id="findEmail" resultType="java.lang.String" parameterType="HashMap">
         SELECT
                A.EMAIL
@@ -104,6 +111,7 @@
            AND A.PHONE = #{ phone }
     </select>
     
+    <!-- 사용자 비밀번호(계정) 존재 유무 확인 by 권순표 -->
     <select id="findPwd" resultType="_int" parameterType="HashMap">
         SELECT
 		       COUNT(*)
@@ -112,6 +120,7 @@
            AND A.EMAIL= #{ email }
     </select>
     
+    <!-- 사용자 비밀번호 수정 by 권순표 -->
     <update id="updatePwd" parameterType="HashMap">
         UPDATE 
 		       SSACK_TBL A
@@ -119,6 +128,7 @@
 		 WHERE A.EMAIL = #{ email }
     </update>
     
+    <!-- 회원가입 단에서 인증번호 발송 시 인증번호 등록 by 권순표 -->
     <insert id="mailCheckInsert" parameterType="java.lang.String">
         INSERT
 		  INTO EMAIL_CHECK_TBL 
@@ -135,6 +145,7 @@
 		)
     </insert>
     
+    <!-- 가장 최근에 등록된 인증번호 조회 by 권순표 -->
     <select id="numberCheck" resultType="_int">
         SELECT V2.CHECK_NUMBER
 		  FROM (SELECT ROWNUM RNUM
@@ -147,18 +158,21 @@
 		       )V2
     </select>
     
+    <!-- 회원가입 시 인증번호와 묶어 사용자 이메일 등록 by 권순표 -->
     <update id="checkUpdate" parameterType="HashMap">
         UPDATE EMAIL_CHECK_TBL A 
 		   SET A.EMAIL = #{ email }
 		 WHERE A.CHECK_NUMBER = #{ number }
     </update>
     
+    <!-- 비밀번호 찾기 단에서 인증번호 발송 시 인증번호 업데이트 by 권순표 -->
     <update id="mailCheckUpdate" parameterType="HashMap">
         UPDATE EMAIL_CHECK_TBL A
 		   SET A.CHECK_NUMBER = #{ number }
 		 WHERE A.EMAIL = #{ email }
     </update>
     
+    <!-- 해당 이메일의 인증번호 조회 by 권순표 -->
     <select id="pwdCheck" resultType="_int" parameterType="java.lang.String">
         SELECT A.CHECK_NUMBER 
 		  FROM EMAIL_CHECK_TBL A
@@ -179,7 +193,7 @@
   		 WHERE EMAIL = #{ email }
 	</select>
 	
-	<!-- 블랙리스트 해지 하기 -->
+	<!-- 블랙리스트 해지 하기 by임예람  -->
 	<update id="modifyBlackStatus">
 		UPDATE SSACK_TBL
 		   SET IS_BLACK = 'N'

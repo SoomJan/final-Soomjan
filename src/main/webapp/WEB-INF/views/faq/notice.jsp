@@ -80,7 +80,7 @@ pageEncoding="UTF-8"%>
           </thead>
           <tbody>
             <c:forEach var="faq" items="${ faqList }">
-              <tr onclick="location.href='${pageContext.servletContext.contextPath}/manager/noticeDetail/${ faq.postCode }'">
+              <tr onclick="location.href='${pageContext.servletContext.contextPath}/faq/noticeDetail/${ faq.postCode }'">
                 <td class="text-left">${ faq.title }</td>
                 <td>${ faq.writeDate }</td>
               </tr>
