@@ -149,7 +149,7 @@
     <select id="numberCheck" resultType="_int">
         SELECT V2.CHECK_NUMBER
 		  FROM (SELECT ROWNUM RNUM
-		            ,  V.*
+		            ,  V.CHECK_NUMBER
 				  FROM (SELECT A.CHECK_NUMBER
 						  FROM EMAIL_CHECK_TBL A
 						 ORDER BY CHECK_CODE DESC
