@@ -88,7 +88,7 @@
     </resultMap>
     
     
-    
+    <!-- 잔디 정보 조회하기 by 임예람 -->
     <select id="selectJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
 			 , JAN.NICKNAME
@@ -103,6 +103,7 @@
 	   WHERE JAN.EMAIL = #{ email }
     </select>
     
+    <!-- 해당 잔디의 클래스 코드, 타이틀 조회 by 임예람 -->
     <select id="selectClassCodeList" resultType="hashmap">
     	SELECT 
     		   CLASS_CODE
@@ -123,6 +124,7 @@
     
     </update>
 
+	<!-- 카테고리 테이블 조회 by 임예람 -->
     <select id="selectCategoryList" resultType="hashmap">
     	SELECT * FROM CATEGORY_TBL
     </select>
@@ -270,12 +272,14 @@
 	
 	</update>
 	
+	<!-- 잔디 닉네임 변경하기 by 임예람 -->
 	<update id="modifyNickName">
 		UPDATE JANDI_TBL
 		   SET NICKNAME = #{ nickName }
 		 WHERE EMAIL = #{ email }
 	</update>
 	
+	<!-- 해당 잔디의 클래스 썸네일 3개만 조회하기 by 임예람 -->
 	<select id="selectThumbnailClassList" resultMap="findClassResultMap">
 		 SELECT V.CLASS_CODE
 		      , V.CREATE_DATE 

@@ -24,27 +24,23 @@ public class FindJandiServiceImpl implements FindJandiService{
 	@Override
 	public List<JandiDTO> selectfindJandi(SelectCriteria selectCriteria) {
 		
-		List<JandiDTO> jandiDTOList = findJandiMapper.selectFindJandi(selectCriteria);
+		List<JandiDTO> jandiDTOList = findJandiMapper.selectFindAllJandi(selectCriteria);
 		
 		return jandiDTOList;
 	}
 
 	@Override
-	public List<JandiDTO> mainJandi() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<JandiDTO> selectTopFindJandiList() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<JandiDTO> jandiDTOList = findJandiMapper.selectTopFindJandiList();
+		
+		return jandiDTOList;
 	}
 
 
 	// 언제 실행 지 
-	//  무엇이을 실행할건지 
-	//  어떤 값을 받을건지 
+	// 무엇이을 실행할건지 
+	// 어떤 값을 받을건지 
 	@Override
 	public int SelectFindJandiTotalCount(Map<String, Object> searchMap) {
 		
@@ -62,7 +58,5 @@ public class FindJandiServiceImpl implements FindJandiService{
 		return findJandiMapper.selectThumbnailClassList(email);
 
 	}
-
-
 
 }
