@@ -25,5 +25,8 @@ public interface MainService {
 	
 	// 가장 최근에 등록된 공지사항
 	FaqDTO lastestFaq();
+	
+	// 메인 카로셀 광고
+	List<ClassDTO> adClass();
 
 }
