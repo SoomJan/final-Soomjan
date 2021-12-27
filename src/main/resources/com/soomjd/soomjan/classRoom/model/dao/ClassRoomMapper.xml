@@ -597,7 +597,7 @@
     	   AND IS_DELETED = 'N'
     </select>
     
-    <!-- 해당 클래스의 조회수 올리기  -->
+    <!-- 해당 클래스의 조회수 올리기 by 권순표  -->
     <update id="viewsUp" parameterType="HashMap">
         UPDATE 
 		       CLASS_TBL A 

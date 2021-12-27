@@ -106,6 +106,7 @@
           let pwdBool = $("#pwdBoolean").prop("checked");
           let pwdBool2 = $("#pwdBoolean2").prop("checked");
 
+          /* 빈값과 정규식, 번호 확인 체크 */
           if(!originPwd) {
             showModal("현재 비밀번호를 입력해주세요.");
             return false;
@@ -123,6 +124,7 @@
             return false;
           } else {
 
+            /* 비밀번호 수정 */
             $.ajax({
               url: "${ pageContext.servletContext.contextPath }/mypage/modifyPwd",
               type: "post",

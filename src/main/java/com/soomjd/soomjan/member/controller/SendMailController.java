@@ -29,6 +29,12 @@ public class SendMailController {
 		this.memberService = memberService;
 	}
 
+	/**
+	 * @author 권순표
+	 * 사용자 이메일로 인증번호 전송
+	 * @param email 사용자가 입력한 이메일
+	 * @param response 전송 성공 여부
+	 */
 	@PostMapping("join")
 	public void sendMail(@RequestParam("email") String email, HttpServletResponse response) {
 
@@ -41,25 +47,11 @@ public class SendMailController {
 		try {
 			MimeMessage mail = mailSender.createMimeMessage();
 			MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8");
-			// true는 멀티파트 메세지를 사용하겠다는 의미
-
-			/*
-			 * 단순한 텍스트 메세지만 사용시엔 아래의 코드도 사용 가능 
-			 * MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8");
-			 */
 
 			mailHelper.setFrom(from);
-			// 빈에 아이디 설정한 것은 단순히 smtp 인증을 받기 위해 사용 따라서 보내는이(setFrom())반드시 필요
-			// 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다.
-			//mailHelper.setFrom("보내는이 이름 <보내는이 아이디@도메인주소>");
 			mailHelper.setTo(to);
 			mailHelper.setSubject(subject);
 			mailHelper.setText(content, true);
-			// true는 html을 사용하겠다는 의미입니다.
-
-			/*
-			 * 단순한 텍스트만 사용하신다면 다음의 코드를 사용하셔도 됩니다. mailHelper.setText(content);
-			 */
 
 			boolean mailCheckInsert = memberService.mailCheckInsert(authNum);
 			if(mailCheckInsert) {
@@ -76,6 +68,12 @@ public class SendMailController {
 		}
 	}
 
+	/**
+	 * @author 권순표
+	 * 사용자 이메일로 인증번호 전송
+	 * @param email 사용자 입력 이메일
+	 * @param response 인증번호 전송 성공 여부
+	 */
 	@PostMapping("findPwd")
 	public void sendMail2(@RequestParam("email") String email, HttpServletResponse response) {
 
@@ -88,25 +86,11 @@ public class SendMailController {
 		try {
 			MimeMessage mail = mailSender.createMimeMessage();
 			MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8");
-			// true는 멀티파트 메세지를 사용하겠다는 의미
-
-			/*
-			 * 단순한 텍스트 메세지만 사용시엔 아래의 코드도 사용 가능 
-			 * MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8");
-			 */
 
 			mailHelper.setFrom(from);
-			// 빈에 아이디 설정한 것은 단순히 smtp 인증을 받기 위해 사용 따라서 보내는이(setFrom())반드시 필요
-			// 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다.
-			//mailHelper.setFrom("보내는이 이름 <보내는이 아이디@도메인주소>");
 			mailHelper.setTo(to);
 			mailHelper.setSubject(subject);
 			mailHelper.setText(content, true);
-			// true는 html을 사용하겠다는 의미입니다.
-
-			/*
-			 * 단순한 텍스트만 사용하신다면 다음의 코드를 사용하셔도 됩니다. mailHelper.setText(content);
-			 */
 			
 			Map<String, String> map = new HashMap<>();
 			map.put("email", email);

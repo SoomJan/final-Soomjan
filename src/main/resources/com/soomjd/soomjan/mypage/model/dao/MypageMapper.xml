@@ -98,11 +98,6 @@
     	<result column="CLASS_CODE" property="classCode"/>
     	<result column="EMAIL" property="email"/>
     	
-<!--     	<association property="classDTO" resultMap="classResultMap"></association>
-        <association property="categoryDTO" resultMap="categoryList"></association>
-        <association property="jandiDTO" resultMap="jandiResultMap"></association>
-        <association property="paymentDTO" resultMap="paymentResultSet"></association>
-        <association property="purchaseClassDTO" resultMap="purchaseClassSet"></association> -->
    	</resultMap>
    	
     <resultMap id="JjimResultSet" type="JjimDTO">
@@ -145,6 +140,7 @@
     	<result column="REP_TYPE" property="repType"/>
     </resultMap>
 	
+	<!-- 마이페이지 메인 입장 시 세션에 새롭게 등록될 회원의 정보 조회 by 권순표 -->
 	<select id="selectNewMember" resultMap="memberResultSet" parameterType="HashMap">
 	    SELECT
 		       A.EMAIL
@@ -162,6 +158,7 @@
 		   AND A.IS_EXIT = 'N'
 	</select>
 
+    <!-- 회원의 정보 수정 by 권순표-->
 	<update id="modifyInfo" parameterType="HashMap">
 	    UPDATE 
 		       SSACK_TBL A
@@ -170,6 +167,7 @@
 		 WHERE A.EMAIL = #{ email }
 	</update>
 	
+	<!-- 암호화 된 회원의 비밀번호 조회 by 권순표 -->
 	<select id="selectEncPassword" resultType="java.lang.String" parameterType="HashMap">
 	    SELECT
 		       A.PASSWORD
@@ -178,18 +176,21 @@
 		   AND IS_EXIT = 'N'
 	</select>
 	
+	<!-- 회원의 비밀번호 수정 by 권순표 -->
 	<update id="modifyPwd" parameterType="HashMap">
 	    UPDATE SSACK_TBL A
 		   SET A.PASSWORD = #{ setPwd }
 		 WHERE A.EMAIL = #{ email }
 	</update>
 	
+	<!-- 회원의 활동 상태를 탈퇴로 변경 by 권순표 -->
 	<update id="memberExit" parameterType="HashMap">
 	    UPDATE SSACK_TBL A
 		   SET A.IS_EXIT = 'Y'
 		 WHERE A.EMAIL = #{ email }
 	</update>
 	
+	<!-- 회원이 받은 신고 조회 by 권순표 -->
 	<select id="selectReportMember" resultMap="ReportMemberSet" parameterType="HashMap">
 	    SELECT 
 		       *
@@ -239,6 +240,7 @@
 		   AND A.REP_YN = 'Y'
 	</select>
 	
+	<!-- 회원이 수강중인 클래스 조회 by 권순표 -->
 	<select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
 	
 	    SELECT V2.RNUM
@@ -277,6 +279,7 @@
          
      </select>
 	
+	<!-- 회원이 수강중인 클래스의 전체 갯수 조회 by 권순표 -->
 	<select id="selectTakingTotalCount" resultType="_int" parameterType="HashMap">
 	    SELECT
 		       COUNT(*)
@@ -436,6 +439,7 @@
 		)
 	</insert>
 	
+	<!-- 회원이 찜한 클래스 전체 갯수 조회 by 권순표 -->
 	<select id="selectJjimTotalCount" resultType="_int" parameterType="HashMap">
 	    SELECT
 		       COUNT(*)
@@ -458,6 +462,7 @@
 		   </where>
 	</select>
 	
+	<!-- 회원이 찜한 클래스 정보 조회 by 권순표 -->
 	<select id="selectJjimClass" resultMap="JjimResultSet" parameterType="HashMap">
 	    SELECT V2.RNUM
              , V2.*
@@ -490,6 +495,7 @@
 		WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
 	</select>
 	
+	<!-- 회원이 찜한 클래스 취소 by 권순표 -->
 	<delete id="jjimCancel" parameterType="HashMap">
         DELETE
           FROM LIKED_CLASS_TBL A
@@ -501,6 +507,7 @@
           </foreach>
 	</delete>
 	
+	<!-- 회원의 클래스 구매 내역 조회 by 권순표 -->
 	<select id="selectBuyTotalCount" resultType="_int" parameterType="HashMap">
 	    SELECT 
 		       COUNT(*)
@@ -519,6 +526,7 @@
 		   </where>
 	</select>
 	
+	<!-- 회원의 구매 내역 정보 조회 by 권순표 -->
 	<select id="selectBuyList" resultMap="buyResultSet" parameterType="HashMap">
 	    SELECT V2.RNUM
 		     , V2.*
@@ -633,6 +641,7 @@
 		 WHERE REVIEW_CODE = #{ rvCode }
 	</update>
 	
+	<!-- 수강 기간이 마감될 클래스들의 상태값 수강 완료로 바꿔주기 by 권순표 -->
     <update id="endClass" parameterType="PurchaseClassDTO">
 	    UPDATE PURCHASE_CLASS_TBL A 
 	       SET A.STATUS = 'N'

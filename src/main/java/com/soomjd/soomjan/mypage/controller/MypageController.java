@@ -56,6 +56,10 @@ public class MypageController {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	/**
+	 * @author 권순표
+	 * 마이페이지 메인 화면 조회
+	 */
 	@GetMapping("main")
 	public ModelAndView mypageMain(ModelAndView mv, HttpSession session, Model model) {
 
@@ -99,6 +103,10 @@ public class MypageController {
 		return mv;
 	}
 
+	/**
+	 * @author 권순표
+	 * 회원 정보 수정 페이지 조회
+	 */
 	@GetMapping("modify")
 	public ModelAndView modifyForm(ModelAndView mv, HttpSession session) {
 
@@ -107,6 +115,13 @@ public class MypageController {
 		return mv;
 	}
 
+	/**
+	 * @author 권순표
+	 * 회원 정보 수정
+	 * @param response 수정 성공 여부
+	 * @param nickName 사용자 입력 닉네임
+	 * @param phone 사용자 입력 핸드폰 번호
+	 */
 	@PostMapping("modify")
 	public void modifyInfo(HttpServletResponse response, @RequestParam("nickName") String nickName,
 			@RequestParam("phone") String phone, HttpSession session) throws IOException {
@@ -130,6 +145,10 @@ public class MypageController {
 		}
 	}
 
+	/**
+	 * @author 권순표
+	 * 비밀번호 수정 페이지 조회
+	 */
 	@GetMapping("modifyPwd")
 	public ModelAndView modifyPwdForm(ModelAndView mv) {
 
@@ -138,6 +157,13 @@ public class MypageController {
 		return mv;
 	}
 
+	/**
+	 * @author 권순표 
+	 * 사용자 비밀번호 수정
+	 * @param response 수정 성공 여부
+	 * @param originPwd 사용자가 입력한 원래 비밀번호
+	 * @param newPwd 사용자가 입력한 수정될 비밀번호
+	 */
 	@PostMapping("modifyPwd")
 	public void modifyPwd(HttpServletResponse response, @RequestParam("originPwd") String originPwd,
 			@RequestParam("newPwd") String newPwd, HttpSession session) throws IOException {
@@ -167,6 +193,12 @@ public class MypageController {
 		}
 	}
 
+	/**
+	 * @author 권순표
+	 * 회원 탈퇴
+	 * @param response 탈퇴 성공 여부
+	 * @param pwd 사용자가 입력한 비밀번호
+	 */
 	@PostMapping("exit")
 	public void memberExit(HttpServletResponse response, @RequestParam("pwd") String pwd, HttpSession session,
 			SessionStatus status) throws IOException {
@@ -192,7 +224,11 @@ public class MypageController {
 		}
 	}
 
-	// 수강중인
+	
+	/**
+	 * @author 권순표
+	 * 현재 수강중인 클래스 조회
+	 */
 	@GetMapping("taking")
 	public ModelAndView takingForm(ModelAndView mv, HttpSession session,
 			@RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,
@@ -206,6 +242,7 @@ public class MypageController {
 		searchMap.put("email", member.getEmail());
 		System.out.println("searchMap : " + searchMap);
 
+		/* 전체 갯수 조회 */
 		int totalCount = mypageService.selectTakingTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
 
@@ -225,12 +262,13 @@ public class MypageController {
 
 		searchMap.put("selectCriteria", selectCriteria);
 
+		/* 수강했던 클래스 전체 조회 */
 		List<PurchaseClassDTO> pClass = mypageService.selectTakingClass(searchMap);
 		
+		/* 수강기간이 끝난 클래스와 수강중인 클래스 분류하기 */
 		List<PurchaseClassDTO> endClassList = new ArrayList<>();
 		List<PurchaseClassDTO> takingClassList = new ArrayList<>();
 		
-		/* 종료일이 지난 클래스들 수강상태 변경하기 */
 		for(PurchaseClassDTO pc : pClass) {
 			
 			Date now = new java.util.Date();
@@ -247,11 +285,7 @@ public class MypageController {
 			}
 		}
 		
-		for(PurchaseClassDTO ec : endClassList) {
-			System.out.println("기간이 지난 클래스 --------");
-			System.out.println(ec);
-		}
-		
+		/* 기간이 지난 클래스는 수강 완료 상태로 바꿔주기 */
 		if(!endClassList.isEmpty()) {
 			int endClass = mypageService.endClass(endClassList);
 			
@@ -261,7 +295,6 @@ public class MypageController {
 				System.out.println(endClass + "개의 클래스 수강 완료 전환이 실패하였습니다.");
 			}
 		} 
-		
 
 		mv.addObject("classList", takingClassList);
 		mv.addObject("selectCriteria", selectCriteria);
@@ -271,7 +304,11 @@ public class MypageController {
 		
 	}
 
-	// 찜한
+	
+	/**
+	 * @author 권순표
+	 * 찜한 클래스 조회
+	 */
 	@GetMapping("jjim")
 	public ModelAndView jjimForm(ModelAndView mv, HttpSession session,
 			@RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,
@@ -285,6 +322,7 @@ public class MypageController {
 		searchMap.put("email", member.getEmail());
 		System.out.println("searchMap : " + searchMap);
 
+		/* 전체 갯수 조회 */
 		int totalCount = mypageService.selectJjimTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
 
@@ -304,6 +342,7 @@ public class MypageController {
 
 		searchMap.put("selectCriteria", selectCriteria);
 
+		/* 찜한 리스트 조회 */
 		List<JjimDTO> jjimList = mypageService.selectJjimClass(searchMap);
 
 		mv.addObject("jjimList", jjimList);
@@ -313,12 +352,20 @@ public class MypageController {
 		return mv;
 	}
 
+	/**
+	 * @author 권순표
+	 * 찜한 클래스 취소
+	 * @param response 취소 성공 여부
+	 * @param classNo 사용자가 체크한 클래스 번호
+	 */
 	@PostMapping("jjimCancel")
 	public void jjimCancel(HttpServletResponse response, @RequestParam("classNo") String classNo, HttpSession session)
 			throws IOException {
 
-		System.out.println(classNo);
+		System.out.println("삭제할 클래스 번호 모음" + classNo);
+		
 		List<String> classNoList = new ArrayList<>();
+		/* 데이터 정제 */
 		String[] classNo2 = classNo.split(",");
 		for (String c : classNo2) {
 			System.out.println(c);
@@ -332,6 +379,7 @@ public class MypageController {
 		map.put("email", member.getEmail());
 		map.put("classNoList", classNoList);
 
+		/* 찜한 클래스 삭제 */
 		int jjimCancel = mypageService.jjimCancel(map);
 		System.out.println("삭제된 행 갯수 : " + jjimCancel);
 
@@ -342,7 +390,11 @@ public class MypageController {
 		}
 	}
 
-	// 구매내역
+	/**
+	 * @author 권순표
+	 * 구매 내역 조회
+	 * @param sort 사용자가 선택한 정렬 조건
+	 */
 	@GetMapping("buy")
 	public ModelAndView buyForm(ModelAndView mv, HttpSession session
 			, @RequestParam(required = false) String searchCondition
@@ -361,6 +413,7 @@ public class MypageController {
 		searchMap.put("sort", sort);
 		System.out.println("searchMap : " + searchMap);
 
+		/* 전체 갯수 조회 */
 		int totalCount = mypageService.selectBuyTotalCount(searchMap);
 		System.out.println("totlaCount : " + totalCount);
 
@@ -380,6 +433,7 @@ public class MypageController {
 
 		searchMap.put("selectCriteria", selectCriteria);
 
+		/* 구매 내역 조회 */
 		List<BuyDTO> buyList = mypageService.selectBuyList(searchMap);
 
 		mv.addObject("buyList", buyList);

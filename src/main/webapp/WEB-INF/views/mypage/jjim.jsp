@@ -225,7 +225,7 @@
             
             <script>
               $(function () {
-                /* 삭제하기 */
+                /* 찜 취소하기 */
                 $("#deleteClass").click(function () {
 
                   let classNo = "";
@@ -241,6 +241,7 @@
                   });
                   console.log(classNo);
 
+                  /* 빈값 체크 */
                   if(!classNo) {
                     $("#nullmodal").fadeIn();
                     $(".btn").click(function() {
