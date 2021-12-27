@@ -67,8 +67,9 @@
 						for(let tag of tagArr){
 							if(tag !== ""){
 								$('.tag').append(
-								"<div class='ui button' style='margin:3px;' data-position='top left'>"
-								+ tag + "</div>");
+								"<div class='ui button' style='margin:3px;' data-position='top left'"
+									+ "onclick='location.href='${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=&searchValue=" 
+											+ tag + "'>" + tag + "</div>");
 							}
 						}
 					});

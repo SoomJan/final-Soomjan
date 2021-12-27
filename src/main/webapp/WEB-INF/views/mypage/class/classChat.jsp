@@ -249,7 +249,7 @@ img {
 						let img_contents = "<img class='classImg'" 
 							+ "src='${ pageContext.servletContext.contextPath }/resources/uploadFiles/chatFile/"
 							+ chatFileMap.savedName + "'> <br>"
-							+ "<a href='${pageContext.servletContext.contextPath }/mypage/member/classChat/download?filePath=/uploadFiles/chatFile/"
+							+ "<a href='${pageContext.servletContext.contextPath }/member/class/classChat/download?filePath=/uploadFiles/chatFile/"
 							+ chatFileMap.savedName + "&fileName=" + chatFileMap.originFileName + "'>이미지 저장</a>";
 						
 						let chat = {
