@@ -193,7 +193,16 @@
 	<!-- 회원이 받은 신고 조회 by 권순표 -->
 	<select id="selectReportMember" resultMap="ReportMemberSet" parameterType="HashMap">
 	    SELECT 
-		       *
+		       A.EMAIL
+		     , A.REP_CODE
+		     , A.CONTENTS
+		     , A.REP_DATE
+		     , A.IMG_PATH
+		     , A.REP_EMAIL
+		     , A.REP_TYPE_CODE
+		     , A.ORG_IMG_PATH
+		     , A.REP_YN
+		     , B.REP_TYPE
 		  FROM REPORT_MEMBER_TBL A
 		  JOIN REPORT_STATEMENT_TBL B ON(A.REP_TYPE_CODE = B.REP_TYPE_CODE)
 		  JOIN SSACK_TBL S ON(S.EMAIL = A.REP_EMAIL)
@@ -244,9 +253,21 @@
 	<select id="selectTakingClass" resultMap="purchaseClassSet" parameterType="HashMap">
 	
 	    SELECT V2.RNUM
-		     , V2.*
+		     , V2.END_DATE
+             , V2.PAY_CODE
+		     , V2.TITLE
+		     , V2.CLASS_CODE
+             , V2.CATEGORY_NAME
+             , V2.NICKNAME
+             , V2.PAY_DATE
 		  FROM (SELECT ROWNUM RNUM
-		                    , V.*
+		                    , V.END_DATE
+		                    , V.PAY_CODE
+				            , V.TITLE
+				            , V.CLASS_CODE
+		                    , V.CATEGORY_NAME
+		                    , V.NICKNAME
+		                    , V.PAY_DATE
 		          FROM (SELECT A.END_DATE
 		                     , A.PAY_CODE
 				             , B.TITLE
@@ -465,9 +486,19 @@
 	<!-- 회원이 찜한 클래스 정보 조회 by 권순표 -->
 	<select id="selectJjimClass" resultMap="JjimResultSet" parameterType="HashMap">
 	    SELECT V2.RNUM
-             , V2.*
+             , V2.CLASS_CODE
+             , V2.TITLE
+             , V2.FILE_PATH
+             , V2.CATEGORY_NAME
+             , V2.IS_DELETED
+             , V2.NICKNAME
 		  FROM (SELECT ROWNUM RNUM
-		              , V.*
+		              , V.CLASS_CODE
+		              , V.TITLE
+		              , V.FILE_PATH
+		              , V.CATEGORY_NAME
+		              , V.IS_DELETED
+		              , V.NICKNAME
 				  FROM (SELECT A.CLASS_CODE
 						     , B.TITLE
 						     , B.FILE_PATH
@@ -529,9 +560,21 @@
 	<!-- 회원의 구매 내역 정보 조회 by 권순표 -->
 	<select id="selectBuyList" resultMap="buyResultSet" parameterType="HashMap">
 	    SELECT V2.RNUM
-		     , V2.*
+		     , V2.CLASS_CODE
+             , V2.TITLE
+	         , V2.FILE_PATH
+	         , V2.IS_DELETED
+	         , V2.NICKNAME
+  	         , V2.PAY_DATE 
+             , V2.PAY 
 		  FROM ( SELECT ROWNUM RNUM
-		              , V.*
+		              , V.CLASS_CODE
+                      , V.TITLE
+				      , V.FILE_PATH
+				      , V.IS_DELETED
+				      , V.NICKNAME
+		   	          , V.PAY_DATE 
+			          , V.PAY 
 		           FROM ( SELECT A.CLASS_CODE
 		                       , B.TITLE
 						       , B.FILE_PATH
