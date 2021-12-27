@@ -117,7 +117,7 @@ public class FindJandiController {
 		mv.addObject("jandiInfo", findJandiService.selectJandiInfo(email));
 		// 해당 잔디의 클래스 조회
 		mv.addObject("thumbNailClassList", findJandiService.selectThumbnailClassList(email));
-		
+		// 잔디 프로파일 조회
 		mv.setViewName("/findJandi/jandiProfile");
 		return mv;
 	}
