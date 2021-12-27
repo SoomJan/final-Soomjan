@@ -102,7 +102,16 @@ public class JandiController {
 		return "jandi/mentorProfile";
 	}
 
-	
+	/**
+	 * 잔디 프로필 사진변경 
+	 * 
+	 * @param model
+	 * @param profileImage
+	 * @param session
+	 * @param request
+	 * 
+	 * @author 이선호 
+	 */
 	@PostMapping("/jandiProfile1")
 	@ResponseBody
 	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage
@@ -158,10 +167,6 @@ public class JandiController {
 				profileImage.transferTo(new File(filePath+"/"+savedName));
 
 				model.addAttribute("address",savedName);
-				
-				
-				
-				
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -174,7 +179,9 @@ public class JandiController {
 	
 	
 	@PostMapping("/jandiIntro")
-	public String profileIntroUpdate(@ModelAttribute JandiIntroDTO intro, HttpServletRequest request,HttpSession session) {
+	public String profileIntroUpdate(@ModelAttribute JandiIntroDTO intro
+									, HttpServletRequest request
+									,HttpSession session) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		
