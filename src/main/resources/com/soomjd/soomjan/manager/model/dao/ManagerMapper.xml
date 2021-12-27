@@ -351,6 +351,12 @@
     	 WHERE J.EMAIL = #{ email }
     </select>
     
+    <select id="selectManagerTotalCount" resultType="_int">
+    	SELECT
+    	       COUNT(*)
+    	  FROM MANAGER_TBL
+    </select>
+    
      <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
     
      SELECT

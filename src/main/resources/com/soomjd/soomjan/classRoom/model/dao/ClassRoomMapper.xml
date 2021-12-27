@@ -577,7 +577,7 @@
 	        WHERE ROWNUM <= #{ selectCriteria.endRow } 
 	        ]]>	
 		  	) B
-		  	WHERE F.RNUM >= #{ selectCriteria.startRow } 
+		  	WHERE B.RNUM >= #{ selectCriteria.startRow } 
     </select>
     
     <!-- 해당 클래스의 리뷰 평점 조회하기 by 임예람  -->

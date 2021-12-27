@@ -127,5 +127,7 @@ public interface ManagerMapper {
 
 	int updateBlackCancelMember(String email);
 
+	int selectManagerTotalCount(ManagerDTO manager);
+
 	
 }
