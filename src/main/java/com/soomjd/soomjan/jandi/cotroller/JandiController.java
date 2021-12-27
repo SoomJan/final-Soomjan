@@ -68,6 +68,15 @@ public class JandiController {
 		this.jandiService = jandiService;
 	}
 	
+	/**
+	 * 잔디 프로필 페이지
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 * 
+	 * @author 이선호 
+	 */
 	@GetMapping("/jandiProfile")
 	public String jandiProfile(Model model, HttpSession session){
 		
@@ -75,8 +84,11 @@ public class JandiController {
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		List<ClassDTO> classDTO = jandiService.selectClasses(jandi.getEmail());
 		
+		
+		/*잔디 관련 데이터 보내기 */
 		model.addAttribute("jandi", jandi);
 		
+		/*잔디의 진행중인 클래스 데이터 보내기 */
 		model.addAttribute("thumbNailClassList", jandiService.selectThumbnailClassList(jandi.getEmail()));
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
@@ -93,7 +105,10 @@ public class JandiController {
 	
 	@PostMapping("/jandiProfile1")
 	@ResponseBody
-	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage,HttpSession session, HttpServletRequest request, Model model) {
+	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage
+									,HttpSession session
+									, HttpServletRequest request
+									, Model model) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
@@ -472,7 +487,6 @@ public class JandiController {
 					List<FullAdDTO> selectSerialList=jandiService.selectAllAd(classesCodeList.get(i));
 					
 					mySelectedAdList.addAll(selectSerialList);
-					
 				}
 				
 			}
@@ -483,9 +497,6 @@ public class JandiController {
 			
 			
 			for(int i=0; i<mySelectedAdList.size();i++) {
-				
-				
-				
 				
 				if(mySelectedAdList.get(i).getIsAdvertised()=='Y') {
 					
@@ -528,6 +539,23 @@ public class JandiController {
 			System.out.println("====================================================================================");
 			System.out.println(adCodeList);
 			
+			
+			List<String> classesSelect= jandiService.selectClassesList(member.getEmail());
+			
+			System.out.println(member);
+			System.out.println("jandi : "+jandi);
+			System.out.println(classesSelect);
+			System.out.println("아아아 테스");
+			
+			
+			
+			model.addAttribute("jandi",jandi);
+			model.addAttribute("classesSelect",classesSelect);
+			
+			if(adCodeList.size()==0) {
+				return "jandi/createAd";
+			}
+			
 			List<FullAdDTO> MyAdList=jandiService.selectMyAdList(adCodeList.get(0));
 			
 			FullAdDTO ad = MyAdList.get(0);
@@ -536,22 +564,12 @@ public class JandiController {
 				model.addAttribute("message","이미 광고중입니다.");
 				return "jandi/failedPage";
 			}else {
-				
-				List<String> classesSelect= jandiService.selectClassesList(member.getEmail());
-				
-				System.out.println(member);
-				System.out.println("jandi : "+jandi);
-				System.out.println(classesSelect);
-				System.out.println("아아아 테스");
-				
-				
-				
-				model.addAttribute("jandi",jandi);
-				model.addAttribute("classesSelect",classesSelect);
-				
-				
-				return "jandi/myAd";
+
+				return "jandi/createAd";
 			}
+	
+		
+			
 		}
 	}
 	
@@ -570,7 +588,9 @@ public class JandiController {
 		
 		/*이미지 이외의 데이터 삽입 */
 		
-		int classCode= jandiService.selectClassesCode(ads.getMyClass());
+		List<Integer> classCode= jandiService.selectClassesCode(ads.getMyClass());
+		
+		Collections.sort(classCode,Collections.reverseOrder());
 		
 		/*이미지 삽입*/
 		
@@ -608,7 +628,7 @@ public class JandiController {
 			Map<String,Object> key = new HashMap<>();
 			key.put("originFileName", originFileName);
 			key.put("savedName", savedName);
-			key.put("classCode", classCode);
+			key.put("classCode", classCode.get(0));
 			key.put("adContents",ads.getAdContents());
 			
 			
@@ -679,6 +699,7 @@ public class JandiController {
 				
 			}
 			
+			System.out.println("mySelectedAdList : "+mySelectedAdList);
 			
 
 			List<Integer> adCodeList=new ArrayList<Integer>();
@@ -693,6 +714,12 @@ public class JandiController {
 			
 			System.out.println("====================================================================================");
 			System.out.println(adCodeList);
+			
+			if(adCodeList.size()==0) {
+				model.addAttribute("message", "만들어진 광고가 없습니다.");
+				return "jandi/failedPage";
+			}
+			
 			
 			List<FullAdDTO> MyAdList=jandiService.selectMyAdList(adCodeList.get(0));
 			
@@ -761,7 +788,7 @@ public class JandiController {
 		model.addAttribute("imagePath",myAd.getImagePath());
 		model.addAttribute("originImagePath", myAd.getOriginImagePath());
 		model.addAttribute("adContents",myAd.getAdContents());
-		model.addAttribute("className",adClass.getContents());
+		model.addAttribute("className",adClass.getTitle());
 		
 		
 		

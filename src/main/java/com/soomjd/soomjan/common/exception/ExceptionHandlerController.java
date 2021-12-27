@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHandlerController{
 	
-//	@ExceptionHandler(Exception.class)
-//	public Map<String, String> handlerException(Exception e){
-//		
-//		Map<String, String> errMessageMap = new HashMap<>();
-//		errMessageMap.put("errMessage", e.getMessage());
-//		System.out.println(errMessageMap);
-//		
-//		return errMessageMap;
-//	}
+	@ExceptionHandler(Exception.class)
+	public Map<String, String> handlerException(Exception e){
+		
+		Map<String, String> errMessageMap = new HashMap<>();
+		errMessageMap.put("errMessage", e.getMessage());
+		System.out.println(errMessageMap);
+		
+		return errMessageMap;
+	}
 
 }

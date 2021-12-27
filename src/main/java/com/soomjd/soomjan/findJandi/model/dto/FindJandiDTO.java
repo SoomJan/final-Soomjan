@@ -5,16 +5,18 @@ public class FindJandiDTO {
 	private String email;
 	private String nickname;
 	private String profile_path;
+	private int sumviews;
 	
 	public FindJandiDTO() {
 		super();
 	}
 
-	public FindJandiDTO(String email, String nickname, String profile_path) {
+	public FindJandiDTO(String email, String nickname, String profile_path, int sumviews) {
 		super();
 		this.email = email;
 		this.nickname = nickname;
 		this.profile_path = profile_path;
+		this.sumviews = sumviews;
 	}
 
 	public String getEmail() {
@@ -40,10 +42,20 @@ public class FindJandiDTO {
 	public void setProfile_path(String profile_path) {
 		this.profile_path = profile_path;
 	}
+	
 
 	@Override
 	public String toString() {
-		return "FindJandiDTO [email=" + email + ", nickname=" + nickname + ", profile_path=" + profile_path + "]";
+		return "FindJandiDTO [email=" + email + ", nickname=" + nickname + ", profile_path=" + profile_path
+				+ ", sumviews=" + sumviews + "]";
+	}
+
+	public int getSumviews() {
+		return sumviews;
+	}
+
+	public void setSumviews(int sumviews) {
+		this.sumviews = sumviews;
 	}
 	
 	

@@ -500,36 +500,23 @@ public class MypageController {
 	 * @author 효진
 	 */
 	@PostMapping("finishReview")
-	public String finishReview(HttpServletRequest request, HttpSession session, Model model) {
+	public String finishReview(@ModelAttribute ReviewDTO reviewDto, @ModelAttribute PurchaseClassDTO purchaseClassDTO,  @RequestParam("t-categoryName") String categoryName, HttpSession session, Model model) {
 
 		// session에서 로그인 된 정보 가져오기
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
-		
-		// 카테고리이름과 내용 파라미터 값 가져오기
-		String categoryName = request.getParameter("t-categoryName");
-		String contents = request.getParameter("contents");
-		
-		// 가져온 파라미터 값 확인하기
-		System.out.println(request.getParameter("classCode"));
-		System.out.println(request.getParameter("reviewStar"));
-
-		// 파라미터 값 가져오기
-		int classCode = Integer.parseInt(request.getParameter("classCode"));
-		int reviewStar = Integer.parseInt(request.getParameter("reviewStar"));
-		int classPurcCode = Integer.parseInt(request.getParameter("classPurcCode"));
-
-		// 파라미터 값 확인하기
-		System.out.println("후기를 작성할 클래스 코드 : " + request.getParameter("classCode"));
-		System.out.println("후기를 작성할 후기 별점 : " + request.getParameter("reviewStar"));
+	
+		// 들어온 값 확인하기
+		System.out.println("reviewDto : " + reviewDto);
+		System.out.println("purchaseClassDTO : " + purchaseClassDTO);
 
 		// reviewMap에 로그인 된 email과 가져온 파라미터 값 담기
 		Map<String, Object> reviewMap = new HashMap<>();
 		reviewMap.put("email", member.getEmail());
-		reviewMap.put("classCode", classCode);
-		reviewMap.put("reviewStar", reviewStar);
-		reviewMap.put("classPurcCode", classPurcCode);
+		reviewMap.put("classCode", reviewDto.getClassCode());
+		reviewMap.put("reviewStar", reviewDto.getStar());
+		reviewMap.put("classPurcCode", purchaseClassDTO.getClassPurcCode());
 		reviewMap.put("categoryName", categoryName);
-		reviewMap.put("contents", contents);
+		reviewMap.put("contents", reviewDto.getContents());
 
 		// reviewMap에 담긴 값 확인하기
 		System.out.println("reviewMap : " + reviewMap);
@@ -590,11 +577,8 @@ public class MypageController {
 	 * @author 효진
 	 */
 	@PostMapping("deleteReview")
-	public String deleteReview(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
-		
-		// rvCode 파라미터 값 가져오기
-		int rvCode = Integer.parseInt(request.getParameter("rvCode"));
-		
+	public String deleteReview(@RequestParam int rvCode, HttpSession session, RedirectAttributes rttr) {
+
 		// 가져온 파라미터 값 확인하기
 		System.out.println("rvCode : " + rvCode);
 		

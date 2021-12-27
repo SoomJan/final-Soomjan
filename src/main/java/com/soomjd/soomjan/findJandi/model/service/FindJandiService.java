@@ -11,10 +11,7 @@ public interface FindJandiService {
 
 	List<JandiDTO> selectfindJandi(SelectCriteria selectCriteria);
 	
-	List<JandiDTO> mainJandi();
-
 	List<JandiDTO> selectTopFindJandiList();
-
 
 	int SelectFindJandiTotalCount(Map<String, Object> searchMap);
 

@@ -308,10 +308,10 @@
 		       COUNT(*)
 		  FROM PURCHASE_CLASS_TBL A
      LEFT JOIN CLASS_REVIEW_TBL T ON(A.CLASS_PURC_CODE = T.CLASS_PURC_CODE)
-		  JOIN CLASS_TBL L ON (L.CLASS_CODE = A.CLASS_CODE )
-		  JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)
-		  JOIN JANDI_TBL J ON (L.EMAIL = J.EMAIL )
-		  JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
+   		  JOIN CLASS_TBL L ON (L.CLASS_CODE = A.CLASS_CODE )
+   		  JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)
+   		  JOIN JANDI_TBL J ON (L.EMAIL = J.EMAIL )
+   		  JOIN PAYMENT_TBL E ON (A.PAY_CODE = E.PAY_CODE)
 		 <where>
 			   A.STATUS = 'N'
 			   AND A.EMAIL = #{ email }
@@ -573,9 +573,12 @@
 	<select id="selectReviewTotalCount" resultType="_int" parameterType="HashMap">
 		SELECT
 		       COUNT(*)
-		  FROM CLASS_REVIEW_TBL
-		 WHERE EMAIL = #{ email }
-		   AND IS_DELETED = 'N'
+		    FROM CLASS_REVIEW_TBL R
+   			JOIN CLASS_TBL L ON (L.CLASS_CODE = R.CLASS_CODE )
+   			JOIN CATEGORY_TBL C ON (C.CATEGORY_CODE = L.CATEGORY_CODE)
+   			JOIN JANDI_TBL J ON (L.EMAIL = J.EMAIL )
+           WHERE R.EMAIL = #{ email }
+             AND R.IS_DELETED = 'N'
 	</select>
 	
 	<!-- 수강후기 리스트 -->
@@ -633,10 +636,8 @@
 	</select>
 	
 	<!-- 수강후기 삭제 -->
-	<update id="deleteReview">
-		UPDATE CLASS_REVIEW_TBL
-		   SET IS_DELETED = NULL
-		     , REVIEW_CODE = NULL
+	<update id="deleteReview" parameterType="_int">
+		DELETE FROM CLASS_REVIEW_TBL
 		 WHERE REVIEW_CODE = #{ rvCode }
 	</update>
 	

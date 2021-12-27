@@ -54,6 +54,14 @@
     </resultMap>
     
     
+     <resultMap id="claAdResult" type="ClaAdDTO">
+    	<id column="CLASS_CODE" property="classCode"/>
+    	<result column="IMG_PATH" property="imgPath"/>
+    	<result column="IS_DELETED" property="isDeleted"/>
+    	<result column="RNUM" property="rnum"/>
+    </resultMap>
+    
+    
      <select id="mainJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
 			 , JAN.NICKNAME
@@ -151,11 +159,23 @@ ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
    <select id="lastestFaq" resultMap="faqResult">
 	    SELECT *
 		FROM(
-		SELECT TITLE, CONTENTS, WRITE_DATE, IS_DELETED
+		SELECT TITLE, CONTENTS, WRITE_DATE, IS_DELETED, POST_CODE
 		FROM FAQ_TBL
 		order by write_date DESC)
 		WHERE IS_DELETED = 'N'
           AND ROWNUM = 1
+   </select>
+   
+   <select id="adClass" resultMap="claAdResult">
+   	SELECT 
+	       C.CLASS_CODE
+	     , ROWNUM RNUM  
+	     , A.IMG_PATH
+	     , a.is_advertised
+    FROM CLASS_TBL C 
+    JOIN AD_TBL A ON (C.CLASS_CODE = A.CLASS_CODE)
+   WHERE A.IS_ADVERTISED = 'Y'
+   
    </select>
 	
 

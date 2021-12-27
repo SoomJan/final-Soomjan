@@ -40,6 +40,9 @@ public class MainController {
 	@RequestMapping(value= {"/", "main"})
 	public String main(Model model) {
 		
+		// 메인 카로셀 광고
+		List <ClassDTO> adClass = mainService.adClass();
+		
 		// 랜덤 클래스 조회
 		List <ClassDTO> class2 = faqService.mainClass();
 		Collections.shuffle(class2);
@@ -70,7 +73,9 @@ public class MainController {
 		model.addAttribute("almostfinish", almostfinish);	
 		model.addAttribute("highScore", highScore);	
 		model.addAttribute("lastestFaq", lastestFaq);	
+		model.addAttribute("adClass", adClass);	
 		
+		System.out.print(adClass);
 		
 		return "main/main";
 	}
