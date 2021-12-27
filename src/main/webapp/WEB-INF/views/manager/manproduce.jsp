@@ -59,11 +59,11 @@ pageEncoding="UTF-8"%>
    
    .modalContent {background-color: #91c788;}
    
-   #mngName { margin-left: 18%;}
-   #mngNickName {margin-left: 15%;}
-   #mngId {margin-left: 15%;}
-   #password {margin-left: 12%;}
-   #password2 {margin-left: 5%;}
+    #mngName { margin-left: 7%;}
+   #mngNickName {margin-left: 5%;}
+   #mngId {margin-left: 5%;}
+   #password {margin-left: 4%;}
+   #password2 {margin-left: 1%;} 
    
    
     
@@ -109,31 +109,31 @@ pageEncoding="UTF-8"%>
       <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post" id="createForm">     
       <div>
      	 <div class="checkmain">이름
-    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"><span class="nameCheck" style="margin-left:10px; margin-top: 7px;"></span></div>
+    	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"><span class="nameCheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
       	<div class="checkmain">닉네임
-    	<div class="ui input"><input type="text" class="pd2" id="mngNickName" name="mngNickName"><span id="nickNamecheck" style="margin-left:10px; margin-top: 7px;"></span></div>
+    	<div class="ui input"><input type="text" class="pd2" id="mngNickName" name="mngNickName"><span id="nickNamecheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
       	<div class="checkmain">아이디
-    	<div class="ui input"><input type="text" class="pd3" id="mngId" name="mngId"><span id="emailcheck" style="margin-left:10px; margin-top: 7px;"></span></div>
+    	<div class="ui input"><input type="text" class="pd3" id="mngId" name="mngId"><span id="emailcheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
       	<div class="checkmain">비밀번호
-    	<div class="ui input"><input type="password" class="pd4" id="password" name="password"><span id="pwd" style="margin-left:10px; margin-top: 7px;"></span></div>
+    	<div class="ui input"><input type="password" class="pd4" id="password" name="password"><span id="pwd" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
       	<div class="checkmain">비밀번호확인
-    	 <div class="ui input"><input type="password" class="pd5" id="password2" name="password2"><span id="pwdcheck" style="margin-left:10px; margin-top: 7px;"></span></div>
+    	 <div class="ui input"><input type="password" class="pd5" id="password2" name="password2"><span id="pwdcheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       
@@ -272,13 +272,10 @@ pageEncoding="UTF-8"%>
         /* 관리자 계정 비활성화하기 */
         $(function(){
           $(".delete").click(function(e){
-
             var chkArray = new Array();
-            
             $("input:checkbox[name='check']:checked").each(function(){
             	chkArray.push(this.value);
             });
-
             e.preventDefault();
 
             if(chkArray == '') {
@@ -289,7 +286,6 @@ pageEncoding="UTF-8"%>
             } else {
               $("#deleteModal").fadeIn();
               $(".deletebtn1").click(function(){
-            	 
             	$.ajax({
             		type: "POST",
             		url: "${ pageContext.servletContext.contextPath }/manager/inactiveManager",

@@ -166,10 +166,6 @@
   		$(".reviewbtn").on('click', function(e){
   			let $reviewbtn = e.target;
   			let $tr = $($reviewbtn).parent().parent();
-  			console.log($tr);
-  			console.log($($tr).children().eq(0).html());
-  			console.log($($tr).children().eq(4).children().eq(0).val());
-  			console.log("classCode : " + $($tr).children().eq(6).children().eq(0).val());
    			$('.t-categoryName').val($($tr).children().eq(0).html()); 
     		$('.t-title').val($($tr).children().eq(1).html());
   			$('.t-nickName').val($($tr).children().eq(2).html());

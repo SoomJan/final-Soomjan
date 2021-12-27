@@ -70,4 +70,6 @@ public interface MypageMapper {
 	
 	boolean modifyIsJandi(String email);
 
+//	ReviewDTO selectReviewContent(int rvCode);
+
 }
