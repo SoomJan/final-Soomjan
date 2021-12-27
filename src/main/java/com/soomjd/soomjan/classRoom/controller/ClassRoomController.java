@@ -926,6 +926,7 @@ public class ClassRoomController{
 		}else { // 클래스구매내역 DTO로 클래스 구매내역과 결제내역 인서트 실패시
 			purchaseMessage = "N";
 		}
+		
 		rttr.addFlashAttribute("purchaseMessage", purchaseMessage);
 		return "redirect:/findclass/class/classRoom?classCode=" + session.getAttribute("classCode");
 	}
