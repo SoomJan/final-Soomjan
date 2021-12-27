@@ -14,6 +14,7 @@ import com.soomjd.soomjan.mypage.model.dao.MypageMapper;
 import com.soomjd.soomjan.mypage.model.dto.BuyDTO;
 import com.soomjd.soomjan.mypage.model.dto.JjimDTO;
 import com.soomjd.soomjan.mypage.model.dto.PurchaseClassDTO;
+import com.soomjd.soomjan.mypage.model.dto.ReviewDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -154,7 +155,9 @@ public class MypageServiceImpl implements MypageService{
 		// 2. 리뷰에 대한 내용을 이용해 insert
 		// 3. delete 리뷰 호출..
 		
-		return mapper.deleteReview(rvCode);
+	//	ReviewDTO reviewContent = mapper.selectReviewContent(rvCode);
+		
+		 return mapper.deleteReview(rvCode);
 	}
 
 	@Override

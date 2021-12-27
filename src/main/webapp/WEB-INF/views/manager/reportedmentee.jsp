@@ -239,7 +239,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                  $('#repNickName').val(data.repNickName);
                  $('#repContents').val(data.repContents);
                  $('#isBlack').val(data.isBlack);
-                 $('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' + data.imgPath);
+                 $('#imgPath').prop('src','${ pageContext.servletContext.contextPath }/resources/uploadFiles/reportFiles/' 
+                		 + data.imgPath);
               },
               error: function(xhr, status, error){
                  console.log(error);
