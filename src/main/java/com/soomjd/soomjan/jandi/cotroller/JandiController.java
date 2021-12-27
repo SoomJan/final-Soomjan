@@ -68,6 +68,15 @@ public class JandiController {
 		this.jandiService = jandiService;
 	}
 	
+	/**
+	 * 잔디 프로필 페이지
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 * 
+	 * @author 이선호 
+	 */
 	@GetMapping("/jandiProfile")
 	public String jandiProfile(Model model, HttpSession session){
 		
@@ -75,8 +84,11 @@ public class JandiController {
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		List<ClassDTO> classDTO = jandiService.selectClasses(jandi.getEmail());
 		
+		
+		/*잔디 관련 데이터 보내기 */
 		model.addAttribute("jandi", jandi);
 		
+		/*잔디의 진행중인 클래스 데이터 보내기 */
 		model.addAttribute("thumbNailClassList", jandiService.selectThumbnailClassList(jandi.getEmail()));
 		model.addAttribute("classList", jandiService.selectClassCodeList(jandi));
 		model.addAttribute("categoryList", jandiService.selectCategoryList());
@@ -93,7 +105,10 @@ public class JandiController {
 	
 	@PostMapping("/jandiProfile1")
 	@ResponseBody
-	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage,HttpSession session, HttpServletRequest request, Model model) {
+	public String profileFileUpload(@RequestParam(name="profileImage", required=false) MultipartFile profileImage
+									,HttpSession session
+									, HttpServletRequest request
+									, Model model) {
 		
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
@@ -202,7 +217,7 @@ public class JandiController {
 
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 	
 		model.addAttribute("calStartDay", sdf.format(calStartDay));
 		model.addAttribute("calEndDay",  sdf.format(calEndDay));
@@ -210,12 +225,20 @@ public class JandiController {
 
 		
 		Map<String,Object> key1 = new HashMap<>();	
-		key1.put("startDay", calStartDay);
-		key1.put("endDay",calEndDay);
+		try {
+			key1.put("startDay", sdf.parse(sdf.format(calStartDay)));
+			key1.put("endDay",sdf.parse(sdf.format(calEndDay)));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		key1.put("email", jandi.getEmail());
 		
 		
 		List<CalculateDTO> calList=jandiService.selectcalculateList(key1);
+		
+		System.out.println("calList : "+calList);
 		for(int i=0; i<calList.size();i++) {
 			Date date=calList.get(i).getCalDate();
 			try {
@@ -257,6 +280,8 @@ public class JandiController {
 			
 		}
 		
+		System.out.println("feeSetList : "+feeSetList);
+		
 
 		
 		model.addAttribute("feeSetList", feeSetList);
@@ -271,6 +296,9 @@ public class JandiController {
 		
 		
 		List<CalAdDTO> adList= jandiService.selectcalAdList(key1);
+		
+		System.out.println("adList : "+adList);
+		
 		for(int i=0; i<adList.size();i++) {
 			Date date=adList.get(i).getPayDate();
 			try {
@@ -427,8 +455,6 @@ public class JandiController {
 	public String createAd(HttpSession session, Model model){
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
-		
-
 		List<ClassDTO> classes = jandiService.selectClasses(jandi.getEmail());
 		
 		List<Integer> classesCodeList  =new ArrayList<Integer>();
@@ -436,11 +462,7 @@ public class JandiController {
 		for(int i=0; i<classes.size(); i++) {
 			
 			int classesCode = classes.get(i).getClassCode();
-			
-			
-			
 			classesCodeList.add(classesCode);
-			
 			
 		}
 		System.out.println("classes : "+classes);
@@ -448,7 +470,6 @@ public class JandiController {
 		System.out.println("classesCodeList size : "+classesCodeList.size());
 		
 		
-		FullAdDTO myAd=null;
 		
 		
 		if(classesCodeList.size()==0) {
@@ -457,52 +478,100 @@ public class JandiController {
 			
 		}else {
 			
-			List<Integer> adCodeList=new ArrayList<Integer>();
+			List<FullAdDTO> mySelectedAdList=new ArrayList<>();
 			
 			for(int i=0;i<classesCodeList.size();i++) {
 				
-				if(jandiService.selectAd(classesCodeList.get(i))!=null) {
+				if(jandiService.selectAllAd(classesCodeList.get(i))!=null) {
 
-					int adCode= jandiService.selectAd(classesCodeList.get(i)).getAdCode();
-					adCodeList.add(adCode);
+					List<FullAdDTO> selectSerialList=jandiService.selectAllAd(classesCodeList.get(i));
+					
+					mySelectedAdList.addAll(selectSerialList);
 				}
 				
 			}
 			
-			Collections.sort(adCodeList, Collections.reverseOrder());
 			
-			FullAdDTO ad=jandiService.selectMyAd(adCodeList.get(0));
 			
-			if(ad.getIsAdvertised()=='Y') {
-
-				model.addAttribute("message","이미 광고중입니다.");
-				return "jandi/failedPage";
-			}else {
-				List<String> classesSelect= jandiService.selectClassesList(member.getEmail());
+			
+			
+			
+			for(int i=0; i<mySelectedAdList.size();i++) {
 				
-				System.out.println(member);
-				System.out.println("jandi : "+jandi);
-				System.out.println(classesSelect);
-				System.out.println("아아아 테스");
-				
-				
-				
-				model.addAttribute("jandi",jandi);
-				model.addAttribute("classesSelect",classesSelect);
-				
-				
-				return "jandi/createAd";
-				
-				
+				if(mySelectedAdList.get(i).getIsAdvertised()=='Y') {
+					
+					model.addAttribute("message","이미 광고중입니다.");
+					return "jandi/failedPage";
+					
+				}else if( mySelectedAdList.get(i).getStartDate()!=null){
+					
+					
+					Date adDate = mySelectedAdList.get(i).getStartDate();
+					Date today = new Date();
+					
+					long calDate = adDate.getTime()-today.getTime();
+					
+					long calDateDays=calDate/(24*60*60*1000);
+					
+					if(calDateDays>=0) {
+						model.addAttribute("message", "내일부터 광고가 시작됩니다.");
+						return "jandi/failedPage";
+						
+					}
+					
+					
+				}
 				
 			}
 			
+			
+
+			List<Integer> adCodeList=new ArrayList<Integer>();
+			
+			
+			for(int i=0;i<mySelectedAdList.size();i++) {
+				
+				adCodeList.add(mySelectedAdList.get(i).getAdCode());
+			}
+			
+			Collections.sort(adCodeList, Collections.reverseOrder());
+			
+			System.out.println("====================================================================================");
+			System.out.println(adCodeList);
+			
+			
+			List<String> classesSelect= jandiService.selectClassesList(member.getEmail());
+			
+			System.out.println(member);
+			System.out.println("jandi : "+jandi);
+			System.out.println(classesSelect);
+			System.out.println("아아아 테스");
+			
+			
+			
+			model.addAttribute("jandi",jandi);
+			model.addAttribute("classesSelect",classesSelect);
+			
+			if(adCodeList.size()==0) {
+				return "jandi/createAd";
+			}
+			
+			List<FullAdDTO> MyAdList=jandiService.selectMyAdList(adCodeList.get(0));
+			
+			FullAdDTO ad = MyAdList.get(0);
+			
+			if(ad.getIsAdvertised()=='Y') {
+				model.addAttribute("message","이미 광고중입니다.");
+				return "jandi/failedPage";
+			}else {
+
+				return "jandi/createAd";
+			}
+	
+		
+			
 		}
 	}
-	
-	
-	
-	
 	
 	@PostMapping("/createAd")
 	public String createAd(@ModelAttribute CreateAdDTO ads
@@ -519,7 +588,9 @@ public class JandiController {
 		
 		/*이미지 이외의 데이터 삽입 */
 		
-		int classCode= jandiService.selectClassesCode(ads.getMyClass());
+		List<Integer> classCode= jandiService.selectClassesCode(ads.getMyClass());
+		
+		Collections.sort(classCode,Collections.reverseOrder());
 		
 		/*이미지 삽입*/
 		
@@ -557,7 +628,7 @@ public class JandiController {
 			Map<String,Object> key = new HashMap<>();
 			key.put("originFileName", originFileName);
 			key.put("savedName", savedName);
-			key.put("classCode", classCode);
+			key.put("classCode", classCode.get(0));
 			key.put("adContents",ads.getAdContents());
 			
 			
@@ -628,6 +699,7 @@ public class JandiController {
 				
 			}
 			
+			System.out.println("mySelectedAdList : "+mySelectedAdList);
 			
 
 			List<Integer> adCodeList=new ArrayList<Integer>();
@@ -642,6 +714,12 @@ public class JandiController {
 			
 			System.out.println("====================================================================================");
 			System.out.println(adCodeList);
+			
+			if(adCodeList.size()==0) {
+				model.addAttribute("message", "만들어진 광고가 없습니다.");
+				return "jandi/failedPage";
+			}
+			
 			
 			List<FullAdDTO> MyAdList=jandiService.selectMyAdList(adCodeList.get(0));
 			
@@ -710,7 +788,7 @@ public class JandiController {
 		model.addAttribute("imagePath",myAd.getImagePath());
 		model.addAttribute("originImagePath", myAd.getOriginImagePath());
 		model.addAttribute("adContents",myAd.getAdContents());
-		model.addAttribute("className",adClass.getContents());
+		model.addAttribute("className",adClass.getTitle());
 		
 		
 		
@@ -735,91 +813,6 @@ public class JandiController {
 		ClassDTO myClass=jandiService.selectMyClass(myAd.getClassCode());
 		
 		model.addAttribute("contentss", myClass.getTitle());
-//		
-//		List<Integer> classesCodeList  =new ArrayList<Integer>();
-//		
-//		for(int i=0; i<classes.size(); i++) {
-//			
-//			int classesCode = classes.get(i).getClassCode();
-//			
-//			classesCodeList.add(classesCode);
-//			
-//		}
-//		
-//		FullAdDTO myAd=null;
-//		
-//		
-//		if(classesCodeList.size()==0) {
-//
-//		}else {
-//			
-//		String resultValue="N";
-//			
-//		
-//		
-//			List<Integer> adCodeList=new ArrayList<Integer>();
-//			
-//			for(int i=0;i<classesCodeList.size();i++) {
-//				
-//				if(jandiService.selectAd(classesCodeList.get(i))!=null) {
-//
-//					int adCodes= jandiService.selectAd(classesCodeList.get(i)).getAdCode();
-//					adCodeList.add(adCodes);
-//				}
-//				
-//			}
-//			
-//			Collections.sort(adCodeList, Collections.reverseOrder());
-//			
-//			List<FullAdDTO> MyAdList=jandiService.selectMyAdList(adCodeList.get(0));
-//			
-//			FullAdDTO ad = MyAdList.get(0);
-//			if(ad.getIsAdvertised()=='Y') {
-//				Date startDate= ad.getStartDate();
-//				
-//				Date today= new Date();
-//				
-//				if(startDate!=null) {
-//					long calDate=today.getTime()-startDate.getTime() ;
-//					
-//					long calDateDays =7- calDate/(24*60*60*1000);
-//					
-//					if(calDateDays>=0 && 7>=calDateDays) {
-//						myAd = ad;
-//						resultValue="Y";
-//						model.addAttribute("calDateDays",calDateDays);
-//						
-//					}	
-//				}	
-//			}else {
-//				myAd=jandiService.selectMyAd(adCodeList.get(1));
-//			}
-//			
-//			model.addAttribute("resultValue", resultValue);
-//		}
-//		
-//		model.addAttribute("myAd", myAd);
-//		
-//		model.addAttribute("adCode", myAd.getAdCode());
-//		
-//		System.out.println("/////////////////////////////////////////////myAd : "+myAd);
-//		
-//		
-//		ClassDTO adClass=null;
-//		
-//		for(int i=0;i<classes.size();i++) {
-//			
-//			if(classes.get(i).getClassCode()==myAd.getClassCode()) {
-//				adClass=classes.get(i);
-//			}
-//			
-//		}
-//		
-//		
-//		model.addAttribute("myClasses", adClass);
-//		model.addAttribute("contentss", adClass.getTitle());
-//		System.out.println("myClasses: 주세요 : "+adClass);
-//		System.out.println("contentss의 의미 찾자 : "+adClass.getTitle());
 		
 		Date date=new Date();
 		Calendar cal=Calendar.getInstance();

@@ -83,16 +83,16 @@ iframe {
     left: 47%;
   }
   
-   #star {
+   #pstar {
       margin-right: 15%;
   }
   
-   #star a{
+   #pstar a{
    text-decoration: none;
    color: gray;
    font-size: 30px;
   }
-  #star a.on{
+  #pstar a.on{
    color: red;
   } 
 

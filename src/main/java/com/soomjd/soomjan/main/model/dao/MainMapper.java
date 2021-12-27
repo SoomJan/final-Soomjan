@@ -8,6 +8,8 @@ import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 
 public interface MainMapper {
 
+	
+	// 랜덤 잔디 조회
 	List<JandiDTO> mainJandi();
 
 	// 조회수가 가장 높은 강의
@@ -24,5 +26,8 @@ public interface MainMapper {
 
 	// 가장 최근에 등록된 공지
 	FaqDTO lastestFaq();
+
+	// 메인화면 카로셀 광고
+	List<ClassDTO> adClass();
 	
 }

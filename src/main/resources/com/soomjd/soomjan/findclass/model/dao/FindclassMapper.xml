@@ -44,7 +44,7 @@
     
     </select>
     
-    
+    <!-- 현재 운영중인 전체 클래스 조회 by 권순표 -->
     <select id="selectfindclass" resultMap="findClassResultMap" parameterType="HashMap">
     	SELECT V2.RNUM
 		     , V2.*
@@ -97,6 +97,7 @@
 		 WHERE V2.RNUM BETWEEN #{ selectCriteria.startRow } AND #{ selectCriteria.endRow }
     </select>
     
+    <!-- 전체 카테고리 정보 조회 by 권순표 -->
     <select id="selectCategory" resultMap="categoryResultMap">
         SELECT
 		       CATEGORY_NAME
@@ -104,6 +105,7 @@
 		  FROM CATEGORY_TBL
     </select>
    
+   <!-- 인기 클래스 정보 조회 by 권순표 -->
     <select id="selectTopClass" resultMap="findClassResultMap" parameterType="Hashmap">
         SELECT V2.RNUM
              , V2.*

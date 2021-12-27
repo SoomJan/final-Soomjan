@@ -142,7 +142,7 @@ pageEncoding="UTF-8"%>
 
       <script>
       
-      /* 이름 체크 */
+      /* 관리자 계정 생성 - 이름 체크 */
        $(function () {
           $("#mngName").keyup(function () {
             let filter = /^[가-힣]+$/;
@@ -159,7 +159,7 @@ pageEncoding="UTF-8"%>
           });
         });
       
-      /* 이메일 체크 */
+      /* 관리자 계정 생성 - 이메일 체크 */
               $('#mngId').on('keyup',function(){
         	const email = $('#mngId').val();
         	$.ajax({
@@ -183,7 +183,7 @@ pageEncoding="UTF-8"%>
               });
         	});
       
-      /* 비밀번호 확인 체크 */
+      /* 관리자 계정 생성 - 비밀번호 확인 체크 */
               $(function () {
                   $("#password2").keyup(function () {
                     if ($("#password").val() != $("#password2").val()) {
@@ -200,7 +200,7 @@ pageEncoding="UTF-8"%>
                   });
                 });
       
-              /* 닉네임 체크 */
+       /* 관리자 계정 생성 - 닉네임 체크 */
               $('#mngNickName').on('keyup',function(){
         	const nickName = $('#mngNickName').val();
         	$.ajax({
@@ -256,7 +256,6 @@ pageEncoding="UTF-8"%>
                 $("#pwdModal").fadeOut();
               });
             } else {
-              /* 취소 버튼 누르면 창이 꺼지고, 확인 버튼을 눌러야 데이터가 넘어가도록 추후에 처리 필요 */
               $("#createModal").fadeIn();
               $("#crebtn").click(function(){
                 $("#createModal").fadeOut();
@@ -274,13 +273,6 @@ pageEncoding="UTF-8"%>
         $(function(){
           $(".delete").click(function(e){
 
-       /* 	let str = '';
-        	$("input:checkbox[name='check']:checked").each(function(){
-        		str += this.value + ",";
-        	}); 
-        	console.log(str); */
-      /*      let checkNum = $("input:checked").length;
-            console.log(checkNum); */
             var chkArray = new Array();
             
             $("input:checkbox[name='check']:checked").each(function(){
@@ -295,18 +287,15 @@ pageEncoding="UTF-8"%>
                 $("#nullModal").fadeOut();
               });
             } else {
-              /* 취소 버튼 누르면 창이 꺼지고, 확인 버튼을 눌러야 데이터가 넘어가도록 추후에 처리 필요 */
               $("#deleteModal").fadeIn();
               $(".deletebtn1").click(function(){
             	 
             	$.ajax({
-            		
             		type: "POST",
             		url: "${ pageContext.servletContext.contextPath }/manager/inactiveManager",
             		data: {checkbox : chkArray},
             		success: function(data){
             			console.log("들어감");
-            			// window.location.href='${ pageContext.servletContext.contextPath }/manager/manproduce';
             		},
             		error: function(xhr,status,error){
             			console.log("에러");

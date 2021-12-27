@@ -24,63 +24,42 @@ pageEncoding="UTF-8"%>
 
     <!-- 부트스트랩 캐러셀 -->
     <div class="main-logo">
-      <div
-        id="myCarousel"
-        class="carousel slide"
-        data-ride="carousel"
-        style="overflow: auto"
-      >
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-          <li data-target="#myCarousel" data-slide-to="2"></li>
-          <li data-target="#myCarousel" data-slide-to="3"></li>
-        </ol>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel" style="overflow: auto" >
+       
+         <ol class="carousel-indicators">
+        	 <c:forEach var="ad" items="${ adClass }">
+        		  <li data-target="#myCarousel" data-slide-to="${ ad.rnum }" class="active"></li>
+        	 </c:forEach>
+         </ol>
+         
         <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <img
-              class="first-slide"
-              src="${ pageContext.servletContext.contextPath }/resources/images/carousel1.png"
-              alt="First slide"
-            />
-          </div>
-          <div class="item">
-            <img
-              class="second-slide"
-              src="${ pageContext.servletContext.contextPath }/resources/images/carousel2.png"
-              alt="Second slide"
-            />
-          </div>
-          <div class="item">
-            <img
-              class="third-slide"
-              src="${ pageContext.servletContext.contextPath }/resources/images/carousel3.png"
-              alt="Third slide"
-            />
-          </div>
-          <div class="item">
-            <a href="#"
-              ><img
-                class="second-slide"
-                src="${ pageContext.servletContext.contextPath }/resources/images/carousel2.png"
-                alt="Second slide"
-            /></a>
-          </div>
-        </div>
-        <a
-          class="left carousel-control"
-          href="#myCarousel"
-          role="button"
-          data-slide="prev"
-        >
+         
+	          <%--  <c:forEach var="ad" items="${ adClass }">
+	          <div class="item active">
+	        		  <img onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ ad.classCode }'" 
+	        		   class="first-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ad.imgPath}"/>
+          	</div> 
+	        	</c:forEach>  --%>
+	        <div class="item active" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[0].classCode }'">
+            <img class="first-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[0].imgPath}"/>
+          </div>	
+	        	
+	        <div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[1].classCode }'">
+             <img class="second-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[1].imgPath}"/>
+        	</div>
+        	  
+        	<c:if test="${ !empty adClass[2].imgPath}" >
+				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[2].classCode }'">
+            	 <img class="third-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[2].imgPath}"/>
+        		</div>	
+        	</c:if> 
+          
+		</div>
+        
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
           <span class="sr-only">Previous</span>
         </a>
-        <a
-          class="right carousel-control"
-          href="#myCarousel"
-          role="button"
-          data-slide="next"
-        >
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
           <span class="sr-only">Next</span>
         </a>
       </div>
@@ -148,7 +127,7 @@ pageEncoding="UTF-8"%>
         <div class="swiper-wrapper">
           <c:forEach var="jandi" items="${ jandi }" end="7">
           <div class="swiper-slide photo">
-          	<div class="carousel-img" onclick="location.href='https://www.naver.com'">
+          	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandi.email }'">
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${jandi.profile_path}"  />
           	</div>
           		 <div><h3 class="classinstructor">${ jandi.nickName }</h3></div>
@@ -196,7 +175,7 @@ pageEncoding="UTF-8"%>
         <div class="mainadvertisement-left">
           <h1>📬최근 공지사항</h1>
           <span><h2>${lastestFaq.title }</h2></span><span> <h5>${lastestFaq.writeDate }</h5></span>
-          <h2>${lastestFaq.contents }</h2>
+          <h2 class="classtitle" onclick="location.href='${pageContext.servletContext.contextPath}/faq/noticeDetail/${ lastestFaq.postCode }'">${lastestFaq.contents }</h2>
         </div>
       </div>
 
@@ -283,6 +262,10 @@ pageEncoding="UTF-8"%>
       
     </main>
 
+
+
+
+
     <div class="applymentor">
       <div class="applymentor-inner">
         <div class="applymentor-inner-left">
@@ -290,9 +273,19 @@ pageEncoding="UTF-8"%>
           가입 직후 <strong>내 조건에 맞는 요청서</strong>를<br />
           무료로 받아보고 만나고 싶은<br />
           고객과 연락해보세요.<br />
-
-          <button type="button" onclick>잔디로 가입하기</button>
-        </div>
+          
+          <c:if test="${ !empty sessionScope.loginMember }">
+          	<c:if test="${ sessionScope.isjandi eq 'Y' }">
+            	<button onclick="location.href='${ pageContext.servletContext.contextPath }/jandi/jandiProfile'">잔디로 가입하기</button>
+            </c:if>
+         	<c:if test="${ sessionScope.isjandi != 'Y' }">
+           		<button onclick="location.href='${ pageContext.servletContext.contextPath }/mypage/joinJandi'">잔디로 가입하기</button>
+           </c:if>
+          </c:if>
+          <c:if test="${ empty sessionScope.loginMember }">
+           		<button onclick="location.href='${ pageContext.servletContext.contextPath }/mypage/joinJandi'">잔디로 가입하기</button>
+          </c:if>
+          </div>
 
         <div class="swiper-container1">
           <div class="swiper-ljh">

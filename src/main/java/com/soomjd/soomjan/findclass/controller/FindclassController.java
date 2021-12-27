@@ -28,15 +28,17 @@ public class FindclassController {
 		this.findClassService = findClassService;
 	}
 
-	// GETMapping-> 주소를 통해서 페이지를 이동시키기
-	// POSTMapping 
-
+	/**
+	 * @author 권순표
+	 * 현재 운영중인 전체 클래스 조회
+	 * @param categoryCode 사용자가 클릭한 카테고리 번호
+	 */
 	@GetMapping("/findAllClassMain")
 	public ModelAndView findAllClassMain(ModelAndView mv, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,
 			@RequestParam(defaultValue = "1") int currentPage, @RequestParam(required = false) String categoryCode) {
 
 		System.out.println("파인드 클래스 메인입니다 ㅋㅋ");
-		System.out.println("보여줄 클래스 카테고리 : " + categoryCode);
+		System.out.println("보여줄 클래스 카테고리 번호 : " + categoryCode);
 	    System.out.println("검색할 검색값 : " + searchValue);
 	    System.out.println("정렬 조건 : " + searchCondition);
 
@@ -44,6 +46,7 @@ public class FindclassController {
 		searchMap.put("searchCondition", searchCondition);
 		searchMap.put("searchValue", searchValue);
 
+		/* 카테고리 조건이 있다면 함께 보내주기 */
 		if(categoryCode != null && categoryCode != "") { 
 			searchMap.put("categoryCode", categoryCode);
 		}
@@ -105,6 +108,11 @@ public class FindclassController {
 
 	}
 
+	/**
+	 * @author 권순표
+	 * 현재 인기있는 클래스 조회
+	 * @param categoryCode 사용자가 클릭한 카테고리 번호
+	 */
 	@GetMapping("/findTopClassMain")
 	public ModelAndView findTopClassMain(ModelAndView mv, @RequestParam(required = false) String categoryCode) {
 		
@@ -113,6 +121,7 @@ public class FindclassController {
 		
 		Map<String, Object> map = new HashMap<>();
 		
+		/* 카테고리 조건이 있다면 같이 담아 보내주기 */
 	    if(categoryCode != null && categoryCode != "") {
 	    	map.put("categoryCode", categoryCode);
 	    }

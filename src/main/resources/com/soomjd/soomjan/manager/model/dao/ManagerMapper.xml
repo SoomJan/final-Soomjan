@@ -351,6 +351,12 @@
     	 WHERE J.EMAIL = #{ email }
     </select>
     
+    <select id="selectManagerTotalCount" resultType="_int">
+    	SELECT
+    	       COUNT(*)
+    	  FROM MANAGER_TBL
+    </select>
+    
      <select id="managerMember" resultMap="managerResultSet" parameterType="ManagerDTO">
     
      SELECT
@@ -364,6 +370,7 @@
 		    FROM MANAGER_TBL A
     </select>
 	
+	<!-- 매니저 계정 생성 -->
 	<insert id="registMsMember" parameterType="ManagerDTO">
 		INSERT
 		  INTO MANAGER_TBL
@@ -388,6 +395,7 @@
 		)
 	</insert>
 	
+	<!-- 매니저계정 생성 이메일 중복 체크 -->
 	<select id="emailCheck" resultType="_int" parameterType="HashMap">
 		SELECT
 		       COUNT(*)
@@ -395,6 +403,7 @@
 		 WHERE MNG_ID = #{ email }
 	</select>
 	
+	<!-- 매니저게정 생성 닉네임 중복 체크 -->
 	<select id="nickNameCheck" resultType="_int" parameterType="HashMap">
 		SELECT
 		       COUNT(*)

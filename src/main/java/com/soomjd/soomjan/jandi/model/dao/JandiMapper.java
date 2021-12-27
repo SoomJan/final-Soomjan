@@ -27,7 +27,7 @@ public interface JandiMapper {
 
 	int insertAd(Map<String, Object> key);
 
-	int selectClassesCode(String myClass);
+	List<Integer> selectClassesCode(String myClass);
 
 	List<ClassDTO> selectClasses(String email);
 

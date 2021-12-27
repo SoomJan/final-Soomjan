@@ -63,7 +63,7 @@ pageEncoding="UTF-8"%>
 
       $(function(){
 
-        /* 로그인 버튼 클릭 시 조건 체크 */
+        /* 로그인 버튼 클릭 시 빈값 조건 체크 */
         $("#submit").click(function(){
 
           let email = $("#email").val();
@@ -75,7 +75,7 @@ pageEncoding="UTF-8"%>
             showModal("비밀번호를 입력해주세요.");
           } else {
 
-            /* 비밀번호 체크 */
+            /* 전체 조건 체크 */
             $.ajax({
               url: "${ pageContext.servletContext.contextPath }/member/login",
               type: "post",

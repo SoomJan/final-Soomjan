@@ -59,24 +59,25 @@ public class FindJandiController {
 		// 전체 잔디 수 조회
 		int totalCount = findJandiService.SelectFindJandiTotalCount(searchMap);
 		System.out.println("totalCount : " + totalCount);
-		
+		// 검색에대한 정보를 담은 객체에 null 값으로 초기화
 		SelectCriteria selectCriteria = null;
-
+		// 검색조건이 null이 아니거나 빈칸이 아니라면 검색조건과 검색값을 SelectCriteria 넣어준다
 		if (searchCondition != null && !"".equals(searchCondition)) {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
 					searchValue);
+		// 위 조건을 제외한 경우는 검색값을 넣어주지 못하고 페이징처리에 필요한 값들만 넣어준다
 		} else {
 			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
 		}
 		
 		System.out.println("selectCriteria : " + selectCriteria);
-		
+		// 파라미터로 가져온 selectCriteria를 map에 저장
 		searchMap.put("selectCriteria", selectCriteria);
-		
+		// selectCriteria값을 db에서 리스트형태로 가지고 오겠다
 		List<JandiDTO> jandiList = findJandiService.selectfindJandi(selectCriteria);
 		
 		System.out.println("jandiList : " + jandiList);
-		
+		// 속성값에 HashMap형태로(key,value) jandiList와 selectCriteria를 넣어준다
 		model.addAttribute("jandiList", jandiList);
 		model.addAttribute("selectCriteria",selectCriteria);
 	}
@@ -117,7 +118,7 @@ public class FindJandiController {
 		mv.addObject("jandiInfo", findJandiService.selectJandiInfo(email));
 		// 해당 잔디의 클래스 조회
 		mv.addObject("thumbNailClassList", findJandiService.selectThumbnailClassList(email));
-		
+		// 잔디 프로파일 조회
 		mv.setViewName("/findJandi/jandiProfile");
 		return mv;
 	}

@@ -56,4 +56,10 @@ public class MainServiceImpl implements MainService {
 		return mapper.lastestFaq();
 	}
 
+	// 메인 카로셀 광고
+	@Override
+	public List<ClassDTO> adClass() {
+		return mapper.adClass();
+	}
+
 }

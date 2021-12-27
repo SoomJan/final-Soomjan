@@ -84,7 +84,7 @@ main { width: 90% !important;}
 								<c:forEach var="jandiInfo" items="${jandiProfileAndName}">
 						<div class="chatting">
 						
-							<div class="chat_content">
+							<div class="chat_content" onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chattingroom?matchedCode=${jandiInfo.MATCHED_CODE}'">
 								<div class="chat_content_1">
 									<div class="chat_content_3"></div>
 									<div class="chat_content_4 profile"> 
@@ -92,8 +92,8 @@ main { width: 90% !important;}
 										<img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${jandiInfo.PROFILE_PATH}">
 									</div>
 								</div>
-								<div class="chat_content_2">
-									<div class="chat_content_3" onclick="location.href='${ pageContext.servletContext.contextPath }/matching/chattingroom?matchedCode=${jandiInfo.MATCHED_CODE}'"> 
+								<div class="chat_content_2" >
+									<div class="chat_content_3" > 
 										<div class="chat_content_3_1" > ${jandiInfo.NICKNAME}</div> 
 										<div class="chat_content_3_2"></div> 
 									</div>

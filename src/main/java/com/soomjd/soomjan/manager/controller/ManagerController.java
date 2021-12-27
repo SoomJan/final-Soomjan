@@ -204,6 +204,10 @@ public class ManagerController {
 	@GetMapping("/manproduce")
 	public String manproduce(ManagerDTO manager, Model model) {
 		
+		// 관리자 계정 갯수 조회
+		int totalCount = managerService.selectManagerTotalCount(manager);
+        System.out.println("totalCount : " + totalCount);
+		
 		// 관리자 조회하기
 		List<ManagerDTO> managerList = managerService.managerMember(manager);
 		System.out.println(managerList);

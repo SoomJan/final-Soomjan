@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +29,7 @@
       <div class="sidebar-content">
         <p class="taking-title">수강완료 클래스</p>
         <br>
-       <form
-            action="${ pageContext.servletContext.contextPath }/mypage/finish"
-            method="get" id="searchform">
+       <form action="${ pageContext.servletContext.contextPath }/mypage/finish" method="get" id="searchform">
         <div class="dropsearch">
           <input type="hidden" name="currentPage" value="1" />
           <select class="ui dropdown menu" id="searchCondition" name="searchCondition">
@@ -40,24 +38,16 @@
             <option value="2">클래스제목</option>
             <option value="3">강사닉네임</option>
           </select>
-            <div class="ui search jandi-search">
-  				<div class="ui icon input input-search">
+          <div class="ui search jandi-search">
+  			<div class="ui icon input input-search">
     			<input class="prompt" type="search" id="searchValue" name="searchValue" value="${ selectCriteria.searchValue }">
-    			 <button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
-    		<!-- 	<input type="button" id="searchbtn"> -->
-  				</div>
- 			 	<div class="results"></div>
-			</div>
+    			<button id="searchbtn" style="border: none; background:none; position: relative; right: 11%;"><img src="${ pageContext.servletContext.contextPath }/resources/images/search.png" style="width:25px;"></button>
+  			</div>
+ 			<div class="results"></div>
+		  </div>
   		</div>
  	 </form>
-    <br><br>
- 	 <script>
- 	 	$(function(){
- 	 		$('#searchCondition').val("${ selectCriteria.searchCondition }");
- 	 		console.log("${ selectCriteria.searchCondition }");
- 	 	});
- 	 </script>
-  <br><br><br>
+<br><br><br><br><br>
  <c:if test="${ empty finishList[0].status }">
   <div class="unlist-text">
  	 수강이 완료된 클래스가 없거나, 조회된 결과가 없습니다.
@@ -77,17 +67,16 @@
     </tr>
   </thead>
   <tbody>
-
     <c:forEach var="finishClass" items="${ requestScope.finishList }">
     <tr>
       <td>${ finishClass.categoryDTO.categoryName }</td>
       <td>${ finishClass.classDTO.title }</td>
       <td>${ finishClass.classDTO.nickName }</td>
       <td>${ finishClass.endDate }</td>
-      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq NULL }">
+      <c:if test="${ finishClass.reviewDTO.rvCode eq 0 || finishClass.reviewDTO.isDelete eq 'Y' || finishClass.reviewDTO.isDelete eq null }">
       <td><button class="ui button reviewbtn" id="reviewbtn">수강후기작성</button></td>
       </c:if>
-      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 || finishClass.reviewDTO.isDelete eq 'N' }">
+      <c:if test="${ finishClass.reviewDTO.rvCode ne 0 && finishClass.reviewDTO.isDelete eq 'N' }">
       <td style="color: #52734D; font-weight: 700;">후기작성완료</td>
       </c:if>
     </tr>
@@ -115,7 +104,6 @@
               	<th>카테고리</th>
                 <th>강사</th>
                 <th>수강기간</th>
-                
               </tr>
             </thead>
             <tbody>
@@ -131,13 +119,13 @@
             <br>
             <div class="review">
           <p class="review-title">클래스는 만족하셨나요?</p>
-            <p id="star">
+            <p id="pstar">
 			   <a href="#" class="on" id="1">★</a>
 			   <a href="#" class="on" id="2">★</a>
 			   <a href="#" class="on" id="3">★</a>
 			   <a href="#" id="4">★</a>
 			   <a href="#" id="5">★</a>
-			   <input type="hidden" id="reviewStar" name="reviewStar" value="3">
+			   <input type="hidden" id="star" name="star" value="3">
  			 <p>
         </div>
         <br><br>
@@ -168,6 +156,13 @@
         </div>
       </div>
       <script>
+      /* 검색 조건 유지 하기 */
+	 	$(function(){
+ 	 		$('#searchCondition').val("${ selectCriteria.searchCondition }");
+ 	 		console.log("${ selectCriteria.searchCondition }");
+ 	 	});
+      
+      /* 클래스 정보가 적힌 리뷰 작성 모달 창 띄워주기 */
   		$(".reviewbtn").on('click', function(e){
   			let $reviewbtn = e.target;
   			let $tr = $($reviewbtn).parent().parent();
@@ -185,16 +180,19 @@
   			e.preventDefault();
   		});
         
+      /* 리뷰 작성 확인 모달창 */
         $(".finishbtn").on('click', function(e) {
         	$('#finishmodal').fadeIn();
         	e.preventDefault();
         });
         
+      /* 리뷰 모달 창 닫기 */
         $(".exitbtn").click(function(e){
         	$('#reviewmodal').fadeOut();
         	e.preventDefault();
         });
         
+      /* 수강 후기 작성 완료 모달 창 */
         $("#obtn").on('click', function(e){
         	$("#reviewmodal").fadeOut();
         	$("#finishmodal").fadeOut();
@@ -202,28 +200,31 @@
         	e.preventDefault();
         });
           
-          $("#o2btn").click(function(e){
-              $("#finish2modal").fadeOut();
-              $("#reviewform").submit();
-              e.preventDefault();
-          });
-          
-          $(".xbtn").on('click', function(e){
-        	 $("#reviewmodal").fadeOut();
-        	 $("#finishmodal").fadeOut();
-        	 e.preventDefault();
-          });
+     		/* '확인' 버튼 클릭 시 작성된 리뷰가 DB로 전달 된다. */
+         $("#o2btn").click(function(e){
+             $("#finish2modal").fadeOut();
+             $("#reviewform").submit();
+             e.preventDefault();
+         });
          
-	$( document ).ready(function() {
-		$( "#star a" ).click(function() {
-			$(this).parent().children("a").removeClass("on");
-			$(this).addClass("on").prevAll("a").addClass("on");
-				var starRate = $(this).attr('id');
-				console.log(starRate);
-			$("#reviewStar").val(starRate);
-				return false;
-		});
-	}); 
+     		/* 모달창 닫기 */
+         $(".xbtn").on('click', function(e){
+       	 	$("#reviewmodal").fadeOut();
+       	 	$("#finishmodal").fadeOut();
+       	 	e.preventDefault();
+         });
+        
+      	/* 별점 표시 - 기본 3개 */
+		$( document ).ready(function() {
+			$( "#pstar a" ).click(function() {
+				$(this).parent().children("a").removeClass("on");
+				$(this).addClass("on").prevAll("a").addClass("on");
+					var starRate = $(this).attr('id');
+					console.log(starRate);
+				$("#star").val(starRate);
+					return false;
+			});
+		}); 
   
       </script>
 </body>
