@@ -130,7 +130,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </a>
         </ul>
         <ul class="hide-grass">
-          <a href="#">
+          <a href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain">
             <li>
               <span>🍀</span>
               <span>숨은 잔디 찾기</span>
@@ -141,14 +141,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       <div>
         <hr/>
-        <ul>
-          <a href="#">
-            <li>
-              <span>👩‍🏫</span>
-              <span>잔디 가입하기</span>
-            </li>
-          </a>
-        </ul>
+        
         <ul>
           <a href="#">
             <li>
@@ -158,7 +151,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </a>
         </ul>
         <ul>
-          <a href="#">
+          <a href="${ pageContext.servletContext.contextPath}/faq/notice">
             <li>
               <span>📑</span>
               <span>의견 및 오류 제보</span>
