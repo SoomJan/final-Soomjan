@@ -27,8 +27,8 @@ pageEncoding="UTF-8"%>
       <div class="container" style="width:75%; margin-top:150px">
 
   <!-- Page Heading -->
-  <h1 class="my-4">멘토 보기 | 
-    <small>인기 멘토</small>
+  <h1 class="my-4">잔디 보기 | 
+    <small>잔디 멘토</small>
   </h1>
   
 
