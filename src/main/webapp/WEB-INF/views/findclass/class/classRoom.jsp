@@ -67,12 +67,15 @@
 						for(let tag of tagArr){
 							if(tag !== ""){
 								$('.tag').append(
-								"<div class='ui button' style='margin:3px;' data-position='top left'"
-									+ "onclick='location.href='${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=&searchValue=" 
-											+ tag + "'>" + tag + "</div>");
+								"<div class='ui button' style='margin:3px;' data-position='top left' onclick='moveTag(this);'>" + tag + "</div>");
 							}
 						}
 					});
+					function moveTag(item){
+						console.log($(item).html());
+						let tag = $(item).html();
+						location.href='${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?searchValue=' + tag;
+					}
 				</script>
 				<hr>
 				<h2>강의 목차</h2>
