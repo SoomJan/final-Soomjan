@@ -68,7 +68,7 @@
     
     <resultMap type="com.soomjd.soomjan.jandi.model.dto.CalAdDTO" id="calAdResultMap">
     	<result column="PAY_DATE" property="payDate"/>
-    	<result column="CONTENTS" property="className"/>
+    	<result column="TITLE" property="className"/>
     	<result column="PAY" property="pay"/>
     
     </resultMap>
@@ -229,7 +229,7 @@
 			 , A.MNG_NO
 			 , A.CAL_DATE
 		  FROM CALCULATE_TBL A
-		  JOIN PURCHASE_CLASS_TBL B ON(A.EMAIL=B.EMAIL)	   
+		  JOIN PURCHASE_CLASS_TBL B ON(A.CLASS_PURC_CODE=B.CLASS_PURC_CODE)	   
 		  JOIN PAYMENT_TBL C ON(B.PAY_CODE=C.PAY_CODE)
 		 WHERE C.PAY_DATE BETWEEN #{startDay} AND #{endDay}
 		   AND A.EMAIL=#{ email } 
@@ -238,7 +238,7 @@
 	<select id="selectcalAdList" resultMap="calAdResultMap">
 		SELECT
 		 	   A.PAY_DATE
-		 	 , D.CONTENTS
+		 	 , D.TITLE
 		 	 , A.PAY
 		  FROM PAYMENT_TBL A
 		  JOIN PURCHASE_AD_TBL B ON(A.PAY_CODE=B.PAY_CODE)

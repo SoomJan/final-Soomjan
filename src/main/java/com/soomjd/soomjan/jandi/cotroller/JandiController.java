@@ -178,6 +178,16 @@ public class JandiController {
 	}
 	
 	
+	
+	/**
+	 * 잔디 프로필 소개 및 연혁 변경 
+	 * 
+	 * @param intro
+	 * @param session
+	 * @param request
+	 * 
+	 * @author 이선호 
+	 */
 	@PostMapping("/jandiIntro")
 	public String profileIntroUpdate(@ModelAttribute JandiIntroDTO intro
 									, HttpServletRequest request
@@ -203,18 +213,25 @@ public class JandiController {
 	
 	
 	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	/**
+	 * 잔디 정산페이지 
+	 * 
+	 * @param session
+	 * @param request
+	 * 
+	 * @author 이선호 
+	 */
 	@GetMapping("/jandiCalc")
 	public String jandiCalc(HttpSession session,Model model){
 		MemberDTO member = (MemberDTO) session.getAttribute("loginMember");
 		JandiDTO jandi = jandiService.selectJandi(member.getEmail());
 		
+		
 		model.addAttribute("account", jandi.getAccount());
 		model.addAttribute("accName", jandi.getAcc_name());
 		model.addAttribute("bank", jandi.getBank());
 		
-		
+		/*시작 날짜(오늘날짜) & 종료날짜(7일후:광고기간이 7일이기 때문)*/
 		Date calStartDay = new Date();
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(calStartDay);
@@ -242,7 +259,7 @@ public class JandiController {
 
 		key1.put("email", jandi.getEmail());
 		
-		
+		/*클래스 정산 결과 가져오기 */
 		List<CalculateDTO> calList=jandiService.selectcalculateList(key1);
 		
 		System.out.println("calList : "+calList);
@@ -259,7 +276,7 @@ public class JandiController {
 		}
 		
 		
-		
+		/*정산 결과 합산 */
 		int feeSum=0;
 		
 		for(int i=0;i<calList.size();i++) {
@@ -267,23 +284,21 @@ public class JandiController {
 			feeSum+=calList.get(i).getFees();
 		}
 		
-		
-
-		
-		
-		
 		List<Map<String,Object>> feeSetList = new ArrayList<>();
 		
 		for(int i=0;i<calList.size();i++) {
 			
 			
 			Map<String, Object> feeSet = new HashMap<String, Object>();
+		
 			feeSet.put("calDate", sdf.format( calList.get(i).getCalDate()));
 			feeSet.put("fullFee",calList.get(i).getFees()*10);
 			feeSet.put("fees", calList.get(i).getFees());
 			feeSet.put("realFeeSet",calList.get(i).getFees()*9);
 			
 			feeSetList.add(feeSet);
+			
+
 			
 		}
 		
@@ -350,7 +365,7 @@ public class JandiController {
 		Date startDay=null;
 		Date endDay=null;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			startDay = sdf.parse(calStartDate);
 			endDay = sdf.parse(calEndDate);
@@ -403,14 +418,20 @@ public class JandiController {
 		
 		for(int i=0;i<calList.size();i++) {
 			
-			
+		
 			Map<String, Object> feeSet = new HashMap<String, Object>();
-			feeSet.put("calDate", sdf.format( calList.get(i).getCalDate()));
-			feeSet.put("fullFee",calList.get(i).getFees()*10);
-			feeSet.put("fees", calList.get(i).getFees());
-			feeSet.put("realFeeSet",calList.get(i).getFees()*9);
+			try {
+				feeSet.put("calDate", sdf.parse(sdf.format( calList.get(i).getCalDate())));
+				feeSet.put("fullFee",calList.get(i).getFees()*10);
+				feeSet.put("fees", calList.get(i).getFees());
+				feeSet.put("realFeeSet",calList.get(i).getFees()*9);
+				
+				feeSetList.add(feeSet);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			feeSetList.add(feeSet);
 			
 		}
 		
@@ -543,8 +564,7 @@ public class JandiController {
 			
 			Collections.sort(adCodeList, Collections.reverseOrder());
 			
-			System.out.println("====================================================================================");
-			System.out.println(adCodeList);
+
 			
 			
 			List<String> classesSelect= jandiService.selectClassesList(member.getEmail());
@@ -558,6 +578,9 @@ public class JandiController {
 			
 			model.addAttribute("jandi",jandi);
 			model.addAttribute("classesSelect",classesSelect);
+			
+
+			
 			
 			if(adCodeList.size()==0) {
 				return "jandi/createAd";
