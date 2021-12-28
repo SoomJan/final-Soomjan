@@ -88,7 +88,7 @@
 		       COUNT(*)
 		  FROM JANDI_TBL A
 	   	  <if test='searchValue != null'>
-			     AND A.NICKNAME LIKE '%' || #{ searchValue } || '%' 
+			  WHERE A.NICKNAME LIKE '%' || #{ searchValue } || '%' 
 		  </if>
 	      	  
     </select>

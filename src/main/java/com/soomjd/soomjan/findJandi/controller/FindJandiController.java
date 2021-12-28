@@ -52,23 +52,19 @@ public class FindJandiController {
 		Map<String, Object> searchMap = new HashMap<>();
 		// 파라미터로 가져온 searchValue를 map에 저장
 		searchMap.put("searchValue", searchValue);
+		searchMap.put("searchCondition",searchCondition);
 		// 한페이지당 뜨는 프로필 제한 갯수를 정하고, 페이징 버튼 갯수 정하기
 		int limit = 9;
 		int buttonAmount = 5;
 		
 		// 전체 잔디 수 조회
 		int totalCount = findJandiService.SelectFindJandiTotalCount(searchMap);
-		System.out.println("totalCount : " + totalCount);
+		System.out.println("searchMap : " + searchMap);
+		
 		// 검색에대한 정보를 담은 객체에 null 값으로 초기화
 		SelectCriteria selectCriteria = null;
-		// 검색조건이 null이 아니거나 빈칸이 아니라면 검색조건과 검색값을 SelectCriteria 넣어준다
-		if (searchCondition != null && !"".equals(searchCondition)) {
-			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
-					searchValue);
-		// 위 조건을 제외한 경우는 검색값을 넣어주지 못하고 페이징처리에 필요한 값들만 넣어준다
-		} else {
-			selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
-		}
+		selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition,
+				searchValue);
 		
 		System.out.println("selectCriteria : " + selectCriteria);
 		// 파라미터로 가져온 selectCriteria를 map에 저장
