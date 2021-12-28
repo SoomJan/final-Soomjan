@@ -807,7 +807,7 @@ public class ClassRoomController{
 		String returnMessage = "결제에 실패했습니다.";
 		try {
 			// 카카오 URL갔다가 돌어올  url설정 
-			String localPath = "http://localhost:8585" + request.getContextPath();
+			String localPath = "http://125.132.252.115:8585" + request.getContextPath();
 			// 카카오 url 연결
 			URL kakaoUrl = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection urlConnection = (HttpURLConnection)kakaoUrl.openConnection();
