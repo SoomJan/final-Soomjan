@@ -5,6 +5,7 @@ import java.util.List;
 import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 
 public interface MainMapper {
 
@@ -29,5 +30,8 @@ public interface MainMapper {
 
 	// 메인화면 카로셀 광고
 	List<ClassDTO> adClass();
+
+	// 카테고리 검색
+	List<CategoryDTO> category();
 	
 }

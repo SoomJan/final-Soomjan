@@ -17,27 +17,18 @@ pageEncoding="UTF-8"%>
           <div>
             <h3>Company</h3>
             <div>
-              <a href="${ pageContext.servletContext.contextPath}/faq/test"><p>회사 소개</p></a>
-              <a href="${ pageContext.servletContext.contextPath}/faq/gametest"><p>블로그</p></a>
               <a href="${ pageContext.servletContext.contextPath}/faq/notice"><p>공지사항</p></a>
             </div>
           </div>
           <div>
             <h3>SUPPORT</h3>
-            <a href="${ pageContext.servletContext.contextPath}/faq/faq"
-              ><p>FAQ</p></a
-            >
-            <a href="FAQ.html"><p>숨은 잔디 센터</p></a>
+            <a href="${ pageContext.servletContext.contextPath}/faq/faq"><p>FAQ</p></a>
           </div>
 
           <div>
             <h3>POLICIES</h3>
-            <a href="${ pageContext.servletContext.contextPath}/faq/policy"
-              ><p>이용약관</p></a
-            >
-            <a href="${ pageContext.servletContext.contextPath}/faq/policy"
-              ><p>개인정보처리방침</p></a
-            >
+            <a href="${ pageContext.servletContext.contextPath}/faq/policy"><p>이용약관</p></a>
+            <a href="${ pageContext.servletContext.contextPath}/faq/policy"><p>개인정보처리방침</p></a>
           </div>
 
           <div>

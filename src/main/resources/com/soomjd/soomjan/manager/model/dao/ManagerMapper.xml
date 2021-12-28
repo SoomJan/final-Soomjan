@@ -114,12 +114,30 @@
     	<result column="REP_TYPE" property="repType"/>
     </resultMap>
     
+    <resultMap id="AdResultMap" type="AdDTO">
+    	<id column="AD_CODE" property="adCode"/>
+    	<result column="AD_CONTENTS" property="adContents"/>
+    	<result column="IMG_PATH" property="imgPath"/>
+    	<result column="CLASS_CODE" property="classCode"/>
+    	<result column="START_DATE" property="startDate"/>
+    	<result column="IS_ADVERTISED" property="isAdvertised"/>
+    	<association property="ClassDTO" resultMap="classResultMap"></association>
+    </resultMap>
+    
     <resultMap id="calculateDTO" type="CalculateDTO">
     	<id column="CALC_CODE" property="calCode"/>
     	<result column="FEES" property="fees"/>
     	<result column="EMAIL" property="email"/>
     	<result column="CLASS_PURC_CODE" property="classPurchaseCode"/>
     	<result column="CAL_DATE" property="calDate"/>
+    </resultMap>
+    
+    <resultMap id="purchaseAdResultMap" type="PurchaseAdDTO">
+    	<id column="AD_CODE" property="adCode"/>
+    	<result column="PAY_CODE" property="payCode"/>
+    	<result column="AD_PURC_CODE" property="adPurchaseCode"/>
+    	<result column="EMAIL" property="email"/>
+    	<association property="PaymentDTO" resultMap="paymentResultSet"></association>
     </resultMap>
     
     <resultMap id="reportClassResultSet" type="ReportClassDTO">
@@ -1119,5 +1137,38 @@
 		     , S.BLACK_END_DATE = SYSDATE + 30
 		 WHERE EMAIL = #{ EMAIL }
 	</update>
+	
+	<select id="selectfinishadcalTotalCount" resultType="_int" parameterType="hashMap">
+	SELECT COUNT(*)
+      FROM PURCHASE_AD_TBL PA
+      JOIN PAYMENT_TBL PT ON(PT.PAY_CODE = PA.PAY_CODE)
+		<where>
+			<if test='searchCondition == "1"'>
+			 PA.EMAIL LIKE '%' || #{ searchValue } || '%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="purchaseAd" resultMap="purchaseAdResultMap">
+		SELECT
+			   PT.PAY_DATE
+		     , PT.OWNER
+		     , PA.EMAIL
+		   FROM PURCHASE_AD_TBL PA
+		   JOIN PAYMENT_TBL PT ON(PT.PAY_CODE = PA.PAY_CODE)
+		   <where>
+		   		<if test='searchCondition == "1"'>
+				 PA.EMAIL LIKE '%' || #{ searchValue } || '%'
+				</if>
+		   </where>
+	</select>
+	
+	<select id="nowAd" resultMap="AdResultMap">
+	 SELECT * 
+			FROM AD_TBL A 
+			JOIN CLASS_TBL C ON(A.CLASS_CODE = C.CLASS_CODE) 
+			WHERE is_advertised='Y'
+	
+	</select>
 	
 </mapper>
