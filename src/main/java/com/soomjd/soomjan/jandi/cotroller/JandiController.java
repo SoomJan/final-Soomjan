@@ -878,7 +878,7 @@ public class JandiController {
 			URL address= new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection serverAddress = (HttpURLConnection) address.openConnection();
 			serverAddress.setRequestMethod("POST");
-			serverAddress.setRequestProperty("Authorization", "KakaoAK 8c3ee8cfc430145172ddcb8047be3afe");
+			serverAddress.setRequestProperty("Authorization", "KakaoAK b4ca33fb39dc934a8fe5ce28a439ef6e");
 			serverAddress.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 			serverAddress.setDoOutput(true);  //input은 자동적으로 연결
 			String parameter="cid=TC0ONETIME"
