@@ -109,7 +109,7 @@ pageEncoding="UTF-8"%>
             <tbody>
             <c:forEach var="jandiMember" items="${ sessionScope.jandiList }">
               <tr class="move jandiBtn" onclick="location.href='${ pageContext.servletContext.contextPath}/findJandi/jandiProfile/${ jandiMember.email }'">
-              	<td><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ jandiMember.profile_path }" style="width:100px;"></td>
+              	<td><img src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ jandiMember.profile_path }" style="width:70px;"></td>
                 <td>${ jandiMember.email }</td>
                 <td>${ jandiMember.acc_name }</td>
                 <td>${ jandiMember.nickName }</td>

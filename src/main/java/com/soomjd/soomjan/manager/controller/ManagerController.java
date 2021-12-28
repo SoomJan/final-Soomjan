@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.common.exception.LoginFailedException;
 import com.soomjd.soomjan.common.exception.MemberRegistException;
 import com.soomjd.soomjan.common.paging.Pagenation;
@@ -35,7 +34,9 @@ import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.manager.model.dto.AdDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.manager.model.dto.PurchaseAdDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.manager.model.service.ManagerService;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
@@ -730,8 +731,14 @@ public class ManagerController {
 	
 	// 현재 광고 중
 	@GetMapping("/classadvertisment")
-	public String classadvertisment() {
+	public String classadvertisment(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
 				
+		List <AdDTO> purchaseAd = managerService.nowAd();
+	      
+        System.out.println("selectCriteria : " + purchaseAd);
+	      
+	    model.addAttribute("purchaseAd",purchaseAd);
+		
 		return "manager/classadvertisment";
 	}
 	
@@ -739,7 +746,35 @@ public class ManagerController {
 	
 	// 현재 광고 중
 	@GetMapping("/advertcal")
-	public String advertcal() {
+	public String advertcal(Model model, @RequestParam(required = false) String searchCondition, @RequestParam(required = false) String searchValue,@RequestParam(defaultValue = "1") int currentPage) {
+		
+		 Map<String, String> searchMap = new HashMap<>();
+	      searchMap.put("searchCondition", searchCondition);
+	      searchMap.put("searchValue", searchValue);
+	      System.out.println("searchMap : " + searchMap);
+	      
+	      int totalCount = managerService.selectfinishadcalTotalCount(searchMap);
+	      System.out.println("totalCount : " + totalCount);
+	      
+	      int limit = 10;
+	      int buttonAmount = 5;
+	      
+	      SelectCriteria selectCriteria = null;
+		
+	      if(searchCondition != null && !"".equals(searchCondition)) {
+		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount, searchCondition, searchValue);
+		      } else {
+		         selectCriteria = Pagenation.getSelectCriteria(currentPage, totalCount, limit, buttonAmount);
+		      }
+		
+	      System.out.println("selectCriteria : " + selectCriteria);
+		
+	      List <PurchaseAdDTO> purchaseAd = managerService.purchaseAd(selectCriteria);
+	      
+	      System.out.println("selectCriteria : " + purchaseAd);
+	      
+	      model.addAttribute("purchaseAd",purchaseAd);
+			model.addAttribute("selectCriteria", selectCriteria);
 				
 		return "manager/advertcal";
 	}

@@ -59,11 +59,11 @@ pageEncoding="UTF-8"%>
    
    .modalContent {background-color: #91c788;}
    
-    #mngName { margin-left: 7%;}
-   #mngNickName {margin-left: 5%;}
-   #mngId {margin-left: 5%;}
-   #password {margin-left: 4%;}
-   #password2 {margin-left: 1%;} 
+/*     #mngName { margin-left: 8%;}
+   #mngNickName {margin-left: 6%;}
+   #mngId {margin-left: 6%;}
+   #password {margin-left: 11%;}
+   #password2 {margin-left: 11%;}  */
    
    
     
@@ -108,19 +108,19 @@ pageEncoding="UTF-8"%>
       <h3>관리자 계정 생성 </h3>
       <form class="create-pro" action="${ pageContext.servletContext.contextPath }/manager/msregist" method="post" id="createForm">     
       <div>
-     	 <div class="checkmain">이름
+     	 <div class="checkmain">이름<br>
     	<div class="ui input"><input type="text" class="pd1" id="mngName" name="mngName"><span class="nameCheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
-      	<div class="checkmain">닉네임
+      	<div class="checkmain">닉네임<br>
     	<div class="ui input"><input type="text" class="pd2" id="mngNickName" name="mngNickName"><span id="nickNamecheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>
       <br>
       <div>
-      	<div class="checkmain">아이디
+      	<div class="checkmain">아이디<br>
     	<div class="ui input"><input type="text" class="pd3" id="mngId" name="mngId"><span id="emailcheck" style="margin-left:10px; margin-top: 7px; width: 500px;"></span></div>
     	</div>
       </div>

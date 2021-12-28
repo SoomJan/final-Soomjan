@@ -20,6 +20,7 @@ import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.faq.model.service.FaqService;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.main.model.service.MainService;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
 
 @Controller
@@ -42,6 +43,10 @@ public class MainController {
 		
 		// 메인 카로셀 광고
 		List <ClassDTO> adClass = mainService.adClass();
+		
+		// 메인 카테고리
+		List <CategoryDTO> category = mainService.category();
+		Collections.shuffle(category);
 		
 		// 랜덤 클래스 조회
 		List <ClassDTO> class2 = faqService.mainClass();
@@ -74,6 +79,7 @@ public class MainController {
 		model.addAttribute("highScore", highScore);	
 		model.addAttribute("lastestFaq", lastestFaq);	
 		model.addAttribute("adClass", adClass);	
+		model.addAttribute("category", category);	
 		
 		System.out.print(adClass);
 		

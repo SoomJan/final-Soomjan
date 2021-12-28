@@ -48,7 +48,7 @@ pageEncoding="UTF-8"%>
 
   <!-- Page Heading -->
   <h1 class="my-4">잔디 보기 | 
-    <small>잔디 멘토</small>
+    <small>전체 잔디</small>
   </h1>
 
   	<div class="row">

@@ -206,31 +206,19 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <div class="nav-left">
         <div>
         <a href="${ pageContext.servletContext.contextPath }">
-          <img
-            src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"
-        /></a>
+          <img src="${ pageContext.servletContext.contextPath }/resources/images/Logo3.png"/></a>
       </div>
       </div>
-
       <div class="nav-menu">
         <div class="nav-menu-item">
           <div>
-            <a
-              href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain"
-              >잔디보기</a
-            >
+            <a href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain">잔디보기</a>
           </div>
           <div>
-            <a
-              href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain"
-              >클래스</a
-            >
+            <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" >클래스</a>
           </div>
           <div>
-            <a
-              href="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email}"
-              >매칭</a
-            >
+            <a href="${ pageContext.servletContext.contextPath }/matching/manteeMain/${ sessionScope.loginMember.email}">매칭</a>
           </div>
           <div>
           <c:if test="${ !empty sessionScope.loginMember }">
@@ -246,18 +234,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </c:if>
           </div>
         </div>
-
         <div class="nav-right">
-          <c:if
-            test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}"
-          >
+          <c:if test="${ empty sessionScope.loginMember.email && empty sessionScope.loginManager.mngNickName}">
             <div class="nav-right-login">
-              <a href="${ pageContext.servletContext.contextPath }/member/login"
-                ><button type="button" class="btn">로그인</button>
+              <a href="${ pageContext.servletContext.contextPath }/member/login"><button type="button" class="btn">로그인</button>
               </a>
-               <a
-                href="${ pageContext.servletContext.contextPath }/member/terms"
-                ><button type="button" class="btn" style="background-color:#91c788 ;">회원가입</button>
+               <a href="${ pageContext.servletContext.contextPath }/member/terms"><button type="button" class="btn" style="background-color:#91c788 ;">회원가입</button>
               </a>
             </div>
           </c:if>
@@ -278,9 +260,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
           <div class="nav-right-sidebar">
             <button type="button" id="acti">
-              <img
-                src="${ pageContext.servletContext.contextPath }/resources/images/navi.png"
-              />
+              <img src="${ pageContext.servletContext.contextPath }/resources/images/navi.png" />
             </button>
           </div>
         </div>

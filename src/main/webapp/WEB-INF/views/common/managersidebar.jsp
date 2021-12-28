@@ -47,16 +47,7 @@ pageEncoding="UTF-8"%>
             </a>
           </li>
           <li>
-            <a
-              href="${ pageContext.servletContext.contextPath }/manager/applyclassadvertisment"
-              >클래스 광고 요청</a
-            >
-          </li>
-          <li>
-            <a
-              href="${ pageContext.servletContext.contextPath }/manager/classadvertisment"
-              >현재 광고중인 클래스</a
-            >
+            <a href="${ pageContext.servletContext.contextPath }/manager/classadvertisment">현재 광고중인 클래스</a>
           </li>
         </ul>
         <ul>

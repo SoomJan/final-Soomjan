@@ -95,7 +95,7 @@
     <!-- 수강후기 모달창 -->
    <form action="${ pageContext.servletContext.contextPath }/mypage/finishReview" method="post" id="reviewform">
     <div class="ui small modal" id="reviewmodal">
-        <div class="header modal-header"><input type="text" class="t-title" style="border:none; text-align:center;"></div>
+        <div class="header modal-header"><input type="text" class="t-title" style="border:none; text-align:center; width: 100%;"></div>
         <div class="content modal-content">
           <br>
           <table class="ui basic table modal-table">

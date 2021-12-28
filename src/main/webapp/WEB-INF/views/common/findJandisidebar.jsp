@@ -12,14 +12,14 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="sidebar">
       <div class="sidebar-inner-name">
-        <h1>멘토 보기</h1>
+        <h1>잔디 보기</h1>
         <hr class="border-1px-black" />
       </div>
       <div class="sidebar-inner-name1">
         <ul>
           
-          <li><a href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain">전체 멘토</a></li>
-          <li><a href="${ pageContext.servletContext.contextPath }/findJandi/findTopJandiMain">인기 멘토</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/findJandi/findAllJandiMain">전체 잔디</a></li>
+          <li><a href="${ pageContext.servletContext.contextPath }/findJandi/findTopJandiMain">인기 잔디</a></li>
         </ul>
       </div>
     </div>

@@ -44,7 +44,7 @@ public class FindJandiServiceImpl implements FindJandiService{
 	@Override
 	public int SelectFindJandiTotalCount(Map<String, Object> searchMap) {
 		
-		int totalCount = findJandiMapper.SelectFindJandiTotalCount();
+		int totalCount = findJandiMapper.SelectFindJandiTotalCount(searchMap);
 		return totalCount;
 	}
 
