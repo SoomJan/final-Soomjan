@@ -67,7 +67,7 @@ p {
 
 .inputStyle {
 	border: none;
-	width: 100px;
+	width: 100%;
 	text-align: center;
 }
 
