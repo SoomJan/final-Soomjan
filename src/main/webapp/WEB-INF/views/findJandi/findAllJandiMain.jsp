@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
       <div class="container" style="width:75%; margin-top:150px">
 
   <!-- Page Heading -->
-  <h1 class="my-4">멘토 보기 | 
+  <h1 class="my-4">잔디 보기 | 
     <small>전체 잔디</small>
   </h1>
 

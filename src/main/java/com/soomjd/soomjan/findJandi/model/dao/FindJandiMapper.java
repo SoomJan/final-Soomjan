@@ -1,7 +1,7 @@
 package com.soomjd.soomjan.findJandi.model.dao;
 
 import java.util.List;
-
+import java.util.Map;
 
 import com.soomjd.soomjan.common.paging.SelectCriteria;
 
@@ -18,7 +18,7 @@ public interface FindJandiMapper {
 
 	List<FindClassDTO> selectThumbnailClassList(String email);
 
-	int SelectFindJandiTotalCount();
+	int SelectFindJandiTotalCount(Map<String, Object> searchMap);
 
 	List<JandiDTO> selectTopFindJandiList();
 
