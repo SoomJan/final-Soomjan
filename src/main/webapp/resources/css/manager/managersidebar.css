@@ -18,8 +18,8 @@
   width: 20%;
   height: auto;
   margin: 0 50px;
-  overflow: auto;
-  border: 1px solid blue;
+ /*  overflow: auto;
+  border: 1px solid blue; */
 }
 
 .sidebar-inner-name {

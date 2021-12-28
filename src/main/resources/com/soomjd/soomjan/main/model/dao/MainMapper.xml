@@ -61,17 +61,18 @@
     	<result column="RNUM" property="rnum"/>
     </resultMap>
     
+   <resultMap id="categoryResult" type="CategoryDTO">
+    	<id column="CATEGORY_CODE" property="categoryCode"/>
+    	<result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    
+    
     
      <select id="mainJandi" resultMap="jandiResultMap">
     	SELECT JAN.EMAIL
 			 , JAN.NICKNAME
-			 , JAN.CAREER
 			 , JAN.INTRO
 			 , JAN.PROFILE_PATH
-			 , JAN.ENROLL_DATE
-			 , JAN.ACCOUNT
-			 , JAN.BANK
-			 , JAN.ACC_NAME
 		FROM JANDI_TBL JAN
     </select>
     
@@ -125,12 +126,12 @@
      , J.NICKNAME
      , COUNT(PT.CLASS_CODE)
      , pt.CLASS_CODE 
-FROM CLASS_TBL C
-JOIN PURCHASE_CLASS_TBL PT ON (PT.CLASS_CODE = C.CLASS_CODE)
-JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
-WHERE PT.STATUS = 'Y'
-GROUP BY PT.CLASS_CODE, C.MAX_COUNT, C.FILE_PATH, C.TITLE, C.PRICE, J.NICKNAME, C.VIEWS
-ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
+		FROM CLASS_TBL C
+		JOIN PURCHASE_CLASS_TBL PT ON (PT.CLASS_CODE = C.CLASS_CODE)
+		JOIN JANDI_TBL J ON (C.EMAIL = J.EMAIL) 
+		WHERE PT.STATUS = 'Y'
+		GROUP BY PT.CLASS_CODE, C.MAX_COUNT, C.FILE_PATH, C.TITLE, C.PRICE, J.NICKNAME, C.VIEWS
+		ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
    </select>
    
    
@@ -175,7 +176,10 @@ ORDER BY C.MAX_COUNT - COUNT(PT.CLASS_CODE)
     FROM CLASS_TBL C 
     JOIN AD_TBL A ON (C.CLASS_CODE = A.CLASS_CODE)
    WHERE A.IS_ADVERTISED = 'Y'
+   </select>
    
+   <select id="category" resultMap="categoryResult">
+   SELECT * FROM CATEGORY_TBL
    </select>
 	
 

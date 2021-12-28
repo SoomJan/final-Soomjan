@@ -27,7 +27,9 @@
   		<typeAlias type="com.soomjd.soomjan.mypage.model.dto.ReviewDTO" alias="ReviewDTO"/>
   		<typeAlias type="com.soomjd.soomjan.mypage.model.dto.BuyDTO" alias="BuyDTO"/>
   		<typeAlias type="com.soomjd.soomjan.manager.model.dto.ReportClassDTO" alias="ReportClassDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.manager.model.dto.PurchaseAdDTO" alias="PurchaseAdDTO"/>
   		<typeAlias type="com.soomjd.soomjan.manager.model.dto.ReportStatementDTO" alias="ReportStatementDTO"/>
+  		<typeAlias type="com.soomjd.soomjan.manager.model.dto.AdDTO" alias="AdDTO"/>
   		<typeAlias type="com.soomjd.soomjan.findclass.model.dto.FindClassDTO" alias="FindClassDTO"/>
   		<typeAlias type="com.soomjd.soomjan.matching.model.dto.MatchedChattingDTO" alias="MatchedChattingDTO"/>
     </typeAliases>

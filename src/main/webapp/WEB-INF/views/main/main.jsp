@@ -33,35 +33,34 @@ pageEncoding="UTF-8"%>
          </ol>
          
         <div class="carousel-inner" role="listbox">
-         
-	          <%--  <c:forEach var="ad" items="${ adClass }">
-	          <div class="item active">
-	        		  <img onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ ad.classCode }'" 
-	        		   class="first-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${ad.imgPath}"/>
-          	</div> 
-	        	</c:forEach>  --%>
 	        <div class="item active" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[0].classCode }'">
             <img class="first-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[0].imgPath}"/>
           </div>	
-	        	
 	        <div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[1].classCode }'">
              <img class="second-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[1].imgPath}"/>
         	</div>
-        	  
         	<c:if test="${ !empty adClass[2].imgPath}" >
 				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[2].classCode }'">
             	 <img class="third-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[2].imgPath}"/>
         		</div>	
         	</c:if> 
-          
+        	<c:if test="${ !empty adClass[3].imgPath}" >
+				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[3].classCode }'">
+            	 <img class="forth-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[3].imgPath}"/>
+        		</div>	
+        	</c:if> 
+        	<c:if test="${ !empty adClass[4].imgPath}" >
+				<div class="item" onclick="location.href='${ pageContext.servletContext.contextPath}/findclass/class/viewsUp?classCode=${ adClass[4].classCode }'">
+            	 <img class="fifth-slide" src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/profile/${adClass[4].imgPath}"/>
+        		</div>	
+        	</c:if> 
 		</div>
         
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-          <span class="sr-only">Previous</span>
-        </a>
+          <span class="sr-only">Previous</span> </a>
         <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
-        </a>
+          <span class="sr-only">Next</span> </a>
+    
       </div>
     </div>
 
@@ -71,18 +70,14 @@ pageEncoding="UTF-8"%>
         <form class="main-searchbox" action="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain" method="get">
           <input type="text"id="searchValue" name="searchValue" placeholder="찾으시는 강의가 있으신가요?" />
           <button type="submit">
-            <img
-              src="${ pageContext.servletContext.contextPath }/resources/images/research.png"
-            />
+            <img src="${ pageContext.servletContext.contextPath }/resources/images/research.png"/>
           </button>
         </form>
       </div>
       <div class="recommendclass">
-        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=1"><button class="btn-hover color-1">프로그래밍</button></a>
-        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=2"><button class="btn-hover color-1">웹 개발</button></a>
-        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=3"><button class="btn-hover color-1">백엔드</button></a>
-        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=4"><button class="btn-hover color-1">풀 스택</button></a>
-        <a href="#"><button class="btn-hover color-1">백앤드</button></a>
+      <c:forEach var="category" items="${ category }" end="4">
+        <a href="${ pageContext.servletContext.contextPath }/findclass/findAllClassMain?categoryCode=${category.categoryCode}"><button class="btn-hover color-1">${category.categoryName}</button></a>
+        </c:forEach>
       </div>
       <br />
 
@@ -93,6 +88,7 @@ pageEncoding="UTF-8"%>
         <br />
       </div>
       <div class="swiper-container">
+      
         <div class="swiper-wrapper">
           <c:forEach var="class1" items="${ class2 }" end="7">
           <div class="swiper-slide photo">
@@ -156,10 +152,10 @@ pageEncoding="UTF-8"%>
            		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
            		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
            		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">❤️0</h4></div>	
+           		  <div><h4 class="classtitle">⭐ ️0</h4></div>	
            		 </c:if>
            		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">❤️${ viewClass.avgReview }</h4> </div>
+           		 <div> <h4 class="classtitle">⭐ ${ viewClass.avgReview }<%-- <fmt:formatNumber value="️" pattern=".00"/> --%></h4> </div>
            		 </c:if>
            		 <span class="views">🔍${ viewClass.views }</span>
           </div>
@@ -195,10 +191,10 @@ pageEncoding="UTF-8"%>
            		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
            		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
            		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">❤️0</h4></div>	
+           		  <div><h4 class="classtitle">⭐ ️0</h4></div>	
            		 </c:if>
            		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">❤️${ viewClass.avgReview }</h4> </div>
+           		 <div> <h4 class="classtitle">⭐ ️${ viewClass.avgReview }</h4> </div>
            		 </c:if>
            		 <span class="views">🔍${ viewClass.views }</span>	
           </div>
@@ -215,7 +211,7 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <c:forEach var="viewClass" items="${ almostfinish }" end="3">
+          <c:forEach var="viewClass" items="${ almostfinish }" end="7">
           <div class="swiper-slide photo">
           	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
@@ -236,9 +232,10 @@ pageEncoding="UTF-8"%>
         <h4>새싹들이 인정한 믿고 듣는 좋은 수업!</h4>
         <br>
       </div>
+      
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <c:forEach var="viewClass" items="${ highScore }" end="3">
+          <c:forEach var="viewClass" items="${ highScore }" end="7">
           <div class="swiper-slide photo">
           	<div class="carousel-img" onclick="location.href='${ pageContext.servletContext.contextPath }/findclass/class/viewsUp?classCode=${viewClass.classCode }'">
 				<img  src="${ pageContext.servletContext.contextPath }/resources/uploadFiles/classImage/${viewClass.filePath}"  />
@@ -247,10 +244,10 @@ pageEncoding="UTF-8"%>
            		 <div> <h4 class="classtitle">${ viewClass.title }</h4> </div>
            		 <div><span class="classprice"><fmt:formatNumber value="${viewClass.price}" pattern="\#,###.##"/></span> </div>	
            		  <c:if test="${ viewClass.avgReview eq null}">
-           		  <div><h4 class="classtitle">❤️0</h4></div>	
+           		  <div><h4 class="classtitle">⭐ ️0</h4></div>	
            		 </c:if>
            		 <c:if test="${ viewClass.avgReview ne null}">
-           		 <div> <h4 class="classtitle">❤️${ viewClass.avgReview }</h4> </div>
+           		 <div> <h4 class="classtitle">⭐ ${ viewClass.avgReview }</h4> </div>
            		 </c:if>
            		 <span class="views">🔍${ viewClass.views }</span>	
           </div>

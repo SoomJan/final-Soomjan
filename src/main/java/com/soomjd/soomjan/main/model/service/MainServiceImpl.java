@@ -9,6 +9,7 @@ import com.soomjd.soomjan.classRoom.model.dto.ClassDTO;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.main.model.dao.MainMapper;
+import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 
 @Service
 public class MainServiceImpl implements MainService {
@@ -60,6 +61,11 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<ClassDTO> adClass() {
 		return mapper.adClass();
+	}
+
+	@Override
+	public List<CategoryDTO> category() {
+		return mapper.category();
 	}
 
 }

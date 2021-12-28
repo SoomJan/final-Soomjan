@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -41,62 +42,48 @@ pageEncoding="UTF-8"%>
       <h1 id="category"> 광고 결제 내역 </h1> <br>
 
       <h3> 내역 </h3> 
-      <input type="date"> ~ <input type="date"> &nbsp; &nbsp;
-      <input class="date-search" type="submit" value="검색하기">
     
           <table class="ui basic table warningtable">
             <thead>
               <tr>
                 <th>결제 날짜</th>
+                <th>멘토 닉네임</th>
                 <th>멘토 이메일</th>
                 <th>결제 금액</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>2021-11-24</td>
-                <td>gsp@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
-              <tr>
-                <td>2021-11-24</td>
-                <td>yhj@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
-              <tr>
-                <td>2021-11-24</td>
-                <td>osb@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
-              <tr>
-                <td>2021-11-24</td>
-                <td>ysm@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
-              <tr>
-                <td>2021-11-24</td>
-                <td>lsh@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
-              <tr>
-                <td>2021-11-24</td>
-                <td>ljh@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
-              <tr>
-                <td>2021-11-24</td>
-                <td>iyr@gmail.com</td>
-                <td class="payment">30,000</td>
-              </tr>
+              <c:forEach var="ad" items="${ purchaseAd }">
+            	 <tr class="calClass">
+            	 	<td>${ad.paymentDTO.payDate }</td>
+            	 	<td>${ad.paymentDTO.owner }</td>
+            	 	<td>${ad.email }</td>
+            	 	<td class="payment">300,000<td>
+         	    </tr>
+             </c:forEach>
               <tr>
                 <td><strong>총합계</strong></td>
                 <td></td>
-                <td><strong class="paymentSum">210,000</strong></td>
+                <td></td>
+                <td><strong class="paymentSum"></strong></td>
             </tr>
             </tbody>
           </table>
+			<form action="${ pageContext.servletContext.contextPath }/manager/advertcal" method="get">
+    			<div style="width:30%; height:60px; margin:0 auto;">
+    			<input  type="search" style="width:70%; border:1px solid black; border-radius:30px; padding:10px; height:30px;" id="searchValue" name="searchValue">
+    			 <button type="submit" style="border:none; padding:5px;"> 검색하기</button>
+				<input name="searchCondition" style="display:none" value="1">
+    			 </div>
+			</form>
 
-          <script>
+         
+
+			<jsp:include page="../common/Paging.jsp" />
+        </div>
+      </div>
+  </body>
+   <script>
               /* 결제 금액 합계 구하기 */
             let payment = $(".payment")
             let sum = 0;
@@ -110,32 +97,5 @@ pageEncoding="UTF-8"%>
             console.log(paymentSum);
             $(".paymentSum").html(paymentSum);
           </script>
-
-          <div class="manager-search">
-            <form class="manager-searchbox" method="post">
-              <input type="text" />
-              <button type="submit">
-                <img
-                  src="${ pageContext.servletContext.contextPath }/resources/images/redgrass.png"
-                />
-              </button>
-            </form>
-          </div>
-          <div>
-            <div class="manager-paging">
-              <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">next</a></li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </body>
   <jsp:include page="../common/footer.jsp" />
 </html>

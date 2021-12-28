@@ -15,7 +15,9 @@ import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
 import com.soomjd.soomjan.manager.model.dao.ManagerMapper;
+import com.soomjd.soomjan.manager.model.dto.AdDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.manager.model.dto.PurchaseAdDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
@@ -349,6 +351,26 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public int selectManagerTotalCount(ManagerDTO manager) {
 		return mapper.selectManagerTotalCount(manager);
+	}
+
+
+	// 광고 결제 완료 페이지 처리
+	@Override
+	public int selectfinishadcalTotalCount(Map<String, String> searchMap) {
+		return mapper.selectfinishadcalTotalCount(searchMap);
+	}
+
+
+	@Override
+	public List<PurchaseAdDTO> purchaseAd(SelectCriteria selectCriteria) {
+		return mapper.purchaseAd(selectCriteria);
+	}
+
+
+	// 현재 광고 내역
+	@Override
+	public List<AdDTO> nowAd() {
+		return mapper.nowAd();
 	}
 
 

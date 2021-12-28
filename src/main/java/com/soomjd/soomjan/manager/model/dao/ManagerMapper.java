@@ -9,7 +9,9 @@ import com.soomjd.soomjan.common.paging.SelectCriteriawithdate;
 import com.soomjd.soomjan.faq.model.dto.FaqDTO;
 import com.soomjd.soomjan.jandi.model.dto.CalculateDTO;
 import com.soomjd.soomjan.jandi.model.dto.JandiDTO;
+import com.soomjd.soomjan.manager.model.dto.AdDTO;
 import com.soomjd.soomjan.manager.model.dto.ManagerDTO;
+import com.soomjd.soomjan.manager.model.dto.PurchaseAdDTO;
 import com.soomjd.soomjan.manager.model.dto.ReportClassDTO;
 import com.soomjd.soomjan.matching.model.dto.CategoryDTO;
 import com.soomjd.soomjan.member.model.dto.MemberDTO;
@@ -128,6 +130,15 @@ public interface ManagerMapper {
 	int updateBlackCancelMember(String email);
 
 	int selectManagerTotalCount(ManagerDTO manager);
+
+	// 광고 결제 내역 페이지
+	int selectfinishadcalTotalCount(Map<String, String> searchMap);
+
+	// 광고 결제 내역 페이지 처리
+	List<PurchaseAdDTO> purchaseAd(SelectCriteria selectCriteria);
+
+	// 현재 광고 내역
+	List<AdDTO> nowAd();
 
 	
 }
