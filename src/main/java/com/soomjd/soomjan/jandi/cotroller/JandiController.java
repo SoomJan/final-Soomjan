@@ -888,9 +888,9 @@ public class JandiController {
 							+"&quantity=1"
 							+"&total_amount=10"
 							+"&tax_free_amount=0"
-							+"&approval_url=http://localhost:8585/soomjan/jandi/successPage"
-							+"&cancel_url=http://localhost:8585/soomjan/jandi/failedPage"
-							+"&fail_url=http://localhost:8585/soomjan/jandi/failedPage";
+							+"&approval_url=http://125.132.252.115:8585/soomjan/jandi/successPage"
+							+"&cancel_url=http://125.132.252.115:8585/soomjan/jandi/failedPage"
+							+"&fail_url=http://125.132.252.115:8585/soomjan/jandi/failedPage";
 			OutputStream out = serverAddress.getOutputStream();
 			DataOutputStream dataOut= new DataOutputStream(out);
 			
